@@ -54,7 +54,7 @@ namespace Telebot
             if (!string.IsNullOrEmpty(token))
             {
                 botClient = new TelegramBotClient(token);
-                botClient.OnMessage += _botClient_OnMessage;
+                botClient.OnMessage += botClient_OnMessage;
             }
             else
             {
@@ -81,7 +81,7 @@ namespace Telebot
             }
         }
 
-        private void _botClient_OnMessage(object sender, MessageEventArgs e)
+        private void botClient_OnMessage(object sender, MessageEventArgs e)
         {
             void sendText(string text)
             {
@@ -178,14 +178,13 @@ namespace Telebot
             if (!string.IsNullOrEmpty(token))
             {
                 botClient.StartReceiving();
+                Text += $" - ({(await botClient.GetMeAsync()).Username})";
             }
 
             if ((chatId != null) && (chatId.Identifier > 0))
             {
                 tempMonitor.Start();
             }
-
-            Text += $" - ({(await botClient.GetMeAsync()).Username})";
         }
 
         private void Form1_Resize(object sender, EventArgs e)

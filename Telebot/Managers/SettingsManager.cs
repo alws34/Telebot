@@ -67,7 +67,7 @@ namespace Telebot.Managers
                 return JsonConvert.DeserializeObject<Rectangle>(s);
             }
 
-            return new Rectangle();
+            return new Rectangle(0, 0, 150, 150);
         }
 
         public float GetGPUTemperature()

@@ -29,15 +29,12 @@ namespace Telebot
         public Form1()
         {
             InitializeComponent();
-
-            whiteList = new List<int>();
-
             listView1.DoubleBuffered(true);
 
+            whiteList = new List<int>();
             this.commands = new Dictionary<string, ICommand>();
 
             var commands = Program.container.GetAllInstances<ICommand>();
-
             foreach (ICommand command in commands)
             {
                 this.commands.Add(command.Name, command);
@@ -55,10 +52,6 @@ namespace Telebot
             {
                 botClient = new TelegramBotClient(token);
                 botClient.OnMessage += botClient_OnMessage;
-            }
-            else
-            {
-                MessageBox.Show("No token found for Telegram bot.");
             }
         }
 
@@ -85,14 +78,23 @@ namespace Telebot
         {
             void sendText(string text)
             {
-                botClient.SendTextMessageAsync(e.Message.Chat.Id, text,
-                    parseMode: ParseMode.Markdown, replyToMessageId: e.Message.MessageId);
+                botClient.SendTextMessageAsync
+                (
+                    e.Message.Chat.Id, 
+                    text,
+                    parseMode: ParseMode.Markdown, 
+                    replyToMessageId: e.Message.MessageId
+                );
             }
 
             if (!whiteList.Exists(x => x.Equals(e.Message.From.Id)))
             {
                 sendText("Unauthorized.");
                 return;
+            }
+
+            if (chatId == null || chatId.Identifier == 0) {
+                chatId = e.Message.Chat.Id;
             }
 
             string cmdKey = e.Message.Text;
@@ -163,7 +165,7 @@ namespace Telebot
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (botClient.IsReceiving)
+            if (botClient != null && botClient.IsReceiving)
             {
                 botClient.StopReceiving();
             }
@@ -175,15 +177,25 @@ namespace Telebot
         {
             LoadSettings();
 
-            if (!string.IsNullOrEmpty(token))
+            if (botClient != null)
             {
                 botClient.StartReceiving();
                 Text += $" - ({(await botClient.GetMeAsync()).Username})";
-            }
 
-            if ((chatId != null) && (chatId.Identifier > 0))
-            {
-                tempMonitor.Start();
+                if ((chatId != null) && (chatId.Identifier > 0))
+                {
+                    if (appSettings.GetMonitorEnabled())
+                    {
+                        tempMonitor.Start();
+                    }
+
+                    await botClient.SendTextMessageAsync
+                    (
+                        chatId,
+                        "*Telebot*: I'm Up.",
+                        parseMode: ParseMode.Markdown
+                    );
+                }
             }
         }
 

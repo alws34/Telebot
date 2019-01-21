@@ -127,6 +127,8 @@ namespace Telebot
                 typeof(ScreenOffCmd),
                 typeof(MonitorOnCmd),
                 typeof(MonitorOffCmd),
+                typeof(RebootCmd),
+                typeof(ShutdownCmd),
                 typeof(HelpCmd)
             );
 
@@ -136,17 +138,16 @@ namespace Telebot
                 typeof(GPUProvider)
             );
 
-            container.Register<ITemperatureMonitor, SystemTempMonitor>();
-            container.Register<ISettings, SettingsManager>();
-
+            container.Register<ITemperatureMonitor, SystemTempMonitor>(Lifestyle.Singleton);
+            container.Register<ISettings, SettingsManager>(Lifestyle.Singleton);
             container.Register<Form1>(Lifestyle.Singleton);
 
             container.Register<CaptureController>();
+            container.Register<NetworkController>();
+            container.Register<PowerController>();
             container.Register<ScreenController>();
             container.Register<SystemController>();
             container.Register<WindowsController>();
-            container.Register<NetworkController>();
-            container.Register<TempMonitorController>();
 
             container.Verify();
         }

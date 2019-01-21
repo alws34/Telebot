@@ -34,6 +34,18 @@ namespace Telebot.Managers
             WriteFile(FILE_NAME, data);
         }
 
+        public bool GetMonitorEnabled()
+        {
+            string s = data["Temperature.Monitor"]["Enabled"];
+
+            if (!string.IsNullOrEmpty(s))
+            {
+                return bool.Parse(s);
+            }
+
+            return false;
+        }
+
         public long GetChatId()
         {
             string s = data["Telegram"]["Chat.Id"];
@@ -109,6 +121,11 @@ namespace Telebot.Managers
             }
 
             return new List<int>();
+        }
+
+        public void SetMonitorEnabled(bool enabled)
+        {
+            data["Temperature.Monitor"]["Enabled"] = enabled.ToString();
         }
 
         public void SetChatId(long id)

@@ -12,11 +12,21 @@ namespace Telebot.Commands
 
         public event EventHandler<CommandResult> Completed;
 
+        private readonly ISettings settings;
+        private readonly ITemperatureMonitor tempMon;
+
+        public MonitorOnCmd()
+        {
+            settings = Program.container.GetInstance<ISettings>();
+            tempMon = Program.container.GetInstance<ITemperatureMonitor>();
+        }
+
         public void Execute(object parameter)
         {
             var cmdInfo = parameter as CommandInfo;
 
-            cmdInfo.Form1.tempMonitor.Start();
+            tempMon.Start();
+            settings.SetMonitorEnabled(true);
 
             var info = new CommandResult
             {

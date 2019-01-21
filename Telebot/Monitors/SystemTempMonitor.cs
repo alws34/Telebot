@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
 using Telebot.Contracts;
-using Telebot.Models;
 
 namespace Telebot.Monitors
 {
@@ -40,8 +36,8 @@ namespace Telebot.Monitors
             {
                 var hwInfos = tempProvider.GetTemperature();
 
-                foreach(IHardwareInfo hwInfo in hwInfos)
-                { 
+                foreach (IHardwareInfo hwInfo in hwInfos)
+                {
                     TemperatureChanged?.Invoke(this, hwInfo);
                 }
             }

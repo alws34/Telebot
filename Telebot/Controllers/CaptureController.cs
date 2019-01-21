@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace Telebot.Controllers
@@ -9,11 +10,19 @@ namespace Telebot.Controllers
         {
             Bitmap result = new Bitmap(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
 
-            using (Graphics gObj = Graphics.FromImage(result))
+            try
             {
-                gObj.CopyFromScreen(0, 0, 0, 0, Screen.PrimaryScreen.Bounds.Size);
-                return result;
+                using (Graphics gObj = Graphics.FromImage(result))
+                {
+                    gObj.CopyFromScreen(0, 0, 0, 0, Screen.PrimaryScreen.Bounds.Size);
+                }
             }
+            catch (Exception e)
+            {
+                MessageBox.Show($"Message:\n{e.Message}\n\nInner Message:\n{e.InnerException.Message}");
+            }
+
+            return result;
         }
 
         public Bitmap CaptureControl(Control control)

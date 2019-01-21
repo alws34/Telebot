@@ -22,5 +22,7 @@ namespace Telebot.Contracts
         void SetCPUTemperature(float value);
         float GetGPUTemperature();
         void SetGPUTemperature(float value);
+        bool GetMonitorEnabled();
+        void SetMonitorEnabled(bool enabled);
     }
 }

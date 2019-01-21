@@ -48,6 +48,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>icon.ico</ApplicationIcon>
@@ -86,8 +87,10 @@
     <Compile Include="Commands\HelpCmd.cs" />
     <Compile Include="Commands\MonitorOffCmd.cs" />
     <Compile Include="Commands\MonitorOnCmd.cs" />
+    <Compile Include="Commands\RebootCmd.cs" />
     <Compile Include="Commands\ScreenOffCmd.cs" />
     <Compile Include="Commands\ScreenOnCmd.cs" />
+    <Compile Include="Commands\ShutdownCmd.cs" />
     <Compile Include="Commands\StatusCmd.cs" />
     <Compile Include="Commands\StatusCommands\IPCmd.cs" />
     <Compile Include="Commands\StatusCommands\SystemCmd.cs" />
@@ -103,9 +106,9 @@
     <Compile Include="Contracts\IUtilizationProvider.cs" />
     <Compile Include="Controllers\CaptureController.cs" />
     <Compile Include="Controllers\NetworkController.cs" />
+    <Compile Include="Controllers\PowerController.cs" />
     <Compile Include="Controllers\ScreenController.cs" />
     <Compile Include="Controllers\SystemController.cs" />
-    <Compile Include="Controllers\TempMonitorController.cs" />
     <Compile Include="Controllers\WindowsController.cs" />
     <Compile Include="cpuidsdk.cs" />
     <Compile Include="Extensions\BitmapExtensions.cs" />

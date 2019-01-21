@@ -5,16 +5,16 @@ namespace Telebot.Commands.StatusCommands
 {
     public class TempMonitorCmd : IStatusCommand
     {
-        private readonly TempMonitorController controller;
+        private readonly ITemperatureMonitor tempMonitor;
 
         public TempMonitorCmd()
         {
-            controller = Program.container.GetInstance<TempMonitorController>();
+            tempMonitor = Program.container.GetInstance<ITemperatureMonitor>();
         }
 
         public string Execute()
         {
-            return $"*Monitor (°C)*: {controller.GetMonitorStatus()}";
+            return $"*Monitor (°C)*: {tempMonitor.IsActive}";
         }
     }
 }

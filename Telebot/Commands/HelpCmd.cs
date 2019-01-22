@@ -13,13 +13,20 @@ namespace Telebot.Commands
 
         public event EventHandler<CommandResult> Completed;
 
+        private readonly Form1 form1;
+
+        public HelpCmd()
+        {
+            form1 = Program.container.GetInstance<Form1>();
+        }
+
         public void Execute(object parameter)
         {
             var cmdInfo = parameter as CommandInfo;
 
             var builder = new StringBuilder();
 
-            foreach (ICommand command in cmdInfo.Form1.commands.Values)
+            foreach (ICommand command in form1.Commands.Values)
             {
                 builder.AppendLine(command.ToString());
             }

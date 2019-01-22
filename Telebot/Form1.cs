@@ -20,8 +20,10 @@ namespace Telebot
         private ChatId chatId;
         private List<int> whiteList;
 
-        public readonly Dictionary<string, ICommand> commands;
-        public readonly ITemperatureMonitor tempMonitor;
+        private readonly Dictionary<string, ICommand> commands;
+        private readonly ITemperatureMonitor tempMonitor;
+
+        public Dictionary<string, ICommand> Commands { get { return commands; } }
 
         private readonly ISettings appSettings;
         private readonly TelegramBotClient botClient;
@@ -32,14 +34,7 @@ namespace Telebot
             listView1.DoubleBuffered(true);
 
             whiteList = new List<int>();
-            this.commands = new Dictionary<string, ICommand>();
-
-            var commands = Program.container.GetAllInstances<ICommand>();
-            foreach (ICommand command in commands)
-            {
-                this.commands.Add(command.Name, command);
-                command.Completed += Command_Completed;
-            }
+            commands = new Dictionary<string, ICommand>();
 
             tempMonitor = Program.container.GetInstance<ITemperatureMonitor>();
             tempMonitor.TemperatureChanged += TemperatureChanged;
@@ -103,8 +98,7 @@ namespace Telebot
             {
                 var cmdInfo = new CommandInfo
                 {
-                    Message = e.Message,
-                    Form1 = this
+                    Message = e.Message
                 };
 
                 commands[cmdKey].Execute(cmdInfo);
@@ -173,9 +167,18 @@ namespace Telebot
             SaveSettings();
         }
 
-        private async void Form1_Load(object sender, EventArgs e)
+        protected async override void OnLoad(EventArgs e)
         {
+            base.OnLoad(e);
+
             LoadSettings();
+
+            var commands = Program.container.GetAllInstances<ICommand>();
+            foreach (ICommand command in commands)
+            {
+                this.commands.Add(command.Name, command);
+                command.Completed += Command_Completed;
+            }
 
             if (botClient != null)
             {

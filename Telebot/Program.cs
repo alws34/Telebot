@@ -6,6 +6,7 @@ using Telebot.Commands;
 using Telebot.Commands.StatusCommands;
 using Telebot.Contracts;
 using Telebot.Controllers;
+using Telebot.Loggers;
 using Telebot.Managers;
 using Telebot.Monitors;
 using Telebot.Providers;
@@ -140,6 +141,7 @@ namespace Telebot
 
             container.Register<ITemperatureMonitor, SystemTempMonitor>(Lifestyle.Singleton);
             container.Register<ISettings, SettingsManager>(Lifestyle.Singleton);
+            container.Register<ILogger, FileLogger>(Lifestyle.Singleton);
             container.Register<Form1>(Lifestyle.Singleton);
 
             container.Register<CaptureController>();

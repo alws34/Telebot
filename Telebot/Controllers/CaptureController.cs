@@ -1,25 +1,36 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using Telebot.Contracts;
 
 namespace Telebot.Controllers
 {
     public class CaptureController
     {
+        private readonly ILogger logger;
+
+        public CaptureController()
+        {
+            logger = Program.container.GetInstance<ILogger>();
+        }
+
         public Bitmap CaptureDesktop()
         {
-            Bitmap result = new Bitmap(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
+            int width = Screen.PrimaryScreen.Bounds.Width;
+            int height = Screen.PrimaryScreen.Bounds.Height;
+
+            Bitmap result = new Bitmap(width, height);
 
             try
             {
                 using (Graphics gObj = Graphics.FromImage(result))
                 {
-                    gObj.CopyFromScreen(0, 0, 0, 0, Screen.PrimaryScreen.Bounds.Size);
+                    gObj.CopyFromScreen(0, 0, 0, 0, result.Size);
                 }
             }
             catch (Exception e)
             {
-                MessageBox.Show($"Message:\n{e.Message}\n\nInner Message:\n{e.InnerException.Message}");
+                logger.Log(e.ToString());
             }
 
             return result;

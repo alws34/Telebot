@@ -98,6 +98,7 @@
     <Compile Include="Commands\StatusCommands\UptimeCmd.cs" />
     <Compile Include="Contracts\ICommand.cs" />
     <Compile Include="Contracts\IHardwareInfo.cs" />
+    <Compile Include="Contracts\ILogger.cs" />
     <Compile Include="Contracts\ISettings.cs" />
     <Compile Include="Contracts\IStatusCommand.cs" />
     <Compile Include="Contracts\ITemperatureMonitor.cs" />
@@ -120,6 +121,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Loggers\FileLogger.cs" />
     <Compile Include="Managers\SettingsManager.cs" />
     <Compile Include="Models\CommandInfo.cs" />
     <Compile Include="Models\CommandResult.cs" />

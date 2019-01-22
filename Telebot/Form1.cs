@@ -16,17 +16,15 @@ namespace Telebot
         private float CPU_TEMPERATURE_WARNING = 65.0f;
         private float GPU_TEMPERATURE_WARNING = 65.0f;
 
-        private readonly string token;
+        private string token;
         private ChatId chatId;
         private List<int> whiteList;
+        private ITemperatureMonitor tempMonitor;
 
-        private readonly Dictionary<string, ICommand> commands;
-        private readonly ITemperatureMonitor tempMonitor;
+        public Dictionary<string, ICommand> Commands { get; }
 
-        public Dictionary<string, ICommand> Commands { get { return commands; } }
-
-        private readonly ISettings appSettings;
-        private readonly TelegramBotClient botClient;
+        private ISettings appSettings;
+        private TelegramBotClient botClient;
 
         public Form1()
         {
@@ -34,20 +32,7 @@ namespace Telebot
             listView1.DoubleBuffered(true);
 
             whiteList = new List<int>();
-            commands = new Dictionary<string, ICommand>();
-
-            tempMonitor = Program.container.GetInstance<ITemperatureMonitor>();
-            tempMonitor.TemperatureChanged += TemperatureChanged;
-
-            appSettings = Program.container.GetInstance<ISettings>();
-
-            token = appSettings.GetTelegramToken();
-
-            if (!string.IsNullOrEmpty(token))
-            {
-                botClient = new TelegramBotClient(token);
-                botClient.OnMessage += botClient_OnMessage;
-            }
+            Commands = new Dictionary<string, ICommand>();
         }
 
         private void Command_Completed(object sender, CommandResult e)
@@ -75,9 +60,9 @@ namespace Telebot
             {
                 botClient.SendTextMessageAsync
                 (
-                    e.Message.Chat.Id, 
+                    e.Message.Chat.Id,
                     text,
-                    parseMode: ParseMode.Markdown, 
+                    parseMode: ParseMode.Markdown,
                     replyToMessageId: e.Message.MessageId
                 );
             }
@@ -94,14 +79,18 @@ namespace Telebot
 
             string cmdKey = e.Message.Text;
 
-            if (commands.ContainsKey(cmdKey))
+            if (string.IsNullOrEmpty(cmdKey)) {
+                return;
+            }
+
+            if (Commands.ContainsKey(cmdKey))
             {
                 var cmdInfo = new CommandInfo
                 {
                     Message = e.Message
                 };
 
-                commands[cmdKey].Execute(cmdInfo);
+                Commands[cmdKey].Execute(cmdInfo);
             }
             else
             {
@@ -171,13 +160,26 @@ namespace Telebot
         {
             base.OnLoad(e);
 
+            appSettings = Program.container.GetInstance<ISettings>();
+
             LoadSettings();
 
             var commands = Program.container.GetAllInstances<ICommand>();
             foreach (ICommand command in commands)
             {
-                this.commands.Add(command.Name, command);
+                Commands.Add(command.Name, command);
                 command.Completed += Command_Completed;
+            }
+
+            tempMonitor = Program.container.GetInstance<ITemperatureMonitor>();
+            tempMonitor.TemperatureChanged += TemperatureChanged;
+
+            token = appSettings.GetTelegramToken();
+
+            if (!string.IsNullOrEmpty(token))
+            {
+                botClient = new TelegramBotClient(token);
+                botClient.OnMessage += botClient_OnMessage;
             }
 
             if (botClient != null)

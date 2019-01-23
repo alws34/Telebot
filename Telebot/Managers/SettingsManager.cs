@@ -12,17 +12,20 @@ namespace Telebot.Managers
     public class SettingsManager : FileIniDataParser, ISettings
     {
         private const string FILE_NAME = "settings.ini";
+        private readonly string filePath;
 
         private readonly IniData data;
 
         public SettingsManager()
         {
-            if (!File.Exists(FILE_NAME)) {
-                File.Create(FILE_NAME);
+            filePath = AppDomain.CurrentDomain.BaseDirectory + FILE_NAME;
+
+            if (!File.Exists(filePath)) {
+                File.Create(filePath);
             }
 
             try {
-                data = ReadFile(FILE_NAME);
+                data = ReadFile(filePath);
             }
             catch {
 
@@ -31,7 +34,7 @@ namespace Telebot.Managers
 
         ~SettingsManager()
         {
-            WriteFile(FILE_NAME, data);
+            WriteFile(filePath, data);
         }
 
         public bool GetMonitorEnabled()

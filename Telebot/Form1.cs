@@ -164,15 +164,9 @@ namespace Telebot
 
             LoadSettings();
 
-            var commands = Program.container.GetAllInstances<ICommand>();
-            foreach (ICommand command in commands)
-            {
-                Commands.Add(command.Name, command);
-                command.Completed += Command_Completed;
-            }
+            InitializeCommands();
 
-            tempMonitor = Program.container.GetInstance<ITemperatureMonitor>();
-            tempMonitor.TemperatureChanged += TemperatureChanged;
+            InitializeTempMonitor();
 
             token = appSettings.GetTelegramToken();
 
@@ -201,6 +195,22 @@ namespace Telebot
                         parseMode: ParseMode.Markdown
                     );
                 }
+            }
+        }
+
+        private void InitializeTempMonitor()
+        {
+            tempMonitor = Program.container.GetInstance<ITemperatureMonitor>();
+            tempMonitor.TemperatureChanged += TemperatureChanged;
+        }
+
+        private void InitializeCommands()
+        {
+            var commands = Program.container.GetAllInstances<ICommand>();
+            foreach (ICommand command in commands)
+            {
+                Commands.Add(command.Name, command);
+                command.Completed += Command_Completed;
             }
         }
 

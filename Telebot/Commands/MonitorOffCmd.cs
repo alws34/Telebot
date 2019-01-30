@@ -26,7 +26,7 @@ namespace Telebot.Commands
             var cmdInfo = parameter as CommandInfo;
 
             tempMon.Stop();
-            settings.SetMonitorEnabled(false);
+            settings.MonitorEnabled = false;
 
             var info = new CommandResult
             {

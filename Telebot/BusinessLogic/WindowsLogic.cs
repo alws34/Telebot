@@ -3,9 +3,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
-namespace Telebot.Controllers
+namespace Telebot.BusinessLogic
 {
-    public class WindowsController
+    public class WindowsLogic
     {
         public string GetActiveApplications()
         {

@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
 
-namespace Telebot.Controllers
+namespace Telebot.BusinessLogic
 {
-    public class PowerController
+    public class PowerLogic
     {
         public void ShutdownWindows()
         {

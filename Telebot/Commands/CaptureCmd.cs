@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using Telebot.Contracts;
-using Telebot.Controllers;
+using Telebot.BusinessLogic;
 using Telebot.Extensions;
 using Telebot.Helpers;
 using Telebot.Models;
@@ -17,12 +17,12 @@ namespace Telebot.Commands
 
         public event EventHandler<CommandResult> Completed;
 
-        private readonly CaptureController capController;
+        private readonly CaptureLogic captureLogic;
         private readonly Form1 form1;
 
         public CaptureCmd()
         {
-            capController = Program.container.GetInstance<CaptureController>();
+            captureLogic = Program.container.GetInstance<CaptureLogic>();
             form1 = Program.container.GetInstance<Form1>();
         }
 
@@ -32,8 +32,8 @@ namespace Telebot.Commands
 
             var bitmaps = new List<Bitmap>
             {
-                capController.CaptureControl(form1),
-                capController.CaptureDesktop()
+                captureLogic.CaptureControl(form1),
+                captureLogic.CaptureDesktop()
             };
 
             foreach (Bitmap bitmap in bitmaps)

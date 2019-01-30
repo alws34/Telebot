@@ -3,9 +3,9 @@ using System.Diagnostics;
 using System.Text;
 using Telebot.Extensions;
 
-namespace Telebot.Controllers
+namespace Telebot.BusinessLogic
 {
-    public class SystemController
+    public class SystemLogic
     {
         public string GetSystemStatus()
         {

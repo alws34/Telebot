@@ -168,7 +168,7 @@ namespace Telebot
 
             InitializeTempMonitor();
 
-            token = appSettings.GetTelegramToken();
+            token = appSettings.TelegramToken;
 
             if (!string.IsNullOrEmpty(token))
             {
@@ -183,7 +183,7 @@ namespace Telebot
 
                 if ((chatId != null) && (chatId.Identifier > 0))
                 {
-                    if (appSettings.GetMonitorEnabled())
+                    if (appSettings.MonitorEnabled)
                     {
                         tempMonitor.Start();
                     }
@@ -232,38 +232,38 @@ namespace Telebot
 
         private void SaveSettings()
         {
-            appSettings.SetForm1Bounds(Bounds);
+            appSettings.Form1Bounds = Bounds;
 
             var widths = new List<int>(listView1.Columns.Count);
             foreach (ColumnHeader column in listView1.Columns)
             {
                 widths.Add(column.Width);
             }
-            appSettings.SetListView1ColumnsWidth(widths);
+            appSettings.ListView1ColumnsWidth = widths;
 
-            appSettings.SetChatId(chatId.Identifier);
+            appSettings.ChatId = chatId.Identifier;
 
-            appSettings.SetCPUTemperature(CPU_TEMPERATURE_WARNING);
-            appSettings.SetGPUTemperature(GPU_TEMPERATURE_WARNING);
+            appSettings.CPUTemperature = CPU_TEMPERATURE_WARNING;
+            appSettings.GPUTemperature = GPU_TEMPERATURE_WARNING;
         }
 
         private void LoadSettings()
         {
             //GUI Settings
-            Bounds = appSettings.GetForm1Bounds();
-            var w = appSettings.GetListView1ColumnsWidth();
+            Bounds = appSettings.Form1Bounds;
+            var w = appSettings.ListView1ColumnsWidth;
             for (int i = 0; i < w.Count; i++)
             {
                 listView1.Columns[i].Width = w[i];
             }
 
             //Telegram Settings
-            whiteList = appSettings.GetTelegramWhiteList();
-            chatId = appSettings.GetChatId();
+            whiteList = appSettings.TelegramWhiteList;
+            chatId = appSettings.ChatId;
 
             //Temperature Monitor Settings
-            CPU_TEMPERATURE_WARNING = appSettings.GetCPUTemperature();
-            GPU_TEMPERATURE_WARNING = appSettings.GetGPUTemperature();
+            CPU_TEMPERATURE_WARNING = appSettings.CPUTemperature;
+            GPU_TEMPERATURE_WARNING = appSettings.GPUTemperature;
         }
     }
 }

@@ -1,23 +1,20 @@
-﻿using System;
-using System.Diagnostics;
-using Telebot.Contracts;
-using Telebot.Controllers;
-using Telebot.Extensions;
+﻿using Telebot.Contracts;
+using Telebot.BusinessLogic;
 
 namespace Telebot.Commands.StatusCommands
 {
     public class UptimeCmd : IStatusCommand
     {
-        private readonly SystemController sysControlelr;
+        private readonly SystemLogic systemLogic;
 
         public UptimeCmd()
         {
-            sysControlelr = Program.container.GetInstance<SystemController>();
+            systemLogic = Program.container.GetInstance<SystemLogic>();
         }
 
         public string Execute()
         {
-            return $"*Uptime*: {sysControlelr.GetUptime()}";
+            return $"*Uptime*: {systemLogic.GetUptime()}";
         }
     }
 }

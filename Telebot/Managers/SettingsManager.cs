@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Windows.Forms;
 using Telebot.Contracts;
 
 namespace Telebot.Managers
@@ -18,7 +19,7 @@ namespace Telebot.Managers
 
         public SettingsManager()
         {
-            filePath = AppDomain.CurrentDomain.BaseDirectory + FILE_NAME;
+            filePath = $"{Application.StartupPath}\\{FILE_NAME}";
 
             if (!File.Exists(filePath)) {
                 File.Create(filePath);
@@ -37,130 +38,118 @@ namespace Telebot.Managers
             WriteFile(filePath, data);
         }
 
-        public bool GetMonitorEnabled()
+        public bool MonitorEnabled
         {
-            string s = data["Temperature.Monitor"]["Enabled"];
-
-            if (!string.IsNullOrEmpty(s))
+            get
             {
-                return bool.Parse(s);
+                return Convert.ToBoolean(data["Temperature.Monitor"]["Enabled"]);
             }
-
-            return false;
+            set
+            {
+                data["Temperature.Monitor"]["Enabled"] = value.ToString();
+            }
         }
 
-        public long GetChatId()
+        public long ChatId
         {
-            string s = data["Telegram"]["Chat.Id"];
-
-            if (!string.IsNullOrEmpty(s))
+            get
             {
-                return long.Parse(s);
+                return Convert.ToInt64(data["Telegram"]["Chat.Id"]);
             }
-
-            return 0;
+            set
+            {
+                data["Telegram"]["Chat.Id"] = value.ToString();
+            }
         }
 
-        public float GetCPUTemperature()
+        public float CPUTemperature
         {
-            string s = data["Temperature.Monitor"]["CPU_TEMPERATURE_WARNING"];
-
-            if (!string.IsNullOrEmpty(s))
+            get
             {
-                return float.Parse(s);
+                string s = data["Temperature.Monitor"]["CPU_TEMPERATURE_WARNING"];
+                if (string.IsNullOrEmpty(s)) {
+                    return 65.0f;
+                }
+                return (float)Convert.ToDouble(s);
             }
-
-            return 65.0f;
+            set
+            {
+                data["Temperature.Monitor"]["CPU_TEMPERATURE_WARNING"] = value.ToString();
+            }
         }
 
-        public Rectangle GetForm1Bounds()
+        public Rectangle Form1Bounds
         {
-            string s = data["GUI"]["Form1.Bounds"];
-
-            if (!string.IsNullOrEmpty(s))
+            get
             {
+                string s = data["GUI"]["Form1.Bounds"];
+                if (string.IsNullOrEmpty(s)) {
+                    return new Rectangle(50, 50, 150, 150);
+                }
                 return JsonConvert.DeserializeObject<Rectangle>(s);
             }
-
-            return new Rectangle(0, 0, 150, 150);
-        }
-
-        public float GetGPUTemperature()
-        {
-            string s = data["Temperature.Monitor"]["GPU_TEMPERATURE_WARNING"];
-
-            if (!string.IsNullOrEmpty(s))
+            set
             {
-                return float.Parse(s);
+                string s = JsonConvert.SerializeObject(value);
+                data["GUI"]["Form1.Bounds"] = s;
             }
-
-            return 65.0f;
         }
 
-        public List<int> GetListView1ColumnsWidth()
+        public float GPUTemperature
         {
-            string s = data["GUI"]["listview1.Columns.Width"];
-
-            if (!string.IsNullOrEmpty(s))
+            get
             {
+                string s = data["Temperature.Monitor"]["GPU_TEMPERATURE_WARNING"];
+                if (string.IsNullOrEmpty(s)) {
+                    return 65.0f;
+                }
+                return (float)Convert.ToDouble(s);
+            }
+            set
+            {
+                data["Temperature.Monitor"]["GPU_TEMPERATURE_WARNING"] = value.ToString();
+            }
+        }
+
+        public List<int> ListView1ColumnsWidth
+        {
+            get
+            {
+                string s = data["GUI"]["listview1.Columns.Width"];
+                if (string.IsNullOrEmpty(s)) {
+                    return new List<int> { 50, 150 };
+                }
                 return JsonConvert.DeserializeObject<List<int>>(s);
             }
-
-            return new List<int>();
-        }
-
-        public string GetTelegramToken()
-        {
-            return data["Telegram"]["Token"];
-        }
-
-        public List<int> GetTelegramWhiteList()
-        {
-            string s = data["Telegram"]["WhiteList"];
-
-            if (!string.IsNullOrEmpty(s))
+            set
             {
+                string s = JsonConvert.SerializeObject(value);
+                data["GUI"]["listview1.Columns.Width"] = s;
+            }
+        }
+
+        public string TelegramToken
+        {
+            get
+            {
+                string s = data["Telegram"]["Token"];
+                if (string.IsNullOrEmpty(s)) {
+                    return string.Empty;
+                }
+                return s;
+            }
+        }
+
+        public List<int> TelegramWhiteList
+        {
+            get
+            {
+                string s = data["Telegram"]["WhiteList"];
+                if (string.IsNullOrEmpty(s)) {
+                    return new List<int>();
+                }
                 return JsonConvert.DeserializeObject<List<int>>(s);
             }
-
-            return new List<int>();
-        }
-
-        public void SetMonitorEnabled(bool enabled)
-        {
-            data["Temperature.Monitor"]["Enabled"] = enabled.ToString();
-        }
-
-        public void SetChatId(long id)
-        {
-            data["Telegram"]["Chat.Id"] = id.ToString();
-        }
-
-        public void SetCPUTemperature(float value)
-        {
-            data["Temperature.Monitor"]["CPU_TEMPERATURE_WARNING"] = value.ToString();
-        }
-
-        public void SetForm1Bounds(Rectangle bounds)
-        {
-            string s = JsonConvert.SerializeObject(bounds);
-            data["GUI"]["Form1.Bounds"] = s;
-        }
-
-        public void SetGPUTemperature(float value)
-        {
-            data["Temperature.Monitor"]["GPU_TEMPERATURE_WARNING"] = value.ToString();
-        }
-
-        public void SetListView1ColumnsWidth(List<int> widths)
-        {
-            string s = JsonConvert.SerializeObject(widths);
-            data["GUI"]["listview1.Columns.Width"] = s;
-        }
-
-        public void SetTelegramWhiteList(List<int> list)
-        {
-            throw new NotImplementedException();
         }
     }
 }

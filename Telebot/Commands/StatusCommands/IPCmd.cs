@@ -1,23 +1,20 @@
-﻿using System;
-using System.Net;
-using System.Net.Sockets;
-using Telebot.Contracts;
-using Telebot.Controllers;
+﻿using Telebot.Contracts;
+using Telebot.BusinessLogic;
 
 namespace Telebot.Commands.StatusCommands
 {
     public class IPCmd : IStatusCommand
     {
-        private readonly NetworkController netController;
+        private readonly NetworkLogic networkLogic;
 
         public IPCmd()
         {
-            netController = Program.container.GetInstance<NetworkController>();
+            networkLogic = Program.container.GetInstance<NetworkLogic>();
         }
 
         public string Execute()
         {
-            return $"*IP*: {netController.IP}";
+            return $"*IP*: {networkLogic.IP}";
         }
     }
 }

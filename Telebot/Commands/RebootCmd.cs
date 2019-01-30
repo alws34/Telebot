@@ -1,6 +1,6 @@
 ﻿using System;
 using Telebot.Contracts;
-using Telebot.Controllers;
+using Telebot.BusinessLogic;
 using Telebot.Models;
 
 namespace Telebot.Commands
@@ -11,20 +11,20 @@ namespace Telebot.Commands
 
         public string Description => "Reboots the host machine.";
 
-        private readonly PowerController powerController;
+        private readonly PowerLogic powerLogic;
 
         public event EventHandler<CommandResult> Completed;
 
         public RebootCmd()
         {
-            powerController = Program.container.GetInstance<PowerController>();
+            powerLogic = Program.container.GetInstance<PowerLogic>();
         }
 
         public void Execute(object parameter)
         {
             var cmdInfo = parameter as CommandInfo;
 
-            powerController.RestartWindows();
+            powerLogic.RestartWindows();
 
             var info = new CommandResult
             {

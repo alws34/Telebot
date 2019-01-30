@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Telebot.Contracts;
-using Telebot.Controllers;
-using Telebot.Helpers;
 using Telebot.Models;
-using Telebot.Providers;
 
 namespace Telebot.Commands
 {

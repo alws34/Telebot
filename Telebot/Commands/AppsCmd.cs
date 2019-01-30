@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using Telebot.Contracts;
-using Telebot.Controllers;
+using Telebot.BusinessLogic;
 using Telebot.Helpers;
 using Telebot.Models;
 
@@ -17,11 +17,11 @@ namespace Telebot.Commands
 
         public event EventHandler<CommandResult> Completed;
 
-        private readonly WindowsController winController;
+        private readonly WindowsLogic windowsLogic;
 
         public AppsCmd()
         {
-            winController = Program.container.GetInstance<WindowsController>();
+            windowsLogic = Program.container.GetInstance<WindowsLogic>();
         }
 
         public void Execute(object parameter)
@@ -31,7 +31,7 @@ namespace Telebot.Commands
             var info = new CommandResult
             {
                 Message = cmdInfo.Message,
-                Text = winController.GetActiveApplications(),
+                Text = windowsLogic.GetActiveApplications(),
                 SendType = SendType.Text
             };
 

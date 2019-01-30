@@ -3,13 +3,13 @@ using System.Drawing;
 using System.Windows.Forms;
 using Telebot.Contracts;
 
-namespace Telebot.Controllers
+namespace Telebot.BusinessLogic
 {
-    public class CaptureController
+    public class CaptureLogic
     {
         private readonly ILogger logger;
 
-        public CaptureController()
+        public CaptureLogic()
         {
             logger = Program.container.GetInstance<ILogger>();
         }

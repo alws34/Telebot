@@ -2,13 +2,13 @@
 using System.Net;
 using System.Net.Sockets;
 
-namespace Telebot.Controllers
+namespace Telebot.BusinessLogic
 {
-    public class NetworkController
+    public class NetworkLogic
     {
         public readonly string IP;
 
-        public NetworkController()
+        public NetworkLogic()
         {
             IP = GetLocalIPAddress();
         }

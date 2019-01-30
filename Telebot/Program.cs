@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using Telebot.Commands;
 using Telebot.Commands.StatusCommands;
 using Telebot.Contracts;
-using Telebot.Controllers;
+using Telebot.BusinessLogic;
 using Telebot.Loggers;
 using Telebot.Managers;
 using Telebot.Monitors;
@@ -144,12 +144,12 @@ namespace Telebot
             container.Register<ILogger, FileLogger>(Lifestyle.Singleton);
             container.Register<Form1>(Lifestyle.Singleton);
 
-            container.Register<CaptureController>();
-            container.Register<NetworkController>();
-            container.Register<PowerController>();
-            container.Register<ScreenController>();
-            container.Register<SystemController>();
-            container.Register<WindowsController>();
+            container.Register<CaptureLogic>();
+            container.Register<NetworkLogic>();
+            container.Register<PowerLogic>();
+            container.Register<ScreenLogic>();
+            container.Register<SystemLogic>();
+            container.Register<WindowsLogic>();
 
             container.Verify();
         }

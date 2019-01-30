@@ -1,7 +1,6 @@
 ﻿using System;
 using Telebot.Contracts;
-using Telebot.Controllers;
-using Telebot.Helpers;
+using Telebot.BusinessLogic;
 using Telebot.Models;
 
 namespace Telebot.Commands
@@ -14,18 +13,18 @@ namespace Telebot.Commands
 
         public event EventHandler<CommandResult> Completed;
 
-        private readonly ScreenController screenController;
+        private readonly ScreenLogic screenLogic;
 
         public ScreenOffCmd()
         {
-            screenController = Program.container.GetInstance<ScreenController>();
+            screenLogic = Program.container.GetInstance<ScreenLogic>();
         }
 
         public void Execute(object parameter)
         {
             var cmdInfo = parameter as CommandInfo;
 
-            screenController.SetMonitorOff();
+            screenLogic.SetMonitorOff();
 
             var info = new CommandResult
             {

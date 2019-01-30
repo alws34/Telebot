@@ -1,20 +1,20 @@
 ﻿using Telebot.Contracts;
-using Telebot.Controllers;
+using Telebot.BusinessLogic;
 
 namespace Telebot.Commands.StatusCommands
 {
     public class SystemCmd : IStatusCommand
     {
-        private readonly SystemController sysController;
+        private readonly SystemLogic systemLogic;
 
         public SystemCmd()
         {
-            sysController = Program.container.GetInstance<SystemController>();
+            systemLogic = Program.container.GetInstance<SystemLogic>();
         }
 
         public string Execute()
         {
-            return sysController.GetSystemStatus();
+            return systemLogic.GetSystemStatus();
         }
     }
 }

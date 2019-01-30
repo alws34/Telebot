@@ -1,6 +1,6 @@
 ﻿using static Telebot.Helpers.User32Helper;
 
-namespace Telebot.Controllers
+namespace Telebot.BusinessLogic
 {
     public enum MonitorState
     {
@@ -8,7 +8,7 @@ namespace Telebot.Controllers
         MonitorStateOff = 2
     }
 
-    public class ScreenController
+    public class ScreenLogic
     {
         public void SetMonitorOn()
         {

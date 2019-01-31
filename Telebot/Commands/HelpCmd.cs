@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using Telebot.Contracts;
 using Telebot.Models;
@@ -13,28 +14,21 @@ namespace Telebot.Commands
 
         public event EventHandler<CommandResult> Completed;
 
-        private readonly Form1 form1;
-
-        public HelpCmd()
-        {
-            form1 = Program.container.GetInstance<Form1>();
-        }
-
         public void Execute(object parameter)
         {
             var cmdInfo = parameter as CommandInfo;
 
-            var builder = new StringBuilder();
+            var commandsStr = new StringBuilder();
 
-            foreach (ICommand command in form1.Commands.Values)
+            foreach (ICommand command in cmdInfo.Commands)
             {
-                builder.AppendLine(command.ToString());
+                commandsStr.AppendLine(command.ToString());
             }
 
             var info = new CommandResult
             {
                 Message = cmdInfo.Message,
-                Text = builder.ToString(),
+                Text = commandsStr.ToString(),
                 SendType = SendType.Text
             };
 

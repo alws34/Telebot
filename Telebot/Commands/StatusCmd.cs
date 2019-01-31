@@ -8,7 +8,7 @@ namespace Telebot.Commands
 {
     public class StatusCmd : ICommand
     {
-        public string Name => $"/status";
+        public string Name => "/status";
 
         public string Description => "Receive hardware information.";
 

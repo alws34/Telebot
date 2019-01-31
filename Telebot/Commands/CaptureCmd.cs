@@ -18,12 +18,12 @@ namespace Telebot.Commands
         public event EventHandler<CommandResult> Completed;
 
         private readonly CaptureLogic captureLogic;
-        private readonly Form1 form1;
+        private readonly MainForm mainForm;
 
         public CaptureCmd()
         {
             captureLogic = Program.container.GetInstance<CaptureLogic>();
-            form1 = Program.container.GetInstance<Form1>();
+            mainForm = Program.container.GetInstance<MainForm>();
         }
 
         public void Execute(object parameter)
@@ -32,7 +32,7 @@ namespace Telebot.Commands
 
             var bitmaps = new List<Bitmap>
             {
-                captureLogic.CaptureControl(form1),
+                captureLogic.CaptureControl(mainForm),
                 captureLogic.CaptureDesktop()
             };
 

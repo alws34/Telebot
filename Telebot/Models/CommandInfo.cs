@@ -1,9 +1,11 @@
-﻿using Telegram.Bot.Types;
+﻿using Telebot.Contracts;
+using Telegram.Bot.Types;
 
 namespace Telebot.Models
 {
     public class CommandInfo
     {
         public Message Message { get; set; }
+        public ICommand[] Commands { get; set; }
     }
 }

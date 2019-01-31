@@ -10,6 +10,8 @@ using Telebot.Loggers;
 using Telebot.Managers;
 using Telebot.Monitors;
 using Telebot.Providers;
+using Telebot.Presenters;
+using System.Collections.Generic;
 
 namespace Telebot
 {
@@ -89,7 +91,11 @@ namespace Telebot
 
                 buildContainer();
 
-                Application.Run(container.GetInstance<Form1>());
+                var mainForm = container.GetInstance<MainForm>();
+
+                var presenter = new MainFormPresenter(mainForm);
+
+                Application.Run(mainForm);
 
                 _shouldStop = true;
                 UpdateThread.Join();
@@ -142,7 +148,7 @@ namespace Telebot
             container.Register<ITemperatureMonitor, SystemTempMonitor>(Lifestyle.Singleton);
             container.Register<ISettings, SettingsManager>(Lifestyle.Singleton);
             container.Register<ILogger, FileLogger>(Lifestyle.Singleton);
-            container.Register<Form1>(Lifestyle.Singleton);
+            container.Register<MainForm>(Lifestyle.Singleton);
 
             container.Register<CaptureLogic>();
             container.Register<NetworkLogic>();

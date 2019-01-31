@@ -42,7 +42,10 @@ namespace Telebot.Managers
         {
             get
             {
-                return Convert.ToBoolean(data["Temperature.Monitor"]["Enabled"]);
+                string s = data["Temperature.Monitor"]["Enabled"];
+                if (string.IsNullOrEmpty(s))
+                    return false;
+                return Convert.ToBoolean(s);
             }
             set
             {
@@ -54,7 +57,10 @@ namespace Telebot.Managers
         {
             get
             {
-                return Convert.ToInt64(data["Telegram"]["Chat.Id"]);
+                string s = data["Telegram"]["Chat.Id"];
+                if (string.IsNullOrEmpty(s))
+                    return 0;
+                return Convert.ToInt64(s);
             }
             set
             {

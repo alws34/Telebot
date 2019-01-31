@@ -11,7 +11,6 @@ using Telebot.Managers;
 using Telebot.Monitors;
 using Telebot.Providers;
 using Telebot.Presenters;
-using System.Collections.Generic;
 
 namespace Telebot
 {
@@ -37,11 +36,10 @@ namespace Telebot
 
             pSDK = new CPUIDSDK();
             pSDK.InitDLL();
-            res = pSDK.InitSDK(ref error_code, ref extended_error_code);
+            res = pSDK.InitSDK_Quick(ref error_code, ref extended_error_code);
 
             if (error_code != CPUIDSDK.CPUIDSDK_ERROR_NO_ERROR)
             {
-                //	Init failed, check errorcode
                 switch ((uint)error_code)
                 {
                     case CPUIDSDK.CPUIDSDK_ERROR_EVALUATION:

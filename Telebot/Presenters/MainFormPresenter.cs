@@ -124,12 +124,10 @@ namespace Telebot.Presenters
         {
             LoadSettings();
 
-            token = appSettings.TelegramToken;
-
             if (!string.IsNullOrEmpty(token))
             {
                 botClient = new TelegramBotClient(token);
-                botClient.OnMessage += BotClient_OnMessage; ;
+                botClient.OnMessage += BotClient_OnMessage;
             }
 
             if (botClient != null)
@@ -247,6 +245,7 @@ namespace Telebot.Presenters
             }
 
             //Telegram Settings
+            token = appSettings.TelegramToken;
             whiteList = appSettings.TelegramWhiteList;
             chatId = appSettings.ChatId;
 

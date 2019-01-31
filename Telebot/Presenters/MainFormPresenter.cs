@@ -127,7 +127,7 @@ namespace Telebot.Presenters
             if (!string.IsNullOrEmpty(token))
             {
                 botClient = new TelegramBotClient(token);
-                botClient.OnMessage += BotClient_OnMessage;
+                botClient.OnMessage += BotMessageHandler;
             }
 
             if (botClient != null)
@@ -152,7 +152,7 @@ namespace Telebot.Presenters
             }
         }
 
-        private void BotClient_OnMessage(object sender, MessageEventArgs e)
+        private void BotMessageHandler(object sender, MessageEventArgs e)
         {
             void sendText(string text)
             {
@@ -171,8 +171,7 @@ namespace Telebot.Presenters
                 return;
             }
 
-            if (chatId == null || chatId.Identifier == 0)
-            {
+            if (chatId == null || chatId.Identifier == 0) {
                 chatId = e.Message.Chat.Id;
             }
 

@@ -28,7 +28,7 @@ namespace Telebot.Presenters
             mainFormView.Load += mainFormView_Load;
             mainFormView.FormClosed += mainFormView_FormClosed;
             mainFormView.Resize += mainFormView_Resize;
-            mainFormView.NotifyIcon.MouseClick += NotifyIcon_MouseClick;
+            mainFormView.TrayMouseClick += NotifyIcon_MouseClick;
 
             settings = Program.container.GetInstance<ISettings>();
             communicationService = Program.container.GetInstance<ICommunicationService>();
@@ -41,7 +41,7 @@ namespace Telebot.Presenters
         {
             mainFormView.Show();
             mainFormView.WindowState = FormWindowState.Normal;
-            mainFormView.NotifyIcon.Visible = false;
+            EventAggregator.Instance.Publish(new UpdateNotifyIconVisible(false));
         }
 
         private void TemperatureChanged(object sender, IHardwareInfo e)
@@ -72,7 +72,7 @@ namespace Telebot.Presenters
             if (mainFormView.WindowState == FormWindowState.Minimized)
             {
                 mainFormView.Hide();
-                mainFormView.NotifyIcon.Visible = true;
+                EventAggregator.Instance.Publish(new UpdateNotifyIconVisible(true));
             }
         }
 

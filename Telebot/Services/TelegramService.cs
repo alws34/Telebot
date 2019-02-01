@@ -122,17 +122,6 @@ namespace Telebot.Services
                 );
             }
 
-            void ShowBalloonTip(string text)
-            {
-                mainFormView.NotifyIcon.ShowBalloonTip
-               (
-                    1000, 
-                    mainFormView.Text, 
-                    text, 
-                    ToolTipIcon.Info
-               );
-            }
-
             if (!whiteList.Exists(x => x.Equals(e.Message.From.Id)))
             {
                 sendText("Unauthorized.");
@@ -178,7 +167,7 @@ namespace Telebot.Services
 
             if (mainFormView.WindowState == FormWindowState.Minimized)
             {
-                ShowBalloonTip(info);
+                EventAggregator.Instance.Publish(new ShowNotifyIconBalloon(info));
             }
         }
 

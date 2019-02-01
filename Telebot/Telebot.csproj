@@ -104,6 +104,8 @@
     <Compile Include="Events\HighTemperatureMessage.cs" />
     <Compile Include="Events\IApplicationEvent.cs" />
     <Compile Include="Events\IEventAggregator.cs" />
+    <Compile Include="Events\ShowNotifyIconBalloon.cs" />
+    <Compile Include="Events\UpdateNotifyIconVisible.cs" />
     <Compile Include="Models\IHardwareInfo.cs" />
     <Compile Include="Loggers\ILogger.cs" />
     <Compile Include="Managers\ISettings.cs" />

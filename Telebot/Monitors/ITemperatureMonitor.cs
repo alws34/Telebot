@@ -1,6 +1,7 @@
 ﻿using System;
+using Telebot.Models;
 
-namespace Telebot.Contracts
+namespace Telebot.Monitors
 {
     public interface ITemperatureMonitor
     {

@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using Telebot.Contracts;
+﻿using System.Collections.Generic;
+using Telebot.Models;
 
-namespace Telebot.Providers
+namespace Telebot.HwProviders
 {
-    public class GPUProvider : BaseProvider, ITemperatureProvider, IUtilizationProvider
+    public class GPUProvider : BaseProvider, ITemperatureProvider
     {
         public List<IHardwareInfo> GetTemperature()
         {

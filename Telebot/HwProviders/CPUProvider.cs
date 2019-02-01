@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using Telebot.Contracts;
+using Telebot.Models;
 
-namespace Telebot.Providers
+namespace Telebot.HwProviders
 {
-    public class CPUProvider : BaseProvider, ITemperatureProvider, IUtilizationProvider
+    public class CPUProvider : BaseProvider, ITemperatureProvider
     {
         public List<IHardwareInfo> GetTemperature()
         {

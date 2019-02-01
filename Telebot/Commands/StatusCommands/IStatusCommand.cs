@@ -1,4 +1,4 @@
-﻿namespace Telebot.Contracts
+﻿namespace Telebot.StatusCommands
 {
     public interface IStatusCommand
     {

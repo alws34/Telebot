@@ -4,7 +4,7 @@ using System.Text;
 using Telebot.Contracts;
 using Telebot.Models;
 
-namespace Telebot.Providers
+namespace Telebot.HwProviders
 {
     public class BaseProvider
     {

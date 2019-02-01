@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Timers;
-using Telebot.Contracts;
+using Telebot.HwProviders;
+using Telebot.Models;
 
 namespace Telebot.Monitors
 {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Telebot.Contracts;
 using Telebot.Models;
+using Telebot.StatusCommands;
 
 namespace Telebot.Commands
 {

@@ -1,6 +1,7 @@
 ﻿using System;
-using Telebot.Contracts;
+using Telebot.Managers;
 using Telebot.Models;
+using Telebot.Monitors;
 
 namespace Telebot.Commands
 {

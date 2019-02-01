@@ -99,15 +99,17 @@
     <Compile Include="Commands\StatusCommands\SystemCmd.cs" />
     <Compile Include="Commands\StatusCommands\TempMonitorCmd.cs" />
     <Compile Include="Commands\StatusCommands\UptimeCmd.cs" />
-    <Compile Include="Contracts\ICommand.cs" />
-    <Compile Include="Contracts\IHardwareInfo.cs" />
-    <Compile Include="Contracts\ILogger.cs" />
-    <Compile Include="Contracts\ISettings.cs" />
-    <Compile Include="Contracts\IStatusCommand.cs" />
-    <Compile Include="Contracts\ITemperatureMonitor.cs" />
-    <Compile Include="Contracts\ITemperatureProvider.cs" />
-    <Compile Include="Contracts\IUtilizationMonitor.cs" />
-    <Compile Include="Contracts\IUtilizationProvider.cs" />
+    <Compile Include="Commands\ICommand.cs" />
+    <Compile Include="Events\EventAggregator.cs" />
+    <Compile Include="Events\HighTemperatureMessage.cs" />
+    <Compile Include="Events\IApplicationEvent.cs" />
+    <Compile Include="Events\IEventAggregator.cs" />
+    <Compile Include="Models\IHardwareInfo.cs" />
+    <Compile Include="Loggers\ILogger.cs" />
+    <Compile Include="Managers\ISettings.cs" />
+    <Compile Include="Commands\StatusCommands\IStatusCommand.cs" />
+    <Compile Include="Monitors\ITemperatureMonitor.cs" />
+    <Compile Include="HwProviders\ITemperatureProvider.cs" />
     <Compile Include="BusinessLogic\CaptureLogic.cs" />
     <Compile Include="BusinessLogic\NetworkLogic.cs" />
     <Compile Include="BusinessLogic\PowerLogic.cs" />
@@ -119,6 +121,8 @@
     <Compile Include="Extensions\TimeSpanExtensions.cs" />
     <Compile Include="Models\LvItem.cs" />
     <Compile Include="Presenters\MainFormPresenter.cs" />
+    <Compile Include="Services\ICommunicationService.cs" />
+    <Compile Include="Services\TelegramService.cs" />
     <Compile Include="Views\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -130,12 +134,12 @@
     <Compile Include="Models\CommandInfo.cs" />
     <Compile Include="Models\CommandResult.cs" />
     <Compile Include="Monitors\SystemTempMonitor.cs" />
-    <Compile Include="Providers\CPUProvider.cs" />
-    <Compile Include="Providers\BaseProvider.cs" />
+    <Compile Include="HwProviders\CPUProvider.cs" />
+    <Compile Include="HwProviders\BaseProvider.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\User32Helper.cs" />
-    <Compile Include="Providers\GPUProvider.cs" />
+    <Compile Include="HwProviders\GPUProvider.cs" />
     <Compile Include="Models\HardwareInfo.cs" />
     <Compile Include="Views\IMainFormView.cs" />
     <EmbeddedResource Include="Views\MainForm.resx">

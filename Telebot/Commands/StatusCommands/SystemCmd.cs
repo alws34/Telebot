@@ -1,5 +1,5 @@
-﻿using Telebot.Contracts;
-using Telebot.BusinessLogic;
+﻿using Telebot.BusinessLogic;
+using Telebot.StatusCommands;
 
 namespace Telebot.Commands.StatusCommands
 {

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using Telebot.Models;
 
-namespace Telebot.Contracts
+namespace Telebot.HwProviders
 {
     public interface ITemperatureProvider
     {

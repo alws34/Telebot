@@ -1,8 +1,7 @@
 ﻿using System;
 using Telebot.Models;
-using Telegram.Bot.Types;
 
-namespace Telebot.Contracts
+namespace Telebot.Commands
 {
     public interface ICommand
     {

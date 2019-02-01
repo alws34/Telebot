@@ -9,8 +9,10 @@ using Telebot.BusinessLogic;
 using Telebot.Loggers;
 using Telebot.Managers;
 using Telebot.Monitors;
-using Telebot.Providers;
+using Telebot.HwProviders;
 using Telebot.Presenters;
+using Telebot.Services;
+using Telebot.StatusCommands;
 
 namespace Telebot
 {
@@ -144,6 +146,7 @@ namespace Telebot
             );
 
             container.Register<ITemperatureMonitor, SystemTempMonitor>(Lifestyle.Singleton);
+            container.Register<ICommunicationService, TelegramService>(Lifestyle.Singleton);
             container.Register<ISettings, SettingsManager>(Lifestyle.Singleton);
             container.Register<ILogger, FileLogger>(Lifestyle.Singleton);
             container.Register<MainForm>(Lifestyle.Singleton);

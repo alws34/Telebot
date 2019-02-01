@@ -1,4 +1,4 @@
-﻿using Telebot.Contracts;
+﻿using Telebot.Commands;
 using Telegram.Bot.Types;
 
 namespace Telebot.Models

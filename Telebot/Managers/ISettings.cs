@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 
-namespace Telebot.Contracts
+namespace Telebot.Managers
 {
     public interface ISettings
     {

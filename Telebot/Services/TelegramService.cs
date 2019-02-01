@@ -24,7 +24,7 @@ namespace Telebot.Services
         private readonly ISettings settings;
         private readonly IMainFormView mainFormView;
 
-        private Dictionary<string, ICommand> commands { get; }
+        private Dictionary<string, ICommand> commands;
 
         public TelegramService()
         {

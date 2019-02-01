@@ -18,7 +18,7 @@ namespace Telebot.Presenters
         private ITemperatureMonitor tempMonitor;
         private ICommunicationService communicationService;
 
-        private ISettings appSettings;
+        private ISettings settings;
 
         private readonly IMainFormView mainFormView;
 
@@ -30,11 +30,11 @@ namespace Telebot.Presenters
             mainFormView.Resize += mainFormView_Resize;
             mainFormView.NotifyIcon.MouseClick += NotifyIcon_MouseClick;
 
-            appSettings = Program.container.GetInstance<ISettings>();
+            settings = Program.container.GetInstance<ISettings>();
             communicationService = Program.container.GetInstance<ICommunicationService>();
 
             tempMonitor = Program.container.GetInstance<ITemperatureMonitor>();
-            tempMonitor.TemperatureChanged += TempMonitor_TemperatureChanged;
+            tempMonitor.TemperatureChanged += TemperatureChanged;
         }
 
         private void NotifyIcon_MouseClick(object sender, MouseEventArgs e)
@@ -44,7 +44,7 @@ namespace Telebot.Presenters
             mainFormView.NotifyIcon.Visible = false;
         }
 
-        private void TempMonitor_TemperatureChanged(object sender, IHardwareInfo e)
+        private void TemperatureChanged(object sender, IHardwareInfo e)
         {
             string text = "";
 
@@ -80,39 +80,45 @@ namespace Telebot.Presenters
         {
             SaveSettings();
             communicationService.Stop();
+
+            if (tempMonitor.IsActive)
+                tempMonitor.Stop();
         }
 
         private void mainFormView_Load(object sender, EventArgs e)
         {
             LoadSettings();
             communicationService.Start();
+
+            if (settings.MonitorEnabled)
+                tempMonitor.Start();
         }
 
         private void SaveSettings()
         {
-            appSettings.Form1Bounds = mainFormView.Bounds;
+            settings.Form1Bounds = mainFormView.Bounds;
 
             var widths = new List<int>(mainFormView.ObjectListView.Columns.Count);
             foreach (ColumnHeader column in mainFormView.ObjectListView.Columns) {
                 widths.Add(column.Width);
             }
-            appSettings.ListView1ColumnsWidth = widths;
+            settings.ListView1ColumnsWidth = widths;
 
-            appSettings.CPUTemperature = CPU_TEMPERATURE_WARNING;
-            appSettings.GPUTemperature = GPU_TEMPERATURE_WARNING;
+            settings.CPUTemperature = CPU_TEMPERATURE_WARNING;
+            settings.GPUTemperature = GPU_TEMPERATURE_WARNING;
         }
 
         private void LoadSettings()
         {
-            mainFormView.Bounds = appSettings.Form1Bounds;
-            var w = appSettings.ListView1ColumnsWidth;
+            mainFormView.Bounds = settings.Form1Bounds;
+            var w = settings.ListView1ColumnsWidth;
             for (int i = 0; i < w.Count; i++)
             {
                 mainFormView.ObjectListView.Columns[i].Width = w[i];
             }
 
-            CPU_TEMPERATURE_WARNING = appSettings.CPUTemperature;
-            GPU_TEMPERATURE_WARNING = appSettings.GPUTemperature;
+            CPU_TEMPERATURE_WARNING = settings.CPUTemperature;
+            GPU_TEMPERATURE_WARNING = settings.GPUTemperature;
         }
     }
 }

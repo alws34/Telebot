@@ -24,11 +24,6 @@ namespace Telebot
             EventAggregator.Instance.Subscribe<ShowNotifyIconBalloon>(OnShowNotifyIconBalloon);
         }
 
-        public void UpdateListView(LvItem item)
-        {
-            objectListView1.AddObject(item);
-        }
-
         private void OnUpdateNotifyIconVisible(UpdateNotifyIconVisible obj)
         {
             notifyIcon1.Visible = obj.Visible;

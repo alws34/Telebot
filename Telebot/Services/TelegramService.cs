@@ -163,7 +163,7 @@ namespace Telebot.Services
                 Text = info
             };
 
-            mainFormView.UpdateListView(item);
+            mainFormView.ObjectListView.AddObject(item);
 
             if (mainFormView.WindowState == FormWindowState.Minimized)
             {

@@ -111,20 +111,15 @@ namespace Telebot.Services
 
         private void BotMessageHandler(object sender, MessageEventArgs e)
         {
-            void sendText(string text)
-            {
-                client.SendTextMessageAsync
-                (
-                    e.Message.Chat.Id,
-                    text,
-                    parseMode: ParseMode.Markdown,
-                    replyToMessageId: e.Message.MessageId
-                );
-            }
-
             if (!whiteList.Exists(x => x.Equals(e.Message.From.Id)))
             {
-                sendText("Unauthorized.");
+                var cmdResult = new CommandResult
+                {
+                    Message = e.Message,
+                    SendType = SendType.Text,
+                    Text = "Unauthorized."
+                };
+                CommandCompleted(sender, cmdResult);
                 return;
             }
 
@@ -152,7 +147,13 @@ namespace Telebot.Services
             }
             else
             {
-                sendText("Undefined command. For commands list, type */help*.");
+                var cmdResult = new CommandResult
+                {
+                    Message = e.Message,
+                    SendType = SendType.Text,
+                    Text = "Undefined command. For commands list, type */help*."
+                };
+                CommandCompleted(sender, cmdResult);
             }
 
             string info = $"Received {e.Message.Text} from {e.Message.From.Username}.";

@@ -94,6 +94,7 @@
     <Compile Include="Commands\ScreenOffCmd.cs" />
     <Compile Include="Commands\ScreenOnCmd.cs" />
     <Compile Include="Commands\ShutdownCmd.cs" />
+    <Compile Include="Commands\SleepCmd.cs" />
     <Compile Include="Commands\StatusCmd.cs" />
     <Compile Include="Commands\StatusCommands\IPCmd.cs" />
     <Compile Include="Commands\StatusCommands\SystemCmd.cs" />

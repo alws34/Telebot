@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Windows.Forms;
 
 namespace Telebot.BusinessLogic
 {
@@ -26,6 +27,11 @@ namespace Telebot.BusinessLogic
                     UseShellExecute = false
                 }
             );
+        }
+
+        public void SleepWindows()
+        {
+            Application.SetSuspendState(PowerState.Suspend, true, true);
         }
     }
 }

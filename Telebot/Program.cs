@@ -129,13 +129,14 @@ namespace Telebot
             (
                 typeof(StatusCmd),
                 typeof(AppsCmd),
-                typeof(CaptureCmd),
+                //typeof(CaptureCmd),
                 typeof(ScreenOnCmd),
                 typeof(ScreenOffCmd),
                 typeof(MonitorOnCmd),
                 typeof(MonitorOffCmd),
                 typeof(RebootCmd),
                 typeof(ShutdownCmd),
+                typeof(SleepCmd),
                 typeof(HelpCmd)
             );
 

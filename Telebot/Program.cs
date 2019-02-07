@@ -129,7 +129,7 @@ namespace Telebot
             (
                 typeof(StatusCmd),
                 typeof(AppsCmd),
-                //typeof(CaptureCmd),
+                typeof(CaptureCmd),
                 typeof(ScreenOnCmd),
                 typeof(ScreenOffCmd),
                 typeof(MonitorOnCmd),
@@ -158,8 +158,6 @@ namespace Telebot
             container.Register<ScreenLogic>();
             container.Register<SystemLogic>();
             container.Register<WindowsLogic>();
-
-            container.Verify();
         }
     }
 }

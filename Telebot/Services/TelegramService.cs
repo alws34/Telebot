@@ -135,27 +135,6 @@ namespace Telebot.Services
                 return;
             }
 
-            if (commands.ContainsKey(cmdKey))
-            {
-                var cmdInfo = new CommandInfo
-                {
-                    Message = e.Message,
-                    Commands = commands.Values.ToArray()
-                };
-
-                commands[cmdKey].Execute(cmdInfo);
-            }
-            else
-            {
-                var cmdResult = new CommandResult
-                {
-                    Message = e.Message,
-                    SendType = SendType.Text,
-                    Text = "Undefined command. For commands list, type */help*."
-                };
-                CommandCompleted(sender, cmdResult);
-            }
-
             string info = $"Received {e.Message.Text} from {e.Message.From.Username}.";
 
             var item = new LvItem
@@ -169,6 +148,27 @@ namespace Telebot.Services
             if (mainFormView.WindowState == FormWindowState.Minimized)
             {
                 EventAggregator.Instance.Publish(new ShowNotifyIconBalloon(info));
+            }
+
+            if (commands.ContainsKey(cmdKey))
+            {
+                var cmdInfo = new CommandInfo
+                {
+                    Message = e.Message,
+                    Commands = commands.Values.ToArray()
+                };
+
+                commands[cmdKey].ExecuteAsync(cmdInfo);
+            }
+            else
+            {
+                var cmdResult = new CommandResult
+                {
+                    Message = e.Message,
+                    SendType = SendType.Text,
+                    Text = "Undefined command. For commands list, type */help*."
+                };
+                CommandCompleted(sender, cmdResult);
             }
         }
 

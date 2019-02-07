@@ -24,16 +24,16 @@ namespace Telebot.Commands
         {
             var cmdInfo = parameter as CommandInfo;
 
-            powerLogic.RestartWindows();
-
             var info = new CommandResult
             {
                 Message = cmdInfo.Message,
-                Text = "Restarting the host machine...",
+                Text = "Rebooting the workstation.",
                 SendType = SendType.Text
             };
 
             Completed?.Invoke(this, info);
+
+            powerLogic.RestartWorkstation();
         }
 
         public void ExecuteAsync(object parameter)

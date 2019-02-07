@@ -117,7 +117,7 @@
     <Compile Include="BusinessLogic\CaptureLogic.cs" />
     <Compile Include="BusinessLogic\NetworkLogic.cs" />
     <Compile Include="BusinessLogic\PowerLogic.cs" />
-    <Compile Include="BusinessLogic\ScreenLogic.cs" />
+    <Compile Include="BusinessLogic\DisplayLogic.cs" />
     <Compile Include="BusinessLogic\SystemLogic.cs" />
     <Compile Include="BusinessLogic\WindowsLogic.cs" />
     <Compile Include="cpuidsdk.cs" />

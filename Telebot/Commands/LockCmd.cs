@@ -17,16 +17,16 @@ namespace Telebot.Commands
         {
             var cmdInfo = parameter as CommandInfo;
 
-            User32Helper.LockWorkStation();
-
             var info = new CommandResult
             {
                 Message = cmdInfo.Message,
-                Text = "Locked down the host machine.",
+                Text = "Locked down the workstation.",
                 SendType = SendType.Text
             };
 
             Completed?.Invoke(this, info);
+
+            User32Helper.LockWorkStation();
         }
 
         public void ExecuteAsync(object parameter)

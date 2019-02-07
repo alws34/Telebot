@@ -24,16 +24,16 @@ namespace Telebot.Commands
         {
             var cmdInfo = parameter as CommandInfo;
 
-            powerLogic.ShutdownWindows();
-
             var info = new CommandResult
             {
                 Message = cmdInfo.Message,
-                Text = "Shutting down the host machine...",
+                Text = "Shutting down the workstation.",
                 SendType = SendType.Text
             };
 
             Completed?.Invoke(this, info);
+
+            powerLogic.ShutdownWorkstation();
         }
 
         public void ExecuteAsync(object parameter)

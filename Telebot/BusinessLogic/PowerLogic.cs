@@ -5,7 +5,7 @@ namespace Telebot.BusinessLogic
 {
     public class PowerLogic
     {
-        public void ShutdownWindows()
+        public void ShutdownWorkstation()
         {
             Process.Start
             (
@@ -17,7 +17,7 @@ namespace Telebot.BusinessLogic
             );
         }
 
-        public void RestartWindows()
+        public void RestartWorkstation()
         {
             Process.Start
             (
@@ -29,9 +29,9 @@ namespace Telebot.BusinessLogic
             );
         }
 
-        public void SleepWindows()
+        public void SleepWorkstation()
         {
-            Application.SetSuspendState(PowerState.Suspend, true, true);
+            Application.SetSuspendState(PowerState.Suspend, false, false);
         }
     }
 }

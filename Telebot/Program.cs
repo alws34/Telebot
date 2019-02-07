@@ -105,12 +105,12 @@ namespace Telebot
             container.Register<ILogger, FileLogger>(Lifestyle.Singleton);
             container.Register<MainForm>(Lifestyle.Singleton);
 
-            container.Register<CaptureLogic>();
-            container.Register<NetworkLogic>();
-            container.Register<PowerLogic>();
-            container.Register<ScreenLogic>();
-            container.Register<SystemLogic>();
-            container.Register<WindowsLogic>();
+            container.Register<CaptureLogic>(Lifestyle.Singleton);
+            container.Register<NetworkLogic>(Lifestyle.Singleton);
+            container.Register<PowerLogic>(Lifestyle.Singleton);
+            container.Register<DisplayLogic>(Lifestyle.Singleton);
+            container.Register<SystemLogic>(Lifestyle.Singleton);
+            container.Register<WindowsLogic>(Lifestyle.Singleton);
         }
     }
 }

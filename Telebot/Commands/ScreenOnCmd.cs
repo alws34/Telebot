@@ -9,22 +9,22 @@ namespace Telebot.Commands
     {
         public string Name => "/screen on";
 
-        public string Description => "Turn on the monitor.";
+        public string Description => "Turn on the display.";
 
         public event EventHandler<CommandResult> Completed;
 
-        private readonly ScreenLogic screenLogic;
+        private readonly DisplayLogic screenLogic;
 
         public ScreenOnCmd()
         {
-            screenLogic = Program.container.GetInstance<ScreenLogic>();
+            screenLogic = Program.container.GetInstance<DisplayLogic>();
         }
 
         public void Execute(object parameter)
         {
             var cmdInfo = parameter as CommandInfo;
 
-            screenLogic.SetMonitorOn();
+            screenLogic.SetDisplayOn();
 
             var info = new CommandResult
             {

@@ -9,22 +9,22 @@ namespace Telebot.Commands
     {
         public string Name => "/screen off";
 
-        public string Description => "Turn off the monitor.";
+        public string Description => "Turn off the display.";
 
         public event EventHandler<CommandResult> Completed;
 
-        private readonly ScreenLogic screenLogic;
+        private readonly DisplayLogic screenLogic;
 
         public ScreenOffCmd()
         {
-            screenLogic = Program.container.GetInstance<ScreenLogic>();
+            screenLogic = Program.container.GetInstance<DisplayLogic>();
         }
 
         public void Execute(object parameter)
         {
             var cmdInfo = parameter as CommandInfo;
 
-            screenLogic.SetMonitorOff();
+            screenLogic.SetDisplayOff();
 
             var info = new CommandResult
             {

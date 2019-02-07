@@ -24,16 +24,16 @@ namespace Telebot.Commands
         {
             var cmdInfo = parameter as CommandInfo;
 
-            powerLogic.SleepWindows();
-
             var info = new CommandResult
             {
                 Message = cmdInfo.Message,
-                Text = "Suspending the host machine...",
+                Text = "Workstation is entering sleep mode.",
                 SendType = SendType.Text
             };
 
             Completed?.Invoke(this, info);
+
+            powerLogic.SleepWorkstation();
         }
 
         public void ExecuteAsync(object parameter)

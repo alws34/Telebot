@@ -26,62 +26,14 @@ namespace Telebot
         [STAThread]
         static void Main()
         {
-            Thread UpdateThread;
-            bool res;
-            int error_code = 0, extended_error_code = 0;
-            string error_message;
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            UpdateThread = new Thread(ThreadLoop);
+            Thread UpdateThread = new Thread(ThreadLoop);
 
             pSDK = new CPUIDSDK();
             pSDK.InitDLL();
-            res = pSDK.InitSDK_Quick(ref error_code, ref extended_error_code);
-
-            if (error_code != CPUIDSDK.CPUIDSDK_ERROR_NO_ERROR)
-            {
-                switch ((uint)error_code)
-                {
-                    case CPUIDSDK.CPUIDSDK_ERROR_EVALUATION:
-                        {
-                            switch ((uint)extended_error_code)
-                            {
-                                case CPUIDSDK.CPUIDSDK_EXT_ERROR_EVAL_1:
-                                    error_message = "You are running a trial version of the DLL SDK. In order to make it work, please run CPU-Z at the same time.";
-                                    break;
-
-                                case CPUIDSDK.CPUIDSDK_EXT_ERROR_EVAL_2:
-                                    error_message = "Evaluation version has expired.";
-                                    break;
-
-                                default:
-                                    error_message = "Eval version error " + extended_error_code;
-                                    break;
-                            }
-                        }
-                        break;
-
-                    case CPUIDSDK.CPUIDSDK_ERROR_DRIVER:
-                        error_message = "Driver error " + extended_error_code;
-                        break;
-
-                    case CPUIDSDK.CPUIDSDK_ERROR_VM_RUNNING:
-                        error_message = "Virtual machine detected.";
-                        break;
-
-                    case CPUIDSDK.CPUIDSDK_ERROR_LOCKED:
-                        error_message = "SDK mutex locked.";
-                        break;
-
-                    default:
-                        error_message = "Error code 0x%X" + error_code;
-                        break;
-                }
-
-                MessageBox.Show(error_message, "CPUID SDK Error");
-            }
+            bool res = pSDK.InitSDK_Quick();
 
             if (res)
             {
@@ -99,9 +51,9 @@ namespace Telebot
 
                 _shouldStop = true;
                 UpdateThread.Join();
-            }
 
-            pSDK.UninitSDK();
+                pSDK.UninitSDK();
+            }
         }
 
         private static void ThreadLoop()
@@ -132,11 +84,12 @@ namespace Telebot
                 typeof(CaptureCmd),
                 typeof(ScreenOnCmd),
                 typeof(ScreenOffCmd),
-                typeof(MonitorOnCmd),
-                typeof(MonitorOffCmd),
+                typeof(TempMonOnCmd),
+                typeof(TempMonOffCmd),
                 typeof(RebootCmd),
                 typeof(ShutdownCmd),
                 typeof(SleepCmd),
+                typeof(LockCmd),
                 typeof(HelpCmd)
             );
 

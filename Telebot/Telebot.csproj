@@ -88,8 +88,9 @@
     <Compile Include="Commands\AppsCmd.cs" />
     <Compile Include="Commands\CaptureCmd.cs" />
     <Compile Include="Commands\HelpCmd.cs" />
-    <Compile Include="Commands\MonitorOffCmd.cs" />
-    <Compile Include="Commands\MonitorOnCmd.cs" />
+    <Compile Include="Commands\LockCmd.cs" />
+    <Compile Include="Commands\TempMonOffCmd.cs" />
+    <Compile Include="Commands\TempMonOnCmd.cs" />
     <Compile Include="Commands\RebootCmd.cs" />
     <Compile Include="Commands\ScreenOffCmd.cs" />
     <Compile Include="Commands\ScreenOnCmd.cs" />

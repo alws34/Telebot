@@ -9,7 +9,7 @@ namespace Telebot.Commands
     {
         public string Name => "/sleep";
 
-        public string Description => "Suspends the host machine.";
+        public string Description => "Puts the workstation into sleep mode.";
 
         public event EventHandler<CommandResult> Completed;
 

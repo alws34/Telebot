@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using Telebot.Contracts;
 using Telebot.BusinessLogic;
 using Telebot.Extensions;
-using Telebot.Helpers;
 using Telebot.Models;
 using System.Threading.Tasks;
 
@@ -14,7 +12,7 @@ namespace Telebot.Commands
     {
         public string Name => "/capture";
 
-        public string Description => "Get screenshot of bot and desktop.";
+        public string Description => "Get a screenshot of the workstation.";
 
         public event EventHandler<CommandResult> Completed;
 
@@ -33,7 +31,7 @@ namespace Telebot.Commands
 
             var bitmaps = new List<Bitmap>
             {
-                captureLogic.CaptureControl(mainForm),
+                //captureLogic.CaptureControl(mainForm),
                 captureLogic.CaptureDesktop()
             };
 

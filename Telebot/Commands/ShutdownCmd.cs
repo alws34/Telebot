@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Telebot.BusinessLogic;
-using Telebot.Contracts;
 using Telebot.Models;
 
 namespace Telebot.Commands
@@ -10,7 +9,7 @@ namespace Telebot.Commands
     {
         public string Name => "/shutdown";
 
-        public string Description => "Shuts down the host machine.";
+        public string Description => "Shuts down the workstation.";
 
         private readonly PowerLogic powerLogic;
 

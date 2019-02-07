@@ -10,5 +10,8 @@ namespace Telebot.Helpers
 
         [DllImport("user32.dll")]
         public static extern int PostMessage(int hWnd, int hMsg, int wParam, int lParam);
+
+        [DllImport("user32.dll")]
+        public static extern bool LockWorkStation();
     }
 }

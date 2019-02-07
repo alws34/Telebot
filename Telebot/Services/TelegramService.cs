@@ -96,7 +96,7 @@ namespace Telebot.Services
                         replyToMessageId: e.Message.MessageId);
                     break;
                 case SendType.Photo:
-                    client.SendPhotoAsync(e.Message.Chat.Id, e.Stream,
+                    client.SendDocumentAsync(e.Message.Chat.Id, e.Stream,
                         caption: $"{DateTime.Now.ToString()} by *Telebot*",
                         parseMode: ParseMode.Markdown,
                         replyToMessageId: e.Message.MessageId);

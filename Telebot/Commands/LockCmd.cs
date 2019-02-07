@@ -1,39 +1,28 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Telebot.Managers;
 using Telebot.Models;
-using Telebot.Monitors;
+using Telebot.Helpers;
 
 namespace Telebot.Commands
 {
-    public class MonitorOnCmd : ICommand
+    public class LockCmd : ICommand
     {
-        public string Name => "/monitor on";
+        public string Name => "/lock";
 
-        public string Description => "Turn on monitoring of temperature.";
+        public string Description => "Locks the workstation.";
 
         public event EventHandler<CommandResult> Completed;
-
-        private readonly ISettings settings;
-        private readonly ITemperatureMonitor tempMon;
-
-        public MonitorOnCmd()
-        {
-            settings = Program.container.GetInstance<ISettings>();
-            tempMon = Program.container.GetInstance<ITemperatureMonitor>();
-        }
 
         public void Execute(object parameter)
         {
             var cmdInfo = parameter as CommandInfo;
 
-            tempMon.Start();
-            settings.MonitorEnabled = true;
+            User32Helper.LockWorkStation();
 
             var info = new CommandResult
             {
                 Message = cmdInfo.Message,
-                Text = "Temperature monitor is turned on.",
+                Text = "Locked down the host machine.",
                 SendType = SendType.Text
             };
 

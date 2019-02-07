@@ -5,10 +5,11 @@ namespace Telebot.Commands
 {
     public interface ICommand
     {
+        event EventHandler<CommandResult> Completed;
         string Name { get; }
         string Description { get; }
-        event EventHandler<CommandResult> Completed;
         void Execute(object parameter);
         void ExecuteAsync(object parameter);
+        string ToString();
     }
 }

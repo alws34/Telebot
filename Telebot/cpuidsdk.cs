@@ -125,10 +125,12 @@ public class CPUIDSDK
     }
 
     // Token: 0x06000479 RID: 1145 RVA: 0x0002A95C File Offset: 0x00028B5C
-    public bool InitSDK_Quick(ref int num, ref int num2)
+    public bool InitSDK_Quick()
     {
         this.CPUIDSDK_fp_QueryInterface = (CPUIDSDK.CPUIDSDKfpQueryInterface)Marshal.GetDelegateForFunctionPointer(CPUIDSDK.GetProcAddress(this._dllHandle, "QueryInterface"), typeof(CPUIDSDK.CPUIDSDKfpQueryInterface));
         this.CreateInstance();
+        int num = 0;
+        int num2 = 0;
         return this.Init(null, "cpuidsdk64.dll", 2147483567u, ref num, ref num2);
     }
 

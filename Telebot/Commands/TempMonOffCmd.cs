@@ -1,42 +1,39 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
+using Telebot.Managers;
 using Telebot.Models;
-using Telebot.StatusCommands;
+using Telebot.Monitors;
 
 namespace Telebot.Commands
 {
-    public class StatusCmd : ICommand
+    public class TempMonOffCmd : ICommand
     {
-        public string Name => "/status";
+        public string Name => "/tempmon off";
 
-        public string Description => "Receive workstation information.";
+        public string Description => "Turn off temperature monitoring.";
 
         public event EventHandler<CommandResult> Completed;
 
-        private readonly IEnumerable<IStatusCommand> statusCommands;
+        private readonly ISettings settings;
+        private readonly ITemperatureMonitor tempMon;
 
-        public StatusCmd()
+        public TempMonOffCmd()
         {
-            statusCommands = Program.container.GetAllInstances<IStatusCommand>();
+            settings = Program.container.GetInstance<ISettings>();
+            tempMon = Program.container.GetInstance<ITemperatureMonitor>();
         }
 
         public void Execute(object parameter)
         {
             var cmdInfo = parameter as CommandInfo;
 
-            var status = new StringBuilder();
-
-            foreach(IStatusCommand cmd in statusCommands)
-            {
-                status.AppendLine(cmd.Execute());
-            }
+            tempMon.Stop();
+            settings.MonitorEnabled = false;
 
             var info = new CommandResult
             {
                 Message = cmdInfo.Message,
-                Text = status.ToString(),
+                Text = "Temperature monitor is turned off.",
                 SendType = SendType.Text
             };
 

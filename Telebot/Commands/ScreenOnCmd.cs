@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Telebot.BusinessLogic;
-using Telebot.Contracts;
 using Telebot.Models;
 
 namespace Telebot.Commands

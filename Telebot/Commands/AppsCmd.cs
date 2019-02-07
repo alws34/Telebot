@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using Telebot.Contracts;
 using Telebot.BusinessLogic;
-using Telebot.Helpers;
 using Telebot.Models;
 using System.Threading.Tasks;
 
@@ -14,7 +9,7 @@ namespace Telebot.Commands
     {
         public string Name => "/apps";
 
-        public string Description => "List of open applications.";
+        public string Description => "List of active applications.";
 
         public event EventHandler<CommandResult> Completed;
 

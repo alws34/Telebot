@@ -6,18 +6,18 @@ using Telebot.Monitors;
 
 namespace Telebot.Commands
 {
-    public class MonitorOffCmd : ICommand
+    public class TempMonOnCmd : ICommand
     {
-        public string Name => "/monitor off";
+        public string Name => "/tempmon on";
 
-        public string Description => "Turn off monitoring of temperature.";
+        public string Description => "Turn on temperature monitoring.";
 
         public event EventHandler<CommandResult> Completed;
 
         private readonly ISettings settings;
         private readonly ITemperatureMonitor tempMon;
 
-        public MonitorOffCmd()
+        public TempMonOnCmd()
         {
             settings = Program.container.GetInstance<ISettings>();
             tempMon = Program.container.GetInstance<ITemperatureMonitor>();
@@ -27,13 +27,13 @@ namespace Telebot.Commands
         {
             var cmdInfo = parameter as CommandInfo;
 
-            tempMon.Stop();
-            settings.MonitorEnabled = false;
+            tempMon.Start();
+            settings.MonitorEnabled = true;
 
             var info = new CommandResult
             {
                 Message = cmdInfo.Message,
-                Text = "Temperature monitor is turned off.",
+                Text = "Temperature monitor is turned on.",
                 SendType = SendType.Text
             };
 

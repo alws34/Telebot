@@ -1,5 +1,4 @@
 ﻿using System;
-using Telebot.Contracts;
 using Telebot.BusinessLogic;
 using Telebot.Models;
 using System.Threading.Tasks;
@@ -10,7 +9,7 @@ namespace Telebot.Commands
     {
         public string Name => "/reboot";
 
-        public string Description => "Reboots the host machine.";
+        public string Description => "Reboots the workstation.";
 
         private readonly PowerLogic powerLogic;
 

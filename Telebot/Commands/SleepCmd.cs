@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Telebot.BusinessLogic;
 using Telebot.Models;
 
@@ -33,6 +34,11 @@ namespace Telebot.Commands
             };
 
             Completed?.Invoke(this, info);
+        }
+
+        public void ExecuteAsync(object parameter)
+        {
+            Task.Run(() => Execute(parameter));
         }
 
         public override string ToString()

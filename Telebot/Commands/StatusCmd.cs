@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Telebot.Contracts;
 using Telebot.Models;
 using Telebot.StatusCommands;
@@ -41,6 +42,11 @@ namespace Telebot.Commands
             };
 
             Completed?.Invoke(this, info);
+        }
+
+        public void ExecuteAsync(object parameter)
+        {
+            Task.Run(() => Execute(parameter));
         }
 
         public override string ToString()

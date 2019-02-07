@@ -9,5 +9,6 @@ namespace Telebot.Commands
         string Description { get; }
         event EventHandler<CommandResult> Completed;
         void Execute(object parameter);
+        void ExecuteAsync(object parameter);
     }
 }

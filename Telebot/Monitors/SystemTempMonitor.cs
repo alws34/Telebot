@@ -11,21 +11,14 @@ namespace Telebot.Monitors
         private const int REFRESH_INTERVAL = 10000;
 
         private readonly Timer workerTimer;
-        private readonly List<ITemperatureProvider> tempProviders;
-        public bool IsActive => workerTimer.Enabled;
+        private readonly IEnumerable<ITemperatureProvider> tempProviders;
+        public bool IsActive { get { return workerTimer.Enabled; } }
 
         public event EventHandler<IHardwareInfo> TemperatureChanged;
 
         public SystemTempMonitor()
         {
-            tempProviders = new List<ITemperatureProvider>();
-
-            var providers = Program.container.GetAllInstances<ITemperatureProvider>();
-
-            foreach (ITemperatureProvider provider in providers)
-            {
-                tempProviders.Add(provider);
-            }
+            tempProviders = Program.container.GetAllInstances<ITemperatureProvider>();
 
             workerTimer = new Timer(REFRESH_INTERVAL);
             workerTimer.Elapsed += WorkerTimer_Elapsed;

@@ -13,6 +13,7 @@ using Telebot.HwProviders;
 using Telebot.Presenters;
 using Telebot.Services;
 using Telebot.StatusCommands;
+using Telebot.ScheduledOperations;
 
 namespace Telebot
 {
@@ -87,6 +88,7 @@ namespace Telebot
                 typeof(TempMonOnCmd),
                 typeof(TempMonOffCmd),
                 typeof(TempTimeCmd),
+                typeof(CapTimeCmd),
                 typeof(RebootCmd),
                 typeof(ShutdownCmd),
                 typeof(SleepCmd),
@@ -100,6 +102,7 @@ namespace Telebot
                 typeof(GPUProvider)
             );
 
+            container.Register<IScheduledScreenCapture, ScheduledScreenCapture>(Lifestyle.Singleton);
             container.Register<IScheduledTemperatureMonitor, ScheduledSystemTempMonitor>(Lifestyle.Singleton);
             container.Register<ITemperatureMonitor, SystemTempMonitor>(Lifestyle.Singleton);
             container.Register<ICommunicationService, TelegramService>(Lifestyle.Singleton);

@@ -5,7 +5,7 @@ namespace Telebot.Monitors
 {
     public interface ITemperatureMonitor
     {
-        event EventHandler<IHardwareInfo> TemperatureChanged;
+        event EventHandler<HardwareInfo> TemperatureChanged;
         bool IsActive { get; }
         void Start();
         void Stop();

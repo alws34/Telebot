@@ -8,11 +8,11 @@ namespace Telebot.HwProviders
 {
     public class BaseProvider
     {
-        protected List<IHardwareInfo> GetCpuInfo(int sensorType)
+        protected List<HardwareInfo> GetCpuInfo(int sensorType)
         {
             int dummy = 0;
 
-            var result = new List<IHardwareInfo>();
+            var result = new List<HardwareInfo>();
 
             float val = Program.pSDK.GetSensorTypeValue(sensorType, ref dummy, ref dummy);
 
@@ -24,9 +24,9 @@ namespace Telebot.HwProviders
 
             return result;
         }
-        protected List<IHardwareInfo> GetDeviceInfoBySensor(int sensorClass, uint deviceClass)
+        protected List<HardwareInfo> GetDeviceInfoBySensor(int sensorClass, uint deviceClass)
         {
-            var result = new List<IHardwareInfo>();
+            var result = new List<HardwareInfo>();
 
             for (int device_index = 0; device_index < Program.NbDevices; device_index++)
             {

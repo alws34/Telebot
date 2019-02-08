@@ -1,24 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Drawing;
 using System.Timers;
-using Telebot.HwProviders;
-using Telebot.Models;
+using Telebot.BusinessLogic;
 
-namespace Telebot.Monitors
+namespace Telebot.ScheduledOperations
 {
-    public class ScheduledSystemTempMonitor : IScheduledTemperatureMonitor
+    public class ScheduledScreenCapture : IScheduledScreenCapture
     {
         private readonly Timer workerTimer;
         private DateTime stopTime;
-        private readonly IEnumerable<ITemperatureProvider> tempProviders;
 
         public bool IsActive { get { return workerTimer.Enabled; } }
 
-        public event EventHandler<IHardwareInfo> TemperatureChanged;
+        public event EventHandler<Bitmap> Captured;
 
-        public ScheduledSystemTempMonitor()
+        private readonly CaptureLogic captureLogic;
+
+        public ScheduledScreenCapture()
         {
-            tempProviders = Program.container.GetAllInstances<ITemperatureProvider>();
+            captureLogic = Program.container.GetInstance<CaptureLogic>();
 
             workerTimer = new Timer();
             workerTimer.Elapsed += WorkerTimer_Elapsed;
@@ -32,15 +32,7 @@ namespace Telebot.Monitors
                 return;
             }
 
-            foreach (ITemperatureProvider tempProvider in tempProviders)
-            {
-                var hwInfos = tempProvider.GetTemperature();
-
-                foreach (IHardwareInfo hwInfo in hwInfos)
-                {
-                    TemperatureChanged?.Invoke(this, hwInfo);
-                }
-            }
+            Captured?.Invoke(this, captureLogic.CaptureDesktop());
         }
 
         public void Start(int durationInSec, int intervalInSec)

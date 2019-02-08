@@ -86,6 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\AppsCmd.cs" />
+    <Compile Include="Commands\CapTimeCmd.cs" />
     <Compile Include="Commands\CaptureCmd.cs" />
     <Compile Include="Commands\HelpCmd.cs" />
     <Compile Include="Commands\LockCmd.cs" />
@@ -104,16 +105,17 @@
     <Compile Include="Commands\TempMonOnCmd.cs" />
     <Compile Include="Commands\TempTimeCmd.cs" />
     <Compile Include="Events\EventAggregator.cs" />
-    <Compile Include="Events\HighTemperatureMessage.cs" />
+    <Compile Include="Events\OnHighTemperatureArgs.cs" />
     <Compile Include="Events\IApplicationEvent.cs" />
     <Compile Include="Events\IEventAggregator.cs" />
-    <Compile Include="Events\ShowNotifyIconBalloon.cs" />
-    <Compile Include="Events\UpdateNotifyIconVisible.cs" />
-    <Compile Include="Models\IHardwareInfo.cs" />
+    <Compile Include="Events\OnScreenCaptureArgs.cs" />
+    <Compile Include="Events\OnNotifyIconBalloonArgs.cs" />
+    <Compile Include="Events\OnNotifyIconVisibilityArgs.cs" />
     <Compile Include="Loggers\ILogger.cs" />
     <Compile Include="Managers\ISettings.cs" />
     <Compile Include="Commands\StatusCommands\IStatusCommand.cs" />
-    <Compile Include="Monitors\IScheduledTemperatureMonitor.cs" />
+    <Compile Include="ScheduledOperations\IScheduledScreenCapture.cs" />
+    <Compile Include="ScheduledOperations\IScheduledTemperatureMonitor.cs" />
     <Compile Include="Monitors\ITemperatureMonitor.cs" />
     <Compile Include="HwProviders\ITemperatureProvider.cs" />
     <Compile Include="BusinessLogic\CaptureLogic.cs" />
@@ -126,7 +128,8 @@
     <Compile Include="Extensions\BitmapExtensions.cs" />
     <Compile Include="Extensions\TimeSpanExtensions.cs" />
     <Compile Include="Models\LvItem.cs" />
-    <Compile Include="Monitors\ScheduledSystemTempMonitor.cs" />
+    <Compile Include="ScheduledOperations\ScheduledScreenCapture.cs" />
+    <Compile Include="ScheduledOperations\ScheduledSystemTempMonitor.cs" />
     <Compile Include="Presenters\MainFormPresenter.cs" />
     <Compile Include="Services\ICommunicationService.cs" />
     <Compile Include="Services\TelegramService.cs" />

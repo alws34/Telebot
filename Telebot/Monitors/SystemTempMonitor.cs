@@ -16,7 +16,7 @@ namespace Telebot.Monitors
         private readonly ISettings settings;
         public bool IsActive { get { return workerTimer.Enabled; } }
 
-        public event EventHandler<IHardwareInfo> TemperatureChanged;
+        public event EventHandler<HardwareInfo> TemperatureChanged;
 
         public SystemTempMonitor()
         {
@@ -35,7 +35,7 @@ namespace Telebot.Monitors
             {
                 var hwInfos = tempProvider.GetTemperature();
 
-                foreach (IHardwareInfo hwInfo in hwInfos)
+                foreach (HardwareInfo hwInfo in hwInfos)
                 {
                     TemperatureChanged?.Invoke(this, hwInfo);
                 }

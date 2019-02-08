@@ -19,16 +19,16 @@ namespace Telebot
         {
             InitializeComponent();
 
-            EventAggregator.Instance.Subscribe<UpdateNotifyIconVisible>(OnUpdateNotifyIconVisible);
-            EventAggregator.Instance.Subscribe<ShowNotifyIconBalloon>(OnShowNotifyIconBalloon);
+            EventAggregator.Instance.Subscribe<OnNotifyIconVisibilityArgs>(OnUpdateNotifyIconVisible);
+            EventAggregator.Instance.Subscribe<OnNotifyIconBalloonArgs>(OnShowNotifyIconBalloon);
         }
 
-        private void OnUpdateNotifyIconVisible(UpdateNotifyIconVisible obj)
+        private void OnUpdateNotifyIconVisible(OnNotifyIconVisibilityArgs obj)
         {
             notifyIcon1.Visible = obj.Visible;
         }
 
-        private void OnShowNotifyIconBalloon(ShowNotifyIconBalloon obj)
+        private void OnShowNotifyIconBalloon(OnNotifyIconBalloonArgs obj)
         {
             notifyIcon1.ShowBalloonTip(1000, Text, obj.Text, ToolTipIcon.Info);
         }

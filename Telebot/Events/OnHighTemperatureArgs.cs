@@ -1,10 +1,10 @@
 ﻿namespace Telebot.Events
 {
-    public class HighTemperatureMessage : IApplicationEvent
+    public class OnHighTemperatureArgs : IApplicationEvent
     {
         public string Message { get; private set; }
 
-        public HighTemperatureMessage(string message)
+        public OnHighTemperatureArgs(string message)
         {
             Message = message;
         }

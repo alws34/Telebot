@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Telebot.Commands;
 using Telebot.Events;
+using Telebot.Extensions;
 using Telebot.Managers;
 using Telebot.Models;
 using Telebot.Views;
@@ -49,7 +50,8 @@ namespace Telebot.Services
                 doStartup();
             }
 
-            EventAggregator.Instance.Subscribe<HighTemperatureMessage>(OnHighTemperature);
+            EventAggregator.Instance.Subscribe<OnHighTemperatureArgs>(OnHighTemperature);
+            EventAggregator.Instance.Subscribe<OnScreenCaptureArgs>(OnScreenCapture);
         }
 
         private void LoadSettings()
@@ -62,7 +64,7 @@ namespace Telebot.Services
         {
             mainFormView.Text += $" - ({(await client.GetMeAsync()).Username})";
 
-            foreach(long chatid in whitelist)
+            foreach (long chatid in whitelist)
             {
                 await client.SendTextMessageAsync
                 (
@@ -84,7 +86,7 @@ namespace Telebot.Services
                         replyToMessageId: e.Message.MessageId);
                     break;
                 case SendType.Photo:
-                    client.SendDocumentAsync(e.Message.Chat.Id, e.Stream,
+                    client.SendPhotoAsync(e.Message.Chat.Id, e.Stream,
                         caption: $"{DateTime.Now.ToString()} by *Telebot*",
                         parseMode: ParseMode.Markdown,
                         replyToMessageId: e.Message.MessageId);
@@ -92,11 +94,25 @@ namespace Telebot.Services
             }
         }
 
-        private void OnHighTemperature(HighTemperatureMessage obj)
+        private void OnHighTemperature(OnHighTemperatureArgs obj)
         {
             foreach (long chatid in whitelist)
             {
                 client.SendTextMessageAsync(chatid, obj.Message, parseMode: ParseMode.Markdown);
+            }
+        }
+
+        private void OnScreenCapture(OnScreenCaptureArgs obj)
+        {
+            foreach (long chatid in whitelist)
+            {
+                client.SendPhotoAsync
+                (
+                    chatid,
+                    obj.Photo.ToStream(),
+                    parseMode: ParseMode.Markdown,
+                    caption: "From *Telebot*"
+                );
             }
         }
 
@@ -133,7 +149,7 @@ namespace Telebot.Services
 
             if (mainFormView.WindowState == FormWindowState.Minimized)
             {
-                EventAggregator.Instance.Publish(new ShowNotifyIconBalloon(info));
+                EventAggregator.Instance.Publish(new OnNotifyIconBalloonArgs(info));
             }
 
             if (commands.Keys.Any(key => Regex.IsMatch($"^{cmdKey}$", key)))

@@ -1,8 +1,8 @@
 ﻿namespace Telebot.Events
 {
-    public class ShowNotifyIconBalloon : IApplicationEvent
+    public class OnNotifyIconBalloonArgs : IApplicationEvent
     {
-        public ShowNotifyIconBalloon(string text)
+        public OnNotifyIconBalloonArgs(string text)
         {
             Text = text;
         }

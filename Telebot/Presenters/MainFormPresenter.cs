@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
+using System.Text;
 using System.Windows.Forms;
 using Telebot.Events;
 using Telebot.Managers;
 using Telebot.Models;
 using Telebot.Monitors;
+using Telebot.ScheduledOperations;
 using Telebot.Services;
 using Telebot.Views;
 
@@ -17,6 +21,7 @@ namespace Telebot.Presenters
 
         private readonly ITemperatureMonitor temperatureMonitor;
         private readonly IScheduledTemperatureMonitor scheduledTemperatureMonitor;
+        private readonly IScheduledScreenCapture scheduledScreenCapture;
         private readonly ICommunicationService communicationService;
 
         private ISettings settings;
@@ -38,17 +43,25 @@ namespace Telebot.Presenters
             temperatureMonitor.TemperatureChanged += TemperatureChanged;
 
             scheduledTemperatureMonitor = Program.container.GetInstance<IScheduledTemperatureMonitor>();
-            scheduledTemperatureMonitor.TemperatureChanged += TemperatureChanged2;
+            scheduledTemperatureMonitor.TemperatureChanged += ScheduledTemperatureChanged;
+
+            scheduledScreenCapture = Program.container.GetInstance<IScheduledScreenCapture>();
+            scheduledScreenCapture.Captured += ScheduledScreenCaptureCaptured;
+        }
+
+        private void ScheduledScreenCaptureCaptured(object sender, Bitmap e)
+        {
+            EventAggregator.Instance.Publish(new OnScreenCaptureArgs(e));
         }
 
         private void NotifyIcon_MouseClick(object sender, MouseEventArgs e)
         {
             mainFormView.Show();
             mainFormView.WindowState = FormWindowState.Normal;
-            EventAggregator.Instance.Publish(new UpdateNotifyIconVisible(false));
+            EventAggregator.Instance.Publish(new OnNotifyIconVisibilityArgs(false));
         }
 
-        private void TemperatureChanged(object sender, IHardwareInfo e)
+        private void TemperatureChanged(object sender, HardwareInfo e)
         {
             string text = "";
 
@@ -68,24 +81,29 @@ namespace Telebot.Presenters
                     break;
             }
 
-            EventAggregator.Instance.Publish(new HighTemperatureMessage(text));
+            EventAggregator.Instance.Publish(new OnHighTemperatureArgs(text));
         }
 
-        private void TemperatureChanged2(object sender, IHardwareInfo e)
+        private void ScheduledTemperatureChanged(object sender, IEnumerable<HardwareInfo> e)
         {
-            string text = "";
+            var text = new StringBuilder();
 
-            switch (e.DeviceClass)
+            foreach (HardwareInfo device in e)
             {
-                case CPUIDSDK.CLASS_DEVICE_PROCESSOR:
-                    text = $"*CPU_TEMPERATURE*: {e.Value}°C\nFrom *Telebot*";
-                    break;
-                case CPUIDSDK.CLASS_DEVICE_DISPLAY_ADAPTER:
-                    text = $"*{e.DeviceName}*: {e.Value}°C\nFrom *Telebot*";
-                    break;
+                switch (device.DeviceClass)
+                {
+                    case CPUIDSDK.CLASS_DEVICE_PROCESSOR:
+                        text.AppendLine($"*CPU_TEMPERATURE*: {device.Value}°C");
+                        break;
+                    case CPUIDSDK.CLASS_DEVICE_DISPLAY_ADAPTER:
+                        text.AppendLine($"*{device.DeviceName}*: {device.Value}°C");
+                        break;
+                }
             }
 
-            EventAggregator.Instance.Publish(new HighTemperatureMessage(text));
+            text.AppendLine("\nFrom *Telebot*");
+
+            EventAggregator.Instance.Publish(new OnHighTemperatureArgs(text.ToString()));
         }
 
         private void mainFormView_Resize(object sender, EventArgs e)
@@ -93,7 +111,7 @@ namespace Telebot.Presenters
             if (mainFormView.WindowState == FormWindowState.Minimized)
             {
                 mainFormView.Hide();
-                EventAggregator.Instance.Publish(new UpdateNotifyIconVisible(true));
+                EventAggregator.Instance.Publish(new OnNotifyIconVisibilityArgs(true));
             }
         }
 

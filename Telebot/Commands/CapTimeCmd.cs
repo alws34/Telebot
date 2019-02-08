@@ -1,23 +1,26 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Telebot.Models;
 using Telebot.ScheduledOperations;
 
 namespace Telebot.Commands
 {
-    public class TempTimeCmd : ICommand
+    public class CapTimeCmd : ICommand
     {
-        public string Name => "/temptime -d (\\d+) -i (\\d+)";
+        public string Name => "/captime -d (\\d+) -i (\\d+)";
 
-        public string Description => "Schedules a temperature monitor.";
+        public string Description => "Schedules a screen capture session.";
 
         public event EventHandler<CommandResult> Completed;
 
-        private readonly IScheduledTemperatureMonitor scheduledTemperatureMonitor;
+        private readonly IScheduledScreenCapture scheduledScreenCapture;
 
-        public TempTimeCmd()
+        public CapTimeCmd()
         {
-            scheduledTemperatureMonitor = Program.container.GetInstance<IScheduledTemperatureMonitor>();
+            scheduledScreenCapture = Program.container.GetInstance<IScheduledScreenCapture>();
         }
 
         public void Execute(object parameter)
@@ -27,13 +30,13 @@ namespace Telebot.Commands
             int duration = Convert.ToInt32(parameters.Parameters.Groups[1].Value);
             int interval = Convert.ToInt32(parameters.Parameters.Groups[2].Value);
 
-            scheduledTemperatureMonitor.Start(duration, interval);
+            scheduledScreenCapture.Start(duration, interval);
 
             var result = new CommandResult
             {
                 Message = parameters.Message,
                 SendType = SendType.Text,
-                Text = "Successfully scheduled temperature monitor."
+                Text = "Successfully scheduled screen capture."
             };
 
             Completed?.Invoke(this, result);

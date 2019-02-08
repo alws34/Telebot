@@ -5,11 +5,11 @@ namespace Telebot.Commands.StatusCommands
 {
     public class TempMonitorCmd : IStatusCommand
     {
-        private readonly IScheduledTemperatureMonitor tempMonitor;
+        private readonly ITemperatureMonitor tempMonitor;
 
         public TempMonitorCmd()
         {
-            tempMonitor = Program.container.GetInstance<IScheduledTemperatureMonitor>();
+            tempMonitor = Program.container.GetInstance<ITemperatureMonitor>();
         }
 
         public string Execute()

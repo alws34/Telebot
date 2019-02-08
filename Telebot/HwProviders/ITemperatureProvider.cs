@@ -5,6 +5,6 @@ namespace Telebot.HwProviders
 {
     public interface ITemperatureProvider
     {
-        List<IHardwareInfo> GetTemperature();
+        IEnumerable<HardwareInfo> GetTemperature();
     }
 }

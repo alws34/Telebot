@@ -1,6 +1,6 @@
 ﻿namespace Telebot.Models
 {
-    public class HardwareInfo : IHardwareInfo
+    public class HardwareInfo
     {
         public string DeviceName { get; set; }
         public uint DeviceClass { get; set; }

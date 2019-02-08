@@ -1,8 +1,8 @@
 ﻿namespace Telebot.Events
 {
-    public class UpdateNotifyIconVisible : IApplicationEvent
+    public class OnNotifyIconVisibilityArgs : IApplicationEvent
     {
-        public UpdateNotifyIconVisible(bool visible)
+        public OnNotifyIconVisibilityArgs(bool visible)
         {
             Visible = visible;
         }

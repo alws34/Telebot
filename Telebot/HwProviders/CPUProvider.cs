@@ -5,12 +5,12 @@ namespace Telebot.HwProviders
 {
     public class CPUProvider : BaseProvider, ITemperatureProvider
     {
-        public List<IHardwareInfo> GetTemperature()
+        public IEnumerable<HardwareInfo> GetTemperature()
         {
             return GetCpuInfo(CPUIDSDK.SENSOR_TEMPERATURE_CPU_DTS);
         }
 
-        public List<IHardwareInfo> GetUtilization()
+        public IEnumerable<HardwareInfo> GetUtilization()
         {
             return GetCpuInfo(CPUIDSDK.SENSOR_UTILIZATION_CPU);
         }

@@ -27,7 +27,7 @@ namespace Telebot.Commands
 
         public void Execute(object parameter)
         {
-            var cmdInfo = parameter as CommandInfo;
+            var parameters = parameter as CommandParam;
 
             var bitmaps = new List<Bitmap>
             {
@@ -37,14 +37,14 @@ namespace Telebot.Commands
 
             foreach (Bitmap bitmap in bitmaps)
             {
-                var info = new CommandResult
+                var result = new CommandResult
                 {
-                    Message = cmdInfo.Message,
+                    Message = parameters.Message,
                     Stream = bitmap.ToStream(),
                     SendType = SendType.Photo
                 };
 
-                Completed?.Invoke(this, info);
+                Completed?.Invoke(this, result);
             }
         }
 

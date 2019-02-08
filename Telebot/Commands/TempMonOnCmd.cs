@@ -25,19 +25,19 @@ namespace Telebot.Commands
 
         public void Execute(object parameter)
         {
-            var cmdInfo = parameter as CommandInfo;
+            var parameters = parameter as CommandParam;
 
             tempMon.Start();
-            settings.MonitorEnabled = true;
+            settings.TempMonEnabled = true;
 
-            var info = new CommandResult
+            var result = new CommandResult
             {
-                Message = cmdInfo.Message,
+                Message = parameters.Message,
                 Text = "Temperature monitor is turned on.",
                 SendType = SendType.Text
             };
 
-            Completed?.Invoke(this, info);
+            Completed?.Invoke(this, result);
         }
 
         public void ExecuteAsync(object parameter)

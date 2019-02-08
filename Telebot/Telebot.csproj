@@ -89,8 +89,6 @@
     <Compile Include="Commands\CaptureCmd.cs" />
     <Compile Include="Commands\HelpCmd.cs" />
     <Compile Include="Commands\LockCmd.cs" />
-    <Compile Include="Commands\TempMonOffCmd.cs" />
-    <Compile Include="Commands\TempMonOnCmd.cs" />
     <Compile Include="Commands\RebootCmd.cs" />
     <Compile Include="Commands\ScreenOffCmd.cs" />
     <Compile Include="Commands\ScreenOnCmd.cs" />
@@ -102,6 +100,9 @@
     <Compile Include="Commands\StatusCommands\TempMonitorCmd.cs" />
     <Compile Include="Commands\StatusCommands\UptimeCmd.cs" />
     <Compile Include="Commands\ICommand.cs" />
+    <Compile Include="Commands\TempMonOffCmd.cs" />
+    <Compile Include="Commands\TempMonOnCmd.cs" />
+    <Compile Include="Commands\TempTimeCmd.cs" />
     <Compile Include="Events\EventAggregator.cs" />
     <Compile Include="Events\HighTemperatureMessage.cs" />
     <Compile Include="Events\IApplicationEvent.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="Loggers\ILogger.cs" />
     <Compile Include="Managers\ISettings.cs" />
     <Compile Include="Commands\StatusCommands\IStatusCommand.cs" />
+    <Compile Include="Monitors\IScheduledTemperatureMonitor.cs" />
     <Compile Include="Monitors\ITemperatureMonitor.cs" />
     <Compile Include="HwProviders\ITemperatureProvider.cs" />
     <Compile Include="BusinessLogic\CaptureLogic.cs" />
@@ -124,6 +126,7 @@
     <Compile Include="Extensions\BitmapExtensions.cs" />
     <Compile Include="Extensions\TimeSpanExtensions.cs" />
     <Compile Include="Models\LvItem.cs" />
+    <Compile Include="Monitors\ScheduledSystemTempMonitor.cs" />
     <Compile Include="Presenters\MainFormPresenter.cs" />
     <Compile Include="Services\ICommunicationService.cs" />
     <Compile Include="Services\TelegramService.cs" />
@@ -135,7 +138,7 @@
     </Compile>
     <Compile Include="Loggers\FileLogger.cs" />
     <Compile Include="Managers\SettingsManager.cs" />
-    <Compile Include="Models\CommandInfo.cs" />
+    <Compile Include="Models\CommandParam.cs" />
     <Compile Include="Models\CommandResult.cs" />
     <Compile Include="Monitors\SystemTempMonitor.cs" />
     <Compile Include="HwProviders\CPUProvider.cs" />

@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using Telebot.Contracts;
 
 namespace Telebot.Managers
 {
@@ -21,14 +20,17 @@ namespace Telebot.Managers
         {
             filePath = $"{Application.StartupPath}\\{FILE_NAME}";
 
-            if (!File.Exists(filePath)) {
+            if (!File.Exists(filePath))
+            {
                 File.Create(filePath);
             }
 
-            try {
+            try
+            {
                 data = ReadFile(filePath);
             }
-            catch {
+            catch
+            {
 
             }
         }
@@ -38,49 +40,29 @@ namespace Telebot.Managers
             WriteFile(filePath, data);
         }
 
-        public bool MonitorEnabled
+        public string TelegramToken
         {
             get
             {
-                string s = data["Temperature.Monitor"]["Enabled"];
+                string s = data["Telegram"]["Token"];
                 if (string.IsNullOrEmpty(s))
-                    return false;
-                return Convert.ToBoolean(s);
-            }
-            set
-            {
-                data["Temperature.Monitor"]["Enabled"] = value.ToString();
-            }
-        }
-
-        public long ChatId
-        {
-            get
-            {
-                string s = data["Telegram"]["Chat.Id"];
-                if (string.IsNullOrEmpty(s))
-                    return 0;
-                return Convert.ToInt64(s);
-            }
-            set
-            {
-                data["Telegram"]["Chat.Id"] = value.ToString();
-            }
-        }
-
-        public float CPUTemperature
-        {
-            get
-            {
-                string s = data["Temperature.Monitor"]["CPU_TEMPERATURE_WARNING"];
-                if (string.IsNullOrEmpty(s)) {
-                    return 65.0f;
+                {
+                    return string.Empty;
                 }
-                return (float)Convert.ToDouble(s);
+                return s;
             }
-            set
+        }
+
+        public List<long> TelegramWhitelist
+        {
+            get
             {
-                data["Temperature.Monitor"]["CPU_TEMPERATURE_WARNING"] = value.ToString();
+                string s = data["Telegram"]["Whitelist"];
+                if (string.IsNullOrEmpty(s))
+                {
+                    return new List<long>();
+                }
+                return JsonConvert.DeserializeObject<List<long>>(s);
             }
         }
 
@@ -89,7 +71,8 @@ namespace Telebot.Managers
             get
             {
                 string s = data["GUI"]["Form1.Bounds"];
-                if (string.IsNullOrEmpty(s)) {
+                if (string.IsNullOrEmpty(s))
+                {
                     return new Rectangle(50, 50, 150, 150);
                 }
                 return JsonConvert.DeserializeObject<Rectangle>(s);
@@ -101,28 +84,13 @@ namespace Telebot.Managers
             }
         }
 
-        public float GPUTemperature
-        {
-            get
-            {
-                string s = data["Temperature.Monitor"]["GPU_TEMPERATURE_WARNING"];
-                if (string.IsNullOrEmpty(s)) {
-                    return 65.0f;
-                }
-                return (float)Convert.ToDouble(s);
-            }
-            set
-            {
-                data["Temperature.Monitor"]["GPU_TEMPERATURE_WARNING"] = value.ToString();
-            }
-        }
-
         public List<int> ListView1ColumnsWidth
         {
             get
             {
                 string s = data["GUI"]["listview1.Columns.Width"];
-                if (string.IsNullOrEmpty(s)) {
+                if (string.IsNullOrEmpty(s))
+                {
                     return new List<int> { 50, 150 };
                 }
                 return JsonConvert.DeserializeObject<List<int>>(s);
@@ -134,27 +102,52 @@ namespace Telebot.Managers
             }
         }
 
-        public string TelegramToken
+        public float CPUTemperature
         {
             get
             {
-                string s = data["Telegram"]["Token"];
-                if (string.IsNullOrEmpty(s)) {
-                    return string.Empty;
+                string s = data["Temperature.Monitor"]["CPU_TEMPERATURE_WARNING"];
+                if (string.IsNullOrEmpty(s))
+                {
+                    return 65.0f;
                 }
-                return s;
+                return (float)Convert.ToDouble(s);
+            }
+            set
+            {
+                data["Temperature.Monitor"]["CPU_TEMPERATURE_WARNING"] = value.ToString();
             }
         }
 
-        public List<int> TelegramWhiteList
+        public float GPUTemperature
         {
             get
             {
-                string s = data["Telegram"]["WhiteList"];
-                if (string.IsNullOrEmpty(s)) {
-                    return new List<int>();
+                string s = data["Temperature.Monitor"]["GPU_TEMPERATURE_WARNING"];
+                if (string.IsNullOrEmpty(s))
+                {
+                    return 65.0f;
                 }
-                return JsonConvert.DeserializeObject<List<int>>(s);
+                return (float)Convert.ToDouble(s);
+            }
+            set
+            {
+                data["Temperature.Monitor"]["GPU_TEMPERATURE_WARNING"] = value.ToString();
+            }
+        }
+
+        public bool TempMonEnabled
+        {
+            get
+            {
+                string s = data["Temperature.Monitor"]["Enabled"];
+                if (string.IsNullOrEmpty(s))
+                    return false;
+                return Convert.ToBoolean(s);
+            }
+            set
+            {
+                data["Temperature.Monitor"]["Enabled"] = value.ToString();
             }
         }
     }

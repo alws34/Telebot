@@ -2,35 +2,36 @@
 using System.Collections.Generic;
 using System.Timers;
 using Telebot.HwProviders;
-using Telebot.Managers;
 using Telebot.Models;
 
 namespace Telebot.Monitors
 {
-    public class SystemTempMonitor : ITemperatureMonitor
+    public class ScheduledSystemTempMonitor : IScheduledTemperatureMonitor
     {
-        private const int Refresh_Interval = 10 * 1000;
-
         private readonly Timer workerTimer;
+        private DateTime stopTime;
         private readonly IEnumerable<ITemperatureProvider> tempProviders;
-        private readonly ISettings settings;
+
         public bool IsActive { get { return workerTimer.Enabled; } }
 
         public event EventHandler<IHardwareInfo> TemperatureChanged;
 
-        public SystemTempMonitor()
+        public ScheduledSystemTempMonitor()
         {
             tempProviders = Program.container.GetAllInstances<ITemperatureProvider>();
-            settings = Program.container.GetInstance<ISettings>();
 
-            workerTimer = new Timer(Refresh_Interval);
+            workerTimer = new Timer();
             workerTimer.Elapsed += WorkerTimer_Elapsed;
-
-            if (settings.TempMonEnabled) Start();
         }
 
         private void WorkerTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
+            if (System.DateTime.Now >= stopTime)
+            {
+                workerTimer.Stop();
+                return;
+            }
+
             foreach (ITemperatureProvider tempProvider in tempProviders)
             {
                 var hwInfos = tempProvider.GetTemperature();
@@ -42,8 +43,10 @@ namespace Telebot.Monitors
             }
         }
 
-        public void Start()
+        public void Start(int durationInSec, int intervalInSec)
         {
+            stopTime = DateTime.Now.AddSeconds(durationInSec);
+            workerTimer.Interval = intervalInSec * 1000;
             workerTimer.Start();
         }
 

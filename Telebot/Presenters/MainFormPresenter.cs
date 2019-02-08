@@ -15,8 +15,9 @@ namespace Telebot.Presenters
         private float CPU_TEMPERATURE_WARNING = 65.0f;
         private float GPU_TEMPERATURE_WARNING = 65.0f;
 
-        private ITemperatureMonitor tempMonitor;
-        private ICommunicationService communicationService;
+        private readonly ITemperatureMonitor temperatureMonitor;
+        private readonly IScheduledTemperatureMonitor scheduledTemperatureMonitor;
+        private readonly ICommunicationService communicationService;
 
         private ISettings settings;
 
@@ -33,8 +34,11 @@ namespace Telebot.Presenters
             settings = Program.container.GetInstance<ISettings>();
             communicationService = Program.container.GetInstance<ICommunicationService>();
 
-            tempMonitor = Program.container.GetInstance<ITemperatureMonitor>();
-            tempMonitor.TemperatureChanged += TemperatureChanged;
+            temperatureMonitor = Program.container.GetInstance<ITemperatureMonitor>();
+            temperatureMonitor.TemperatureChanged += TemperatureChanged;
+
+            scheduledTemperatureMonitor = Program.container.GetInstance<IScheduledTemperatureMonitor>();
+            scheduledTemperatureMonitor.TemperatureChanged += TemperatureChanged2;
         }
 
         private void NotifyIcon_MouseClick(object sender, MouseEventArgs e)
@@ -67,6 +71,23 @@ namespace Telebot.Presenters
             EventAggregator.Instance.Publish(new HighTemperatureMessage(text));
         }
 
+        private void TemperatureChanged2(object sender, IHardwareInfo e)
+        {
+            string text = "";
+
+            switch (e.DeviceClass)
+            {
+                case CPUIDSDK.CLASS_DEVICE_PROCESSOR:
+                    text = $"*CPU_TEMPERATURE*: {e.Value}°C\nFrom *Telebot*";
+                    break;
+                case CPUIDSDK.CLASS_DEVICE_DISPLAY_ADAPTER:
+                    text = $"*{e.DeviceName}*: {e.Value}°C\nFrom *Telebot*";
+                    break;
+            }
+
+            EventAggregator.Instance.Publish(new HighTemperatureMessage(text));
+        }
+
         private void mainFormView_Resize(object sender, EventArgs e)
         {
             if (mainFormView.WindowState == FormWindowState.Minimized)
@@ -80,18 +101,12 @@ namespace Telebot.Presenters
         {
             SaveSettings();
             communicationService.Stop();
-
-            if (tempMonitor.IsActive)
-                tempMonitor.Stop();
         }
 
         private void mainFormView_Load(object sender, EventArgs e)
         {
             LoadSettings();
             communicationService.Start();
-
-            if (settings.MonitorEnabled)
-                tempMonitor.Start();
         }
 
         private void SaveSettings()
@@ -99,7 +114,8 @@ namespace Telebot.Presenters
             settings.Form1Bounds = mainFormView.Bounds;
 
             var widths = new List<int>(mainFormView.ObjectListView.Columns.Count);
-            foreach (ColumnHeader column in mainFormView.ObjectListView.Columns) {
+            foreach (ColumnHeader column in mainFormView.ObjectListView.Columns)
+            {
                 widths.Add(column.Width);
             }
             settings.ListView1ColumnsWidth = widths;

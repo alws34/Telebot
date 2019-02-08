@@ -3,11 +3,11 @@ using Telebot.Models;
 
 namespace Telebot.Monitors
 {
-    public interface ITemperatureMonitor
+    public interface IScheduledTemperatureMonitor
     {
         event EventHandler<IHardwareInfo> TemperatureChanged;
         bool IsActive { get; }
-        void Start();
+        void Start(int durationInSec, int intervalInSec);
         void Stop();
     }
 }

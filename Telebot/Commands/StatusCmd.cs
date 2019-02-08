@@ -24,7 +24,7 @@ namespace Telebot.Commands
 
         public void Execute(object parameter)
         {
-            var cmdInfo = parameter as CommandInfo;
+            var parameters = parameter as CommandParam;
 
             var status = new StringBuilder();
 
@@ -33,14 +33,14 @@ namespace Telebot.Commands
                 status.AppendLine(cmd.Execute());
             }
 
-            var info = new CommandResult
+            var result = new CommandResult
             {
-                Message = cmdInfo.Message,
+                Message = parameters.Message,
                 Text = status.ToString(),
                 SendType = SendType.Text
             };
 
-            Completed?.Invoke(this, info);
+            Completed?.Invoke(this, result);
         }
 
         public void ExecuteAsync(object parameter)

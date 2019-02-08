@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Telebot.Commands;
 using Telebot.Events;
@@ -9,7 +10,6 @@ using Telebot.Models;
 using Telebot.Views;
 using Telegram.Bot;
 using Telegram.Bot.Args;
-using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 
 namespace Telebot.Services
@@ -17,8 +17,7 @@ namespace Telebot.Services
     public class TelegramService : ICommunicationService
     {
         private string token;
-        private ChatId chatId;
-        private List<int> whiteList;
+        private List<long> whitelist;
 
         private readonly TelegramBotClient client;
         private readonly ISettings settings;
@@ -53,32 +52,21 @@ namespace Telebot.Services
             EventAggregator.Instance.Subscribe<HighTemperatureMessage>(OnHighTemperature);
         }
 
-        ~TelegramService()
-        {
-            SaveSettings();
-        }
-
         private void LoadSettings()
         {
             token = settings.TelegramToken;
-            whiteList = settings.TelegramWhiteList;
-            chatId = settings.ChatId;
-        }
-
-        private void SaveSettings()
-        {
-            settings.ChatId = chatId.Identifier;
+            whitelist = settings.TelegramWhitelist;
         }
 
         private async void doStartup()
         {
             mainFormView.Text += $" - ({(await client.GetMeAsync()).Username})";
 
-            if (chatId != null && chatId.Identifier > 0)
+            foreach(long chatid in whitelist)
             {
                 await client.SendTextMessageAsync
                 (
-                    chatId,
+                    chatid,
                     "*Telebot*: I'm Up.",
                     parseMode: ParseMode.Markdown
                 );
@@ -106,12 +94,15 @@ namespace Telebot.Services
 
         private void OnHighTemperature(HighTemperatureMessage obj)
         {
-            client.SendTextMessageAsync(chatId, obj.Message, parseMode: ParseMode.Markdown);
+            foreach (long chatid in whitelist)
+            {
+                client.SendTextMessageAsync(chatid, obj.Message, parseMode: ParseMode.Markdown);
+            }
         }
 
         private void BotMessageHandler(object sender, MessageEventArgs e)
         {
-            if (!whiteList.Exists(x => x.Equals(e.Message.From.Id)))
+            if (!whitelist.Exists(x => x.Equals(e.Message.From.Id)))
             {
                 var cmdResult = new CommandResult
                 {
@@ -123,11 +114,6 @@ namespace Telebot.Services
                 return;
             }
 
-            if (chatId == null || chatId.Identifier == 0)
-            {
-                chatId = e.Message.Chat.Id;
-            }
-
             string cmdKey = e.Message.Text;
 
             if (string.IsNullOrEmpty(cmdKey))
@@ -135,7 +121,7 @@ namespace Telebot.Services
                 return;
             }
 
-            string info = $"Received {e.Message.Text} from {e.Message.From.Username}.";
+            string info = $"Received {cmdKey} from {e.Message.From.Username}.";
 
             var item = new LvItem
             {
@@ -150,15 +136,18 @@ namespace Telebot.Services
                 EventAggregator.Instance.Publish(new ShowNotifyIconBalloon(info));
             }
 
-            if (commands.ContainsKey(cmdKey))
+            if (commands.Keys.Any(key => Regex.IsMatch($"^{cmdKey}$", key)))
             {
-                var cmdInfo = new CommandInfo
+                var key = commands.Keys.Single(k => Regex.IsMatch($"^{cmdKey}$", k));
+
+                var cmdInfo = new CommandParam
                 {
                     Message = e.Message,
-                    Commands = commands.Values.ToArray()
+                    Commands = commands.Values.ToArray(),
+                    Parameters = Regex.Match(cmdKey, key)
                 };
 
-                commands[cmdKey].ExecuteAsync(cmdInfo);
+                commands.Single(pair => Regex.IsMatch($"^{cmdKey}$", pair.Key)).Value.ExecuteAsync(cmdInfo);
             }
             else
             {

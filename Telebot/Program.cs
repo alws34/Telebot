@@ -86,6 +86,7 @@ namespace Telebot
                 typeof(ScreenOffCmd),
                 typeof(TempMonOnCmd),
                 typeof(TempMonOffCmd),
+                typeof(TempTimeCmd),
                 typeof(RebootCmd),
                 typeof(ShutdownCmd),
                 typeof(SleepCmd),
@@ -99,6 +100,7 @@ namespace Telebot
                 typeof(GPUProvider)
             );
 
+            container.Register<IScheduledTemperatureMonitor, ScheduledSystemTempMonitor>(Lifestyle.Singleton);
             container.Register<ITemperatureMonitor, SystemTempMonitor>(Lifestyle.Singleton);
             container.Register<ICommunicationService, TelegramService>(Lifestyle.Singleton);
             container.Register<ISettings, SettingsManager>(Lifestyle.Singleton);

@@ -1,6 +1,4 @@
-﻿using Telebot.Contracts;
-
-namespace Telebot.Models
+﻿namespace Telebot.Models
 {
     public class HardwareInfo : IHardwareInfo
     {

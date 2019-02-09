@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.Timers;
 using Telebot.HwProviders;
@@ -27,7 +26,7 @@ namespace Telebot.ScheduledOperations
 
         private void Elapsed(object sender, ElapsedEventArgs e)
         {
-            if (System.DateTime.Now >= stopTime)
+            if (DateTime.Now >= stopTime)
             {
                 workerTimer.Stop();
                 return;

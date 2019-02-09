@@ -26,7 +26,7 @@ namespace Telebot.ScheduledOperations
 
         private void Elapsed(object sender, ElapsedEventArgs e)
         {
-            if (System.DateTime.Now >= stopTime)
+            if (DateTime.Now >= stopTime)
             {
                 workerTimer.Stop();
                 return;

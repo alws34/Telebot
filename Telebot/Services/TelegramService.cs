@@ -24,7 +24,7 @@ namespace Telebot.Services
         private readonly ISettings settings;
         private readonly IMainFormView mainFormView;
 
-        private Dictionary<Regex, ICommand> commands;
+        private readonly Dictionary<Regex, ICommand> commands;
 
         public TelegramService()
         {
@@ -106,13 +106,8 @@ namespace Telebot.Services
         {
             foreach (long chatid in whitelist)
             {
-                client.SendPhotoAsync
-                (
-                    chatid,
-                    obj.Photo.ToStream(),
-                    parseMode: ParseMode.Markdown,
-                    caption: "From *Telebot*"
-                );
+                client.SendPhotoAsync(chatid, obj.Photo.ToStream(), 
+                    parseMode: ParseMode.Markdown, caption: "From *Telebot*");
             }
         }
 
@@ -152,7 +147,7 @@ namespace Telebot.Services
                 EventAggregator.Instance.Publish(new OnNotifyIconBalloonArgs(info));
             }
 
-            var command = commands.SingleOrDefault(pair => pair.Key.IsMatch(cmdKey));
+            var command = commands.SingleOrDefault(x => x.Key.IsMatch(cmdKey));
             if (command.Key != null)
             {
                 var cmdInfo = new CommandParam

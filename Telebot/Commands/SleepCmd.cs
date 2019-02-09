@@ -7,7 +7,7 @@ namespace Telebot.Commands
 {
     public class SleepCmd : ICommand
     {
-        public string Name => "/sleep";
+        public string Pattern => "/sleep";
 
         public string Description => "Puts the workstation into sleep mode.";
 
@@ -43,7 +43,7 @@ namespace Telebot.Commands
 
         public override string ToString()
         {
-            return $"*{Name}* - {Description}";
+            return $"*{Pattern}* - {Description}";
         }
     }
 }

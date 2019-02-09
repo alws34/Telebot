@@ -9,7 +9,7 @@ namespace Telebot.Commands
 {
     public class HelpCmd : ICommand
     {
-        public string Name => "/help";
+        public string Pattern => "/help";
 
         public string Description => "List of available commands.";
 
@@ -43,7 +43,7 @@ namespace Telebot.Commands
 
         public override string ToString()
         {
-            return $"*{Name}* - {Description}";
+            return $"*{Pattern}* - {Description}";
         }
     }
 }

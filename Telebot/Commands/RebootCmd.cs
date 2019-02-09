@@ -7,7 +7,7 @@ namespace Telebot.Commands
 {
     public class RebootCmd : ICommand
     {
-        public string Name => "/reboot";
+        public string Pattern => "/reboot";
 
         public string Description => "Reboots the workstation.";
 
@@ -43,7 +43,7 @@ namespace Telebot.Commands
 
         public override string ToString()
         {
-            return $"*{Name}* - {Description}";
+            return $"*{Pattern}* - {Description}";
         }
     }
 }

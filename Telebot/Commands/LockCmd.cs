@@ -7,7 +7,7 @@ namespace Telebot.Commands
 {
     public class LockCmd : ICommand
     {
-        public string Name => "/lock";
+        public string Pattern => "/lock";
 
         public string Description => "Locks the workstation.";
 
@@ -36,7 +36,7 @@ namespace Telebot.Commands
 
         public override string ToString()
         {
-            return $"*{Name}* - {Description}";
+            return $"*{Pattern}* - {Description}";
         }
     }
 }

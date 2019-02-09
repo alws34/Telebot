@@ -7,7 +7,7 @@ namespace Telebot.Commands
 {
     public class ShutdownCmd : ICommand
     {
-        public string Name => "/shutdown";
+        public string Pattern => "/shutdown";
 
         public string Description => "Shuts down the workstation.";
 
@@ -43,7 +43,7 @@ namespace Telebot.Commands
 
         public override string ToString()
         {
-            return $"*{Name}* - {Description}";
+            return $"*{Pattern}* - {Description}";
         }
     }
 }

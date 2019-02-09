@@ -7,7 +7,7 @@ namespace Telebot.Commands
 {
     public class TempTimeCmd : ICommand
     {
-        public string Name => "/temptime -d (\\d+) -i (\\d+)";
+        public string Pattern => "/temptime -d (\\d+) -i (\\d+)";
 
         public string Description => "Schedules a temperature monitor.";
 
@@ -46,7 +46,7 @@ namespace Telebot.Commands
 
         public override string ToString()
         {
-            return $"*{Name}* - {Description}";
+            return $"*{Pattern}* - {Description}";
         }
     }
 }

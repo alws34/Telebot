@@ -22,10 +22,10 @@ namespace Telebot.ScheduledOperations
             tempProviders = Program.container.GetAllInstances<ITemperatureProvider>();
 
             workerTimer = new Timer();
-            workerTimer.Elapsed += WorkerTimer_Elapsed;
+            workerTimer.Elapsed += Elapsed;
         }
 
-        private void WorkerTimer_Elapsed(object sender, ElapsedEventArgs e)
+        private void Elapsed(object sender, ElapsedEventArgs e)
         {
             if (System.DateTime.Now >= stopTime)
             {

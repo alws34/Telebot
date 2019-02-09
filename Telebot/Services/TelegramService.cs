@@ -24,18 +24,18 @@ namespace Telebot.Services
         private readonly ISettings settings;
         private readonly IMainFormView mainFormView;
 
-        private Dictionary<string, ICommand> commands;
+        private Dictionary<Regex, ICommand> commands;
 
         public TelegramService()
         {
             mainFormView = Program.container.GetInstance<MainForm>();
 
-            this.commands = new Dictionary<string, ICommand>();
+            this.commands = new Dictionary<Regex, ICommand>();
 
             var commands = Program.container.GetAllInstances<ICommand>();
             foreach (ICommand command in commands)
             {
-                this.commands.Add(command.Name, command);
+                this.commands.Add(new Regex($"^{command.Pattern}$"), command);
                 command.Completed += CommandCompleted;
             }
 
@@ -152,18 +152,17 @@ namespace Telebot.Services
                 EventAggregator.Instance.Publish(new OnNotifyIconBalloonArgs(info));
             }
 
-            if (commands.Keys.Any(key => Regex.IsMatch($"^{cmdKey}$", key)))
+            var command = commands.SingleOrDefault(pair => pair.Key.IsMatch(cmdKey));
+            if (command.Key != null)
             {
-                var key = commands.Keys.Single(k => Regex.IsMatch($"^{cmdKey}$", k));
-
                 var cmdInfo = new CommandParam
                 {
                     Message = e.Message,
                     Commands = commands.Values.ToArray(),
-                    Parameters = Regex.Match(cmdKey, key)
+                    Parameters = command.Key.Match(cmdKey)
                 };
 
-                commands.Single(pair => Regex.IsMatch($"^{cmdKey}$", pair.Key)).Value.ExecuteAsync(cmdInfo);
+                command.Value.ExecuteAsync(cmdInfo);
             }
             else
             {

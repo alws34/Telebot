@@ -7,7 +7,7 @@ namespace Telebot.Commands
 {
     public class AppsCmd : ICommand
     {
-        public string Name => "/apps";
+        public string Pattern => "/apps";
 
         public string Description => "List of active applications.";
 
@@ -41,7 +41,7 @@ namespace Telebot.Commands
 
         public override string ToString()
         {
-            return $"*{Name}* - {Description}";
+            return $"*{Pattern}* - {Description}";
         }
     }
 }

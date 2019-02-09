@@ -9,7 +9,7 @@ namespace Telebot.Commands
 {
     public class StatusCmd : ICommand
     {
-        public string Name => "/status";
+        public string Pattern => "/status";
 
         public string Description => "Receive workstation information.";
 
@@ -50,7 +50,7 @@ namespace Telebot.Commands
 
         public override string ToString()
         {
-            return $"*{Name}* - {Description}";
+            return $"*{Pattern}* - {Description}";
         }
     }
 }

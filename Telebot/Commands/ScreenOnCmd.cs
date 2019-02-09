@@ -7,7 +7,7 @@ namespace Telebot.Commands
 {
     public class ScreenOnCmd : ICommand
     {
-        public string Name => "/screen on";
+        public string Pattern => "/screen on";
 
         public string Description => "Turn on the display.";
 
@@ -43,7 +43,7 @@ namespace Telebot.Commands
 
         public override string ToString()
         {
-            return $"*{Name}* - {Description}";
+            return $"*{Pattern}* - {Description}";
         }
     }
 }

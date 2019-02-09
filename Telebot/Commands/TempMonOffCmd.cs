@@ -8,7 +8,7 @@ namespace Telebot.Commands
 {
     public class TempMonOffCmd : ICommand
     {
-        public string Name => "/tempmon off";
+        public string Pattern => "/tempmon off";
 
         public string Description => "Turn off temperature monitoring.";
 
@@ -47,7 +47,7 @@ namespace Telebot.Commands
 
         public override string ToString()
         {
-            return $"*{Name}* - {Description}";
+            return $"*{Pattern}* - {Description}";
         }
     }
 }

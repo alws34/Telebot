@@ -10,7 +10,7 @@ namespace Telebot.Commands
 {
     public class CaptureCmd : ICommand
     {
-        public string Name => "/capture";
+        public string Pattern => "/capture";
 
         public string Description => "Get a screenshot of the workstation.";
 
@@ -55,7 +55,7 @@ namespace Telebot.Commands
 
         public override string ToString()
         {
-            return $"*{Name}* - {Description}";
+            return $"*{Pattern}* - {Description}";
         }
     }
 }

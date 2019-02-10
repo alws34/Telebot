@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using Telebot.Contracts;
 
 namespace Telebot.Loggers
 {

@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.Linq;
 using System.Windows.Forms;
-using Telebot.Contracts;
+using Telebot.Loggers;
 
 namespace Telebot.BusinessLogic
 {
@@ -18,10 +16,13 @@ namespace Telebot.BusinessLogic
 
         public Bitmap CaptureDesktop()
         {
-            int width = SystemInformation.VirtualScreen.Width;
-            int height = SystemInformation.VirtualScreen.Height;
-            int left = SystemInformation.VirtualScreen.Left;
-            int top = SystemInformation.VirtualScreen.Top;
+            //int width = SystemInformation.VirtualScreen.Width;
+            //int height = SystemInformation.VirtualScreen.Height;
+            //int left = SystemInformation.VirtualScreen.Left;
+            //int top = SystemInformation.VirtualScreen.Top;
+
+            int width = Screen.PrimaryScreen.Bounds.Width;
+            int height = Screen.PrimaryScreen.Bounds.Height;
 
             Bitmap result = new Bitmap(width, height);
 
@@ -29,7 +30,7 @@ namespace Telebot.BusinessLogic
             {
                 using (Graphics gObj = Graphics.FromImage(result))
                 {
-                    gObj.CopyFromScreen(left, top, 0, 0, result.Size);
+                    gObj.CopyFromScreen(0, 0, 0, 0, result.Size);
                 }
             }
             catch (Exception e)

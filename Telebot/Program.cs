@@ -2,18 +2,17 @@
 using System;
 using System.Threading;
 using System.Windows.Forms;
+using Telebot.BusinessLogic;
 using Telebot.Commands;
 using Telebot.Commands.StatusCommands;
-using Telebot.Contracts;
-using Telebot.BusinessLogic;
+using Telebot.HwProviders;
 using Telebot.Loggers;
 using Telebot.Managers;
 using Telebot.Monitors;
-using Telebot.HwProviders;
 using Telebot.Presenters;
+using Telebot.ScheduledOperations;
 using Telebot.Services;
 using Telebot.StatusCommands;
-using Telebot.ScheduledOperations;
 
 namespace Telebot
 {

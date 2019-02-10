@@ -16,6 +16,7 @@ namespace Telebot.HwProviders
 
             result.Add(new HardwareInfo
             {
+                DeviceName = Program.pSDK.GetProcessorName(0),
                 DeviceClass = CPUIDSDK.CLASS_DEVICE_PROCESSOR,
                 Value = val
             });

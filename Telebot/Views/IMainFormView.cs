@@ -16,7 +16,6 @@ namespace Telebot.Views
         void Show();
         ObjectListView ObjectListView { get; }
         Rectangle Bounds { get; set; }
-        string Text { get; set; }
         FormWindowState WindowState { get; set; }
     }
 }

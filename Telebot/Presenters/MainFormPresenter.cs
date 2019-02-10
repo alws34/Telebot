@@ -63,25 +63,11 @@ namespace Telebot.Presenters
 
         private void TemperatureChanged(object sender, HardwareInfo e)
         {
-            string text = "";
-
-            switch (e.DeviceClass)
+            if (e.Value >= CPU_TEMPERATURE_WARNING || e.Value >= GPU_TEMPERATURE_WARNING)
             {
-                case CPUIDSDK.CLASS_DEVICE_PROCESSOR:
-                    if (e.Value >= CPU_TEMPERATURE_WARNING)
-                    {
-                        text = $"*[WARNING] CPU_TEMPERATURE*: {e.Value}°C\nFrom *Telebot*";
-                    }
-                    break;
-                case CPUIDSDK.CLASS_DEVICE_DISPLAY_ADAPTER:
-                    if (e.Value >= GPU_TEMPERATURE_WARNING)
-                    {
-                        text = $"*[WARNING] {e.DeviceName}*: {e.Value}°C\nFrom *Telebot*";
-                    }
-                    break;
+                string text = $"*[WARNING] {e.DeviceName}*: {e.Value}°C\nFrom *Telebot*";
+                EventAggregator.Instance.Publish(new OnHighTemperatureArgs(text));
             }
-
-            EventAggregator.Instance.Publish(new OnHighTemperatureArgs(text));
         }
 
         private void ScheduledTemperatureChanged(object sender, IEnumerable<HardwareInfo> e)
@@ -90,15 +76,7 @@ namespace Telebot.Presenters
 
             foreach (HardwareInfo device in e)
             {
-                switch (device.DeviceClass)
-                {
-                    case CPUIDSDK.CLASS_DEVICE_PROCESSOR:
-                        text.AppendLine($"*CPU_TEMPERATURE*: {device.Value}°C");
-                        break;
-                    case CPUIDSDK.CLASS_DEVICE_DISPLAY_ADAPTER:
-                        text.AppendLine($"*{device.DeviceName}*: {device.Value}°C");
-                        break;
-                }
+                text.AppendLine($"*{device.DeviceName}*: {device.Value}°C");
             }
 
             text.AppendLine("\nFrom *Telebot*");

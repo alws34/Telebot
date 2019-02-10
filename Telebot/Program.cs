@@ -109,6 +109,7 @@ namespace Telebot
             container.Register<ISettings, SettingsManager>(Lifestyle.Singleton);
             container.Register<ILogger, FileLogger>(Lifestyle.Singleton);
             container.Register<MainForm>(Lifestyle.Singleton);
+            container.Register<CommandDispatcher>(Lifestyle.Singleton);
 
             container.Register<CaptureLogic>(Lifestyle.Singleton);
             container.Register<NetworkLogic>(Lifestyle.Singleton);

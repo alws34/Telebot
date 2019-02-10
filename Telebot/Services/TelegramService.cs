@@ -24,22 +24,13 @@ namespace Telebot.Services
         private readonly ISettings settings;
         private readonly IMainFormView mainFormView;
 
-        private readonly Dictionary<Regex, ICommand> commands;
+        private readonly CommandDispatcher cmdDispatcher;
 
         public TelegramService()
         {
             mainFormView = Program.container.GetInstance<MainForm>();
-
-            this.commands = new Dictionary<Regex, ICommand>();
-
-            var commands = Program.container.GetAllInstances<ICommand>();
-            foreach (ICommand command in commands)
-            {
-                this.commands.Add(new Regex($"^{command.Pattern}$"), command);
-                command.Completed += CommandCompleted;
-            }
-
             settings = Program.container.GetInstance<ISettings>();
+            cmdDispatcher = Program.container.GetInstance<CommandDispatcher>();
 
             LoadSettings();
 
@@ -50,6 +41,8 @@ namespace Telebot.Services
                 doStartup();
             }
 
+            EventAggregator.Instance.Subscribe<OnSendPhotoToChatArgs>(OnSendPhotoToChat);
+            EventAggregator.Instance.Subscribe<OnSendTextToChatArgs>(OnSendTextToChat);
             EventAggregator.Instance.Subscribe<OnHighTemperatureArgs>(OnHighTemperature);
             EventAggregator.Instance.Subscribe<OnScreenCaptureArgs>(OnScreenCapture);
         }
@@ -75,23 +68,16 @@ namespace Telebot.Services
             }
         }
 
-        private void CommandCompleted(object sender, CommandResult e)
+        private void OnSendTextToChat(OnSendTextToChatArgs obj)
         {
-            switch (e.SendType)
-            {
-                case SendType.Text:
-                    client.SendTextMessageAsync(e.Message.Chat.Id,
-                        e.Text.TrimEnd(),
-                        parseMode: ParseMode.Markdown,
-                        replyToMessageId: e.Message.MessageId);
-                    break;
-                case SendType.Photo:
-                    client.SendPhotoAsync(e.Message.Chat.Id, e.Stream,
-                        caption: $"{DateTime.Now.ToString()} by *Telebot*",
-                        parseMode: ParseMode.Markdown,
-                        replyToMessageId: e.Message.MessageId);
-                    break;
-            }
+            client.SendTextMessageAsync(obj.ChatId, 
+                obj.Text, parseMode: ParseMode.Markdown, replyToMessageId: obj.MessageId);
+        }
+
+        private void OnSendPhotoToChat(OnSendPhotoToChatArgs obj)
+        {
+            client.SendPhotoAsync(obj.ChatId,
+                obj.PhotoStream, parseMode: ParseMode.Markdown, replyToMessageId: obj.MessageId);
         }
 
         private void OnHighTemperature(OnHighTemperatureArgs obj)
@@ -115,24 +101,19 @@ namespace Telebot.Services
         {
             if (!whitelist.Exists(x => x.Equals(e.Message.From.Id)))
             {
-                var cmdResult = new CommandResult
-                {
-                    Message = e.Message,
-                    SendType = SendType.Text,
-                    Text = "Unauthorized."
-                };
-                CommandCompleted(sender, cmdResult);
+                var cmdResult = new OnSendTextToChatArgs("Unauthorized.", e.Message.Chat.Id, 0);
+                OnSendTextToChat(cmdResult);
                 return;
             }
 
-            string cmdKey = e.Message.Text;
+            string cmdPattern = e.Message.Text;
 
-            if (string.IsNullOrEmpty(cmdKey))
+            if (string.IsNullOrEmpty(cmdPattern))
             {
                 return;
             }
 
-            string info = $"Received {cmdKey} from {e.Message.From.Username}.";
+            string info = $"Received {cmdPattern} from {e.Message.From.Username}.";
 
             var item = new LvItem
             {
@@ -147,27 +128,11 @@ namespace Telebot.Services
                 EventAggregator.Instance.Publish(new OnNotifyIconBalloonArgs(info));
             }
 
-            var command = commands.SingleOrDefault(x => x.Key.IsMatch(cmdKey));
-            if (command.Key != null)
+            if(!cmdDispatcher.Dispatch(cmdPattern, e.Message))
             {
-                var cmdInfo = new CommandParam
-                {
-                    Message = e.Message,
-                    Commands = commands.Values.ToArray(),
-                    Parameters = command.Key.Match(cmdKey)
-                };
-
-                command.Value.ExecuteAsync(cmdInfo);
-            }
-            else
-            {
-                var cmdResult = new CommandResult
-                {
-                    Message = e.Message,
-                    SendType = SendType.Text,
-                    Text = "Undefined command. For commands list, type */help*."
-                };
-                CommandCompleted(sender, cmdResult);
+                var cmdResult = new OnSendTextToChatArgs(
+                    "Undefined command. For commands list, type */help*.", e.Message.Chat.Id, 0);
+                OnSendTextToChat(cmdResult);
             }
         }
 

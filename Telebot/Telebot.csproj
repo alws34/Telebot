@@ -88,6 +88,7 @@
     <Compile Include="Commands\AppsCmd.cs" />
     <Compile Include="Commands\CapTimeCmd.cs" />
     <Compile Include="Commands\CaptureCmd.cs" />
+    <Compile Include="Commands\CommandDispatcher.cs" />
     <Compile Include="Commands\HelpCmd.cs" />
     <Compile Include="Commands\LockCmd.cs" />
     <Compile Include="Commands\RebootCmd.cs" />
@@ -111,6 +112,8 @@
     <Compile Include="Events\OnScreenCaptureArgs.cs" />
     <Compile Include="Events\OnNotifyIconBalloonArgs.cs" />
     <Compile Include="Events\OnNotifyIconVisibilityArgs.cs" />
+    <Compile Include="Events\OnSendPhotoToChatArgs.cs" />
+    <Compile Include="Events\OnSendTextToChatArgs.cs" />
     <Compile Include="Loggers\ILogger.cs" />
     <Compile Include="Managers\ISettings.cs" />
     <Compile Include="Commands\StatusCommands\IStatusCommand.cs" />

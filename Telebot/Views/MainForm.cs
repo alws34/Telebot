@@ -21,6 +21,8 @@ namespace Telebot
 
             EventAggregator.Instance.Subscribe<OnNotifyIconVisibilityArgs>(OnUpdateNotifyIconVisible);
             EventAggregator.Instance.Subscribe<OnNotifyIconBalloonArgs>(OnShowNotifyIconBalloon);
+            EventAggregator.Instance.Subscribe<OnSetBotTitleArgs>(OnSetBotTitle);
+            EventAggregator.Instance.Subscribe<OnAddObjectToLvArgs>(OnAddObjectToLv);
         }
 
         private void OnUpdateNotifyIconVisible(OnNotifyIconVisibilityArgs obj)
@@ -30,7 +32,20 @@ namespace Telebot
 
         private void OnShowNotifyIconBalloon(OnNotifyIconBalloonArgs obj)
         {
-            notifyIcon1.ShowBalloonTip(1000, Text, obj.Text, ToolTipIcon.Info);
+            if (WindowState == FormWindowState.Minimized)
+            {
+                notifyIcon1.ShowBalloonTip(1000, Text, obj.Text, ToolTipIcon.Info);
+            }
+        }
+
+        private void OnSetBotTitle(OnSetBotTitleArgs obj)
+        {
+            Text += obj.BotTitle;
+        }
+
+        private void OnAddObjectToLv(OnAddObjectToLvArgs obj)
+        {
+            objectListView1.AddObject(obj.Item);
         }
     }
 }

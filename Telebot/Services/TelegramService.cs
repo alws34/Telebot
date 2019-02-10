@@ -22,13 +22,11 @@ namespace Telebot.Services
 
         private readonly TelegramBotClient client;
         private readonly ISettings settings;
-        private readonly IMainFormView mainFormView;
 
         private readonly CommandDispatcher cmdDispatcher;
 
         public TelegramService()
         {
-            mainFormView = Program.container.GetInstance<MainForm>();
             settings = Program.container.GetInstance<ISettings>();
             cmdDispatcher = Program.container.GetInstance<CommandDispatcher>();
 
@@ -55,16 +53,12 @@ namespace Telebot.Services
 
         private async void doStartup()
         {
-            mainFormView.Text += $" - ({(await client.GetMeAsync()).Username})";
+            string title = $" - ({(await client.GetMeAsync()).Username})";
+            EventAggregator.Instance.Publish(new OnSetBotTitleArgs(title));
 
             foreach (long chatid in whitelist)
             {
-                await client.SendTextMessageAsync
-                (
-                    chatid,
-                    "*Telebot*: I'm Up.",
-                    parseMode: ParseMode.Markdown
-                );
+                client.SendTextMessageAsync(chatid, "*Telebot*: I'm Up.", parseMode: ParseMode.Markdown);
             }
         }
 
@@ -121,14 +115,11 @@ namespace Telebot.Services
                 Text = info
             };
 
-            mainFormView.ObjectListView.AddObject(item);
+            EventAggregator.Instance.Publish(new OnAddObjectToLvArgs(item));
 
-            if (mainFormView.WindowState == FormWindowState.Minimized)
-            {
-                EventAggregator.Instance.Publish(new OnNotifyIconBalloonArgs(info));
-            }
+            EventAggregator.Instance.Publish(new OnNotifyIconBalloonArgs(info));
 
-            if(!cmdDispatcher.Dispatch(cmdPattern, e.Message))
+            if (!cmdDispatcher.Dispatch(cmdPattern, e.Message))
             {
                 var cmdResult = new OnSendTextToChatArgs(
                     "Undefined command. For commands list, type */help*.", e.Message.Chat.Id, 0);

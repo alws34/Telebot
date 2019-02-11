@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Telebot.Commands.Dispatchers;
+using System.IO;
+using System.Text.RegularExpressions;
+using Telebot.Commands.Facotries;
 using Telebot.Events;
 using Telebot.Extensions;
 using Telebot.Managers;
@@ -19,12 +21,9 @@ namespace Telebot.Services
         private readonly TelegramBotClient client;
         private readonly ISettings settings;
 
-        private readonly CommandDispatcher cmdDispatcher;
-
         public TelegramService()
         {
             settings = Program.container.GetInstance<ISettings>();
-            cmdDispatcher = Program.container.GetInstance<CommandDispatcher>();
 
             LoadSettings();
 
@@ -35,8 +34,6 @@ namespace Telebot.Services
                 doStartup();
             }
 
-            EventAggregator.Instance.Subscribe<OnSendPhotoToChatArgs>(OnSendPhotoToChat);
-            EventAggregator.Instance.Subscribe<OnSendTextToChatArgs>(OnSendTextToChat);
             EventAggregator.Instance.Subscribe<OnHighTemperatureArgs>(OnHighTemperature);
             EventAggregator.Instance.Subscribe<OnScreenCaptureArgs>(OnScreenCapture);
         }
@@ -56,18 +53,6 @@ namespace Telebot.Services
             {
                 client.SendTextMessageAsync(chatid, "*Telebot*: I'm Up.", parseMode: ParseMode.Markdown);
             }
-        }
-
-        private void OnSendTextToChat(OnSendTextToChatArgs obj)
-        {
-            client.SendTextMessageAsync(obj.ChatId,
-                obj.Text, parseMode: ParseMode.Markdown, replyToMessageId: obj.MessageId);
-        }
-
-        private void OnSendPhotoToChat(OnSendPhotoToChatArgs obj)
-        {
-            client.SendPhotoAsync(obj.ChatId,
-                obj.PhotoStream, parseMode: ParseMode.Markdown, replyToMessageId: obj.MessageId);
         }
 
         private void OnHighTemperature(OnHighTemperatureArgs obj)
@@ -91,8 +76,7 @@ namespace Telebot.Services
         {
             if (!whitelist.Exists(x => x.Equals(e.Message.From.Id)))
             {
-                var cmdResult = new OnSendTextToChatArgs("Unauthorized.", e.Message.Chat.Id, 0);
-                OnSendTextToChat(cmdResult);
+                SendTextToChat("Unauthorized.", e.Message.Chat.Id, 0);
                 return;
             }
 
@@ -115,12 +99,44 @@ namespace Telebot.Services
 
             EventAggregator.Instance.Publish(new OnNotifyIconBalloonArgs(info));
 
-            if (!await cmdDispatcher.Dispatch(cmdPattern, e.Message))
+            var command = CommandFactory.Instance.GetCommand(cmdPattern);
+
+            if (command != null)
             {
-                var cmdResult = new OnSendTextToChatArgs(
-                    "Undefined command. For commands list, type */help*.", e.Message.Chat.Id, 0);
-                OnSendTextToChat(cmdResult);
+                var groups = Regex.Match(cmdPattern, command.Pattern).Groups;
+
+                var cmdParams = new CommandParam
+                {
+                    Groups = groups
+                };
+
+                var result = await command.ExecuteAsync(cmdParams);
+
+                switch (result.SendType)
+                {
+                    case SendType.Text:
+                        SendTextToChat(result.Text.TrimEnd(), e.Message.Chat.Id, e.Message.MessageId);
+                        break;
+                    case SendType.Photo:
+                        SendPhotoToChat(result.Stream, e.Message.Chat.Id, e.Message.MessageId);
+                        break;
+                }
             }
+            else
+            {
+                string s = "Undefined command. For commands list, type */help*.";
+                SendTextToChat(s, e.Message.Chat.Id, 0);
+            }
+        }
+
+        private void SendTextToChat(string text, long chatid, int messageid)
+        {
+            client.SendTextMessageAsync(chatid, text, parseMode: ParseMode.Markdown, replyToMessageId: messageid);
+        }
+
+        private void SendPhotoToChat(Stream photoStream, long chatid, int messageid)
+        {
+            client.SendPhotoAsync(chatid, photoStream, parseMode: ParseMode.Markdown, replyToMessageId: messageid);
         }
 
         public void Start()

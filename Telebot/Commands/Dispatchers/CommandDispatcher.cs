@@ -1,42 +1,28 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Telebot.Commands.Facotries;
 using Telebot.Events;
 using Telebot.Models;
 using Telegram.Bot.Types;
 
-namespace Telebot.Commands
+namespace Telebot.Commands.Dispatchers
 {
     public class CommandDispatcher
     {
-        private readonly Dictionary<Regex, ICommand> _commands;
-
-        public CommandDispatcher()
-        {
-            _commands = new Dictionary<Regex, ICommand>();
-
-            var commands = Program.container.GetAllInstances<ICommand>();
-
-            foreach (ICommand command in commands)
-            {
-                _commands.Add(new Regex($"^{command.Pattern}$"), command);
-            }
-        }
-
         public async Task<bool> Dispatch(string pattern, Message message)
         {
-            var command = _commands.SingleOrDefault(x => x.Key.IsMatch(pattern));
+            var command = CommandFactory.Instance.GetCommand(pattern);
 
-            if (command.Key != null)
+            if (command != null)
             {
-                var cmdArgs = new CommandParam
+                var groups = Regex.Match(pattern, command.Pattern).Groups;
+
+                var cmdParams = new CommandParam
                 {
-                    Commands = _commands.Values.ToArray(),
-                    Groups = command.Key.Match(pattern).Groups
+                    Groups = groups
                 };
 
-                var result = await command.Value.ExecuteAsync(cmdArgs);
+                var result = await command.ExecuteAsync(cmdParams);
 
                 switch (result.SendType)
                 {

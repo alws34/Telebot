@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using Telebot.Commands.Facotries;
 using Telebot.Models;
 
 namespace Telebot.Commands
@@ -13,11 +14,11 @@ namespace Telebot.Commands
 
         public override CommandResult Execute(object parameter)
         {
-            var parameters = parameter as CommandParam;
-
             var commandsStr = new StringBuilder();
 
-            foreach (ICommand command in parameters.Commands)
+            var commands = CommandFactory.Instance.GetAllCommands();
+
+            foreach (ICommand command in commands)
             {
                 commandsStr.AppendLine(command.ToString());
             }

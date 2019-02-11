@@ -4,6 +4,7 @@ using System.Threading;
 using System.Windows.Forms;
 using Telebot.BusinessLogic;
 using Telebot.Commands;
+using Telebot.Commands.Facotries;
 using Telebot.Commands.StatusCommands;
 using Telebot.HwProviders;
 using Telebot.Loggers;
@@ -101,6 +102,8 @@ namespace Telebot
                 typeof(GPUProvider)
             );
 
+            container.Register<CommandDispatcher>(Lifestyle.Singleton);
+
             container.Register<IScheduledScreenCapture, ScheduledScreenCapture>(Lifestyle.Singleton);
             container.Register<IScheduledTemperatureMonitor, ScheduledSystemTempMonitor>(Lifestyle.Singleton);
             container.Register<ITemperatureMonitor, SystemTempMonitor>(Lifestyle.Singleton);
@@ -108,7 +111,6 @@ namespace Telebot
             container.Register<ISettings, SettingsManager>(Lifestyle.Singleton);
             container.Register<ILogger, FileLogger>(Lifestyle.Singleton);
             container.Register<MainForm>(Lifestyle.Singleton);
-            container.Register<CommandDispatcher>(Lifestyle.Singleton);
 
             container.Register<CaptureLogic>(Lifestyle.Singleton);
             container.Register<NetworkLogic>(Lifestyle.Singleton);

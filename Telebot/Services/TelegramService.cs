@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Telebot.Commands;
+using Telebot.Commands.Dispatchers;
 using Telebot.Events;
 using Telebot.Extensions;
 using Telebot.Managers;

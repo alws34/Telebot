@@ -1,42 +1,27 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using Telebot.Helpers;
 using Telebot.Models;
-using Telebot.Helpers;
 
 namespace Telebot.Commands
 {
-    public class LockCmd : ICommand
+    public class LockCmd : CommandBase
     {
-        public string Pattern => "/lock";
-
-        public string Description => "Locks the workstation.";
-
-        public event EventHandler<CommandResult> Completed;
-
-        public void Execute(object parameter)
+        public LockCmd()
         {
-            var parameters = parameter as CommandParam;
+            Pattern = "/lock";
+            Description = "Locks the workstation.";
+        }
 
+        public override CommandResult Execute(object parameter)
+        {
             var result = new CommandResult
             {
-                Message = parameters.Message,
                 Text = "Locked down the workstation.",
                 SendType = SendType.Text
             };
 
-            Completed?.Invoke(this, result);
-
             User32Helper.LockWorkStation();
-        }
 
-        public void ExecuteAsync(object parameter)
-        {
-            Task.Run(() => Execute(parameter));
-        }
-
-        public override string ToString()
-        {
-            return $"*{Pattern}* - {Description}";
+            return result;
         }
     }
 }

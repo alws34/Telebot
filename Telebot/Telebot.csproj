@@ -88,6 +88,7 @@
     <Compile Include="Commands\AppsCmd.cs" />
     <Compile Include="Commands\CapTimeCmd.cs" />
     <Compile Include="Commands\CaptureCmd.cs" />
+    <Compile Include="Commands\CommandBase.cs" />
     <Compile Include="Commands\CommandDispatcher.cs" />
     <Compile Include="Commands\HelpCmd.cs" />
     <Compile Include="Commands\LockCmd.cs" />

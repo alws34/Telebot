@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Telebot.Events;
@@ -23,11 +21,10 @@ namespace Telebot.Commands
             foreach (ICommand command in commands)
             {
                 _commands.Add(new Regex($"^{command.Pattern}$"), command);
-                command.Completed += CommandCompleted;
             }
         }
 
-        public bool Dispatch(string pattern, Message message)
+        public async Task<bool> Dispatch(string pattern, Message message)
         {
             var command = _commands.SingleOrDefault(x => x.Key.IsMatch(pattern));
 
@@ -35,32 +32,28 @@ namespace Telebot.Commands
             {
                 var cmdArgs = new CommandParam
                 {
-                    Message = message,
                     Commands = _commands.Values.ToArray(),
-                    Parameters = command.Key.Match(pattern)
+                    Groups = command.Key.Match(pattern).Groups
                 };
 
-                command.Value.ExecuteAsync(cmdArgs);
+                var result = await command.Value.ExecuteAsync(cmdArgs);
+
+                switch (result.SendType)
+                {
+                    case SendType.Text:
+                        EventAggregator.Instance.Publish(new OnSendTextToChatArgs(
+                            result.Text.TrimEnd(), message.Chat.Id, message.MessageId));
+                        break;
+                    case SendType.Photo:
+                        EventAggregator.Instance.Publish(new OnSendPhotoToChatArgs(
+                           result.Stream, message.Chat.Id, message.MessageId));
+                        break;
+                }
 
                 return true;
             }
 
             return false;
-        }
-
-        private void CommandCompleted(object sender, CommandResult e)
-        {
-            switch (e.SendType)
-            {
-                case SendType.Text:
-                    EventAggregator.Instance.Publish(new OnSendTextToChatArgs(
-                        e.Text.TrimEnd(), e.Message.Chat.Id, e.Message.MessageId));
-                    break;
-                case SendType.Photo:
-                    EventAggregator.Instance.Publish(new OnSendPhotoToChatArgs(
-                       e.Stream, e.Message.Chat.Id, e.Message.MessageId));
-                    break;
-            }
         }
     }
 }

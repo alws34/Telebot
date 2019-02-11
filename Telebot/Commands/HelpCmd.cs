@@ -1,19 +1,17 @@
-﻿using System;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 using Telebot.Models;
 
 namespace Telebot.Commands
 {
-    public class HelpCmd : ICommand
+    public class HelpCmd : CommandBase
     {
-        public string Pattern => "/help";
+        public HelpCmd()
+        {
+            Pattern = "/help";
+            Description = "List of available commands.";
+        }
 
-        public string Description => "List of available commands.";
-
-        public event EventHandler<CommandResult> Completed;
-
-        public void Execute(object parameter)
+        public override CommandResult Execute(object parameter)
         {
             var parameters = parameter as CommandParam;
 
@@ -26,22 +24,11 @@ namespace Telebot.Commands
 
             var result = new CommandResult
             {
-                Message = parameters.Message,
                 Text = commandsStr.ToString(),
                 SendType = SendType.Text
             };
 
-            Completed?.Invoke(this, result);
-        }
-
-        public void ExecuteAsync(object parameter)
-        {
-            Task.Run(() => Execute(parameter));
-        }
-
-        public override string ToString()
-        {
-            return $"*{Pattern}* - {Description}";
+            return result;
         }
     }
 }

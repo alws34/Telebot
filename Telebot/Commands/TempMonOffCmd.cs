@@ -1,53 +1,34 @@
-﻿using System;
-using System.Threading.Tasks;
-using Telebot.Managers;
+﻿using Telebot.Managers;
 using Telebot.Models;
 using Telebot.Monitors;
 
 namespace Telebot.Commands
 {
-    public class TempMonOffCmd : ICommand
+    public class TempMonOffCmd : CommandBase
     {
-        public string Pattern => "/tempmon off";
-
-        public string Description => "Turn off temperature monitoring.";
-
-        public event EventHandler<CommandResult> Completed;
-
         private readonly ISettings settings;
         private readonly ITemperatureMonitor tempMon;
 
         public TempMonOffCmd()
         {
+            Pattern = "/tempmon off";
+            Description = "Turn off temperature monitoring.";
             settings = Program.container.GetInstance<ISettings>();
             tempMon = Program.container.GetInstance<ITemperatureMonitor>();
         }
 
-        public void Execute(object parameter)
+        public override CommandResult Execute(object parameter)
         {
-            var parameters = parameter as CommandParam;
-
             tempMon.Stop();
             settings.TempMonEnabled = false;
 
             var result = new CommandResult
             {
-                Message = parameters.Message,
                 Text = "Temperature monitor is turned off.",
                 SendType = SendType.Text
             };
 
-            Completed?.Invoke(this, result);
-        }
-
-        public void ExecuteAsync(object parameter)
-        {
-            Task.Run(() => Execute(parameter));
-        }
-
-        public override string ToString()
-        {
-            return $"*{Pattern}* - {Description}";
+            return result;
         }
     }
 }

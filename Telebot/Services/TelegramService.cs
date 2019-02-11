@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Windows.Forms;
 using Telebot.Commands;
 using Telebot.Events;
 using Telebot.Extensions;
 using Telebot.Managers;
 using Telebot.Models;
-using Telebot.Views;
 using Telegram.Bot;
 using Telegram.Bot.Args;
 using Telegram.Bot.Types.Enums;
@@ -64,7 +60,7 @@ namespace Telebot.Services
 
         private void OnSendTextToChat(OnSendTextToChatArgs obj)
         {
-            client.SendTextMessageAsync(obj.ChatId, 
+            client.SendTextMessageAsync(obj.ChatId,
                 obj.Text, parseMode: ParseMode.Markdown, replyToMessageId: obj.MessageId);
         }
 
@@ -86,12 +82,12 @@ namespace Telebot.Services
         {
             foreach (long chatid in whitelist)
             {
-                client.SendPhotoAsync(chatid, obj.Photo.ToStream(), 
+                client.SendPhotoAsync(chatid, obj.Photo.ToStream(),
                     parseMode: ParseMode.Markdown, caption: "From *Telebot*");
             }
         }
 
-        private void BotMessageHandler(object sender, MessageEventArgs e)
+        private async void BotMessageHandler(object sender, MessageEventArgs e)
         {
             if (!whitelist.Exists(x => x.Equals(e.Message.From.Id)))
             {
@@ -119,7 +115,7 @@ namespace Telebot.Services
 
             EventAggregator.Instance.Publish(new OnNotifyIconBalloonArgs(info));
 
-            if (!cmdDispatcher.Dispatch(cmdPattern, e.Message))
+            if (!await cmdDispatcher.Dispatch(cmdPattern, e.Message))
             {
                 var cmdResult = new OnSendTextToChatArgs(
                     "Undefined command. For commands list, type */help*.", e.Message.Chat.Id, 0);

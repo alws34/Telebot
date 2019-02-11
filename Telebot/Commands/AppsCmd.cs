@@ -1,47 +1,30 @@
-﻿using System;
-using Telebot.BusinessLogic;
+﻿using Telebot.BusinessLogic;
 using Telebot.Models;
-using System.Threading.Tasks;
 
 namespace Telebot.Commands
 {
-    public class AppsCmd : ICommand
+    public class AppsCmd : CommandBase
     {
-        public string Pattern => "/apps";
-
-        public string Description => "List of active applications.";
-
-        public event EventHandler<CommandResult> Completed;
-
         private readonly WindowsLogic windowsLogic;
 
         public AppsCmd()
         {
+            Pattern = "/apps";
+            Description = "List of active applications.";
             windowsLogic = Program.container.GetInstance<WindowsLogic>();
         }
 
-        public void Execute(object parameter)
+        public override CommandResult Execute(object parameter)
         {
-            var parameters = parameter as CommandParam;
+            string activeApps = windowsLogic.GetActiveApplications();
 
             var result = new CommandResult
             {
-                Message = parameters.Message,
-                Text = windowsLogic.GetActiveApplications(),
+                Text = activeApps,
                 SendType = SendType.Text
             };
 
-            Completed?.Invoke(this, result);
-        }
-
-        public void ExecuteAsync(object parameter)
-        {
-            Task.Run(() => Execute(parameter));
-        }
-
-        public override string ToString()
-        {
-            return $"*{Pattern}* - {Description}";
+            return result;
         }
     }
 }

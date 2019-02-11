@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using Telegram.Bot.Types;
 
 namespace Telebot.Models
 {
@@ -13,7 +12,6 @@ namespace Telebot.Models
     {
         public string Text { get; set; }
         public Stream Stream { get; set; }
-        public Message Message { get; set; }
         public SendType SendType { get; set; }
     }
 }

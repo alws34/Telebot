@@ -1,61 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using Telebot.BusinessLogic;
+﻿using Telebot.BusinessLogic;
 using Telebot.Extensions;
 using Telebot.Models;
-using System.Threading.Tasks;
 
 namespace Telebot.Commands
 {
-    public class CaptureCmd : ICommand
+    public class CaptureCmd : CommandBase
     {
-        public string Pattern => "/capture";
-
-        public string Description => "Get a screenshot of the workstation.";
-
-        public event EventHandler<CommandResult> Completed;
-
         private readonly CaptureLogic captureLogic;
-        private readonly MainForm mainForm;
 
         public CaptureCmd()
         {
+            Pattern = "/capture";
+            Description = "Get a screenshot of the workstation.";
             captureLogic = Program.container.GetInstance<CaptureLogic>();
-            mainForm = Program.container.GetInstance<MainForm>();
         }
 
-        public void Execute(object parameter)
+        public override CommandResult Execute(object parameter)
         {
-            var parameters = parameter as CommandParam;
+            var bitmap = captureLogic.CaptureDesktop();
 
-            var bitmaps = new List<Bitmap>
+            var result = new CommandResult
             {
-                //captureLogic.CaptureControl(mainForm),
-                captureLogic.CaptureDesktop()
+                Stream = bitmap.ToStream(),
+                SendType = SendType.Photo
             };
 
-            foreach (Bitmap bitmap in bitmaps)
-            {
-                var result = new CommandResult
-                {
-                    Message = parameters.Message,
-                    Stream = bitmap.ToStream(),
-                    SendType = SendType.Photo
-                };
-
-                Completed?.Invoke(this, result);
-            }
-        }
-
-        public void ExecuteAsync(object parameter)
-        {
-            Task.Run(() => Execute(parameter));
-        }
-
-        public override string ToString()
-        {
-            return $"*{Pattern}* - {Description}";
+            return result;
         }
     }
 }

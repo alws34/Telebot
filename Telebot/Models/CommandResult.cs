@@ -4,8 +4,8 @@ namespace Telebot.Models
 {
     public enum SendType
     {
-        Text = 0,
-        Photo = 1
+        Text,
+        Photo
     };
 
     public class CommandResult

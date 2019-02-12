@@ -1,18 +1,19 @@
 ﻿using System;
 using Telebot.Models;
-using Telebot.ScheduledOperations;
+using Telebot.Monitors;
+using Telebot.Monitors.Factories;
 
 namespace Telebot.Commands
 {
     public class TempTimeCmd : CommandBase
     {
-        private readonly IScheduledTemperatureMonitor scheduledTemperatureMonitor;
+        private readonly ITemperatureMonitor temperatureMonitor;
 
         public TempTimeCmd()
         {
             Pattern = "/temptime -d (\\d+) -i (\\d+)";
             Description = "Schedules a temperature monitor.";
-            scheduledTemperatureMonitor = Program.container.GetInstance<IScheduledTemperatureMonitor>();
+            temperatureMonitor = TempMonitorFactory.Instance.GetTemperatureMonitor<ScheduledTempMonitor>();
         }
 
         public override CommandResult Execute(object parameter)
@@ -22,7 +23,10 @@ namespace Telebot.Commands
             int duration = Convert.ToInt32(parameters.Groups[1].Value);
             int interval = Convert.ToInt32(parameters.Groups[2].Value);
 
-            scheduledTemperatureMonitor.Start(duration, interval);
+            TimeSpan tsDuration = TimeSpan.FromSeconds(duration);
+            TimeSpan tsInterval = TimeSpan.FromSeconds(interval);
+
+            temperatureMonitor.Start(tsDuration, tsInterval);
 
             var result = new CommandResult
             {

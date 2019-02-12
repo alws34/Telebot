@@ -6,8 +6,7 @@ namespace Telebot.Events
 {
     class EventAggregator : IEventAggregator
     {
-        private static readonly IEventAggregator instance = new EventAggregator();
-        public static IEventAggregator Instance { get { return instance; } }
+        public static IEventAggregator Instance { get; } = new EventAggregator();
 
         private readonly ConcurrentDictionary<Type, List<object>> subscriptions = new ConcurrentDictionary<Type, List<object>>();
 

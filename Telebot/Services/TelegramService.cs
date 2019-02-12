@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
-using Telebot.Commands.Facotries;
+using Telebot.Commands.Factories;
 using Telebot.Events;
 using Telebot.Extensions;
 using Telebot.Managers;
@@ -131,12 +131,14 @@ namespace Telebot.Services
 
         private void SendTextToChat(string text, long chatid, int messageid)
         {
-            client.SendTextMessageAsync(chatid, text, parseMode: ParseMode.Markdown, replyToMessageId: messageid);
+            client.SendTextMessageAsync(chatid, text, 
+                parseMode: ParseMode.Markdown, replyToMessageId: messageid);
         }
 
         private void SendPhotoToChat(Stream photoStream, long chatid, int messageid)
         {
-            client.SendPhotoAsync(chatid, photoStream, parseMode: ParseMode.Markdown, replyToMessageId: messageid);
+            client.SendPhotoAsync(chatid, photoStream, 
+                parseMode: ParseMode.Markdown, replyToMessageId: messageid);
         }
 
         public void Start()

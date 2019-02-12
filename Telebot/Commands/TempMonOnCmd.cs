@@ -1,25 +1,26 @@
 ﻿using Telebot.Managers;
 using Telebot.Models;
 using Telebot.Monitors;
+using Telebot.Monitors.Factories;
 
 namespace Telebot.Commands
 {
     public class TempMonOnCmd : CommandBase
     {
         private readonly ISettings settings;
-        private readonly ITemperatureMonitor tempMon;
+        private readonly ITemperatureMonitor temperatureMonitor;
 
         public TempMonOnCmd()
         {
             Pattern = "/tempmon on";
             Description = "Turn on temperature monitoring.";
             settings = Program.container.GetInstance<ISettings>();
-            tempMon = Program.container.GetInstance<ITemperatureMonitor>();
+            temperatureMonitor = TempMonitorFactory.Instance.GetTemperatureMonitor<PermanentTempMonitor>();
         }
 
         public override CommandResult Execute(object parameter)
         {
-            tempMon.Start();
+            temperatureMonitor.Start();
             settings.TempMonEnabled = true;
 
             var result = new CommandResult

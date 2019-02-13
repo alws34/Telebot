@@ -10,7 +10,9 @@ namespace Telebot.Monitors
     {
         private DateTime dtStop;
 
-        public ScheduledTempMonitor()
+        public static ITemperatureMonitor Instance { get; } = new ScheduledTempMonitor();
+
+        ScheduledTempMonitor()
         {
             timer.Elapsed += Elapsed;
         }
@@ -30,14 +32,14 @@ namespace Telebot.Monitors
                 result.AddRange(temperatureProvider.GetTemperature());
             }
 
-            OnTemperatureChanged(result);
+            callback(result);
         }
 
-        public override void Start(TimeSpan duration, TimeSpan interval)
+        public override void Start(TimeSpan duration, TimeSpan interval, Action<IEnumerable<HardwareInfo>> callback)
         {
             dtStop = DateTime.Now.AddSeconds(duration.TotalSeconds);
             timer.Interval = interval.TotalMilliseconds;
-            Start();
+            Start(callback);
         }
     }
 }

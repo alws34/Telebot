@@ -8,9 +8,7 @@ using Telebot.Commands.StatusCommands;
 using Telebot.HwProviders;
 using Telebot.Loggers;
 using Telebot.Managers;
-using Telebot.Monitors;
 using Telebot.Presenters;
-using Telebot.ScheduledOperations;
 using Telebot.Services;
 using Telebot.StatusCommands;
 
@@ -18,6 +16,7 @@ namespace Telebot
 {
     static class Program
     {
+        public static ISettings appSettings;
         public static Container container;
         public static CPUIDSDK pSDK;
         public static int NbDevices;
@@ -42,6 +41,8 @@ namespace Telebot
                 UpdateThread.Start();
 
                 buildContainer();
+
+                appSettings = container.GetInstance<ISettings>();
 
                 var mainForm = container.GetInstance<MainForm>();
 
@@ -101,13 +102,6 @@ namespace Telebot
                 typeof(GPUProvider)
             );
 
-            container.Collection.Register<ITemperatureMonitor>
-            (
-                typeof(PermanentTempMonitor),
-                typeof(ScheduledTempMonitor)
-            );
-
-            container.Register<IScheduledScreenCapture, ScheduledScreenCapture>(Lifestyle.Singleton);
             container.Register<ICommunicationService, TelegramService>(Lifestyle.Singleton);
             container.Register<ISettings, SettingsManager>(Lifestyle.Singleton);
             container.Register<ILogger, FileLogger>(Lifestyle.Singleton);

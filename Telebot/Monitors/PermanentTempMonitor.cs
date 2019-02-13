@@ -9,16 +9,24 @@ namespace Telebot.Monitors
 {
     public class PermanentTempMonitor : TemperatureMonitorBase
     {
-        private readonly ISettings settings;
+        private float CPU_TEMPERATURE_WARNING = 65.0f;
+        private float GPU_TEMPERATURE_WARNING = 65.0f;
 
-        public PermanentTempMonitor()
+        public static ITemperatureMonitor Instance { get; } = new PermanentTempMonitor();
+
+        PermanentTempMonitor()
         {
-            settings = Program.container.GetInstance<ISettings>();
+            CPU_TEMPERATURE_WARNING = Program.appSettings.CPUTemperature;
+            GPU_TEMPERATURE_WARNING = Program.appSettings.GPUTemperature;
 
             timer.Interval = TimeSpan.FromSeconds(10).TotalMilliseconds;
             timer.Elapsed += Elapsed;
+        }
 
-            if (settings.TempMonEnabled) Start();
+        ~PermanentTempMonitor()
+        {
+            Program.appSettings.CPUTemperature = CPU_TEMPERATURE_WARNING;
+            Program.appSettings.GPUTemperature = GPU_TEMPERATURE_WARNING;
         }
 
         private void Elapsed(object sender, ElapsedEventArgs e)
@@ -27,10 +35,27 @@ namespace Telebot.Monitors
 
             foreach (ITemperatureProvider temperatureProvider in temperatureProviders)
             {
-                result.AddRange(temperatureProvider.GetTemperature());
+                foreach (HardwareInfo device in temperatureProvider.GetTemperature())
+                {
+                    switch(device.DeviceClass)
+                    {
+                        case CPUIDSDK.CLASS_DEVICE_PROCESSOR:
+                            if (device.Value >= CPU_TEMPERATURE_WARNING)
+                            {
+                                result.Add(device);
+                            }
+                            break;
+                        case CPUIDSDK.CLASS_DEVICE_DISPLAY_ADAPTER:
+                            if (device.Value >= GPU_TEMPERATURE_WARNING)
+                            {
+                                result.Add(device);
+                            }
+                            break;
+                    }
+                }
             }
 
-            OnTemperatureChanged(result);
+            callback(result);
         }
     }
 }

@@ -14,12 +14,7 @@ namespace Telebot.Monitors
 
         protected readonly IEnumerable<ITemperatureProvider> temperatureProviders;
 
-        public event EventHandler<IEnumerable<HardwareInfo>> TemperatureChanged;
-
-        protected void OnTemperatureChanged(IEnumerable<HardwareInfo> info)
-        {
-            TemperatureChanged?.Invoke(this, info);
-        }
+        protected Action<IEnumerable<HardwareInfo>> callback;
 
         public TemperatureMonitorBase()
         {
@@ -27,12 +22,13 @@ namespace Telebot.Monitors
             temperatureProviders = Program.container.GetAllInstances<ITemperatureProvider>();
         }
 
-        public void Start()
+        public void Start(Action<IEnumerable<HardwareInfo>> callback)
         {
+            this.callback = callback;
             timer.Start();
         }
 
-        public virtual void Start(TimeSpan duration, TimeSpan interval)
+        public virtual void Start(TimeSpan duration, TimeSpan interval, Action<IEnumerable<HardwareInfo>> callback)
         {
             throw new NotImplementedException();
         }

@@ -1,26 +1,39 @@
 ﻿using System;
+using System.Drawing;
+using Telebot.Extensions;
 using Telebot.Models;
-using Telebot.ScheduledOperations;
+using Telebot.ScreenCaptures;
 
 namespace Telebot.Commands
 {
     public class CapTimeCmd : CommandBase
     {
-        private readonly IScheduledScreenCapture scheduledScreenCapture;
-
         public CapTimeCmd()
         {
             Pattern = "/captime -d (\\d+) -i (\\d+)";
             Description = "Schedules a screen capture session.";
-            scheduledScreenCapture = Program.container.GetInstance<IScheduledScreenCapture>();
         }
 
         public override void Execute(object parameter, Action<CommandResult> callback)
         {
+            void onScreenCapture(Bitmap photo)
+            {
+                var res = new CommandResult
+                {
+                    SendType = SendType.Photo,
+                    Stream = photo.ToStream()
+                };
+
+                callback(res);
+            }
+
             var parameters = parameter as CommandParam;
 
             int duration = Convert.ToInt32(parameters.Groups[1].Value);
             int interval = Convert.ToInt32(parameters.Groups[2].Value);
+
+            TimeSpan tsDuration = TimeSpan.FromSeconds(duration);
+            TimeSpan tsInterval = TimeSpan.FromSeconds(interval);
 
             var result = new CommandResult
             {
@@ -30,7 +43,7 @@ namespace Telebot.Commands
 
             callback(result);
 
-            scheduledScreenCapture.Start(duration, interval);
+            ScheduledScreenCapture.Instance.Start(tsDuration, tsInterval, onScreenCapture);
         }
     }
 }

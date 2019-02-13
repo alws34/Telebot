@@ -4,7 +4,6 @@ using System.IO;
 using System.Text.RegularExpressions;
 using Telebot.Commands.Factories;
 using Telebot.Events;
-using Telebot.Extensions;
 using Telebot.Managers;
 using Telebot.Models;
 using Telegram.Bot;
@@ -19,12 +18,9 @@ namespace Telebot.Services
         private List<long> whitelist;
 
         private readonly TelegramBotClient client;
-        private readonly ISettings settings;
 
         public TelegramService()
         {
-            settings = Program.container.GetInstance<ISettings>();
-
             LoadSettings();
 
             if (!string.IsNullOrEmpty(token))
@@ -33,15 +29,12 @@ namespace Telebot.Services
                 client.OnMessage += BotMessageHandler;
                 doStartup();
             }
-
-            EventAggregator.Instance.Subscribe<OnHighTemperatureArgs>(OnHighTemperature);
-            EventAggregator.Instance.Subscribe<OnScreenCaptureArgs>(OnScreenCapture);
         }
 
         private void LoadSettings()
         {
-            token = settings.TelegramToken;
-            whitelist = settings.TelegramWhitelist;
+            token = Program.appSettings.TelegramToken;
+            whitelist = Program.appSettings.TelegramWhitelist;
         }
 
         private async void doStartup()
@@ -52,23 +45,6 @@ namespace Telebot.Services
             foreach (long chatid in whitelist)
             {
                 client.SendTextMessageAsync(chatid, "*Telebot*: I'm Up.", parseMode: ParseMode.Markdown);
-            }
-        }
-
-        private void OnHighTemperature(OnHighTemperatureArgs obj)
-        {
-            foreach (long chatid in whitelist)
-            {
-                client.SendTextMessageAsync(chatid, obj.Message, parseMode: ParseMode.Markdown);
-            }
-        }
-
-        private void OnScreenCapture(OnScreenCaptureArgs obj)
-        {
-            foreach (long chatid in whitelist)
-            {
-                client.SendPhotoAsync(chatid, obj.Photo.ToStream(),
-                    parseMode: ParseMode.Markdown, caption: "From *Telebot*");
             }
         }
 
@@ -134,14 +110,14 @@ namespace Telebot.Services
 
         private void SendTextToChat(string text, long chatid, int messageid)
         {
-            client.SendTextMessageAsync(chatid, text, 
+            client.SendTextMessageAsync(chatid, text,
                 parseMode: ParseMode.Markdown, replyToMessageId: messageid);
         }
 
         private void SendPhotoToChat(Stream photoStream, long chatid, int messageid)
         {
-            client.SendPhotoAsync(chatid, photoStream, 
-                parseMode: ParseMode.Markdown, replyToMessageId: messageid);
+            client.SendPhotoAsync(chatid, photoStream,
+                parseMode: ParseMode.Markdown, replyToMessageId: messageid, caption: "From *Telebot*");
         }
 
         public void Start()

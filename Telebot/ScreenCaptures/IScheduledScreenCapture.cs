@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Drawing;
 
-namespace Telebot.ScheduledOperations
+namespace Telebot.ScreenCaptures
 {
     public interface IScheduledScreenCapture
     {
-        event EventHandler<Bitmap> Captured;
         bool IsActive { get; }
-        void Start(int durationInSec, int intervalInSec);
+        void Start(TimeSpan duration, TimeSpan interval, Action<Bitmap> callback);
         void Stop();
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using Telebot.Models;
 using Telebot.StatusCommands;
@@ -16,7 +17,7 @@ namespace Telebot.Commands
             statusCommands = Program.container.GetAllInstances<IStatusCommand>();
         }
 
-        public override CommandResult Execute(object parameter)
+        public override void Execute(object parameter, Action<CommandResult> callback)
         {
             var status = new StringBuilder();
 
@@ -31,7 +32,7 @@ namespace Telebot.Commands
                 SendType = SendType.Text
             };
 
-            return result;
+            callback(result);
         }
     }
 }

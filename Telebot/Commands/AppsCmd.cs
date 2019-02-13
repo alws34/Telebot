@@ -1,4 +1,5 @@
-﻿using Telebot.BusinessLogic;
+﻿using System;
+using Telebot.BusinessLogic;
 using Telebot.Models;
 
 namespace Telebot.Commands
@@ -14,7 +15,7 @@ namespace Telebot.Commands
             windowsLogic = Program.container.GetInstance<WindowsLogic>();
         }
 
-        public override CommandResult Execute(object parameter)
+        public override void Execute(object parameter, Action<CommandResult> callback)
         {
             string activeApps = windowsLogic.GetActiveApplications();
 
@@ -24,7 +25,7 @@ namespace Telebot.Commands
                 SendType = SendType.Text
             };
 
-            return result;
+            callback(result);
         }
     }
 }

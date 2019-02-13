@@ -7,6 +7,7 @@ using Telebot.Events;
 using Telebot.Managers;
 using Telebot.Models;
 using Telebot.Monitors;
+using Telebot.Monitors.Factories;
 using Telebot.ScheduledOperations;
 using Telebot.Services;
 using Telebot.Views;
@@ -18,8 +19,7 @@ namespace Telebot.Presenters
         private float CPU_TEMPERATURE_WARNING = 65.0f;
         private float GPU_TEMPERATURE_WARNING = 65.0f;
 
-        private readonly ITemperatureMonitor temperatureMonitor;
-        private readonly IScheduledTemperatureMonitor scheduledTemperatureMonitor;
+        private readonly IEnumerable<ITemperatureMonitor> temperatureMonitors;
         private readonly IScheduledScreenCapture scheduledScreenCapture;
         private readonly ICommunicationService communicationService;
 
@@ -30,19 +30,19 @@ namespace Telebot.Presenters
         public MainFormPresenter(IMainFormView mainFormView)
         {
             this.mainFormView = mainFormView;
-            mainFormView.Load += mainFormView_Load;
-            mainFormView.FormClosed += mainFormView_FormClosed;
-            mainFormView.Resize += mainFormView_Resize;
-            mainFormView.TrayMouseClick += NotifyIcon_MouseClick;
+            this.mainFormView.Load += mainFormView_Load;
+            this.mainFormView.FormClosed += mainFormView_FormClosed;
+            this.mainFormView.Resize += mainFormView_Resize;
+            this.mainFormView.TrayMouseClick += NotifyIcon_MouseClick;
 
             settings = Program.container.GetInstance<ISettings>();
             communicationService = Program.container.GetInstance<ICommunicationService>();
 
-            temperatureMonitor = Program.container.GetInstance<ITemperatureMonitor>();
-            temperatureMonitor.TemperatureChanged += TemperatureChanged;
-
-            scheduledTemperatureMonitor = Program.container.GetInstance<IScheduledTemperatureMonitor>();
-            scheduledTemperatureMonitor.TemperatureChanged += ScheduledTemperatureChanged;
+            temperatureMonitors = TempMonitorFactory.Instance.GetAllTemperatureMonitors();
+            foreach (ITemperatureMonitor temperatureMonitor in temperatureMonitors)
+            {
+                temperatureMonitor.TemperatureChanged += TemperatureChanged;
+            }
 
             scheduledScreenCapture = Program.container.GetInstance<IScheduledScreenCapture>();
             scheduledScreenCapture.Captured += ScheduledScreenCaptureCaptured;
@@ -60,27 +60,32 @@ namespace Telebot.Presenters
             EventAggregator.Instance.Publish(new OnNotifyIconVisibilityArgs(false));
         }
 
-        private void TemperatureChanged(object sender, HardwareInfo e)
+        private void TemperatureChanged(object sender, IEnumerable<HardwareInfo> devices)
         {
-            if (e.Value >= CPU_TEMPERATURE_WARNING || e.Value >= GPU_TEMPERATURE_WARNING)
+            if (sender is PermanentTempMonitor)
             {
-                string text = $"*[WARNING] {e.DeviceName}*: {e.Value}°C\nFrom *Telebot*";
-                EventAggregator.Instance.Publish(new OnHighTemperatureArgs(text));
+                foreach (HardwareInfo device in devices)
+                {
+                    if (device.Value >= CPU_TEMPERATURE_WARNING || device.Value >= GPU_TEMPERATURE_WARNING)
+                    {
+                        string text = $"*[WARNING] {device.DeviceName}*: {device.Value}°C\nFrom *Telebot*";
+                        EventAggregator.Instance.Publish(new OnHighTemperatureArgs(text));
+                    }
+                }
             }
-        }
-
-        private void ScheduledTemperatureChanged(object sender, IEnumerable<HardwareInfo> e)
-        {
-            var text = new StringBuilder();
-
-            foreach (HardwareInfo device in e)
+            else if (sender is ScheduledTempMonitor)
             {
-                text.AppendLine($"*{device.DeviceName}*: {device.Value}°C");
+                var text = new StringBuilder();
+
+                foreach (HardwareInfo device in devices)
+                {
+                    text.AppendLine($"*{device.DeviceName}*: {device.Value}°C");
+                }
+
+                text.AppendLine("\nFrom *Telebot*");
+
+                EventAggregator.Instance.Publish(new OnHighTemperatureArgs(text.ToString()));
             }
-
-            text.AppendLine("\nFrom *Telebot*");
-
-            EventAggregator.Instance.Publish(new OnHighTemperatureArgs(text.ToString()));
         }
 
         private void mainFormView_Resize(object sender, EventArgs e)

@@ -35,10 +35,10 @@ namespace Telebot.ScheduledOperations
             Captured?.Invoke(this, captureLogic.CaptureDesktop());
         }
 
-        public void Start(int durationInSec, int intervalInSec)
+        public void Start(int duration_sec, int interval_sec)
         {
-            stopTime = DateTime.Now.AddSeconds(durationInSec);
-            workerTimer.Interval = intervalInSec * 1000;
+            stopTime = DateTime.Now.AddSeconds(duration_sec);
+            workerTimer.Interval = TimeSpan.FromSeconds(interval_sec).TotalMilliseconds;
             workerTimer.Start();
         }
 

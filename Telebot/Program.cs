@@ -101,9 +101,13 @@ namespace Telebot
                 typeof(GPUProvider)
             );
 
+            container.Collection.Register<ITemperatureMonitor>
+            (
+                typeof(PermanentTempMonitor),
+                typeof(ScheduledTempMonitor)
+            );
+
             container.Register<IScheduledScreenCapture, ScheduledScreenCapture>(Lifestyle.Singleton);
-            container.Register<IScheduledTemperatureMonitor, ScheduledSystemTempMonitor>(Lifestyle.Singleton);
-            container.Register<ITemperatureMonitor, SystemTempMonitor>(Lifestyle.Singleton);
             container.Register<ICommunicationService, TelegramService>(Lifestyle.Singleton);
             container.Register<ISettings, SettingsManager>(Lifestyle.Singleton);
             container.Register<ILogger, FileLogger>(Lifestyle.Singleton);

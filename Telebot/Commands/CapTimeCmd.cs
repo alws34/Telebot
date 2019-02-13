@@ -15,14 +15,12 @@ namespace Telebot.Commands
             scheduledScreenCapture = Program.container.GetInstance<IScheduledScreenCapture>();
         }
 
-        public override CommandResult Execute(object parameter)
+        public override void Execute(object parameter, Action<CommandResult> callback)
         {
             var parameters = parameter as CommandParam;
 
             int duration = Convert.ToInt32(parameters.Groups[1].Value);
             int interval = Convert.ToInt32(parameters.Groups[2].Value);
-
-            scheduledScreenCapture.Start(duration, interval);
 
             var result = new CommandResult
             {
@@ -30,7 +28,9 @@ namespace Telebot.Commands
                 Text = "Successfully scheduled screen capture."
             };
 
-            return result;
+            callback(result);
+
+            scheduledScreenCapture.Start(duration, interval);
         }
     }
 }

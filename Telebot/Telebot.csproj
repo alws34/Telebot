@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>Telebot</RootNamespace>
     <AssemblyName>Telebot</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -70,7 +70,9 @@
       <HintPath>..\packages\SimpleInjector.4.4.3\lib\net45\SimpleInjector.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -89,7 +91,7 @@
     <Compile Include="Commands\CapTimeCmd.cs" />
     <Compile Include="Commands\CaptureCmd.cs" />
     <Compile Include="Commands\CommandBase.cs" />
-    <Compile Include="Commands\Facotries\CommandFactory.cs" />
+    <Compile Include="Commands\Factories\CommandFactory.cs" />
     <Compile Include="Commands\HelpCmd.cs" />
     <Compile Include="Commands\LockCmd.cs" />
     <Compile Include="Commands\RebootCmd.cs" />
@@ -114,14 +116,13 @@
     <Compile Include="Events\OnScreenCaptureArgs.cs" />
     <Compile Include="Events\OnNotifyIconBalloonArgs.cs" />
     <Compile Include="Events\OnNotifyIconVisibilityArgs.cs" />
-    <Compile Include="Events\OnSendPhotoToChatArgs.cs" />
-    <Compile Include="Events\OnSendTextToChatArgs.cs" />
     <Compile Include="Events\OnSetBotTitleArgs.cs" />
     <Compile Include="Loggers\ILogger.cs" />
     <Compile Include="Managers\ISettings.cs" />
     <Compile Include="Commands\StatusCommands\IStatusCommand.cs" />
+    <Compile Include="Monitors\Factories\TempMonitorFactory.cs" />
+    <Compile Include="Monitors\TemperatureMonitorBase.cs" />
     <Compile Include="ScheduledOperations\IScheduledScreenCapture.cs" />
-    <Compile Include="ScheduledOperations\IScheduledTemperatureMonitor.cs" />
     <Compile Include="Monitors\ITemperatureMonitor.cs" />
     <Compile Include="HwProviders\ITemperatureProvider.cs" />
     <Compile Include="BusinessLogic\CaptureLogic.cs" />
@@ -135,7 +136,7 @@
     <Compile Include="Extensions\TimeSpanExtensions.cs" />
     <Compile Include="Models\LvItem.cs" />
     <Compile Include="ScheduledOperations\ScheduledScreenCapture.cs" />
-    <Compile Include="ScheduledOperations\ScheduledSystemTempMonitor.cs" />
+    <Compile Include="Monitors\ScheduledTempMonitor.cs" />
     <Compile Include="Presenters\MainFormPresenter.cs" />
     <Compile Include="Services\ICommunicationService.cs" />
     <Compile Include="Services\TelegramService.cs" />
@@ -149,7 +150,7 @@
     <Compile Include="Managers\SettingsManager.cs" />
     <Compile Include="Models\CommandParam.cs" />
     <Compile Include="Models\CommandResult.cs" />
-    <Compile Include="Monitors\SystemTempMonitor.cs" />
+    <Compile Include="Monitors\PermanentTempMonitor.cs" />
     <Compile Include="HwProviders\CPUProvider.cs" />
     <Compile Include="HwProviders\BaseProvider.cs" />
     <Compile Include="Program.cs" />

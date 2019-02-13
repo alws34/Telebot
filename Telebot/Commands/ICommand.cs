@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Telebot.Models;
 
 namespace Telebot.Commands
@@ -7,8 +8,8 @@ namespace Telebot.Commands
     {
         string Pattern { get; }
         string Description { get; }
-        CommandResult Execute(object parameter);
-        Task<CommandResult> ExecuteAsync(object parameter);
+        void Execute(object parameter, Action<CommandResult> callback);
+        Task ExecuteAsync(object parameter, Action<CommandResult> callback);
         string ToString();
     }
 }

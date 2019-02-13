@@ -1,4 +1,5 @@
-﻿using Telebot.BusinessLogic;
+﻿using System;
+using Telebot.BusinessLogic;
 using Telebot.Models;
 
 namespace Telebot.Commands
@@ -14,17 +15,17 @@ namespace Telebot.Commands
             screenLogic = Program.container.GetInstance<DisplayLogic>();
         }
 
-        public override CommandResult Execute(object parameter)
+        public override void Execute(object parameter, Action<CommandResult> callback)
         {
-            screenLogic.SetDisplayOff();
-
             var result = new CommandResult
             {
                 Text = "Display will be turned off now.",
                 SendType = SendType.Text
             };
 
-            return result;
+            callback(result);
+
+            screenLogic.SetDisplayOff();
         }
     }
 }

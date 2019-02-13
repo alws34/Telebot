@@ -1,5 +1,6 @@
-﻿using System.Text;
-using Telebot.Commands.Facotries;
+﻿using System;
+using System.Text;
+using Telebot.Commands.Factories;
 using Telebot.Models;
 
 namespace Telebot.Commands
@@ -12,7 +13,7 @@ namespace Telebot.Commands
             Description = "List of available commands.";
         }
 
-        public override CommandResult Execute(object parameter)
+        public override void Execute(object parameter, Action<CommandResult> callback)
         {
             var commandsStr = new StringBuilder();
 
@@ -29,7 +30,7 @@ namespace Telebot.Commands
                 SendType = SendType.Text
             };
 
-            return result;
+            callback(result);
         }
     }
 }

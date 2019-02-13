@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Telebot.Commands.Facotries
+namespace Telebot.Commands.Factories
 {
     public sealed class CommandFactory
     {

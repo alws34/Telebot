@@ -41,8 +41,7 @@ namespace Telebot.Presenters
             temperatureMonitors = TempMonitorFactory.Instance.GetAllTemperatureMonitors();
             foreach (ITemperatureMonitor temperatureMonitor in temperatureMonitors)
             {
-                //TemperatureChanged
-                temperatureMonitor.TemperatureChanged += (s, o) => { Console.WriteLine("Hey"); };
+                temperatureMonitor.TemperatureChanged += TemperatureChanged;
             }
 
             scheduledScreenCapture = Program.container.GetInstance<IScheduledScreenCapture>();

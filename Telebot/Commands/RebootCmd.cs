@@ -1,4 +1,5 @@
-﻿using Telebot.BusinessLogic;
+﻿using System;
+using Telebot.BusinessLogic;
 using Telebot.Models;
 
 namespace Telebot.Commands
@@ -14,7 +15,7 @@ namespace Telebot.Commands
             powerLogic = Program.container.GetInstance<PowerLogic>();
         }
 
-        public override CommandResult Execute(object parameter)
+        public override void Execute(object parameter, Action<CommandResult> callback)
         {
             var result = new CommandResult
             {
@@ -22,9 +23,9 @@ namespace Telebot.Commands
                 SendType = SendType.Text
             };
 
-            powerLogic.RestartWorkstation();
+            callback(result);
 
-            return result;
+            powerLogic.RestartWorkstation();
         }
     }
 }

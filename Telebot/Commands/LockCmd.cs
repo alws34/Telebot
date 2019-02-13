@@ -1,4 +1,5 @@
-﻿using Telebot.Helpers;
+﻿using System;
+using Telebot.Helpers;
 using Telebot.Models;
 
 namespace Telebot.Commands
@@ -11,7 +12,7 @@ namespace Telebot.Commands
             Description = "Locks the workstation.";
         }
 
-        public override CommandResult Execute(object parameter)
+        public override void Execute(object parameter, Action<CommandResult> callback)
         {
             var result = new CommandResult
             {
@@ -19,9 +20,9 @@ namespace Telebot.Commands
                 SendType = SendType.Text
             };
 
-            User32Helper.LockWorkStation();
+            callback(result);
 
-            return result;
+            User32Helper.LockWorkStation();
         }
     }
 }

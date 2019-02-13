@@ -1,4 +1,5 @@
-﻿using Telebot.Managers;
+﻿using System;
+using Telebot.Managers;
 using Telebot.Models;
 using Telebot.Monitors;
 using Telebot.Monitors.Factories;
@@ -18,18 +19,18 @@ namespace Telebot.Commands
             temperatureMonitor = TempMonitorFactory.Instance.GetTemperatureMonitor<PermanentTempMonitor>();
         }
 
-        public override CommandResult Execute(object parameter)
+        public override void Execute(object parameter, Action<CommandResult> callback)
         {
-            temperatureMonitor.Stop();
-            settings.TempMonEnabled = false;
-
             var result = new CommandResult
             {
                 Text = "Temperature monitor is turned off.",
                 SendType = SendType.Text
             };
 
-            return result;
+            callback(result);
+
+            temperatureMonitor.Stop();
+            settings.TempMonEnabled = false;
         }
     }
 }

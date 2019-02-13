@@ -16,7 +16,7 @@ namespace Telebot.Commands
             temperatureMonitor = TempMonitorFactory.Instance.GetTemperatureMonitor<ScheduledTempMonitor>();
         }
 
-        public override CommandResult Execute(object parameter)
+        public override void Execute(object parameter, Action<CommandResult> callback)
         {
             var parameters = parameter as CommandParam;
 
@@ -26,15 +26,15 @@ namespace Telebot.Commands
             TimeSpan tsDuration = TimeSpan.FromSeconds(duration);
             TimeSpan tsInterval = TimeSpan.FromSeconds(interval);
 
-            temperatureMonitor.Start(tsDuration, tsInterval);
-
             var result = new CommandResult
             {
                 SendType = SendType.Text,
                 Text = "Successfully scheduled temperature monitor."
             };
 
-            return result;
+            callback(result);
+
+            temperatureMonitor.Start(tsDuration, tsInterval);
         }
     }
 }

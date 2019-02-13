@@ -1,4 +1,5 @@
-﻿using Telebot.BusinessLogic;
+﻿using System;
+using Telebot.BusinessLogic;
 using Telebot.Extensions;
 using Telebot.Models;
 
@@ -15,7 +16,7 @@ namespace Telebot.Commands
             captureLogic = Program.container.GetInstance<CaptureLogic>();
         }
 
-        public override CommandResult Execute(object parameter)
+        public override void Execute(object parameter, Action<CommandResult> callback)
         {
             var bitmap = captureLogic.CaptureDesktop();
 
@@ -25,7 +26,7 @@ namespace Telebot.Commands
                 SendType = SendType.Photo
             };
 
-            return result;
+            callback(result);
         }
     }
 }

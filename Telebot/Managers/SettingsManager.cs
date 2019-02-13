@@ -53,16 +53,16 @@ namespace Telebot.Managers
             }
         }
 
-        public List<long> TelegramWhitelist
+        public int TelegramAdminId
         {
             get
             {
-                string s = data["Telegram"]["Whitelist"];
+                string s = data["Telegram"]["AdminId"];
                 if (string.IsNullOrEmpty(s))
                 {
-                    return new List<long>();
+                    return 0;
                 }
-                return JsonConvert.DeserializeObject<List<long>>(s);
+                return Convert.ToInt32(s);
             }
         }
 

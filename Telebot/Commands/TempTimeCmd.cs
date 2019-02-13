@@ -16,26 +16,6 @@ namespace Telebot.Commands
 
         public override void Execute(object parameter, Action<CommandResult> callback)
         {
-            void temperatureChanged(IEnumerable<HardwareInfo> devices)
-            {
-                var text = new StringBuilder();
-
-                foreach (HardwareInfo device in devices)
-                {
-                    text.AppendLine($"*{device.DeviceName}*: {device.Value}°C");
-                }
-
-                text.AppendLine("\nFrom *Telebot*");
-
-                var res = new CommandResult
-                {
-                    SendType = SendType.Text,
-                    Text = text.ToString()
-                };
-
-                callback(res);
-            }
-
             var parameters = parameter as CommandParam;
 
             int duration = Convert.ToInt32(parameters.Groups[1].Value);
@@ -52,7 +32,7 @@ namespace Telebot.Commands
 
             callback(result);
 
-            ScheduledTempMonitor.Instance.Start(tsDuration, tsInterval, temperatureChanged);
+            ScheduledTempMonitor.Instance.Start(tsDuration, tsInterval);
         }
     }
 }

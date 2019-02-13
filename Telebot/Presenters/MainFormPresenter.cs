@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Windows.Forms;
 using Telebot.Events;
 using Telebot.Services;
@@ -22,11 +21,6 @@ namespace Telebot.Presenters
             this.mainFormView.TrayMouseClick += NotifyIcon_MouseClick;
 
             communicationService = Program.container.GetInstance<ICommunicationService>();
-        }
-
-        private void ScheduledScreenCaptureCaptured(object sender, Bitmap e)
-        {
-            EventAggregator.Instance.Publish(new OnScreenCaptureArgs(e));
         }
 
         private void NotifyIcon_MouseClick(object sender, MouseEventArgs e)

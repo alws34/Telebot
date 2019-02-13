@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Timers;
 using Telebot.HwProviders;
-using Telebot.Managers;
 using Telebot.Models;
 
 namespace Telebot.Monitors
@@ -37,7 +36,7 @@ namespace Telebot.Monitors
             {
                 foreach (HardwareInfo device in temperatureProvider.GetTemperature())
                 {
-                    switch(device.DeviceClass)
+                    switch (device.DeviceClass)
                     {
                         case CPUIDSDK.CLASS_DEVICE_PROCESSOR:
                             if (device.Value >= CPU_TEMPERATURE_WARNING)
@@ -55,7 +54,7 @@ namespace Telebot.Monitors
                 }
             }
 
-            callback(result);
+            OnTemperatureChanged(result);
         }
     }
 }

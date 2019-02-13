@@ -16,17 +16,6 @@ namespace Telebot.Commands
 
         public override void Execute(object parameter, Action<CommandResult> callback)
         {
-            void onScreenCapture(Bitmap photo)
-            {
-                var res = new CommandResult
-                {
-                    SendType = SendType.Photo,
-                    Stream = photo.ToStream()
-                };
-
-                callback(res);
-            }
-
             var parameters = parameter as CommandParam;
 
             int duration = Convert.ToInt32(parameters.Groups[1].Value);
@@ -43,7 +32,7 @@ namespace Telebot.Commands
 
             callback(result);
 
-            ScheduledScreenCapture.Instance.Start(tsDuration, tsInterval, onScreenCapture);
+            ScheduledScreenCapture.Instance.Start(tsDuration, tsInterval);
         }
     }
 }

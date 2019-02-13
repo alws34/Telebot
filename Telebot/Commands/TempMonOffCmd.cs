@@ -1,5 +1,4 @@
 ﻿using System;
-using Telebot.Managers;
 using Telebot.Models;
 using Telebot.Monitors;
 

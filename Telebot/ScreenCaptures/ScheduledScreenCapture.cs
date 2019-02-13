@@ -14,9 +14,9 @@ namespace Telebot.ScreenCaptures
 
         public bool IsActive { get { return timer.Enabled; } }
 
-        private readonly CaptureLogic captureLogic;
+        public event EventHandler<ScreenCaptureArgs> PhotoCaptured;
 
-        private Action<Bitmap> callback;
+        private readonly CaptureLogic captureLogic;
 
         ScheduledScreenCapture()
         {
@@ -34,14 +34,18 @@ namespace Telebot.ScreenCaptures
                 return;
             }
 
-            callback(captureLogic.CaptureDesktop());
+            var result = new ScreenCaptureArgs
+            {
+                Photo = captureLogic.CaptureDesktop()
+            };
+
+            PhotoCaptured?.Invoke(this, result);
         }
 
-        public void Start(TimeSpan duration, TimeSpan interval, Action<Bitmap> callback)
+        public void Start(TimeSpan duration, TimeSpan interval)
         {
             stopTime = DateTime.Now.AddSeconds(duration.TotalSeconds);
             timer.Interval = interval.TotalMilliseconds;
-            this.callback = callback;
             timer.Start();
         }
 

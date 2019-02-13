@@ -32,14 +32,14 @@ namespace Telebot.Monitors
                 result.AddRange(temperatureProvider.GetTemperature());
             }
 
-            callback(result);
+            OnTemperatureChanged(result);
         }
 
-        public override void Start(TimeSpan duration, TimeSpan interval, Action<IEnumerable<HardwareInfo>> callback)
+        public override void Start(TimeSpan duration, TimeSpan interval)
         {
             dtStop = DateTime.Now.AddSeconds(duration.TotalSeconds);
             timer.Interval = interval.TotalMilliseconds;
-            Start(callback);
+            Start();
         }
     }
 }

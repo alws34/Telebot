@@ -6,9 +6,10 @@ namespace Telebot.Monitors
 {
     public interface ITemperatureMonitor
     {
+        event EventHandler<IEnumerable<HardwareInfo>> TemperatureChanged;
         bool IsActive { get; }
-        void Start(Action<IEnumerable<HardwareInfo>> callback);
-        void Start(TimeSpan duration, TimeSpan interval, Action<IEnumerable<HardwareInfo>> callback);
+        void Start();
+        void Start(TimeSpan duration, TimeSpan interval);
         void Stop();
     }
 }

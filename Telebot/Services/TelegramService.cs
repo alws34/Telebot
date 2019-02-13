@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Text;
 using System.Text.RegularExpressions;
 using Telebot.Commands.Factories;
 using Telebot.Events;
-using Telebot.Managers;
+using Telebot.Extensions;
 using Telebot.Models;
+using Telebot.Monitors;
+using Telebot.ScreenCaptures;
 using Telegram.Bot;
 using Telegram.Bot.Args;
 using Telegram.Bot.Types.Enums;
@@ -14,38 +16,71 @@ namespace Telebot.Services
 {
     public class TelegramService : ICommunicationService
     {
-        private string token;
-        private List<long> whitelist;
-
+        private readonly string token;
+        private readonly int adminId;
         private readonly TelegramBotClient client;
 
         public TelegramService()
         {
-            LoadSettings();
+            token = Program.appSettings.TelegramToken;
+            adminId = Program.appSettings.TelegramAdminId;
 
             if (!string.IsNullOrEmpty(token))
             {
                 client = new TelegramBotClient(token);
                 client.OnMessage += BotMessageHandler;
-                doStartup();
+                initTitle();
+                doAdminHello();
+            }
+
+            PermanentTempMonitor.Instance.TemperatureChanged += PermanentTemperatureChanged;
+            ScheduledTempMonitor.Instance.TemperatureChanged += ScheduledTemperatureChanged;
+            ScheduledScreenCapture.Instance.PhotoCaptured += PhotoCaptured;
+
+            if (Program.appSettings.TempMonEnabled)
+            {
+                PermanentTempMonitor.Instance.Start();
             }
         }
 
-        private void LoadSettings()
+        private void PermanentTemperatureChanged(object sender, IEnumerable<HardwareInfo> devices)
         {
-            token = Program.appSettings.TelegramToken;
-            whitelist = Program.appSettings.TelegramWhitelist;
+            foreach (HardwareInfo device in devices)
+            {
+                string text = $"*[WARNING] {device.DeviceName}*: {device.Value}°C\nFrom *Telebot*";
+
+                client.SendTextMessageAsync(adminId, text, ParseMode.Markdown);
+            }
         }
 
-        private async void doStartup()
+        private void ScheduledTemperatureChanged(object sender, IEnumerable<HardwareInfo> devices)
+        {
+            var text = new StringBuilder();
+
+            foreach (HardwareInfo device in devices)
+            {
+                text.AppendLine($"*{device.DeviceName}*: {device.Value}°C");
+            }
+
+            text.AppendLine("\nFrom *Telebot*");
+
+            client.SendTextMessageAsync(adminId, text.ToString(), ParseMode.Markdown);
+        }
+
+        private void PhotoCaptured(object sender, ScreenCaptureArgs e)
+        {
+            client.SendPhotoAsync(adminId, e.Photo.ToStream());
+        }
+
+        private async void initTitle()
         {
             string title = $" - ({(await client.GetMeAsync()).Username})";
             EventAggregator.Instance.Publish(new OnSetBotTitleArgs(title));
+        }
 
-            foreach (long chatid in whitelist)
-            {
-                client.SendTextMessageAsync(chatid, "*Telebot*: I'm Up.", parseMode: ParseMode.Markdown);
-            }
+        private void doAdminHello()
+        {
+            client.SendTextMessageAsync(adminId, "*Telebot*: I'm Up.", parseMode: ParseMode.Markdown);
         }
 
         private void BotMessageHandler(object sender, MessageEventArgs e)
@@ -55,17 +90,24 @@ namespace Telebot.Services
                 switch (result.SendType)
                 {
                     case SendType.Text:
-                        SendTextToChat(result.Text.TrimEnd(), e.Message.Chat.Id, e.Message.MessageId);
+                        client.SendTextMessageAsync(e.Message.Chat.Id, result.Text.TrimEnd(),
+                            parseMode: ParseMode.Markdown, replyToMessageId: e.Message.MessageId);
                         break;
                     case SendType.Photo:
-                        SendPhotoToChat(result.Stream, e.Message.Chat.Id, e.Message.MessageId);
+                        client.SendPhotoAsync(e.Message.Chat.Id, result.Stream,
+                            parseMode: ParseMode.Markdown, replyToMessageId: e.Message.MessageId, caption: "From *Telebot*");
                         break;
                 }
             }
 
-            if (!whitelist.Exists(x => x.Equals(e.Message.From.Id)))
+            if (e.Message.From.Id != adminId)
             {
-                SendTextToChat("Unauthorized.", e.Message.Chat.Id, 0);
+                var cmdResult = new CommandResult
+                {
+                    SendType = SendType.Text,
+                    Text = "Unauthorized."
+                };
+                resultCallback(cmdResult);
                 return;
             }
 
@@ -103,21 +145,13 @@ namespace Telebot.Services
             }
             else
             {
-                string s = "Undefined command. For commands list, type */help*.";
-                SendTextToChat(s, e.Message.Chat.Id, 0);
+                var cmdResult = new CommandResult
+                {
+                    SendType = SendType.Text,
+                    Text = "Undefined command. For commands list, type */help*."
+                };
+                resultCallback(cmdResult);
             }
-        }
-
-        private void SendTextToChat(string text, long chatid, int messageid)
-        {
-            client.SendTextMessageAsync(chatid, text,
-                parseMode: ParseMode.Markdown, replyToMessageId: messageid);
-        }
-
-        private void SendPhotoToChat(Stream photoStream, long chatid, int messageid)
-        {
-            client.SendPhotoAsync(chatid, photoStream,
-                parseMode: ParseMode.Markdown, replyToMessageId: messageid, caption: "From *Telebot*");
         }
 
         public void Start()

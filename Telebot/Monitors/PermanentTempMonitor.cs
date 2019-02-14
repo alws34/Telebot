@@ -24,6 +24,7 @@ namespace Telebot.Monitors
 
         ~PermanentTempMonitor()
         {
+            Program.appSettings.TempMonEnabled = IsActive;
             Program.appSettings.CPUTemperature = CPU_TEMPERATURE_WARNING;
             Program.appSettings.GPUTemperature = GPU_TEMPERATURE_WARNING;
         }

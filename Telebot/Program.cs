@@ -85,16 +85,11 @@ namespace Telebot
                 typeof(CaptureCmd),
                 typeof(CapTimeCmd),
                 typeof(CapTimeOffCmd),
-                typeof(ScreenOnCmd),
-                typeof(ScreenOffCmd),
-                typeof(TempMonOnCmd),
-                typeof(TempMonOffCmd),
+                typeof(ScreenCmd),
+                typeof(TempMonCmd),
                 typeof(TempTimeCmd),
                 typeof(TempTimeOffCmd),
-                typeof(RebootCmd),
-                typeof(ShutdownCmd),
-                typeof(SleepCmd),
-                typeof(LockCmd),
+                typeof(PowerCmd),
                 typeof(HelpCmd)
             );
 

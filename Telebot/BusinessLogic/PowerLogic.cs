@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Windows.Forms;
+using Telebot.Helpers;
 
 namespace Telebot.BusinessLogic
 {
@@ -32,6 +33,11 @@ namespace Telebot.BusinessLogic
         public void SleepWorkstation()
         {
             Application.SetSuspendState(PowerState.Suspend, false, false);
+        }
+
+        public void LockWorkstation()
+        {
+            User32Helper.LockWorkStation();
         }
     }
 }

@@ -16,6 +16,7 @@ namespace Telebot
 {
     static class Program
     {
+        public static ILogger logger;
         public static ISettings appSettings;
         public static Container container;
         public static CPUIDSDK pSDK;
@@ -42,11 +43,11 @@ namespace Telebot
 
                 buildContainer();
 
-                appSettings = container.GetInstance<ISettings>();
+                logger = new FileLogger();
+                appSettings = new SettingsManager();
+                var mainForm = new MainForm();
 
-                var mainForm = container.GetInstance<MainForm>();
-
-                var presenter = new MainFormPresenter(mainForm);
+                var presenter = new MainFormPresenter(mainForm, new TelegramService());
 
                 Application.Run(mainForm);
 
@@ -98,11 +99,6 @@ namespace Telebot
                 typeof(CPUProvider),
                 typeof(GPUProvider)
             );
-
-            container.Register<ICommunicationService, TelegramService>(Lifestyle.Singleton);
-            container.Register<ISettings, SettingsManager>(Lifestyle.Singleton);
-            container.Register<ILogger, FileLogger>(Lifestyle.Singleton);
-            container.Register<MainForm>(Lifestyle.Singleton);
 
             container.Register<CaptureLogic>(Lifestyle.Singleton);
             container.Register<NetworkLogic>(Lifestyle.Singleton);

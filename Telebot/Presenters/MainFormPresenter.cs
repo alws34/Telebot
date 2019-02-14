@@ -12,7 +12,7 @@ namespace Telebot.Presenters
         private readonly IMainFormView mainFormView;
         private readonly ICommunicationService communicationService;
 
-        public MainFormPresenter(IMainFormView mainFormView)
+        public MainFormPresenter(IMainFormView mainFormView, ICommunicationService communicationService)
         {
             this.mainFormView = mainFormView;
             this.mainFormView.Load += mainFormView_Load;
@@ -20,7 +20,7 @@ namespace Telebot.Presenters
             this.mainFormView.Resize += mainFormView_Resize;
             this.mainFormView.TrayMouseClick += NotifyIcon_MouseClick;
 
-            communicationService = Program.container.GetInstance<ICommunicationService>();
+            this.communicationService = communicationService;
         }
 
         private void NotifyIcon_MouseClick(object sender, MouseEventArgs e)

@@ -7,13 +7,6 @@ namespace Telebot.BusinessLogic
 {
     public class CaptureLogic
     {
-        private readonly ILogger logger;
-
-        public CaptureLogic()
-        {
-            logger = Program.container.GetInstance<ILogger>();
-        }
-
         public Bitmap CaptureDesktop()
         {
             //int width = SystemInformation.VirtualScreen.Width;
@@ -35,7 +28,7 @@ namespace Telebot.BusinessLogic
             }
             catch (Exception e)
             {
-                logger.Log(e.ToString());
+                Program.logger.Log(e.ToString());
             }
 
             return result;

@@ -36,11 +36,6 @@ namespace Telebot.Services
             PermanentTempMonitor.Instance.TemperatureChanged += PermanentTemperatureChanged;
             ScheduledTempMonitor.Instance.TemperatureChanged += ScheduledTemperatureChanged;
             ScheduledScreenCapture.Instance.PhotoCaptured += PhotoCaptured;
-
-            if (Program.appSettings.TempMonEnabled)
-            {
-                PermanentTempMonitor.Instance.Start();
-            }
         }
 
         private void PermanentTemperatureChanged(object sender, IEnumerable<HardwareInfo> devices)

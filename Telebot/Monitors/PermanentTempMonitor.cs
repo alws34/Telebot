@@ -20,6 +20,8 @@ namespace Telebot.Monitors
 
             timer.Interval = TimeSpan.FromSeconds(10).TotalMilliseconds;
             timer.Elapsed += Elapsed;
+
+            IsActive = Program.appSettings.TempMonEnabled;
         }
 
         ~PermanentTempMonitor()

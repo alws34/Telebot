@@ -10,7 +10,11 @@ namespace Telebot.Monitors
     {
         protected readonly Timer timer;
 
-        public bool IsActive => timer.Enabled;
+        public bool IsActive
+        {
+            get { return timer.Enabled; }
+            protected set { timer.Enabled = value; }
+        }
 
         protected readonly IEnumerable<ITemperatureProvider> temperatureProviders;
 

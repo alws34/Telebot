@@ -3,8 +3,10 @@ using Telebot.Models;
 
 namespace Telebot.HwProviders
 {
-    public interface ITemperatureProvider
+    public interface IHardwareProvider
     {
         IEnumerable<HardwareInfo> GetTemperature();
+
+        IEnumerable<HardwareInfo> GetUtilization();
     }
 }

@@ -3,7 +3,7 @@ using Telebot.Models;
 
 namespace Telebot.HwProviders
 {
-    public class GPUProvider : BaseProvider, ITemperatureProvider
+    public class GPUProvider : BaseProvider, IHardwareProvider
     {
         public IEnumerable<HardwareInfo> GetTemperature()
         {

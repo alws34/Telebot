@@ -27,7 +27,7 @@ namespace Telebot.Monitors
 
             var result = new List<HardwareInfo>();
 
-            foreach (ITemperatureProvider temperatureProvider in temperatureProviders)
+            foreach (IHardwareProvider temperatureProvider in temperatureProviders)
             {
                 result.AddRange(temperatureProvider.GetTemperature());
             }

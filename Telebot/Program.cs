@@ -94,7 +94,7 @@ namespace Telebot
                 typeof(HelpCmd)
             );
 
-            container.Collection.Register<ITemperatureProvider>
+            container.Collection.Register<IHardwareProvider>
             (
                 typeof(CPUProvider),
                 typeof(GPUProvider)

@@ -16,7 +16,7 @@ namespace Telebot.Monitors
             protected set { timer.Enabled = value; }
         }
 
-        protected readonly IEnumerable<ITemperatureProvider> temperatureProviders;
+        protected readonly IEnumerable<IHardwareProvider> temperatureProviders;
 
         public event EventHandler<IEnumerable<HardwareInfo>> TemperatureChanged;
 
@@ -28,7 +28,7 @@ namespace Telebot.Monitors
         public TemperatureMonitorBase()
         {
             timer = new Timer();
-            temperatureProviders = Program.container.GetAllInstances<ITemperatureProvider>();
+            temperatureProviders = Program.container.GetAllInstances<IHardwareProvider>();
         }
 
         public void Start()

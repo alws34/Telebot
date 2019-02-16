@@ -118,7 +118,7 @@
     <Compile Include="Monitors\TemperatureMonitorBase.cs" />
     <Compile Include="ScreenCaptures\IScheduledScreenCapture.cs" />
     <Compile Include="Monitors\ITemperatureMonitor.cs" />
-    <Compile Include="HwProviders\ITemperatureProvider.cs" />
+    <Compile Include="HwProviders\IHardwareProvider.cs" />
     <Compile Include="BusinessLogic\CaptureLogic.cs" />
     <Compile Include="BusinessLogic\NetworkLogic.cs" />
     <Compile Include="BusinessLogic\PowerLogic.cs" />

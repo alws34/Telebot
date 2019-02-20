@@ -34,12 +34,17 @@ namespace Telebot.ScreenCaptures
                 return;
             }
 
-            var result = new ScreenCaptureArgs
-            {
-                Photo = captureLogic.CaptureDesktop()
-            };
+            var bitmaps = captureLogic.CaptureDesktop();
 
-            PhotoCaptured?.Invoke(this, result);
+            foreach (Bitmap bitmap in bitmaps)
+            {
+                var result = new ScreenCaptureArgs
+                {
+                    Photo = bitmap
+                };
+
+                PhotoCaptured?.Invoke(this, result);
+            }
         }
 
         public void Start(TimeSpan duration, TimeSpan interval)

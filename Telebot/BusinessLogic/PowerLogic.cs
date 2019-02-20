@@ -39,5 +39,10 @@ namespace Telebot.BusinessLogic
         {
             User32Helper.LockWorkStation();
         }
+
+        public void LogoffWorkstation()
+        {
+            User32Helper.ExitWindowsEx(User32Helper.EWX_LOGOFF, 0);
+        }
     }
 }

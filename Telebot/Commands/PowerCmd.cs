@@ -13,14 +13,15 @@ namespace Telebot.Commands
 
         public PowerCmd()
         {
-            Pattern = "/power (lock|sleep|reboot|shutdown)";
-            Description = "Lock, sleep, reboot or shutdown the workstateion.";
+            Pattern = "/(lock|logoff|sleep|reboot|shutdown)";
+            Description = "Lock, logoff, sleep, reboot or shutdown the workstateion.";
 
             powerLogic = Program.container.GetInstance<PowerLogic>();
 
             actions = new Dictionary<string, Action>()
             {
                 { "lock", powerLogic.LockWorkstation },
+                { "logoff", powerLogic.LogoffWorkstation },
                 { "sleep", powerLogic.SleepWorkstation },
                 { "reboot", powerLogic.RestartWorkstation },
                 { "shutdown", powerLogic.ShutdownWorkstation }

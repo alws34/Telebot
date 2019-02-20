@@ -17,7 +17,9 @@ namespace Telebot.BusinessLogic
             {
                 try
                 {
-                    result.AppendLine(app.MainModule.FileVersionInfo.ProductName);
+                    string name = app.MainModule.FileVersionInfo.ProductName;
+                    int pid = app.Id;
+                    result.AppendLine($"{name} ({pid})");
                 }
                 catch
                 {

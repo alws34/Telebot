@@ -13,5 +13,10 @@ namespace Telebot.Helpers
 
         [DllImport("user32.dll")]
         public static extern bool LockWorkStation();
+
+        public const int EWX_LOGOFF = 0;
+
+        [DllImport("user32.dll")]
+        public static extern bool ExitWindowsEx(uint uFlags, uint dwReason);
     }
 }

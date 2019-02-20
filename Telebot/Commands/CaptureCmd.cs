@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using Telebot.BusinessLogic;
 using Telebot.Extensions;
 using Telebot.Models;
@@ -18,15 +19,18 @@ namespace Telebot.Commands
 
         public override void Execute(object parameter, Action<CommandResult> callback)
         {
-            var bitmap = captureLogic.CaptureDesktop();
+            var bitmaps = captureLogic.CaptureDesktop();
 
-            var result = new CommandResult
+            foreach (Bitmap bitmap in bitmaps)
             {
-                Stream = bitmap.ToStream(),
-                SendType = SendType.Photo
-            };
+                var result = new CommandResult
+                {
+                    Stream = bitmap.ToStream(),
+                    SendType = SendType.Photo
+                };
 
-            callback(result);
+                callback(result);
+            }
         }
     }
 }

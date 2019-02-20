@@ -94,6 +94,8 @@
     <Compile Include="Commands\CommandBase.cs" />
     <Compile Include="Commands\Factories\CommandFactory.cs" />
     <Compile Include="Commands\HelpCmd.cs" />
+    <Compile Include="Commands\KillTaskCmd.cs" />
+    <Compile Include="Commands\MessageBoxCmd.cs" />
     <Compile Include="Commands\PowerCmd.cs" />
     <Compile Include="Commands\ScreenCmd.cs" />
     <Compile Include="Commands\StatusCmd.cs" />

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Drawing;
-using Telebot.Extensions;
 using Telebot.Models;
 using Telebot.ScreenCaptures;
 
@@ -10,8 +8,8 @@ namespace Telebot.Commands
     {
         public CapTimeCmd()
         {
-            Pattern = "/captime -d (\\d+) -i (\\d+)";
-            Description = "Schedules a screen capture session.";
+            Pattern = "/captime (\\d+) (\\d+)";
+            Description = "Schedules screen capture session.";
         }
 
         public override void Execute(object parameter, Action<CommandResult> callback)

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Telebot.Models;
 using Telebot.Monitors;
 
@@ -10,8 +8,8 @@ namespace Telebot.Commands
     {
         public TempTimeCmd()
         {
-            Pattern = "/temptime -d (\\d+) -i (\\d+)";
-            Description = "Schedules a temperature monitor.";
+            Pattern = "/temptime (\\d+) (\\d+)";
+            Description = "Schedules temperature monitor.";
         }
 
         public override void Execute(object parameter, Action<CommandResult> callback)

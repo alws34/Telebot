@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using Telebot.Loggers;
+using static Telebot.Helpers.User32Helper;
 
 namespace Telebot.BusinessLogic
 {
@@ -22,28 +22,38 @@ namespace Telebot.BusinessLogic
 
             foreach (Screen screen in Screen.AllScreens)
             {
-                int x = screen.Bounds.X;
-                int y = screen.Bounds.Y;
+                int left = screen.Bounds.Left;
+                int top = screen.Bounds.Top;
 
-                var result = new Bitmap(screen.Bounds.Width, screen.Bounds.Height);
+                int width = screen.Bounds.Width;
+                int height = screen.Bounds.Height;
 
-                using (Graphics graphic = Graphics.FromImage(result))
+                var result = new Bitmap(width, height);
+
+                using (var graphic = Graphics.FromImage(result))
                 {
-                    graphic.CopyFromScreen(x, y, 0, 0, result.Size);
+                    graphic.CopyFromScreen(left, top, 0, 0, result.Size);
                 }
 
                 yield return result;
             }
         }
 
-        public Bitmap CaptureControl(Control control)
+        public Bitmap CaptureWindow(IntPtr hWnd)
         {
-            Bitmap result = new Bitmap(control.Width, control.Height);
+            var rect = new Rect();
 
-            control.Invoke((MethodInvoker)delegate
+            GetWindowRect(hWnd, ref rect);
+
+            int width = rect.right - rect.left;
+            int height = rect.bottom - rect.top;
+
+            var result = new Bitmap(width, height);
+
+            using (var graphics = Graphics.FromImage(result))
             {
-                control.DrawToBitmap(result, new Rectangle(0, 0, control.Width, control.Height));
-            });
+                graphics.CopyFromScreen(rect.left, rect.top, 0, 0, result.Size);
+            }
 
             return result;
         }

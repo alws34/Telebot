@@ -18,6 +18,18 @@ namespace Telebot.BusinessLogic
             );
         }
 
+        public void ShutdownWorkstation(int time)
+        {
+            Process.Start
+            (
+                new ProcessStartInfo("shutdown", $"/s /t {time}")
+                {
+                    CreateNoWindow = true,
+                    UseShellExecute = false
+                }
+            );
+        }
+
         public void RestartWorkstation()
         {
             Process.Start

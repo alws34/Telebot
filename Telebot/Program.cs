@@ -84,6 +84,7 @@ namespace Telebot
                 typeof(StatusCmd),
                 typeof(AppsCmd),
                 typeof(CaptureCmd),
+                typeof(CapAppCmd),
                 typeof(CapTimeCmd),
                 typeof(CapTimeOffCmd),
                 typeof(ScreenCmd),
@@ -93,6 +94,7 @@ namespace Telebot
                 typeof(PowerCmd),
                 typeof(MessageBoxCmd),
                 typeof(KillTaskCmd),
+                typeof(VolCmd),
                 typeof(HelpCmd)
             );
 
@@ -108,6 +110,7 @@ namespace Telebot
             container.Register<DisplayLogic>(Lifestyle.Singleton);
             container.Register<SystemLogic>(Lifestyle.Singleton);
             container.Register<WindowsLogic>(Lifestyle.Singleton);
+            container.Register<MediaLogic>(Lifestyle.Singleton);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using Telebot.Commands.Factories;
@@ -10,7 +11,9 @@ using Telebot.Monitors;
 using Telebot.ScreenCaptures;
 using Telegram.Bot;
 using Telegram.Bot.Args;
+using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
+using Telegram.Bot.Types.InputFiles;
 
 namespace Telebot.Services
 {
@@ -64,7 +67,8 @@ namespace Telebot.Services
 
         private void PhotoCaptured(object sender, ScreenCaptureArgs e)
         {
-            client.SendPhotoAsync(adminId, e.Photo.ToStream());
+            var document = new InputOnlineFile(e.Photo.ToStream(), "captime.jpg");
+            client.SendDocumentAsync(adminId, document, thumb: document as InputMedia);
         }
 
         private async void initTitle()
@@ -89,8 +93,16 @@ namespace Telebot.Services
                             parseMode: ParseMode.Markdown, replyToMessageId: e.Message.MessageId);
                         break;
                     case SendType.Photo:
-                        client.SendPhotoAsync(e.Message.Chat.Id, result.Stream,
-                            parseMode: ParseMode.Markdown, replyToMessageId: e.Message.MessageId, caption: "From *Telebot*");
+                        var photo = new InputOnlineFile(result.Stream, "capture.jpg");
+                        client.SendDocumentAsync(e.Message.Chat.Id, photo,
+                            parseMode: ParseMode.Markdown, replyToMessageId: e.Message.MessageId,
+                            caption: "From *Telebot*", thumb: photo as InputMedia);
+                        break;
+                    case SendType.Document:
+                        var document = new InputOnlineFile(result.Stream, (result.Stream as FileStream).Name);
+                        client.SendDocumentAsync(e.Message.Chat.Id, document,
+                            parseMode: ParseMode.Markdown, replyToMessageId: e.Message.MessageId,
+                            caption: "From *Telebot*", thumb: document as InputMedia);
                         break;
                 }
             }

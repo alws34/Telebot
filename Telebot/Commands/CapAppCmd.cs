@@ -23,9 +23,9 @@ namespace Telebot.Commands
 
             int pid = Convert.ToInt32(parameters.Groups[1].Value);
 
-            var hProc = Process.GetProcessById(pid).MainWindowHandle;
+            var hWnd = Process.GetProcessById(pid).MainWindowHandle;
 
-            var photo = captureLogic.CaptureWindow(hProc);
+            var photo = captureLogic.CaptureWindow(hWnd);
 
             var cmdResult = new CommandResult
             {

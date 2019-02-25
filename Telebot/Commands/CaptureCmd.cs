@@ -19,13 +19,13 @@ namespace Telebot.Commands
 
         public override void Execute(object parameter, Action<CommandResult> callback)
         {
-            var bitmaps = captureLogic.CaptureDesktop();
+            var photos = captureLogic.CaptureDesktop();
 
-            foreach (Bitmap bitmap in bitmaps)
+            foreach (Bitmap photo in photos)
             {
                 var result = new CommandResult
                 {
-                    Stream = bitmap.ToStream(),
+                    Stream = photo.ToStream(),
                     SendType = SendType.Photo
                 };
 

@@ -8,7 +8,7 @@ namespace Telebot.Commands
     {
         public CapTimeCmd()
         {
-            Pattern = "/captime (\\d+) (\\d+)";
+            Pattern = "/captime (off|(\\d+) (\\d+))";
             Description = "Schedules screen capture session.";
         }
 
@@ -16,8 +16,27 @@ namespace Telebot.Commands
         {
             var parameters = parameter as CommandParam;
 
-            int duration = Convert.ToInt32(parameters.Groups[1].Value);
-            int interval = Convert.ToInt32(parameters.Groups[2].Value);
+            var reParam = parameters.Groups[1].Value;
+
+            if (reParam.Equals("off"))
+            {
+                var cmdResult = new CommandResult
+                {
+                    SendType = SendType.Text,
+                    Text = "Successfully disabled scheduled screen capture."
+                };
+
+                callback(cmdResult);
+
+                ScheduledScreenCapture.Instance.Stop();
+
+                return;
+            }
+
+            var intParams = reParam.Split(' ');
+
+            int duration = Convert.ToInt32(intParams[0]);
+            int interval = Convert.ToInt32(intParams[1]);
 
             TimeSpan tsDuration = TimeSpan.FromSeconds(duration);
             TimeSpan tsInterval = TimeSpan.FromSeconds(interval);

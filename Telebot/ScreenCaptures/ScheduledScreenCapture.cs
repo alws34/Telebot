@@ -34,13 +34,13 @@ namespace Telebot.ScreenCaptures
                 return;
             }
 
-            var bitmaps = captureLogic.CaptureDesktop();
+            var photos = captureLogic.CaptureDesktop();
 
-            foreach (Bitmap bitmap in bitmaps)
+            foreach (Bitmap photo in photos)
             {
                 var result = new ScreenCaptureArgs
                 {
-                    Photo = bitmap
+                    Photo = photo
                 };
 
                 PhotoCaptured?.Invoke(this, result);

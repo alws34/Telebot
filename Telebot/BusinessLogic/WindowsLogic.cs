@@ -11,7 +11,7 @@ namespace Telebot.BusinessLogic
         {
             var result = new StringBuilder();
 
-            var processes = Process.GetProcesses().Where(x => x.MainWindowHandle != IntPtr.Zero);
+            var processes = Process.GetProcesses().Where(x => x.MainWindowHandle.ToInt32() > 0);
 
             foreach (Process process in processes)
             {

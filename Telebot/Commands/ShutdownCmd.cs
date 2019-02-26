@@ -24,7 +24,7 @@ namespace Telebot.Commands
             var cmdResult = new CommandResult
             {
                 SendType = SendType.Text,
-                Text = "Successfully scheduled the workstation to shutdown."
+                Text = $"Successfully scheduled the workstation to shutdown in {time} seconds."
             };
 
             callback(cmdResult);

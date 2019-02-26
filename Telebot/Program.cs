@@ -90,6 +90,7 @@ namespace Telebot
                 typeof(TempMonCmd),
                 typeof(TempTimeCmd),
                 typeof(PowerCmd),
+                typeof(ShutdownCmd),
                 typeof(MessageBoxCmd),
                 typeof(KillTaskCmd),
                 typeof(VolCmd),

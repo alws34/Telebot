@@ -26,7 +26,15 @@ namespace Telebot.Commands
 
             callback(cmdResult);
 
-            MessageBox.Show(msg);
+            MessageBox.Show
+            (
+                msg, 
+                "Telebot", 
+                MessageBoxButtons.OK, 
+                MessageBoxIcon.Information, 
+                MessageBoxDefaultButton.Button1, 
+                MessageBoxOptions.DefaultDesktopOnly
+            );
         }
     }
 }

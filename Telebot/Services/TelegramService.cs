@@ -148,7 +148,7 @@ namespace Telebot.Services
                     Groups = groups
                 };
 
-                command.ExecuteAsync(cmdParams, resultCallback);
+                command.Execute(cmdParams, resultCallback);
             }
             else
             {

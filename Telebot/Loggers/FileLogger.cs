@@ -6,7 +6,7 @@ namespace Telebot.Loggers
     {
         public void Log(string text)
         {
-            File.WriteAllText("Exceptions.txt", text);
+            File.AppendAllText("Exceptions.txt", text);
         }
     }
 }

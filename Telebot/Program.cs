@@ -47,7 +47,9 @@ namespace Telebot
                 appSettings = new SettingsManager();
                 var mainForm = new MainForm();
 
-                var presenter = new MainFormPresenter(mainForm, new TelegramService());
+                string token = appSettings.TelegramToken;
+
+                var presenter = new MainFormPresenter(mainForm, new TelegramService(token));
 
                 Application.Run(mainForm);
 

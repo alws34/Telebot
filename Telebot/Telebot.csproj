@@ -126,12 +126,12 @@
     <Compile Include="Events\OnNotifyIconVisibilityArgs.cs" />
     <Compile Include="Events\OnSetBotTitleArgs.cs" />
     <Compile Include="Loggers\ILogger.cs" />
-    <Compile Include="Managers\ISettings.cs" />
+    <Compile Include="Settings\ISettings.cs" />
     <Compile Include="Commands\StatusCommands\IStatusCommand.cs" />
-    <Compile Include="Monitors\TemperatureMonitorBase.cs" />
-    <Compile Include="ScreenCaptures\IScheduledScreenCapture.cs" />
-    <Compile Include="Monitors\ITemperatureMonitor.cs" />
-    <Compile Include="HwProviders\IHardwareProvider.cs" />
+    <Compile Include="Temperature\TemperatureMonitorBase.cs" />
+    <Compile Include="ScreenCaptures\IScreenCapture.cs" />
+    <Compile Include="Temperature\ITemperatureMonitor.cs" />
+    <Compile Include="HwProviders\IDeviceProvider.cs" />
     <Compile Include="BusinessLogic\CaptureLogic.cs" />
     <Compile Include="BusinessLogic\NetworkLogic.cs" />
     <Compile Include="BusinessLogic\PowerLogic.cs" />
@@ -142,12 +142,11 @@
     <Compile Include="Extensions\BitmapExtensions.cs" />
     <Compile Include="Extensions\TimeSpanExtensions.cs" />
     <Compile Include="Models\LvItem.cs" />
-    <Compile Include="ScreenCaptures\ScheduledScreenCapture.cs" />
-    <Compile Include="Monitors\ScheduledTempMonitor.cs" />
+    <Compile Include="ScreenCaptures\TimedScreenCapture.cs" />
+    <Compile Include="Temperature\TimedTempMonitor.cs" />
     <Compile Include="Presenters\MainFormPresenter.cs" />
     <Compile Include="ScreenCaptures\ScreenCaptureArgs.cs" />
-    <Compile Include="Services\ICommunicationService.cs" />
-    <Compile Include="Services\TelegramService.cs" />
+    <Compile Include="Clients\TelegramClient.cs" />
     <Compile Include="Views\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -155,17 +154,16 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Loggers\FileLogger.cs" />
-    <Compile Include="Managers\SettingsManager.cs" />
+    <Compile Include="Settings\SettingsManager.cs" />
     <Compile Include="Models\CommandParam.cs" />
     <Compile Include="Models\CommandResult.cs" />
-    <Compile Include="Monitors\PermanentTempMonitor.cs" />
+    <Compile Include="Temperature\WarningTempMonitor.cs" />
     <Compile Include="HwProviders\CPUProvider.cs" />
-    <Compile Include="HwProviders\BaseProvider.cs" />
+    <Compile Include="HwProviders\ProviderBase.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\User32Helper.cs" />
     <Compile Include="HwProviders\GPUProvider.cs" />
-    <Compile Include="Models\HardwareInfo.cs" />
     <Compile Include="Views\IMainFormView.cs" />
     <EmbeddedResource Include="Views\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

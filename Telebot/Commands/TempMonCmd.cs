@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Telebot.Models;
-using Telebot.Monitors;
+using Telebot.Temperature;
 
 namespace Telebot.Commands
 {
@@ -16,8 +16,8 @@ namespace Telebot.Commands
 
             actions = new Dictionary<string, Action>()
             {
-                { "on", PermanentTempMonitor.Instance.Start },
-                { "off", PermanentTempMonitor.Instance.Stop }
+                { "on", WarningTempMonitor.Instance.Start },
+                { "off", WarningTempMonitor.Instance.Stop }
             };
         }
 

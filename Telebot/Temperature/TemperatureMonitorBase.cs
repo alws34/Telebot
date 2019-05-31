@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Timers;
 using Telebot.HwProviders;
-using Telebot.Models;
 
-namespace Telebot.Monitors
+namespace Telebot.Temperature
 {
     public abstract class TemperatureMonitorBase : ITemperatureMonitor
     {
@@ -16,19 +15,20 @@ namespace Telebot.Monitors
             protected set { timer.Enabled = value; }
         }
 
-        protected readonly IEnumerable<IHardwareProvider> temperatureProviders;
+        protected readonly IEnumerable<IDeviceProvider> deviceProviders;
 
-        public event EventHandler<IEnumerable<HardwareInfo>> TemperatureChanged;
+        public event EventHandler<IEnumerable<IDeviceProvider>> TemperatureChanged;
 
-        protected void OnTemperatureChanged(IEnumerable<HardwareInfo> e)
+        protected void OnTemperatureChanged(IEnumerable<IDeviceProvider> e)
         {
             TemperatureChanged?.Invoke(this, e);
         }
 
-        public TemperatureMonitorBase()
+        protected TemperatureMonitorBase()
         {
             timer = new Timer();
-            temperatureProviders = Program.container.GetAllInstances<IHardwareProvider>();
+
+            deviceProviders = Program.container.GetAllInstances<IDeviceProvider>();
         }
 
         public void Start()

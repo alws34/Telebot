@@ -5,12 +5,12 @@ using Telebot.BusinessLogic;
 
 namespace Telebot.ScreenCaptures
 {
-    public class ScheduledScreenCapture : IScheduledScreenCapture
+    public class TimedScreenCapture : IScreenCapture
     {
         private readonly Timer timer;
         private DateTime stopTime;
 
-        public static IScheduledScreenCapture Instance { get; } = new ScheduledScreenCapture();
+        public static IScreenCapture Instance { get; } = new TimedScreenCapture();
 
         public bool IsActive { get { return timer.Enabled; } }
 
@@ -18,7 +18,7 @@ namespace Telebot.ScreenCaptures
 
         private readonly CaptureLogic captureLogic;
 
-        ScheduledScreenCapture()
+        TimedScreenCapture()
         {
             captureLogic = Program.container.GetInstance<CaptureLogic>();
 

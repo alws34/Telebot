@@ -11,9 +11,9 @@ namespace Telebot.BusinessLogic
         {
             StringBuilder result = new StringBuilder();
 
-            for (int device_index = 0; device_index < Program.NbDevices; device_index++)
+            for (int idxDevice = 0; idxDevice < Program.pSDK.GetNumberOfDevices(); idxDevice++)
             {
-                int deviceClass = Program.pSDK.GetDeviceClass(device_index);
+                int deviceClass = Program.pSDK.GetDeviceClass(idxDevice);
 
                 switch (deviceClass)
                 {
@@ -21,14 +21,14 @@ namespace Telebot.BusinessLogic
                     case (int)CPUIDSDK.CLASS_DEVICE_DISPLAY_ADAPTER:
                     case (int)CPUIDSDK.CLASS_DEVICE_MAINBOARD:
                     case (int)CPUIDSDK.CLASS_DEVICE_DRIVE:
-                        int NbUtilSensors = Program.pSDK.GetNumberOfSensors(device_index, CPUIDSDK.SENSOR_CLASS_UTILIZATION);
+                        int NbUtilSensors = Program.pSDK.GetNumberOfSensors(idxDevice, CPUIDSDK.SENSOR_CLASS_UTILIZATION);
                         for (int util_idx = 0; util_idx < NbUtilSensors; util_idx++)
                         {
                             string sensor_name = "";
                             float val = 0.0f, min = 0.0f, max = 0.0f;
                             int sensor_id = 0, iValue = 0;
 
-                            bool utilInfo = Program.pSDK.GetSensorInfos(device_index, util_idx, CPUIDSDK.SENSOR_CLASS_UTILIZATION,
+                            bool utilInfo = Program.pSDK.GetSensorInfos(idxDevice, util_idx, CPUIDSDK.SENSOR_CLASS_UTILIZATION,
                                 ref sensor_id, ref sensor_name, ref iValue, ref val, ref min, ref max);
 
                             if ((utilInfo == true) && (Math.Round(val, 0) >= 0))
@@ -59,14 +59,14 @@ namespace Telebot.BusinessLogic
 
                         if ((deviceClass == CPUIDSDK.CLASS_DEVICE_PROCESSOR) || deviceClass == CPUIDSDK.CLASS_DEVICE_DISPLAY_ADAPTER)
                         {
-                            int NbTempSensors = Program.pSDK.GetNumberOfSensors(device_index, CPUIDSDK.SENSOR_CLASS_TEMPERATURE);
+                            int NbTempSensors = Program.pSDK.GetNumberOfSensors(idxDevice, CPUIDSDK.SENSOR_CLASS_TEMPERATURE);
                             for (int temp_idx = 0; temp_idx < NbTempSensors; temp_idx++)
                             {
                                 string sensor_name = "";
                                 float val = 0.0f, min = 0.0f, max = 0.0f;
                                 int sensor_id = 0, iValue = 0;
 
-                                bool tempInfo = Program.pSDK.GetSensorInfos(device_index, temp_idx, CPUIDSDK.SENSOR_CLASS_TEMPERATURE,
+                                bool tempInfo = Program.pSDK.GetSensorInfos(idxDevice, temp_idx, CPUIDSDK.SENSOR_CLASS_TEMPERATURE,
                                     ref sensor_id, ref sensor_name, ref iValue, ref val, ref min, ref max);
 
                                 if ((tempInfo == true) && (Math.Round(val, 0) >= 0))
@@ -76,7 +76,7 @@ namespace Telebot.BusinessLogic
                                     switch (deviceClass)
                                     {
                                         case (int)CPUIDSDK.CLASS_DEVICE_DISPLAY_ADAPTER:
-                                            string device_name = Program.pSDK.GetDeviceName(device_index);
+                                            string device_name = Program.pSDK.GetDeviceName(idxDevice);
                                             device_name = device_name.Substring(0, device_name.IndexOf(" "));
                                             s = $"*GPU {device_name}*: {Convert.ToString(Math.Round(val, 0))}°C";
                                             break;

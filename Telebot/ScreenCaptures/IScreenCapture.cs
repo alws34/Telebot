@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Drawing;
 
 namespace Telebot.ScreenCaptures
 {
-    public interface IScheduledScreenCapture
+    public interface IScreenCapture
     {
         event EventHandler<ScreenCaptureArgs> PhotoCaptured;
         bool IsActive { get; }

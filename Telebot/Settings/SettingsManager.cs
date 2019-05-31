@@ -7,7 +7,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
-namespace Telebot.Managers
+namespace Telebot.Settings
 {
     public class SettingsManager : FileIniDataParser, ISettings
     {
@@ -35,7 +35,7 @@ namespace Telebot.Managers
             }
         }
 
-        ~SettingsManager()
+        public void CommitChanges()
         {
             WriteFile(filePath, data);
         }

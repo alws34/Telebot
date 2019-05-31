@@ -1,4 +1,4 @@
-﻿using Telebot.Monitors;
+﻿using Telebot.Temperature;
 using Telebot.StatusCommands;
 
 namespace Telebot.Commands.StatusCommands
@@ -7,7 +7,7 @@ namespace Telebot.Commands.StatusCommands
     {
         public string Execute()
         {
-            return $"*Monitor (°C)*: {PermanentTempMonitor.Instance.IsActive}";
+            return $"*Monitor (°C)*: {WarningTempMonitor.Instance.IsActive}";
         }
     }
 }

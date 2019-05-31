@@ -28,7 +28,7 @@ namespace Telebot.Commands
 
                 callback(cmdResult);
 
-                ScheduledScreenCapture.Instance.Stop();
+                TimedScreenCapture.Instance.Stop();
 
                 return;
             }
@@ -49,7 +49,7 @@ namespace Telebot.Commands
 
             callback(result);
 
-            ScheduledScreenCapture.Instance.Start(tsDuration, tsInterval);
+            TimedScreenCapture.Instance.Start(tsDuration, tsInterval);
         }
     }
 }

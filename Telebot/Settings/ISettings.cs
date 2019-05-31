@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 
-namespace Telebot.Managers
+namespace Telebot.Settings
 {
     public interface ISettings
     {
@@ -12,5 +12,6 @@ namespace Telebot.Managers
         float CPUTemperature { get; set; }
         float GPUTemperature { get; set; }
         bool TempMonEnabled { get; set; }
+        void CommitChanges();
     }
 }

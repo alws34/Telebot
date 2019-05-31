@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using Telebot.Events;
-using Telebot.Services;
+using Telebot.Clients;
 using Telebot.Views;
 
 namespace Telebot.Presenters
@@ -10,17 +10,14 @@ namespace Telebot.Presenters
     public class MainFormPresenter
     {
         private readonly IMainFormView mainFormView;
-        private readonly ICommunicationService communicationService;
 
-        public MainFormPresenter(IMainFormView mainFormView, ICommunicationService communicationService)
+        public MainFormPresenter(IMainFormView mainFormView)
         {
             this.mainFormView = mainFormView;
             this.mainFormView.Load += mainFormView_Load;
             this.mainFormView.FormClosed += mainFormView_FormClosed;
             this.mainFormView.Resize += mainFormView_Resize;
             this.mainFormView.TrayMouseClick += NotifyIcon_MouseClick;
-
-            this.communicationService = communicationService;
         }
 
         private void NotifyIcon_MouseClick(object sender, MouseEventArgs e)
@@ -42,13 +39,13 @@ namespace Telebot.Presenters
         private void mainFormView_FormClosed(object sender, FormClosedEventArgs e)
         {
             SaveSettings();
-            communicationService.Stop();
+            TelegramClient.Instance.Stop();
         }
 
         private void mainFormView_Load(object sender, EventArgs e)
         {
             LoadSettings();
-            communicationService.Start();
+            TelegramClient.Instance.Start();
         }
 
         private void SaveSettings()

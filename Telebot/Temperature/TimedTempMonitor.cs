@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Timers;
-using Telebot.HwProviders;
-using Telebot.Models;
 
-namespace Telebot.Monitors
+namespace Telebot.Temperature
 {
-    public class ScheduledTempMonitor : TemperatureMonitorBase
+    public class TimedTempMonitor : TemperatureMonitorBase
     {
         private DateTime dtStop;
 
-        public static ITemperatureMonitor Instance { get; } = new ScheduledTempMonitor();
+        public static ITemperatureMonitor Instance { get; } = new TimedTempMonitor();
 
-        ScheduledTempMonitor()
+        TimedTempMonitor()
         {
             timer.Elapsed += Elapsed;
         }
@@ -25,14 +22,7 @@ namespace Telebot.Monitors
                 return;
             }
 
-            var result = new List<HardwareInfo>();
-
-            foreach (IHardwareProvider temperatureProvider in temperatureProviders)
-            {
-                result.AddRange(temperatureProvider.GetTemperature());
-            }
-
-            OnTemperatureChanged(result);
+            OnTemperatureChanged(deviceProviders);
         }
 
         public override void Start(TimeSpan duration, TimeSpan interval)

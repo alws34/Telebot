@@ -6,8 +6,9 @@ using System.Text.RegularExpressions;
 using Telebot.Commands.Factories;
 using Telebot.Events;
 using Telebot.Extensions;
+using Telebot.HwProviders;
 using Telebot.Models;
-using Telebot.Monitors;
+using Telebot.Temperature;
 using Telebot.ScreenCaptures;
 using Telegram.Bot;
 using Telegram.Bot.Args;
@@ -15,64 +16,86 @@ using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.InputFiles;
 
-namespace Telebot.Services
+namespace Telebot.Clients
 {
-    public class TelegramService : TelegramBotClient, ICommunicationService
+    public class TelegramClient
     {
-        private readonly int adminId;
+        private readonly int idAdmin;
+        private readonly TelegramBotClient botClient;
 
-        public TelegramService(string bot_token) : base(bot_token)
+        public static TelegramClient Instance { get; } = new TelegramClient();
+
+        TelegramClient()
         {
-            adminId = Program.appSettings.TelegramAdminId;
+            idAdmin = Program.appSettings.TelegramAdminId;
+            string token = Program.appSettings.TelegramToken;
 
-            OnMessage += BotMessageHandler;
+            botClient = new TelegramBotClient(token);
+
+            botClient.OnMessage += BotMessageHandler;
             initTitle();
             doAdminHello();
 
-            PermanentTempMonitor.Instance.TemperatureChanged += PermanentTemperatureChanged;
-            ScheduledTempMonitor.Instance.TemperatureChanged += ScheduledTemperatureChanged;
-            ScheduledScreenCapture.Instance.PhotoCaptured += PhotoCaptured;
+            WarningTempMonitor.Instance.TemperatureChanged += PermanentTemperatureChanged;
+            TimedTempMonitor.Instance.TemperatureChanged += ScheduledTemperatureChanged;
+            TimedScreenCapture.Instance.PhotoCaptured += PhotoCaptured;
         }
 
-        private void PermanentTemperatureChanged(object sender, IEnumerable<HardwareInfo> devices)
+        public void Start()
         {
-            foreach (HardwareInfo device in devices)
-            {
-                string text = $"*[WARNING] {device.DeviceName}*: {device.Value}°C\nFrom *Telebot*";
+            botClient.StartReceiving();
+        }
 
-                SendTextMessageAsync(adminId, text, ParseMode.Markdown);
+        public void Stop()
+        {
+            botClient.StopReceiving();
+        }
+
+        private void PermanentTemperatureChanged(object sender, IEnumerable<IDeviceProvider> devices)
+        {
+            foreach (IDeviceProvider device in devices)
+            {
+                string deviceName = device.DeviceName;
+                float temperature = device.GetTemperature();
+
+                string text = $"*[WARNING] {deviceName}*: {temperature}°C\nFrom *Telebot*";
+
+                botClient.SendTextMessageAsync(idAdmin, text, ParseMode.Markdown);
             }
         }
 
-        private void ScheduledTemperatureChanged(object sender, IEnumerable<HardwareInfo> devices)
+        private void ScheduledTemperatureChanged(object sender, IEnumerable<IDeviceProvider> devices)
         {
             var text = new StringBuilder();
 
-            foreach (HardwareInfo device in devices)
+            foreach (IDeviceProvider device in devices)
             {
-                text.AppendLine($"*{device.DeviceName}*: {device.Value}°C");
+                string deviceName = device.DeviceName;
+                float temperature = device.GetTemperature();
+
+                text.AppendLine($"*{deviceName}*: {temperature}°C");
             }
 
             text.AppendLine("\nFrom *Telebot*");
 
-            SendTextMessageAsync(adminId, text.ToString(), ParseMode.Markdown);
+            botClient.SendTextMessageAsync(idAdmin, text.ToString(), ParseMode.Markdown);
         }
 
         private void PhotoCaptured(object sender, ScreenCaptureArgs e)
         {
             var document = new InputOnlineFile(e.Photo.ToStream(), "captime.jpg");
-            SendDocumentAsync(adminId, document, thumb: document as InputMedia);
+            botClient.SendDocumentAsync(idAdmin, document, thumb: document as InputMedia);
         }
 
         private async void initTitle()
         {
-            string title = $" - ({(await GetMeAsync()).Username})";
+            string title = $" - ({(await botClient.GetMeAsync()).Username})";
             EventAggregator.Instance.Publish(new OnSetBotTitleArgs(title));
         }
 
         private void doAdminHello()
         {
-            SendTextMessageAsync(adminId, "*Telebot*: I'm Up.", parseMode: ParseMode.Markdown);
+            botClient.SendTextMessageAsync(idAdmin, "*Telebot*: I'm Up.", parseMode: ParseMode.Markdown);
         }
 
         private void BotMessageHandler(object sender, MessageEventArgs e)
@@ -82,25 +105,25 @@ namespace Telebot.Services
                 switch (result.SendType)
                 {
                     case SendType.Text:
-                        SendTextMessageAsync(e.Message.Chat.Id, result.Text.TrimEnd(),
+                        botClient.SendTextMessageAsync(e.Message.Chat.Id, result.Text.TrimEnd(),
                             parseMode: ParseMode.Markdown, replyToMessageId: e.Message.MessageId);
                         break;
                     case SendType.Photo:
                         var photo = new InputOnlineFile(result.Stream, "capture.jpg");
-                        SendDocumentAsync(e.Message.Chat.Id, photo,
+                        botClient.SendDocumentAsync(e.Message.Chat.Id, photo,
                             parseMode: ParseMode.Markdown, replyToMessageId: e.Message.MessageId,
                             caption: "From *Telebot*", thumb: photo as InputMedia);
                         break;
                     case SendType.Document:
                         var document = new InputOnlineFile(result.Stream, (result.Stream as FileStream).Name);
-                        SendDocumentAsync(e.Message.Chat.Id, document,
+                        botClient.SendDocumentAsync(e.Message.Chat.Id, document,
                             parseMode: ParseMode.Markdown, replyToMessageId: e.Message.MessageId,
                             caption: "From *Telebot*", thumb: document as InputMedia);
                         break;
                 }
             }
 
-            if (e.Message.From.Id != adminId)
+            if (e.Message.From.Id != idAdmin)
             {
                 var cmdResult = new CommandResult
                 {
@@ -152,16 +175,6 @@ namespace Telebot.Services
                 };
                 resultCallback(cmdResult);
             }
-        }
-
-        public void Start()
-        {
-            StartReceiving();
-        }
-
-        public void Stop()
-        {
-            StopReceiving();
         }
     }
 }

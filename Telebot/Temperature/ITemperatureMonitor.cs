@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using Telebot.Models;
+using Telebot.HwProviders;
 
-namespace Telebot.Monitors
+namespace Telebot.Temperature
 {
     public interface ITemperatureMonitor
     {
-        event EventHandler<IEnumerable<HardwareInfo>> TemperatureChanged;
+        event EventHandler<IEnumerable<IDeviceProvider>> TemperatureChanged;
         bool IsActive { get; }
         void Start();
         void Start(TimeSpan duration, TimeSpan interval);

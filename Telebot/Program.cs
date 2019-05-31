@@ -1,5 +1,7 @@
 ﻿using SimpleInjector;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using Telebot.BusinessLogic;
@@ -7,9 +9,9 @@ using Telebot.Commands;
 using Telebot.Commands.StatusCommands;
 using Telebot.HwProviders;
 using Telebot.Loggers;
-using Telebot.Managers;
+using Telebot.Settings;
 using Telebot.Presenters;
-using Telebot.Services;
+using Telebot.Clients;
 using Telebot.StatusCommands;
 
 namespace Telebot
@@ -20,7 +22,7 @@ namespace Telebot
         public static ISettings appSettings;
         public static Container container;
         public static CPUIDSDK pSDK;
-        public static int NbDevices;
+
         private static volatile bool _shouldStop = false;
 
         [STAThread]
@@ -37,19 +39,15 @@ namespace Telebot
 
             if (res)
             {
-                NbDevices = pSDK.GetNumberOfDevices();
-
                 UpdateThread.Start();
 
                 buildContainer();
 
                 logger = new FileLogger();
                 appSettings = new SettingsManager();
-                var mainForm = new MainForm();
+                MainForm mainForm = new MainForm();
 
-                string token = appSettings.TelegramToken;
-
-                var presenter = new MainFormPresenter(mainForm, new TelegramService(token));
+                var presenter = new MainFormPresenter(mainForm);
 
                 Application.Run(mainForm);
 
@@ -57,6 +55,8 @@ namespace Telebot
                 UpdateThread.Join();
 
                 pSDK.UninitSDK();
+
+                appSettings.CommitChanges();
             }
         }
 
@@ -100,11 +100,8 @@ namespace Telebot
                 typeof(HelpCmd)
             );
 
-            container.Collection.Register<IHardwareProvider>
-            (
-                typeof(CPUProvider),
-                typeof(GPUProvider)
-            );
+            var providers = GetCPUProviders().Concat(GetGPUProviders());
+            container.Collection.Register<IDeviceProvider>(providers);
 
             container.Register<CaptureLogic>(Lifestyle.Singleton);
             container.Register<NetworkLogic>(Lifestyle.Singleton);
@@ -113,6 +110,52 @@ namespace Telebot
             container.Register<SystemLogic>(Lifestyle.Singleton);
             container.Register<WindowsLogic>(Lifestyle.Singleton);
             container.Register<MediaLogic>(Lifestyle.Singleton);
+        }
+
+        private static IDeviceProvider[] GetCPUProviders()
+        {
+            int cpu_count = pSDK.GetNumberOfProcessors();
+
+            var arr = new List<IDeviceProvider>(cpu_count);
+
+            for (int idxDevice = 0; idxDevice < pSDK.GetNumberOfDevices(); idxDevice++)
+            {
+                if (pSDK.GetDeviceClass(idxDevice) == CPUIDSDK.CLASS_DEVICE_PROCESSOR)
+                {
+                    string deviceName = pSDK.GetDeviceName(idxDevice);
+                    int deviceIndex = idxDevice;
+                    uint deviceClass = CPUIDSDK.CLASS_DEVICE_PROCESSOR;
+
+                    var cpu = new CPUProvider(deviceName, deviceIndex, deviceClass);
+
+                    arr.Add(cpu);
+                }
+            }
+
+            return arr.ToArray();
+        }
+
+        private static IDeviceProvider[] GetGPUProviders()
+        {
+            int gpu_count = pSDK.GetNumberOfDisplayAdapter();
+
+            var arr = new List<IDeviceProvider>(gpu_count);
+
+            for (int idxDevice = 0; idxDevice < pSDK.GetNumberOfDevices(); idxDevice++)
+            {
+                if (pSDK.GetDeviceClass(idxDevice) == CPUIDSDK.CLASS_DEVICE_DISPLAY_ADAPTER)
+                {
+                    string deviceName = pSDK.GetDeviceName(idxDevice);
+                    int deviceIndex = idxDevice;
+                    uint deviceClass = CPUIDSDK.CLASS_DEVICE_PROCESSOR;
+
+                    var gpu = new GPUProvider(deviceName, deviceIndex, deviceClass);
+
+                    arr.Add(gpu);
+                }
+            }
+
+            return arr.ToArray();
         }
     }
 }

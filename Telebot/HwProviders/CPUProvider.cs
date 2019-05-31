@@ -1,18 +1,28 @@
-﻿using System.Collections.Generic;
-using Telebot.Models;
+﻿using Telebot.Models;
 
 namespace Telebot.HwProviders
 {
-    public class CPUProvider : BaseProvider, IHardwareProvider
+    public class CPUProvider : ProviderBase, IDeviceProvider
     {
-        public IEnumerable<HardwareInfo> GetTemperature()
+        public string DeviceName { get; set; }
+        public int DeviceIndex { get; set; }
+        public uint DeviceClass { get; set; }
+
+        public CPUProvider(string DeviceName, int DeviceIndex, uint DeviceClass)
         {
-            return GetCpuInfo(CPUIDSDK.SENSOR_TEMPERATURE_CPU_DTS);
+            this.DeviceName = DeviceName;
+            this.DeviceIndex = DeviceIndex;
+            this.DeviceClass = DeviceClass;
         }
 
-        public IEnumerable<HardwareInfo> GetUtilization()
+        public float GetTemperature()
         {
-            return GetCpuInfo(CPUIDSDK.SENSOR_UTILIZATION_CPU);
+            return base.GetDeviceInfo(CPUIDSDK.SENSOR_TEMPERATURE_CPU_DTS, this.DeviceIndex);
+        }
+
+        public float GetUtilization()
+        {
+            return base.GetDeviceInfo(CPUIDSDK.SENSOR_UTILIZATION_CPU, this.DeviceIndex);
         }
     }
 }

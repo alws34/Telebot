@@ -31,33 +31,35 @@ namespace Telebot
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Thread UpdateThread = new Thread(ThreadLoop);
+            var UpdateThread = new Thread(ThreadLoop);
 
             pSDK = new CPUIDSDK();
             pSDK.InitDLL();
-            bool res = pSDK.InitSDK_Quick();
+            bool sdkLoaded = pSDK.InitSDK_Quick();
 
-            if (res)
+            if (!sdkLoaded)
             {
-                UpdateThread.Start();
-
-                buildContainer();
-
-                logger = new FileLogger();
-                appSettings = new SettingsManager();
-                MainForm mainForm = new MainForm();
-
-                var presenter = new MainFormPresenter(mainForm);
-
-                Application.Run(mainForm);
-
-                _shouldStop = true;
-                UpdateThread.Join();
-
-                pSDK.UninitSDK();
-
-                appSettings.CommitChanges();
+                throw new Exception("Couldn't load cpuidsdk module.");
             }
+
+            UpdateThread.Start();
+
+            buildContainer();
+
+            logger = new FileLogger();
+            appSettings = new SettingsManager();
+            MainForm mainForm = new MainForm();
+
+            var presenter = new MainFormPresenter(mainForm);
+
+            Application.Run(mainForm);
+
+            _shouldStop = true;
+            UpdateThread.Join();
+
+            pSDK.UninitSDK();
+
+            appSettings.CommitChanges();
         }
 
         private static void ThreadLoop()

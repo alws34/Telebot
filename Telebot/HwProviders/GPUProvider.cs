@@ -17,12 +17,12 @@ namespace Telebot.HwProviders
 
         public float GetTemperature()
         {
-            return base.GetDeviceInfo(CPUIDSDK.SENSOR_TEMPERATURE_GPU, this.DeviceIndex);
+            return base.GetDeviceInfo(CPUIDSDK.SENSOR_CLASS_TEMPERATURE, this.DeviceIndex);
         }
 
         public float GetUtilization()
         {
-            return base.GetDeviceInfo(CPUIDSDK.SENSOR_UTILIZATION_GPU, this.DeviceIndex);
+            return base.GetDeviceInfo(CPUIDSDK.SENSOR_CLASS_UTILIZATION, this.DeviceIndex);
         }
     }
 }

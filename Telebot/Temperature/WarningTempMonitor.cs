@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Timers;
-using Telebot.HwProviders;
+using Telebot.DeviceProviders;
 
 namespace Telebot.Temperature
 {

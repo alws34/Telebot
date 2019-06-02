@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Timers;
-using Telebot.HwProviders;
+using Telebot.DeviceProviders;
 
 namespace Telebot.Temperature
 {
@@ -28,7 +29,12 @@ namespace Telebot.Temperature
         {
             timer = new Timer();
 
-            deviceProviders = Program.container.GetAllInstances<IDeviceProvider>();
+            var cpuProviders = ProvidersFactory.GetCPUProviders();
+            var gpuProviders = ProvidersFactory.GetGPUProviders();
+
+            var providers = cpuProviders.Concat(gpuProviders);
+
+            deviceProviders = providers;
         }
 
         public void Start()

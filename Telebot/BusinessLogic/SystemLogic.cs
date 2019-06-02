@@ -1,101 +1,56 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
+using Telebot.DeviceProviders;
 using Telebot.Extensions;
 
 namespace Telebot.BusinessLogic
 {
     public class SystemLogic
     {
+        private readonly IEnumerable<IDeviceProvider> providers;
+
+        public SystemLogic()
+        {
+            var cpuProviders = ProvidersFactory.GetCPUProviders();
+            var gpuProviders = ProvidersFactory.GetGPUProviders();
+            var ramProviders = ProvidersFactory.GetRAMProviders();
+            var driveProviders = ProvidersFactory.GetDriveProviders();
+
+            providers = ramProviders
+                .Concat(cpuProviders)
+                .Concat(driveProviders)
+                .Concat(gpuProviders);
+        }
+
         public string GetSystemStatus()
         {
-            StringBuilder result = new StringBuilder();
+            var strBuilder = new StringBuilder();
 
-            for (int idxDevice = 0; idxDevice < Program.pSDK.GetNumberOfDevices(); idxDevice++)
+            foreach(IDeviceProvider provider in providers)
             {
-                int deviceClass = Program.pSDK.GetDeviceClass(idxDevice);
-
-                switch (deviceClass)
+                switch (provider.DeviceClass)
                 {
-                    case (int)CPUIDSDK.CLASS_DEVICE_PROCESSOR:
-                    case (int)CPUIDSDK.CLASS_DEVICE_DISPLAY_ADAPTER:
-                    case (int)CPUIDSDK.CLASS_DEVICE_MAINBOARD:
-                    case (int)CPUIDSDK.CLASS_DEVICE_DRIVE:
-                        int NbUtilSensors = Program.pSDK.GetNumberOfSensors(idxDevice, CPUIDSDK.SENSOR_CLASS_UTILIZATION);
-                        for (int util_idx = 0; util_idx < NbUtilSensors; util_idx++)
-                        {
-                            string sensor_name = "";
-                            float val = 0.0f, min = 0.0f, max = 0.0f;
-                            int sensor_id = 0, iValue = 0;
-
-                            bool utilInfo = Program.pSDK.GetSensorInfos(idxDevice, util_idx, CPUIDSDK.SENSOR_CLASS_UTILIZATION,
-                                ref sensor_id, ref sensor_name, ref iValue, ref val, ref min, ref max);
-
-                            if ((utilInfo == true) && (Math.Round(val, 0) >= 0))
-                            {
-                                string s = "";
-
-                                string valStr = Convert.ToString(Math.Round(val, 0));
-
-                                switch (deviceClass)
-                                {
-                                    case (int)CPUIDSDK.CLASS_DEVICE_PROCESSOR:
-                                        s = $"*CPU Usage*: {valStr}%";
-                                        break;
-                                    case (int)CPUIDSDK.CLASS_DEVICE_MAINBOARD:
-                                        s = $"*RAM Used.*: {valStr}%";
-                                        break;
-                                    case (int)CPUIDSDK.CLASS_DEVICE_DRIVE:
-                                        s = $"*{sensor_name.ToUpper().Replace("SPACE", "Storage Used")}*: {valStr}%";
-                                        break;
-                                }
-
-                                if (!string.IsNullOrEmpty(s))
-                                    result.AppendLine(s);
-                            }
-
-                            if (sensor_name.Equals("Processor")) break;
-                        }
-
-                        if ((deviceClass == CPUIDSDK.CLASS_DEVICE_PROCESSOR) || deviceClass == CPUIDSDK.CLASS_DEVICE_DISPLAY_ADAPTER)
-                        {
-                            int NbTempSensors = Program.pSDK.GetNumberOfSensors(idxDevice, CPUIDSDK.SENSOR_CLASS_TEMPERATURE);
-                            for (int temp_idx = 0; temp_idx < NbTempSensors; temp_idx++)
-                            {
-                                string sensor_name = "";
-                                float val = 0.0f, min = 0.0f, max = 0.0f;
-                                int sensor_id = 0, iValue = 0;
-
-                                bool tempInfo = Program.pSDK.GetSensorInfos(idxDevice, temp_idx, CPUIDSDK.SENSOR_CLASS_TEMPERATURE,
-                                    ref sensor_id, ref sensor_name, ref iValue, ref val, ref min, ref max);
-
-                                if ((tempInfo == true) && (Math.Round(val, 0) >= 0))
-                                {
-                                    string s = "";
-
-                                    switch (deviceClass)
-                                    {
-                                        case (int)CPUIDSDK.CLASS_DEVICE_DISPLAY_ADAPTER:
-                                            string device_name = Program.pSDK.GetDeviceName(idxDevice);
-                                            device_name = device_name.Substring(0, device_name.IndexOf(" "));
-                                            s = $"*GPU {device_name}*: {Convert.ToString(Math.Round(val, 0))}°C";
-                                            break;
-                                        case (int)CPUIDSDK.CLASS_DEVICE_PROCESSOR:
-                                            s = $"*CPU Temp*: {Convert.ToString(Math.Round(val, 0))}°C";
-                                            break;
-                                    }
-
-                                    result.AppendLine(s);
-                                }
-
-                                if (sensor_name.Equals("Package")) break;
-                            }
-                        }
+                    case CPUIDSDK.CLASS_DEVICE_MAINBOARD:
+                        strBuilder.AppendLine($"*RAM Used.*: {provider.GetUtilization()}%");
+                        break;
+                    case CPUIDSDK.CLASS_DEVICE_PROCESSOR:
+                        strBuilder.AppendLine($"*CPU Usage*: {provider.GetUtilization()}%");
+                        strBuilder.AppendLine($"*CPU Temp*: {provider.GetTemperature()}°C");
+                        break;
+                    case CPUIDSDK.CLASS_DEVICE_DRIVE:
+                        strBuilder.AppendLine($"*{provider.DeviceName} Used*: {provider.GetUtilization()}%");
+                        break;
+                    case CPUIDSDK.CLASS_DEVICE_DISPLAY_ADAPTER:
+                        var arr = provider.DeviceName.Split(' ');
+                        strBuilder.AppendLine($"*GPU {arr[0]}*: {provider.GetTemperature()}°C");
                         break;
                 }
             }
 
-            return result.ToString().TrimEnd();
+            return strBuilder.ToString().TrimEnd();
         }
 
         public string GetUptime()

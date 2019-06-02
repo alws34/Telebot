@@ -1,17 +1,9 @@
-﻿using SimpleInjector;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Threading;
 using System.Windows.Forms;
-using Telebot.BusinessLogic;
-using Telebot.Commands;
-using Telebot.Commands.StatusCommands;
-using Telebot.HwProviders;
 using Telebot.Loggers;
 using Telebot.Presenters;
 using Telebot.Settings;
-using Telebot.StatusCommands;
 
 namespace Telebot
 {
@@ -19,7 +11,6 @@ namespace Telebot
     {
         public static ILogger logger;
         public static ISettings appSettings;
-        public static Container container;
         public static CPUIDSDK pSDK;
 
         private static volatile bool _shouldStop = false;
@@ -42,8 +33,6 @@ namespace Telebot
             }
 
             RefreshThread.Start();
-
-            buildContainer();
 
             logger = new FileLogger();
             appSettings = new SettingsManager();
@@ -68,60 +57,6 @@ namespace Telebot
                 pSDK.RefreshInformation();
                 Thread.Sleep(1000);
             }
-        }
-
-        private static void buildContainer()
-        {
-            container = new Container();
-
-            var providers = GetCPUProviders().Concat(GetGPUProviders());
-            container.Collection.Register<IDeviceProvider>(providers);
-        }
-
-        private static IDeviceProvider[] GetCPUProviders()
-        {
-            int cpu_count = pSDK.GetNumberOfProcessors();
-
-            var arr = new List<IDeviceProvider>(cpu_count);
-
-            for (int idxDevice = 0; idxDevice < pSDK.GetNumberOfDevices(); idxDevice++)
-            {
-                if (pSDK.GetDeviceClass(idxDevice) == CPUIDSDK.CLASS_DEVICE_PROCESSOR)
-                {
-                    string deviceName = pSDK.GetDeviceName(idxDevice);
-                    int deviceIndex = idxDevice;
-                    uint deviceClass = CPUIDSDK.CLASS_DEVICE_PROCESSOR;
-
-                    var cpu = new CPUProvider(deviceName, deviceIndex, deviceClass);
-
-                    arr.Add(cpu);
-                }
-            }
-
-            return arr.ToArray();
-        }
-
-        private static IDeviceProvider[] GetGPUProviders()
-        {
-            int gpu_count = pSDK.GetNumberOfDisplayAdapter();
-
-            var arr = new List<IDeviceProvider>(gpu_count);
-
-            for (int idxDevice = 0; idxDevice < pSDK.GetNumberOfDevices(); idxDevice++)
-            {
-                if (pSDK.GetDeviceClass(idxDevice) == CPUIDSDK.CLASS_DEVICE_DISPLAY_ADAPTER)
-                {
-                    string deviceName = pSDK.GetDeviceName(idxDevice);
-                    int deviceIndex = idxDevice;
-                    uint deviceClass = CPUIDSDK.CLASS_DEVICE_DISPLAY_ADAPTER;
-
-                    var gpu = new GPUProvider(deviceName, deviceIndex, deviceClass);
-
-                    arr.Add(gpu);
-                }
-            }
-
-            return arr.ToArray();
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Telebot.HwProviders;
+using Telebot.DeviceProviders;
 
 namespace Telebot.Temperature
 {

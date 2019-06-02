@@ -14,7 +14,8 @@ namespace Telebot.Commands
         {
             Pattern = "/apps (fg|all)";
             Description = "List of active applications.";
-            windowsLogic = Program.container.GetInstance<WindowsLogic>();
+
+            windowsLogic = new WindowsLogic();
 
             actions = new Dictionary<string, Func<string>>
             {

@@ -15,7 +15,7 @@ namespace Telebot.Commands
             Pattern = "/screen (on|off)";
             Description = "Turn off or on the monitor.";
 
-            displayLogic = Program.container.GetInstance<DisplayLogic>();
+            displayLogic = new DisplayLogic();
 
             actions = new Dictionary<string, Action>()
             {

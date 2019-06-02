@@ -12,7 +12,8 @@ namespace Telebot.Commands
         {
             Pattern = "/shutdown (\\d+)";
             Description = "Schedule the workstation to shutdown.";
-            powerLogic = Program.container.GetInstance<PowerLogic>();
+
+            powerLogic = new PowerLogic();
         }
 
         public override void Execute(object parameter, Action<CommandResult> callback)

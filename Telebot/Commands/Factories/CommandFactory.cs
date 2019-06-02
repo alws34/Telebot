@@ -14,7 +14,24 @@ namespace Telebot.Commands.Factories
         {
             _commands = new Dictionary<Regex, ICommand>();
 
-            var commands = Program.container.GetAllInstances<ICommand>();
+            var commands = new ICommand[]
+            {
+                new StatusCmd(),
+                new AppsCmd(),
+                new CaptureCmd(),
+                new CapAppCmd(),
+                new CapTimeCmd(),
+                new ScreenCmd(),
+                new TempMonCmd(),
+                new TempTimeCmd(),
+                new PowerCmd(),
+                new ShutdownCmd(),
+                new MessageBoxCmd(),
+                new KillTaskCmd(),
+                new VolCmd(),
+                new SpecCmd(),
+                new HelpCmd()
+            };
 
             foreach (ICommand command in commands)
             {

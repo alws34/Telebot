@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Telebot.Commands.StatusCommands;
 using Telebot.Models;
 using Telebot.StatusCommands;
 
@@ -14,7 +15,14 @@ namespace Telebot.Commands
         {
             Pattern = "/status";
             Description = "Receive workstation information.";
-            statusCommands = Program.container.GetAllInstances<IStatusCommand>();
+
+            statusCommands = new IStatusCommand[]
+            {
+                new SystemCmd(),
+                new IPCmd(),
+                new UptimeCmd(),
+                new TempMonitorCmd()
+            };
         }
 
         public override void Execute(object parameter, Action<CommandResult> callback)

@@ -13,7 +13,7 @@ namespace Telebot.Commands
         {
             Pattern = "/killtask (\\d+)";
             Description = "Kill a task with the specified pid.";
-            systemLogic = Program.container.GetInstance<SystemLogic>();
+            systemLogic = new SystemLogic();
         }
 
         public override void Execute(object parameter, Action<CommandResult> callback)

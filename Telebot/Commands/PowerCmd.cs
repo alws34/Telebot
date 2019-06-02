@@ -16,7 +16,7 @@ namespace Telebot.Commands
             Pattern = "/(lock|logoff|sleep|reboot|shutdown)";
             Description = "Lock, logoff, sleep, reboot or shutdown the workstation.";
 
-            powerLogic = Program.container.GetInstance<PowerLogic>();
+            powerLogic = new PowerLogic();
 
             actions = new Dictionary<string, Action>()
             {

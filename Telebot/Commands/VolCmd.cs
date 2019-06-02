@@ -12,7 +12,8 @@ namespace Telebot.Commands
         {
             Pattern = "/vol (\\d+)";
             Description = "Adjust the workstation volume.";
-            mediaLogic = Program.container.GetInstance<MediaLogic>();
+
+            mediaLogic = new MediaLogic();
         }
 
         public override void Execute(object parameter, Action<CommandResult> callback)

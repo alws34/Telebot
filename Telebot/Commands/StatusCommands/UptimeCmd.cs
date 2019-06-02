@@ -9,7 +9,7 @@ namespace Telebot.Commands.StatusCommands
 
         public UptimeCmd()
         {
-            systemLogic = Program.container.GetInstance<SystemLogic>();
+            systemLogic = new SystemLogic();
         }
 
         public string Execute()

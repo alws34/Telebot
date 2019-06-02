@@ -9,7 +9,7 @@ namespace Telebot.Commands.StatusCommands
 
         public IPCmd()
         {
-            networkLogic = Program.container.GetInstance<NetworkLogic>();
+            networkLogic = new NetworkLogic();
         }
 
         public string Execute()

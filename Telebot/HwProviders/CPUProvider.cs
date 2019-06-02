@@ -1,6 +1,4 @@
-﻿using Telebot.Models;
-
-namespace Telebot.HwProviders
+﻿namespace Telebot.HwProviders
 {
     public class CPUProvider : ProviderBase, IDeviceProvider
     {

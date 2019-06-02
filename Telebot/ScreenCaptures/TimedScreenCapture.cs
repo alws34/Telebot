@@ -20,7 +20,7 @@ namespace Telebot.ScreenCaptures
 
         TimedScreenCapture()
         {
-            captureLogic = Program.container.GetInstance<CaptureLogic>();
+            captureLogic = new CaptureLogic();
 
             timer = new Timer();
             timer.Elapsed += Elapsed;

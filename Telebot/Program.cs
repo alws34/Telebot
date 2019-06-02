@@ -9,9 +9,8 @@ using Telebot.Commands;
 using Telebot.Commands.StatusCommands;
 using Telebot.HwProviders;
 using Telebot.Loggers;
-using Telebot.Settings;
 using Telebot.Presenters;
-using Telebot.Clients;
+using Telebot.Settings;
 using Telebot.StatusCommands;
 
 namespace Telebot
@@ -31,7 +30,7 @@ namespace Telebot
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            var UpdateThread = new Thread(ThreadLoop);
+            var RefreshThread = new Thread(RefreshThreadProc);
 
             pSDK = new CPUIDSDK();
             pSDK.InitDLL();
@@ -42,7 +41,7 @@ namespace Telebot
                 throw new Exception("Couldn't load cpuidsdk module.");
             }
 
-            UpdateThread.Start();
+            RefreshThread.Start();
 
             buildContainer();
 
@@ -55,14 +54,14 @@ namespace Telebot
             Application.Run(mainForm);
 
             _shouldStop = true;
-            UpdateThread.Join();
+            RefreshThread.Join();
 
             pSDK.UninitSDK();
 
             appSettings.CommitChanges();
         }
 
-        private static void ThreadLoop()
+        private static void RefreshThreadProc()
         {
             while (!_shouldStop)
             {
@@ -75,43 +74,8 @@ namespace Telebot
         {
             container = new Container();
 
-            container.Collection.Register<IStatusCommand>
-            (
-                typeof(SystemCmd),
-                typeof(IPCmd),
-                typeof(UptimeCmd),
-                typeof(TempMonitorCmd)
-            );
-
-            container.Collection.Register<ICommand>
-            (
-                typeof(StatusCmd),
-                typeof(AppsCmd),
-                typeof(CaptureCmd),
-                typeof(CapAppCmd),
-                typeof(CapTimeCmd),
-                typeof(ScreenCmd),
-                typeof(TempMonCmd),
-                typeof(TempTimeCmd),
-                typeof(PowerCmd),
-                typeof(ShutdownCmd),
-                typeof(MessageBoxCmd),
-                typeof(KillTaskCmd),
-                typeof(VolCmd),
-                typeof(SpecCmd),
-                typeof(HelpCmd)
-            );
-
             var providers = GetCPUProviders().Concat(GetGPUProviders());
             container.Collection.Register<IDeviceProvider>(providers);
-
-            container.Register<CaptureLogic>(Lifestyle.Singleton);
-            container.Register<NetworkLogic>(Lifestyle.Singleton);
-            container.Register<PowerLogic>(Lifestyle.Singleton);
-            container.Register<DisplayLogic>(Lifestyle.Singleton);
-            container.Register<SystemLogic>(Lifestyle.Singleton);
-            container.Register<WindowsLogic>(Lifestyle.Singleton);
-            container.Register<MediaLogic>(Lifestyle.Singleton);
         }
 
         private static IDeviceProvider[] GetCPUProviders()
@@ -149,7 +113,7 @@ namespace Telebot
                 {
                     string deviceName = pSDK.GetDeviceName(idxDevice);
                     int deviceIndex = idxDevice;
-                    uint deviceClass = CPUIDSDK.CLASS_DEVICE_PROCESSOR;
+                    uint deviceClass = CPUIDSDK.CLASS_DEVICE_DISPLAY_ADAPTER;
 
                     var gpu = new GPUProvider(deviceName, deviceIndex, deviceClass);
 

@@ -14,7 +14,8 @@ namespace Telebot.Commands
         {
             Pattern = "/capapp (\\d+)";
             Description = "Get a screenshot of the specified application (by pid).";
-            captureLogic = Program.container.GetInstance<CaptureLogic>();
+
+            captureLogic = new CaptureLogic();
         }
 
         public override void Execute(object parameter, Action<CommandResult> callback)

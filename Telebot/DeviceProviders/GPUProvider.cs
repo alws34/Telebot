@@ -1,31 +1,30 @@
-﻿namespace Telebot.DeviceProviders
-{
-    public class GPUProvider : ProviderBase, IDeviceProvider
-    {
-        public string DeviceName { get; private set; }
-        public int DeviceIndex { get; private set; }
-        public uint DeviceClass { get; private set; }
+﻿using System.Collections.Generic;
 
+namespace Telebot.DeviceProviders
+{
+    public class GPUProvider : ProviderBase
+    {
         public GPUProvider()
         {
 
         }
 
-        public GPUProvider(string DeviceName, int DeviceIndex, uint DeviceClass)
+        public GPUProvider(string DeviceName, int DeviceIndex, uint DeviceClass, int SensorCount)
         {
             this.DeviceName = DeviceName;
             this.DeviceIndex = DeviceIndex;
             this.DeviceClass = DeviceClass;
+            this.SensorsCount = SensorCount;
         }
 
-        public float GetTemperature()
+        public override IEnumerable<SensorInfo> GetTemperature()
         {
-            return base.GetDeviceInfo(CPUIDSDK.SENSOR_CLASS_TEMPERATURE, this.DeviceIndex);
+            return base.GetSensorsInfo(CPUIDSDK.SENSOR_CLASS_TEMPERATURE, this.DeviceIndex);
         }
 
-        public float GetUtilization()
+        public override IEnumerable<SensorInfo> GetUtilization()
         {
-            return base.GetDeviceInfo(CPUIDSDK.SENSOR_CLASS_UTILIZATION, this.DeviceIndex);
+            return base.GetSensorsInfo(CPUIDSDK.SENSOR_CLASS_UTILIZATION, this.DeviceIndex);
         }
     }
 }

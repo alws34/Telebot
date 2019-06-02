@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using Telebot.Commands.Factories;
@@ -56,7 +57,7 @@ namespace Telebot.Clients
             foreach (IDeviceProvider device in devices)
             {
                 string deviceName = device.DeviceName;
-                float temperature = device.GetTemperature();
+                float temperature = device.GetTemperature().ElementAt(0).Value;
 
                 string text = $"*[WARNING] {deviceName}*: {temperature}°C\nFrom *Telebot*";
 
@@ -71,7 +72,7 @@ namespace Telebot.Clients
             foreach (IDeviceProvider device in devices)
             {
                 string deviceName = device.DeviceName;
-                float temperature = device.GetTemperature();
+                float temperature = device.GetTemperature().ElementAt(0).Value;
 
                 text.AppendLine($"*{deviceName}*: {temperature}°C");
             }

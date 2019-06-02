@@ -16,11 +16,18 @@ namespace Telebot.DeviceProviders
                     string deviceName = Program.pSDK.GetDeviceName(idxDevice);
                     int deviceIndex = idxDevice;
 
+                    int sensorCount = Program.pSDK.GetNumberOfSensors
+                    (
+                        idxDevice, 
+                        CPUIDSDK.SENSOR_CLASS_UTILIZATION
+                    );
+
                     T device = (T)Activator.CreateInstance(typeof(T), new object[] 
                     {
                         deviceName,
                         deviceIndex,
-                        deviceClass
+                        deviceClass,
+                        sensorCount
                     });
 
                     devArr.Add(device);

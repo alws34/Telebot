@@ -118,6 +118,7 @@
     <Compile Include="DeviceProviders\DriveProvider.cs" />
     <Compile Include="DeviceProviders\ProvidersFactory.cs" />
     <Compile Include="DeviceProviders\RAMProvider.cs" />
+    <Compile Include="DeviceProviders\SensorInfo.cs" />
     <Compile Include="Events\EventAggregator.cs" />
     <Compile Include="Events\OnAddObjectToLvArgs.cs" />
     <Compile Include="Events\IApplicationEvent.cs" />

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Timers;
 using Telebot.DeviceProviders;
 
@@ -36,7 +37,7 @@ namespace Telebot.Temperature
 
             foreach (IDeviceProvider deviceProvider in deviceProviders)
             {
-                var temperature = deviceProvider.GetTemperature();
+                float temperature = deviceProvider.GetTemperature().ElementAt(0).Value;
 
                 switch (deviceProvider.DeviceClass)
                 {

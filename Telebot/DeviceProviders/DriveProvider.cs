@@ -6,32 +6,29 @@ using System.Threading.Tasks;
 
 namespace Telebot.DeviceProviders
 {
-    public class DriveProvider : ProviderBase, IDeviceProvider
+    public class DriveProvider : ProviderBase
     {
-        public string DeviceName { get; private set; }
-        public int DeviceIndex { get; private set; }
-        public uint DeviceClass { get; private set; }
-
         public DriveProvider()
         {
 
         }
 
-        public DriveProvider(string DeviceName, int DeviceIndex, uint DeviceClass)
+        public DriveProvider(string DeviceName, int DeviceIndex, uint DeviceClass, int SensorCount)
         {
             this.DeviceName = DeviceName;
             this.DeviceIndex = DeviceIndex;
             this.DeviceClass = DeviceClass;
+            this.SensorsCount = SensorCount;
         }
 
-        public float GetTemperature()
+        public override IEnumerable<SensorInfo> GetTemperature()
         {
-            return base.GetDeviceInfo(CPUIDSDK.SENSOR_CLASS_TEMPERATURE, this.DeviceIndex);
+            return base.GetSensorsInfo(CPUIDSDK.SENSOR_CLASS_TEMPERATURE, this.DeviceIndex);
         }
 
-        public float GetUtilization()
+        public override IEnumerable<SensorInfo> GetUtilization()
         {
-            return base.GetDeviceInfo(CPUIDSDK.SENSOR_CLASS_UTILIZATION, this.DeviceIndex);
+            return base.GetSensorsInfo(CPUIDSDK.SENSOR_CLASS_UTILIZATION, this.DeviceIndex);
         }
     }
 }

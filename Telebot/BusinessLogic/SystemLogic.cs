@@ -37,13 +37,14 @@ namespace Telebot.BusinessLogic
                         strBuilder.AppendLine($"*RAM Used.*: {provider.GetUtilization()}%");
                         break;
                     case CPUIDSDK.CLASS_DEVICE_PROCESSOR:
-                        double utilization = Math.Round(provider.GetUtilization(), 1);
-                        strBuilder.AppendLine($"*CPU Usage*: {utilization}%");
+                        double cpu_util = Math.Round(provider.GetUtilization(), 1);
+                        strBuilder.AppendLine($"*CPU Usage*: {cpu_util}%");
                         strBuilder.AppendLine($"*CPU Temp*: {provider.GetTemperature()}°C");
                         break;
                     case CPUIDSDK.CLASS_DEVICE_DRIVE:
                         var driveBrand = provider.DeviceName.Split(' ')[0];
-                        strBuilder.AppendLine($"*{driveBrand} Used*: {provider.GetUtilization()}%");
+                        double drive_util = Math.Round(provider.GetUtilization(), 1);
+                        strBuilder.AppendLine($"*{driveBrand} Used*: {drive_util}%");
                         break;
                     case CPUIDSDK.CLASS_DEVICE_DISPLAY_ADAPTER:
                         var gpuBrand = provider.DeviceName.Split(' ')[0];

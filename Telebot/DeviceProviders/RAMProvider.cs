@@ -26,7 +26,7 @@ namespace Telebot.DeviceProviders
 
         public float GetTemperature()
         {
-            return base.GetDeviceInfo(CPUIDSDK.SENSOR_TEMPERATURE_DRAM, this.DeviceIndex);
+            return base.GetDeviceInfo(CPUIDSDK.SENSOR_CLASS_TEMPERATURE, this.DeviceIndex);
         }
 
         public float GetUtilization()

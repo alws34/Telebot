@@ -17,12 +17,12 @@ namespace Telebot.DeviceProviders
             this.SensorsCount = SensorCount;
         }
 
-        public override IEnumerable<SensorInfo> GetTemperature()
+        public override IEnumerable<SensorInfo> GetTemperatureSensors()
         {
             return base.GetSensorsInfo(CPUIDSDK.SENSOR_CLASS_TEMPERATURE, this.DeviceIndex);
         }
 
-        public override IEnumerable<SensorInfo> GetUtilization()
+        public override IEnumerable<SensorInfo> GetUtilizationSensors()
         {
             return base.GetSensorsInfo(CPUIDSDK.SENSOR_CLASS_UTILIZATION, this.DeviceIndex);
         }

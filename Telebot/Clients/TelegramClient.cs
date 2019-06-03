@@ -52,40 +52,42 @@ namespace Telebot.Clients
             botClient.StopReceiving();
         }
 
-        private void PermanentTemperatureChanged(object sender, IEnumerable<IDeviceProvider> devices)
+        private async void PermanentTemperatureChanged(object sender, IEnumerable<IDeviceProvider> devices)
         {
             foreach (IDeviceProvider device in devices)
             {
                 string deviceName = device.DeviceName;
-                float temperature = device.GetTemperature().ElementAt(0).Value;
+                SensorInfo package = device.GetTemperatureSensors().ElementAt(0);
+                float temperature = package.Value;
 
                 string text = $"*[WARNING] {deviceName}*: {temperature}°C\nFrom *Telebot*";
 
-                botClient.SendTextMessageAsync(idAdmin, text, ParseMode.Markdown);
+                await botClient.SendTextMessageAsync(idAdmin, text, ParseMode.Markdown);
             }
         }
 
-        private void ScheduledTemperatureChanged(object sender, IEnumerable<IDeviceProvider> devices)
+        private async void ScheduledTemperatureChanged(object sender, IEnumerable<IDeviceProvider> devices)
         {
             var text = new StringBuilder();
 
             foreach (IDeviceProvider device in devices)
             {
                 string deviceName = device.DeviceName;
-                float temperature = device.GetTemperature().ElementAt(0).Value;
+                SensorInfo package = device.GetTemperatureSensors().ElementAt(0);
+                float temperature = package.Value;
 
                 text.AppendLine($"*{deviceName}*: {temperature}°C");
             }
 
             text.AppendLine("\nFrom *Telebot*");
 
-            botClient.SendTextMessageAsync(idAdmin, text.ToString(), ParseMode.Markdown);
+            await botClient.SendTextMessageAsync(idAdmin, text.ToString(), ParseMode.Markdown);
         }
 
-        private void PhotoCaptured(object sender, ScreenCaptureArgs e)
+        private async void PhotoCaptured(object sender, ScreenCaptureArgs e)
         {
             var document = new InputOnlineFile(e.Photo.ToStream(), "captime.jpg");
-            botClient.SendDocumentAsync(idAdmin, document, thumb: document as InputMedia);
+            await botClient.SendDocumentAsync(idAdmin, document, thumb: document as InputMedia);
         }
 
         private async void initTitle()
@@ -94,14 +96,14 @@ namespace Telebot.Clients
             EventAggregator.Instance.Publish(new OnSetBotTitleArgs(title));
         }
 
-        private void doAdminHello()
+        private async void doAdminHello()
         {
-            botClient.SendTextMessageAsync(idAdmin, "*Telebot*: I'm Up.", parseMode: ParseMode.Markdown);
+            await botClient.SendTextMessageAsync(idAdmin, "*Telebot*: I'm Up.", parseMode: ParseMode.Markdown);
         }
 
-        private void BotMessageHandler(object sender, MessageEventArgs e)
+        private async void BotMessageHandler(object sender, MessageEventArgs e)
         {
-            async void resultCallback(CommandResult result)
+            async void executeCallback(CommandResult result)
             {
                 switch (result.SendType)
                 {
@@ -135,7 +137,7 @@ namespace Telebot.Clients
                     SendType = SendType.Text,
                     Text = "Unauthorized."
                 };
-                resultCallback(cmdResult);
+                executeCallback(cmdResult);
                 return;
             }
 
@@ -158,7 +160,7 @@ namespace Telebot.Clients
 
             EventAggregator.Instance.Publish(new OnNotifyIconBalloonArgs(info));
 
-            var command = CommandFactory.Instance.GetCommand(cmdPattern);
+            var command = Program.commandFactory.GetCommand(cmdPattern);
 
             if (command != null)
             {
@@ -169,7 +171,7 @@ namespace Telebot.Clients
                     Groups = groups
                 };
 
-                command.Execute(cmdParams, resultCallback);
+                await command.ExecuteAsync(cmdParams, executeCallback);
             }
             else
             {
@@ -178,7 +180,7 @@ namespace Telebot.Clients
                     SendType = SendType.Text,
                     Text = "Undefined command. For commands list, type */help*."
                 };
-                resultCallback(cmdResult);
+                executeCallback(cmdResult);
             }
         }
     }

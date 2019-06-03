@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading;
 using System.Windows.Forms;
+using Telebot.Commands;
+using Telebot.Commands.Factories;
 using Telebot.Loggers;
 using Telebot.Presenters;
 using Telebot.Settings;
@@ -9,9 +11,12 @@ namespace Telebot
 {
     static class Program
     {
+        public static CPUIDSDK pSDK;
+
         public static ILogger logger;
         public static ISettings appSettings;
-        public static CPUIDSDK pSDK;
+
+        public static CommandFactory commandFactory;
 
         private static volatile bool _shouldStop = false;
 
@@ -36,6 +41,29 @@ namespace Telebot
 
             logger = new FileLogger();
             appSettings = new SettingsManager();
+
+            commandFactory = new CommandFactory
+            (
+                new ICommand[]
+                {
+                    new StatusCmd(),
+                    new AppsCmd(),
+                    new CaptureCmd(),
+                    new CapAppCmd(),
+                    new CapTimeCmd(),
+                    new ScreenCmd(),
+                    new TempMonCmd(),
+                    new TempTimeCmd(),
+                    new PowerCmd(),
+                    new ShutdownCmd(),
+                    new MessageBoxCmd(),
+                    new KillTaskCmd(),
+                    new VolCmd(),
+                    new SpecCmd(),
+                    new HelpCmd()
+                }
+            );
+
             MainForm mainForm = new MainForm();
 
             var presenter = new MainFormPresenter(mainForm);

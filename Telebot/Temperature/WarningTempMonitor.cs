@@ -37,7 +37,9 @@ namespace Telebot.Temperature
 
             foreach (IDeviceProvider deviceProvider in deviceProviders)
             {
-                float temperature = deviceProvider.GetTemperature().ElementAt(0).Value;
+                var sensors = deviceProvider.GetTemperatureSensors();
+                SensorInfo package = sensors.ElementAt(0);
+                float temperature = package.Value;
 
                 switch (deviceProvider.DeviceClass)
                 {

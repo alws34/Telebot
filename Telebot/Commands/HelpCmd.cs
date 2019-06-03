@@ -17,7 +17,7 @@ namespace Telebot.Commands
         {
             var commandsStr = new StringBuilder();
 
-            var commands = CommandFactory.Instance.GetAllCommands();
+            var commands = Program.commandFactory.GetAllCommands();
 
             foreach (ICommand command in commands)
             {

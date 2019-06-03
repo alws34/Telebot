@@ -9,8 +9,8 @@ namespace Telebot.DeviceProviders
         public uint DeviceClass { get; protected set; }
         public int SensorsCount { get; protected set; }
 
-        public abstract IEnumerable<SensorInfo> GetTemperature();
-        public abstract IEnumerable<SensorInfo> GetUtilization();
+        public abstract IEnumerable<SensorInfo> GetTemperatureSensors();
+        public abstract IEnumerable<SensorInfo> GetUtilizationSensors();
 
         protected IEnumerable<SensorInfo> GetSensorsInfo(int sensorType, int deviceIndex)
         {

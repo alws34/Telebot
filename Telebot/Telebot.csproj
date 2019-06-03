@@ -129,6 +129,7 @@
     <Compile Include="Loggers\ILogger.cs" />
     <Compile Include="Settings\ISettings.cs" />
     <Compile Include="Commands\StatusCommands\IStatusCommand.cs" />
+    <Compile Include="Temperature\TemperatureFactory.cs" />
     <Compile Include="Temperature\TemperatureMonitorBase.cs" />
     <Compile Include="ScreenCaptures\IScreenCapture.cs" />
     <Compile Include="Temperature\ITemperatureMonitor.cs" />

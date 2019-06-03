@@ -20,15 +20,16 @@ namespace Telebot.Commands
 
             string filePath = Path.Combine(Application.StartupPath, "info.txt");
 
-            var fileStream = new FileStream(filePath, FileMode.Open);
-
-            var cmdResult = new CommandResult
+            using (var fileStream = new FileStream(filePath, FileMode.Open))
             {
-                SendType = SendType.Document,
-                Stream = fileStream
-            };
+                var cmdResult = new CommandResult
+                {
+                    SendType = SendType.Document,
+                    Stream = fileStream
+                };
 
-            callback(cmdResult);
+                callback(cmdResult);
+            }
         }
     }
 }

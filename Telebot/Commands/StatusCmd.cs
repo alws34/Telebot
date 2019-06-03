@@ -9,14 +9,14 @@ namespace Telebot.Commands
 {
     public class StatusCmd : CommandBase
     {
-        private readonly IEnumerable<IStatusCommand> statusCommands;
+        private readonly IEnumerable<IStatusCommand> statuses;
 
         public StatusCmd()
         {
             Pattern = "/status";
             Description = "Receive workstation information.";
 
-            statusCommands = new IStatusCommand[]
+            statuses = new IStatusCommand[]
             {
                 new SystemCmd(),
                 new IPCmd(),
@@ -27,16 +27,16 @@ namespace Telebot.Commands
 
         public override void Execute(object parameter, Action<CommandResult> callback)
         {
-            var status = new StringBuilder();
+            var statusBuilder = new StringBuilder();
 
-            foreach (IStatusCommand cmd in statusCommands)
+            foreach (IStatusCommand status in statuses)
             {
-                status.AppendLine(cmd.Execute());
+                statusBuilder.AppendLine(status.Execute());
             }
 
             var result = new CommandResult
             {
-                Text = status.ToString(),
+                Text = statusBuilder.ToString(),
                 SendType = SendType.Text
             };
 

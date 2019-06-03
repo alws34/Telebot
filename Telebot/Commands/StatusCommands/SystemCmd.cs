@@ -1,4 +1,5 @@
 ﻿using Telebot.BusinessLogic;
+using Telebot.DeviceProviders;
 using Telebot.StatusCommands;
 
 namespace Telebot.Commands.StatusCommands
@@ -9,7 +10,13 @@ namespace Telebot.Commands.StatusCommands
 
         public SystemCmd()
         {
-            systemLogic = new SystemLogic();
+            systemLogic = new SystemLogic
+            (
+                ProvidersFactory.GetRAMProviders(),
+                ProvidersFactory.GetCPUProviders(),
+                ProvidersFactory.GetDriveProviders(),
+                ProvidersFactory.GetGPUProviders()
+            );
         }
 
         public string Execute()

@@ -3,7 +3,7 @@ using System.Text;
 
 namespace SpecInfo
 {
-    public class Spec
+    public class Spec : IDisposable
     {
         private readonly CPUIDSDK pSDK;
 
@@ -13,11 +13,6 @@ namespace SpecInfo
             pSDK.InitDLL();
             pSDK.InitSDK();
             pSDK.RefreshInformation();
-        }
-
-        ~Spec()
-        {
-            pSDK.UninitSDK();
         }
 
         public string GetInfo()
@@ -148,6 +143,11 @@ namespace SpecInfo
                     }
                 }
             }
+        }
+
+        public void Dispose()
+        {
+            pSDK.UninitSDK();
         }
     }
 }

@@ -101,25 +101,29 @@ namespace Telebot.Clients
 
         private void BotMessageHandler(object sender, MessageEventArgs e)
         {
-            void resultCallback(CommandResult result)
+            async void resultCallback(CommandResult result)
             {
                 switch (result.SendType)
                 {
                     case SendType.Text:
-                        botClient.SendTextMessageAsync(e.Message.Chat.Id, result.Text.TrimEnd(),
+                        await botClient.SendTextMessageAsync(e.Message.Chat.Id, result.Text.TrimEnd(),
                             parseMode: ParseMode.Markdown, replyToMessageId: e.Message.MessageId);
                         break;
                     case SendType.Photo:
                         var photo = new InputOnlineFile(result.Stream, "capture.jpg");
-                        botClient.SendDocumentAsync(e.Message.Chat.Id, photo,
+                        await botClient.SendDocumentAsync(e.Message.Chat.Id, photo,
                             parseMode: ParseMode.Markdown, replyToMessageId: e.Message.MessageId,
                             caption: "From *Telebot*", thumb: photo as InputMedia);
+                        result.Stream.Close();
+                        result.Stream.Dispose();
                         break;
                     case SendType.Document:
                         var document = new InputOnlineFile(result.Stream, (result.Stream as FileStream).Name);
-                        botClient.SendDocumentAsync(e.Message.Chat.Id, document,
+                        await botClient.SendDocumentAsync(e.Message.Chat.Id, document,
                             parseMode: ParseMode.Markdown, replyToMessageId: e.Message.MessageId,
                             caption: "From *Telebot*", thumb: document as InputMedia);
+                        result.Stream.Close();
+                        result.Stream.Dispose();
                         break;
                 }
             }

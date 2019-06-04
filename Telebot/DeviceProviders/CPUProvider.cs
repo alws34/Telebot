@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace Telebot.DeviceProviders
 {
@@ -25,6 +28,22 @@ namespace Telebot.DeviceProviders
         public override IEnumerable<SensorInfo> GetUtilizationSensors()
         {
             return base.GetSensorsInfo(CPUIDSDK.SENSOR_CLASS_UTILIZATION, this.DeviceIndex);
+        }
+
+        public override string ToString()
+        {
+            var strBuilder = new StringBuilder();
+
+            float cpu_util = GetUtilizationSensors().ElementAt(0).Value;
+            double cpu_util_round = Math.Round(cpu_util, 0);
+
+            strBuilder.AppendLine($"*CPU Usage*: {cpu_util_round}%");
+
+            float cpu_temp = GetTemperatureSensors().ElementAt(0).Value;
+
+            strBuilder.AppendLine($"*CPU Temp*: {cpu_temp}°C");
+
+            return strBuilder.ToString().TrimEnd();
         }
     }
 }

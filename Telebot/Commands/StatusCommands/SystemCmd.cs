@@ -18,7 +18,7 @@ namespace Telebot.Commands.StatusCommands
 
         public string Execute()
         {
-            return systemLogic.GetSystemStatus();
+            return systemLogic.GetProvidersInfo();
         }
     }
 }

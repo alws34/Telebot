@@ -39,5 +39,7 @@ namespace Telebot.DeviceProviders
                 yield return new SensorInfo(sensor_name, value);
             }
         }
+
+        public abstract override string ToString();
     }
 }

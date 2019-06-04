@@ -30,5 +30,15 @@ namespace Telebot.DeviceProviders
         {
             return base.GetSensorsInfo(CPUIDSDK.SENSOR_CLASS_UTILIZATION, this.DeviceIndex);
         }
+
+        public override string ToString()
+        {
+            var strBuilder = new StringBuilder();
+
+            float ram_util = GetUtilizationSensors().ElementAt(0).Value;
+            strBuilder.AppendLine($"*RAM Used.*: {ram_util}%");
+
+            return strBuilder.ToString().TrimEnd();
+        }
     }
 }

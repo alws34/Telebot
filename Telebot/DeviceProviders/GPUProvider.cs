@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace Telebot.DeviceProviders
 {
@@ -25,6 +27,17 @@ namespace Telebot.DeviceProviders
         public override IEnumerable<SensorInfo> GetUtilizationSensors()
         {
             return base.GetSensorsInfo(CPUIDSDK.SENSOR_CLASS_UTILIZATION, this.DeviceIndex);
+        }
+
+        public override string ToString()
+        {
+            var strBuilder = new StringBuilder();
+
+            var gpuBrand = DeviceName.Split(' ')[0];
+            float gpu_temp = GetTemperatureSensors().ElementAt(0).Value;
+            strBuilder.AppendLine($"*GPU {gpuBrand}*: {gpu_temp}°C");
+
+            return strBuilder.ToString();
         }
     }
 }

@@ -3,9 +3,12 @@ using System.Threading;
 using System.Windows.Forms;
 using Telebot.Commands;
 using Telebot.Commands.Factories;
+using Telebot.Commands.StatusCommands;
+using Telebot.DeviceProviders;
 using Telebot.Loggers;
 using Telebot.Presenters;
 using Telebot.Settings;
+using Telebot.StatusCommands;
 
 namespace Telebot
 {
@@ -15,7 +18,6 @@ namespace Telebot
 
         public static ILogger logger;
         public static ISettings appSettings;
-
         public static CommandFactory commandFactory;
 
         private static volatile bool _shouldStop = false;
@@ -46,7 +48,22 @@ namespace Telebot
             (
                 new ICommand[]
                 {
-                    new StatusCmd(),
+                    new StatusCmd
+                    (
+                        new IStatusCommand[]
+                        {
+                            new SystemCmd
+                            (    
+                                ProvidersFactory.GetRAMProviders(),
+                                ProvidersFactory.GetCPUProviders(),
+                                ProvidersFactory.GetDriveProviders(),
+                                ProvidersFactory.GetGPUProviders()
+                            ),
+                            new IPCmd(),
+                            new UptimeCmd(),
+                            new TempMonitorCmd()
+                        }
+                    ),
                     new AppsCmd(),
                     new CaptureCmd(),
                     new CapAppCmd(),

@@ -8,14 +8,11 @@ namespace Telebot.Commands.StatusCommands
     {
         private readonly SystemLogic systemLogic;
 
-        public SystemCmd()
+        public SystemCmd(params IDeviceProvider[][] deviceProviders)
         {
             systemLogic = new SystemLogic
             (
-                ProvidersFactory.GetRAMProviders(),
-                ProvidersFactory.GetCPUProviders(),
-                ProvidersFactory.GetDriveProviders(),
-                ProvidersFactory.GetGPUProviders()
+                deviceProviders
             );
         }
 

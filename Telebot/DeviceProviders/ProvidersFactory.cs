@@ -9,16 +9,15 @@ namespace Telebot.DeviceProviders
         {
             var devArr = new List<IDeviceProvider>();
 
-            for (int idxDevice = 0; idxDevice < Program.pSDK.GetNumberOfDevices(); idxDevice++)
+            for (int deviceIndex = 0; deviceIndex < Program.pSDK.GetNumberOfDevices(); deviceIndex++)
             {
-                if (Program.pSDK.GetDeviceClass(idxDevice) == deviceClass)
+                if (Program.pSDK.GetDeviceClass(deviceIndex) == deviceClass)
                 {
-                    string deviceName = Program.pSDK.GetDeviceName(idxDevice);
-                    int deviceIndex = idxDevice;
+                    string deviceName = Program.pSDK.GetDeviceName(deviceIndex);
 
                     int sensorCount = Program.pSDK.GetNumberOfSensors
                     (
-                        idxDevice, 
+                        deviceIndex, 
                         CPUIDSDK.SENSOR_CLASS_UTILIZATION
                     );
 

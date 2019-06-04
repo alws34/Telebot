@@ -11,18 +11,12 @@ namespace Telebot.Commands
     {
         private readonly IEnumerable<IStatusCommand> statuses;
 
-        public StatusCmd()
+        public StatusCmd(IStatusCommand[] statusCommands)
         {
             Pattern = "/status";
             Description = "Receive workstation information.";
 
-            statuses = new IStatusCommand[]
-            {
-                new SystemCmd(),
-                new IPCmd(),
-                new UptimeCmd(),
-                new TempMonitorCmd()
-            };
+            statuses = statusCommands;
         }
 
         public override void Execute(object parameter, Action<CommandResult> callback)

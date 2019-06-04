@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace Telebot.Commands.Factories
 {
-    public sealed class CommandFactory
+    public class CommandFactory
     {
         private readonly Dictionary<Regex, ICommand> _commands;
 

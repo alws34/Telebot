@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Drawing;
 using System.Timers;
-using Telebot.BusinessLogic;
+using Telebot.Infrastructure;
 
 namespace Telebot.ScreenCapture
 {
-    public class ScreenCaptureImpl : IScreenCapture
+    public class ScreenCaptureDurated : IScreenCapture
     {
         private readonly Timer timer;
         private DateTime stopTime;
@@ -16,7 +16,7 @@ namespace Telebot.ScreenCapture
 
         private readonly CaptureLogic captureLogic;
 
-        public ScreenCaptureImpl()
+        public ScreenCaptureDurated()
         {
             captureLogic = new CaptureLogic();
 

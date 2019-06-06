@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Telebot.BusinessLogic;
+using Telebot.Infrastructure;
 using Telebot.Models;
 
 namespace Telebot.Commands

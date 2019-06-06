@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using static Telebot.Helpers.User32Helper;
 
-namespace Telebot.BusinessLogic
+namespace Telebot.Infrastructure
 {
     public class CaptureLogic
     {

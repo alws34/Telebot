@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using Telebot.Helpers;
 
-namespace Telebot.BusinessLogic
+namespace Telebot.Infrastructure
 {
     public class PowerLogic
     {

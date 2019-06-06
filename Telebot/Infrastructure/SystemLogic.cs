@@ -6,7 +6,7 @@ using System.Text;
 using Telebot.DeviceProviders;
 using Telebot.Extensions;
 
-namespace Telebot.BusinessLogic
+namespace Telebot.Infrastructure
 {
     public class SystemLogic
     {

@@ -1,6 +1,6 @@
 ﻿using AudioSwitcher.AudioApi.CoreAudio;
 
-namespace Telebot.BusinessLogic
+namespace Telebot.Infrastructure
 {
     public class MediaLogic
     {

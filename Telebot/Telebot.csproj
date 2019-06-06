@@ -92,7 +92,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BusinessLogic\MediaLogic.cs" />
+    <Compile Include="Infrastructure\MediaLogic.cs" />
     <Compile Include="Clients\ITelebotClient.cs" />
     <Compile Include="Commands\AppsCmd.cs" />
     <Compile Include="Commands\CapAppCmd.cs" />
@@ -132,17 +132,17 @@
     <Compile Include="Commands\StatusCommands\IStatusCommand.cs" />
     <Compile Include="ScreenCapture\IScreenCapture.cs" />
     <Compile Include="DeviceProviders\IDeviceProvider.cs" />
-    <Compile Include="BusinessLogic\CaptureLogic.cs" />
-    <Compile Include="BusinessLogic\NetworkLogic.cs" />
-    <Compile Include="BusinessLogic\PowerLogic.cs" />
-    <Compile Include="BusinessLogic\DisplayLogic.cs" />
-    <Compile Include="BusinessLogic\SystemLogic.cs" />
-    <Compile Include="BusinessLogic\WindowsLogic.cs" />
+    <Compile Include="Infrastructure\CaptureLogic.cs" />
+    <Compile Include="Infrastructure\NetworkLogic.cs" />
+    <Compile Include="Infrastructure\PowerLogic.cs" />
+    <Compile Include="Infrastructure\DisplayLogic.cs" />
+    <Compile Include="Infrastructure\SystemLogic.cs" />
+    <Compile Include="Infrastructure\WindowsLogic.cs" />
     <Compile Include="cpuidsdk.cs" />
     <Compile Include="Extensions\BitmapExtensions.cs" />
     <Compile Include="Extensions\TimeSpanExtensions.cs" />
     <Compile Include="Models\LvItem.cs" />
-    <Compile Include="ScreenCapture\ScreenCaptureImpl.cs" />
+    <Compile Include="ScreenCapture\ScreenCaptureDurated.cs" />
     <Compile Include="Presenters\MainFormPresenter.cs" />
     <Compile Include="ScreenCapture\ScreenCaptureArgs.cs" />
     <Compile Include="Clients\TelebotClient.cs" />

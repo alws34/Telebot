@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
-namespace Telebot.BusinessLogic
+namespace Telebot.Infrastructure
 {
     public class WindowsLogic
     {

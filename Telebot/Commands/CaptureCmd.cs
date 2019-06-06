@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Drawing;
-using Telebot.BusinessLogic;
+using Telebot.Infrastructure;
 using Telebot.Extensions;
 using Telebot.Models;
 

@@ -2,7 +2,7 @@
 using System.Net;
 using System.Net.Sockets;
 
-namespace Telebot.BusinessLogic
+namespace Telebot.Infrastructure
 {
     public class NetworkLogic
     {

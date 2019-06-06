@@ -57,7 +57,7 @@ namespace Telebot
             MainForm mainForm = new MainForm();
             TelebotClient telebotClient = new TelebotClient(admin_token, admin_id);
 
-            screenCapture = new ScreenCaptureImpl();
+            screenCapture = new ScreenCaptureDurated();
 
             temperatureMonitorWarning = new TemperatureMonitorWarning
             (

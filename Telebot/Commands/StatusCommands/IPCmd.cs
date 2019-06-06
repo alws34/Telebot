@@ -1,4 +1,4 @@
-﻿using Telebot.BusinessLogic;
+﻿using Telebot.Infrastructure;
 using Telebot.StatusCommands;
 
 namespace Telebot.Commands.StatusCommands

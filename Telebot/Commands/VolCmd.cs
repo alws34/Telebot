@@ -1,5 +1,5 @@
 ﻿using System;
-using Telebot.BusinessLogic;
+using Telebot.Infrastructure;
 using Telebot.Models;
 
 namespace Telebot.Commands

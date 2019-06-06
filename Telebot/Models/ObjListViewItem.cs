@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace Telebot.Models
+﻿namespace Telebot.Models
 {
-    public class LvItem
+    public class ObjListViewItem
     {
         public string DateTime { get; set; }
         public string Text { get; set; }

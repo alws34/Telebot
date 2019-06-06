@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using Telebot.Clients;
-using Telebot.Events;
 using Telebot.ScreenCapture;
 using Telebot.Temperature;
 using Telebot.Views;
@@ -26,19 +25,31 @@ namespace Telebot.Presenters
             this.mainFormView.Load += mainFormView_Load;
             this.mainFormView.FormClosed += mainFormView_FormClosed;
             this.mainFormView.Resize += mainFormView_Resize;
-            this.mainFormView.TrayMouseClick += NotifyIcon_MouseClick;
+            this.mainFormView.NotifyIcon.MouseClick += NotifyIcon_MouseClick;
 
             this.telebotClient = telebotClient;
+            this.telebotClient.RequestArrival += TelebotClient_RequestArrival;
 
             var screenCaptureAggregator = new ScreenCaptureAggregator(telebotClient, screenCapture);
             var temperatureMonitorAggregator = new TemperatureMonitorAggregator(telebotClient, temperatureMonitors);
+        }
+
+        private void TelebotClient_RequestArrival(object sender, RequestArrivalArgs e)
+        {
+            mainFormView.ObjectListView.AddObject(e.Item);
+
+            if (mainFormView.WindowState == FormWindowState.Minimized)
+            {
+                mainFormView.NotifyIcon.ShowBalloonTip(
+                    1000, mainFormView.Text, e.Item.Text, ToolTipIcon.Info);
+            }
         }
 
         private void NotifyIcon_MouseClick(object sender, MouseEventArgs e)
         {
             mainFormView.Show();
             mainFormView.WindowState = FormWindowState.Normal;
-            EventAggregator.Instance.Publish(new OnNotifyIconVisibilityArgs(false));
+            mainFormView.NotifyIcon.Visible = false;
         }
 
         private void mainFormView_Resize(object sender, EventArgs e)
@@ -46,7 +57,7 @@ namespace Telebot.Presenters
             if (mainFormView.WindowState == FormWindowState.Minimized)
             {
                 mainFormView.Hide();
-                EventAggregator.Instance.Publish(new OnNotifyIconVisibilityArgs(true));
+                mainFormView.NotifyIcon.Visible = true;
             }
         }
 

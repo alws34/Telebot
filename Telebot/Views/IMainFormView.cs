@@ -10,12 +10,12 @@ namespace Telebot.Views
         event EventHandler Load;
         event FormClosedEventHandler FormClosed;
         event EventHandler Resize;
-        event MouseEventHandler TrayMouseClick;
 
         string Text { get; set; }
         void Hide();
         void Show();
         ObjectListView ObjectListView { get; }
+        NotifyIcon NotifyIcon { get; }
         Rectangle Bounds { get; set; }
         FormWindowState WindowState { get; set; }
     }

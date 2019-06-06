@@ -120,12 +120,7 @@
     <Compile Include="DeviceProviders\ProvidersFactory.cs" />
     <Compile Include="DeviceProviders\RAMProvider.cs" />
     <Compile Include="DeviceProviders\SensorInfo.cs" />
-    <Compile Include="Events\EventAggregator.cs" />
-    <Compile Include="Events\OnAddObjectToLvArgs.cs" />
-    <Compile Include="Events\IApplicationEvent.cs" />
-    <Compile Include="Events\IEventAggregator.cs" />
-    <Compile Include="Events\OnNotifyIconBalloonArgs.cs" />
-    <Compile Include="Events\OnNotifyIconVisibilityArgs.cs" />
+    <Compile Include="Clients\RequestArrivalArgs.cs" />
     <Compile Include="Loggers\ILogger.cs" />
     <Compile Include="ScreenCapture\ScreenCaptureAggregator.cs" />
     <Compile Include="Settings\ISettings.cs" />
@@ -141,7 +136,7 @@
     <Compile Include="cpuidsdk.cs" />
     <Compile Include="Extensions\BitmapExtensions.cs" />
     <Compile Include="Extensions\TimeSpanExtensions.cs" />
-    <Compile Include="Models\LvItem.cs" />
+    <Compile Include="Models\ObjListViewItem.cs" />
     <Compile Include="ScreenCapture\ScreenCaptureDurated.cs" />
     <Compile Include="Presenters\MainFormPresenter.cs" />
     <Compile Include="ScreenCapture\ScreenCaptureArgs.cs" />

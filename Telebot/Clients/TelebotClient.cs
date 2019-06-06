@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Text.RegularExpressions;
-using Telebot.Events;
 using Telebot.Models;
 using Telegram.Bot;
 using Telegram.Bot.Args;
@@ -20,6 +19,13 @@ namespace Telebot.Clients
             this.AdminID = admin_id;
 
             OnMessage += BotMessageHandler;
+        }
+
+        public event EventHandler<RequestArrivalArgs> RequestArrival;
+
+        private void RaiseRequestArrival(RequestArrivalArgs e)
+        {
+            RequestArrival?.Invoke(this, e);
         }
 
         private async void BotMessageHandler(object sender, MessageEventArgs e)
@@ -71,15 +77,18 @@ namespace Telebot.Clients
 
             string info = $"Received {cmdPattern} from {e.Message.From.Username}.";
 
-            var item = new LvItem
+            var objlvitem = new ObjListViewItem
             {
                 DateTime = DateTime.Now.ToString(),
                 Text = info
             };
 
-            EventAggregator.Instance.Publish(new OnAddObjectToLvArgs(item));
+            var arrival = new RequestArrivalArgs
+            {
+                Item = objlvitem
+            };
 
-            EventAggregator.Instance.Publish(new OnNotifyIconBalloonArgs(info));
+            RaiseRequestArrival(arrival);
 
             var command = Program.commandFactory.GetCommand(cmdPattern);
 

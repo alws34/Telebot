@@ -1,6 +1,5 @@
 ﻿using System;
 using Telebot.Models;
-using Telebot.Temperature;
 
 namespace Telebot.Commands
 {
@@ -28,7 +27,7 @@ namespace Telebot.Commands
 
                 callback(cmdResult);
 
-                TimedTempMonitor.Instance.Stop();
+                Program.temperatureMonitorDurated.Stop();
 
                 return;
             }
@@ -49,7 +48,7 @@ namespace Telebot.Commands
 
             callback(result);
 
-            TimedTempMonitor.Instance.Start(tsDuration, tsInterval);
+            Program.temperatureMonitorDurated.Start(tsDuration, tsInterval);
         }
     }
 }

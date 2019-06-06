@@ -1,6 +1,5 @@
 ﻿using System;
 using Telebot.Models;
-using Telebot.ScreenCaptures;
 
 namespace Telebot.Commands
 {
@@ -28,7 +27,7 @@ namespace Telebot.Commands
 
                 callback(cmdResult);
 
-                TimedScreenCapture.Instance.Stop();
+                Program.screenCapture.Stop();
 
                 return;
             }
@@ -49,7 +48,7 @@ namespace Telebot.Commands
 
             callback(result);
 
-            TimedScreenCapture.Instance.Start(tsDuration, tsInterval);
+            Program.screenCapture.Start(tsDuration, tsInterval);
         }
     }
 }

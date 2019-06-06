@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Timers;
 using Telebot.DeviceProviders;
 
@@ -16,11 +15,11 @@ namespace Telebot.Temperature
             protected set { timer.Enabled = value; }
         }
 
-        protected readonly IEnumerable<IDeviceProvider> deviceProviders;
+        protected readonly List<IDeviceProvider> deviceProviders;
 
-        public event EventHandler<IEnumerable<IDeviceProvider>> TemperatureChanged;
+        public event EventHandler<TemperatureChangedArgs> TemperatureChanged;
 
-        protected void OnTemperatureChanged(IEnumerable<IDeviceProvider> e)
+        protected void RaiseTemperatureChanged(TemperatureChangedArgs e)
         {
             TemperatureChanged?.Invoke(this, e);
         }
@@ -28,13 +27,7 @@ namespace Telebot.Temperature
         protected TemperatureMonitorBase()
         {
             timer = new Timer();
-
-            var cpuProviders = ProvidersFactory.GetCPUProviders();
-            var gpuProviders = ProvidersFactory.GetGPUProviders();
-
-            var providers = cpuProviders.Concat(gpuProviders);
-
-            deviceProviders = providers;
+            deviceProviders = new List<IDeviceProvider>();
         }
 
         public void Start()

@@ -6,15 +6,18 @@ using Telebot.DeviceProviders;
 
 namespace Telebot.Temperature
 {
-    public class WarningTempMonitor : TemperatureMonitorBase
+    public class TemperatureMonitorWarning : TemperatureMonitorBase
     {
         private float CPU_TEMPERATURE_WARNING = 65.0f;
         private float GPU_TEMPERATURE_WARNING = 65.0f;
 
-        public static ITemperatureMonitor Instance { get; } = new WarningTempMonitor();
-
-        private WarningTempMonitor()
+        public TemperatureMonitorWarning(params IDeviceProvider[][] deviceProviders)
         {
+            foreach (IDeviceProvider[] devices in deviceProviders)
+            {
+                this.deviceProviders.AddRange(devices);
+            }
+
             CPU_TEMPERATURE_WARNING = Program.appSettings.CPUTemperature;
             GPU_TEMPERATURE_WARNING = Program.appSettings.GPUTemperature;
 
@@ -24,7 +27,7 @@ namespace Telebot.Temperature
             IsActive = Program.appSettings.TempMonEnabled;
         }
 
-        ~WarningTempMonitor()
+        ~TemperatureMonitorWarning()
         {
             Program.appSettings.TempMonEnabled = IsActive;
             Program.appSettings.CPUTemperature = CPU_TEMPERATURE_WARNING;
@@ -54,7 +57,12 @@ namespace Telebot.Temperature
                 }
             }
 
-            OnTemperatureChanged(result);
+            var parameter = new TemperatureChangedArgs
+            {
+                Devices = result
+            };
+
+            RaiseTemperatureChanged(parameter);
         }
     }
 }

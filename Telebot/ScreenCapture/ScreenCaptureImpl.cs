@@ -3,22 +3,20 @@ using System.Drawing;
 using System.Timers;
 using Telebot.BusinessLogic;
 
-namespace Telebot.ScreenCaptures
+namespace Telebot.ScreenCapture
 {
-    public class TimedScreenCapture : IScreenCapture
+    public class ScreenCaptureImpl : IScreenCapture
     {
         private readonly Timer timer;
         private DateTime stopTime;
 
-        public static IScreenCapture Instance { get; } = new TimedScreenCapture();
-
         public bool IsActive { get { return timer.Enabled; } }
 
-        public event EventHandler<ScreenCaptureArgs> PhotoCaptured;
+        public event EventHandler<ScreenCaptureArgs> ScreenCaptured;
 
         private readonly CaptureLogic captureLogic;
 
-        TimedScreenCapture()
+        public ScreenCaptureImpl()
         {
             captureLogic = new CaptureLogic();
 
@@ -34,16 +32,16 @@ namespace Telebot.ScreenCaptures
                 return;
             }
 
-            var photos = captureLogic.CaptureDesktop();
+            var desktops = captureLogic.CaptureDesktop();
 
-            foreach (Bitmap photo in photos)
+            foreach (Bitmap desktop in desktops)
             {
                 var result = new ScreenCaptureArgs
                 {
-                    Photo = photo
+                    Capture = desktop
                 };
 
-                PhotoCaptured?.Invoke(this, result);
+                ScreenCaptured?.Invoke(this, result);
             }
         }
 

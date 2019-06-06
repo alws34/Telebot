@@ -16,8 +16,8 @@ namespace Telebot.Commands
 
             actions = new Dictionary<string, Action>()
             {
-                { "on", WarningTempMonitor.Instance.Start },
-                { "off", WarningTempMonitor.Instance.Stop }
+                { "on", Program.temperatureMonitorWarning.Start },
+                { "off", Program.temperatureMonitorWarning.Stop }
             };
         }
 

@@ -4,20 +4,34 @@ using System.Windows.Forms;
 using Telebot.Events;
 using Telebot.Clients;
 using Telebot.Views;
+using Telebot.ScreenCapture;
+using Telebot.Temperature;
+using Telebot.DeviceProviders;
 
 namespace Telebot.Presenters
 {
     public class MainFormPresenter
     {
         private readonly IMainFormView mainFormView;
+        private readonly ITelebotClient telebotClient;
 
-        public MainFormPresenter(IMainFormView mainFormView)
+        public MainFormPresenter(
+            IMainFormView mainFormView, 
+            ITelebotClient telebotClient,
+            IScreenCapture screenCapture,
+            ITemperatureMonitor[] temperatureMonitors
+            )
         {
             this.mainFormView = mainFormView;
             this.mainFormView.Load += mainFormView_Load;
             this.mainFormView.FormClosed += mainFormView_FormClosed;
             this.mainFormView.Resize += mainFormView_Resize;
             this.mainFormView.TrayMouseClick += NotifyIcon_MouseClick;
+
+            this.telebotClient = telebotClient;
+
+            var screenCaptureAggregator = new ScreenCaptureAggregator(telebotClient, screenCapture);
+            var temperatureMonitorAggregator = new TemperatureMonitorAggregator(telebotClient, temperatureMonitors);
         }
 
         private void NotifyIcon_MouseClick(object sender, MouseEventArgs e)
@@ -39,13 +53,13 @@ namespace Telebot.Presenters
         private void mainFormView_FormClosed(object sender, FormClosedEventArgs e)
         {
             SaveSettings();
-            TelegramClient.Instance.Stop();
+            telebotClient.StopReceiving();
         }
 
         private void mainFormView_Load(object sender, EventArgs e)
         {
             LoadSettings();
-            TelegramClient.Instance.Start();
+            telebotClient.StartReceiving();
         }
 
         private void SaveSettings()

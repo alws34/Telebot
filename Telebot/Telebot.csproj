@@ -93,6 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessLogic\MediaLogic.cs" />
+    <Compile Include="Clients\ITelebotClient.cs" />
     <Compile Include="Commands\AppsCmd.cs" />
     <Compile Include="Commands\CapAppCmd.cs" />
     <Compile Include="Commands\CapTimeCmd.cs" />
@@ -127,12 +128,10 @@
     <Compile Include="Events\OnNotifyIconVisibilityArgs.cs" />
     <Compile Include="Events\OnSetBotTitleArgs.cs" />
     <Compile Include="Loggers\ILogger.cs" />
+    <Compile Include="ScreenCapture\ScreenCaptureAggregator.cs" />
     <Compile Include="Settings\ISettings.cs" />
     <Compile Include="Commands\StatusCommands\IStatusCommand.cs" />
-    <Compile Include="Temperature\TemperatureFactory.cs" />
-    <Compile Include="Temperature\TemperatureMonitorBase.cs" />
-    <Compile Include="ScreenCaptures\IScreenCapture.cs" />
-    <Compile Include="Temperature\ITemperatureMonitor.cs" />
+    <Compile Include="ScreenCapture\IScreenCapture.cs" />
     <Compile Include="DeviceProviders\IDeviceProvider.cs" />
     <Compile Include="BusinessLogic\CaptureLogic.cs" />
     <Compile Include="BusinessLogic\NetworkLogic.cs" />
@@ -144,11 +143,16 @@
     <Compile Include="Extensions\BitmapExtensions.cs" />
     <Compile Include="Extensions\TimeSpanExtensions.cs" />
     <Compile Include="Models\LvItem.cs" />
-    <Compile Include="ScreenCaptures\TimedScreenCapture.cs" />
-    <Compile Include="Temperature\TimedTempMonitor.cs" />
+    <Compile Include="ScreenCapture\ScreenCaptureImpl.cs" />
     <Compile Include="Presenters\MainFormPresenter.cs" />
-    <Compile Include="ScreenCaptures\ScreenCaptureArgs.cs" />
-    <Compile Include="Clients\TelegramClient.cs" />
+    <Compile Include="ScreenCapture\ScreenCaptureArgs.cs" />
+    <Compile Include="Clients\TelebotClient.cs" />
+    <Compile Include="Temperature\ITemperatureMonitor.cs" />
+    <Compile Include="Temperature\TemperatureChangedArgs.cs" />
+    <Compile Include="Temperature\TemperatureMonitorAggregator.cs" />
+    <Compile Include="Temperature\TemperatureMonitorBase.cs" />
+    <Compile Include="Temperature\TemperatureMonitorDurated.cs" />
+    <Compile Include="Temperature\TemperatureMonitorWarning.cs" />
     <Compile Include="Views\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -159,7 +163,6 @@
     <Compile Include="Settings\SettingsManager.cs" />
     <Compile Include="Models\CommandParam.cs" />
     <Compile Include="Models\CommandResult.cs" />
-    <Compile Include="Temperature\WarningTempMonitor.cs" />
     <Compile Include="DeviceProviders\CPUProvider.cs" />
     <Compile Include="DeviceProviders\ProviderBase.cs" />
     <Compile Include="Program.cs" />

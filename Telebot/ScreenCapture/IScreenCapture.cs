@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace Telebot.ScreenCaptures
+namespace Telebot.ScreenCapture
 {
     public interface IScreenCapture
     {
-        event EventHandler<ScreenCaptureArgs> PhotoCaptured;
+        event EventHandler<ScreenCaptureArgs> ScreenCaptured;
         bool IsActive { get; }
         void Start(TimeSpan duration, TimeSpan interval);
         void Stop();

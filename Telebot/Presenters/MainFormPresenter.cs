@@ -56,18 +56,28 @@ namespace Telebot.Presenters
             telebotClient.StopReceiving();
         }
 
-        private async void mainFormView_Load(object sender, EventArgs e)
+        private void mainFormView_Load(object sender, EventArgs e)
         {
             LoadSettings();
-            var me = await telebotClient.GetMeAsync();
-            mainFormView.Text += $" ({me.Username})";
+            SetTitleUsername();
+            SendClientHello();
+            telebotClient.StartReceiving();
+        }
+
+        private async void SendClientHello()
+        {
             await telebotClient.SendTextMessageAsync
             (
                 telebotClient.AdminID,
                 "*Telebot*: I'm Up.",
                 parseMode: ParseMode.Markdown
             );
-            telebotClient.StartReceiving();
+        }
+
+        private async void SetTitleUsername()
+        {
+            var me = await telebotClient.GetMeAsync();
+            mainFormView.Text += $" ({me.Username})";
         }
 
         private void SaveSettings()

@@ -20,19 +20,6 @@ namespace Telebot.Clients
             this.AdminID = admin_id;
 
             OnMessage += BotMessageHandler;
-            initTitle();
-            doAdminHello();
-        }
-
-        private async void initTitle()
-        {
-            string title = $" - ({(await GetMeAsync()).Username})";
-            EventAggregator.Instance.Publish(new OnSetBotTitleArgs(title));
-        }
-
-        private async void doAdminHello()
-        {
-            await SendTextMessageAsync(AdminID, "*Telebot*: I'm Up.", parseMode: ParseMode.Markdown);
         }
 
         private async void BotMessageHandler(object sender, MessageEventArgs e)

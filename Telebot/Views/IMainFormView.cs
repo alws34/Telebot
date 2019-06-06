@@ -12,6 +12,7 @@ namespace Telebot.Views
         event EventHandler Resize;
         event MouseEventHandler TrayMouseClick;
 
+        string Text { get; set; }
         void Hide();
         void Show();
         ObjectListView ObjectListView { get; }

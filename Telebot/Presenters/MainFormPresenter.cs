@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using Telebot.Events;
 using Telebot.Clients;
-using Telebot.Views;
+using Telebot.Events;
 using Telebot.ScreenCapture;
 using Telebot.Temperature;
-using Telebot.DeviceProviders;
+using Telebot.Views;
+using Telegram.Bot.Types.Enums;
 
 namespace Telebot.Presenters
 {
@@ -16,7 +16,7 @@ namespace Telebot.Presenters
         private readonly ITelebotClient telebotClient;
 
         public MainFormPresenter(
-            IMainFormView mainFormView, 
+            IMainFormView mainFormView,
             ITelebotClient telebotClient,
             IScreenCapture screenCapture,
             ITemperatureMonitor[] temperatureMonitors
@@ -56,9 +56,17 @@ namespace Telebot.Presenters
             telebotClient.StopReceiving();
         }
 
-        private void mainFormView_Load(object sender, EventArgs e)
+        private async void mainFormView_Load(object sender, EventArgs e)
         {
             LoadSettings();
+            var me = await telebotClient.GetMeAsync();
+            mainFormView.Text += $" ({me.Username})";
+            await telebotClient.SendTextMessageAsync
+            (
+                telebotClient.AdminID,
+                "*Telebot*: I'm Up.",
+                parseMode: ParseMode.Markdown
+            );
             telebotClient.StartReceiving();
         }
 

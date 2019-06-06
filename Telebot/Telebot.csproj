@@ -126,7 +126,6 @@
     <Compile Include="Events\IEventAggregator.cs" />
     <Compile Include="Events\OnNotifyIconBalloonArgs.cs" />
     <Compile Include="Events\OnNotifyIconVisibilityArgs.cs" />
-    <Compile Include="Events\OnSetBotTitleArgs.cs" />
     <Compile Include="Loggers\ILogger.cs" />
     <Compile Include="ScreenCapture\ScreenCaptureAggregator.cs" />
     <Compile Include="Settings\ISettings.cs" />

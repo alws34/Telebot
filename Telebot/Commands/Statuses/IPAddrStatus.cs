@@ -1,13 +1,12 @@
 ﻿using Telebot.Infrastructure;
-using Telebot.StatusCommands;
 
-namespace Telebot.Commands.StatusCommands
+namespace Telebot.Commands.Status
 {
-    public class IPCmd : IStatusCommand
+    public class IPAddrStatus : IStatus
     {
         private readonly NetworkLogic networkLogic;
 
-        public IPCmd()
+        public IPAddrStatus()
         {
             networkLogic = new NetworkLogic();
         }

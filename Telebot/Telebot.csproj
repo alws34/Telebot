@@ -108,10 +108,10 @@
     <Compile Include="Commands\ShutdownCmd.cs" />
     <Compile Include="Commands\SpecCmd.cs" />
     <Compile Include="Commands\StatusCmd.cs" />
-    <Compile Include="Commands\StatusCommands\IPCmd.cs" />
-    <Compile Include="Commands\StatusCommands\SystemCmd.cs" />
-    <Compile Include="Commands\StatusCommands\TempMonitorCmd.cs" />
-    <Compile Include="Commands\StatusCommands\UptimeCmd.cs" />
+    <Compile Include="Commands\Statuses\IPAddrStatus.cs" />
+    <Compile Include="Commands\Statuses\SystemStatus.cs" />
+    <Compile Include="Commands\Statuses\MonitorsStatus.cs" />
+    <Compile Include="Commands\Statuses\UptimeStatus.cs" />
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\TempMonCmd.cs" />
     <Compile Include="Commands\TempTimeCmd.cs" />
@@ -129,7 +129,7 @@
     <Compile Include="Loggers\ILogger.cs" />
     <Compile Include="ScreenCapture\ScreenCaptureAggregator.cs" />
     <Compile Include="Settings\ISettings.cs" />
-    <Compile Include="Commands\StatusCommands\IStatusCommand.cs" />
+    <Compile Include="Commands\Statuses\IStatus.cs" />
     <Compile Include="ScreenCapture\IScreenCapture.cs" />
     <Compile Include="DeviceProviders\IDeviceProvider.cs" />
     <Compile Include="Infrastructure\CaptureLogic.cs" />

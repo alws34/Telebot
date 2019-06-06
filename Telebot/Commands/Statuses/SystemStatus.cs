@@ -1,14 +1,13 @@
-﻿using Telebot.Infrastructure;
-using Telebot.DeviceProviders;
-using Telebot.StatusCommands;
+﻿using Telebot.DeviceProviders;
+using Telebot.Infrastructure;
 
-namespace Telebot.Commands.StatusCommands
+namespace Telebot.Commands.Status
 {
-    public class SystemCmd : IStatusCommand
+    public class SystemStatus : IStatus
     {
         private readonly SystemLogic systemLogic;
 
-        public SystemCmd(params IDeviceProvider[][] deviceProviders)
+        public SystemStatus(params IDeviceProvider[][] deviceProviders)
         {
             systemLogic = new SystemLogic
             (

@@ -1,13 +1,12 @@
 ﻿using Telebot.Infrastructure;
-using Telebot.StatusCommands;
 
-namespace Telebot.Commands.StatusCommands
+namespace Telebot.Commands.Status
 {
-    public class UptimeCmd : IStatusCommand
+    public class UptimeStatus : IStatus
     {
         private readonly SystemLogic systemLogic;
 
-        public UptimeCmd()
+        public UptimeStatus()
         {
             systemLogic = new SystemLogic();
         }

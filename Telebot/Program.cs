@@ -4,13 +4,12 @@ using System.Windows.Forms;
 using Telebot.Clients;
 using Telebot.Commands;
 using Telebot.Commands.Factories;
-using Telebot.Commands.StatusCommands;
+using Telebot.Commands.Status;
 using Telebot.DeviceProviders;
 using Telebot.Loggers;
 using Telebot.Presenters;
 using Telebot.ScreenCapture;
 using Telebot.Settings;
-using Telebot.StatusCommands;
 using Telebot.Temperature;
 
 namespace Telebot
@@ -114,18 +113,18 @@ namespace Telebot
                 {
                     new StatusCmd
                     (
-                        new IStatusCommand[]
+                        new IStatus[]
                         {
-                            new SystemCmd
+                            new SystemStatus
                             (
                                 ProvidersFactory.GetRAMProviders(),
                                 ProvidersFactory.GetCPUProviders(),
                                 ProvidersFactory.GetDriveProviders(),
                                 ProvidersFactory.GetGPUProviders()
                             ),
-                            new IPCmd(),
-                            new UptimeCmd(),
-                            new TempMonitorCmd()
+                            new IPAddrStatus(),
+                            new UptimeStatus(),
+                            new MonitorsStatus()
                         }
                     ),
                     new AppsCmd(),

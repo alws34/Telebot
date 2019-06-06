@@ -1,29 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Telebot.Commands.StatusCommands;
+using Telebot.Commands.Status;
 using Telebot.Models;
-using Telebot.StatusCommands;
 
 namespace Telebot.Commands
 {
     public class StatusCmd : CommandBase
     {
-        private readonly IEnumerable<IStatusCommand> statuses;
+        private readonly IEnumerable<IStatus> statuses;
 
-        public StatusCmd(IStatusCommand[] statusCommands)
+        public StatusCmd(IStatus[] statuses)
         {
             Pattern = "/status";
             Description = "Receive workstation information.";
 
-            statuses = statusCommands;
+            this.statuses = statuses;
         }
 
         public override void Execute(object parameter, Action<CommandResult> callback)
         {
             var statusBuilder = new StringBuilder();
 
-            foreach (IStatusCommand status in statuses)
+            foreach (IStatus status in statuses)
             {
                 statusBuilder.AppendLine(status.Execute());
             }

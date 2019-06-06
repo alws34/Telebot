@@ -1,8 +1,6 @@
-﻿using Telebot.StatusCommands;
-
-namespace Telebot.Commands.StatusCommands
+﻿namespace Telebot.Commands.Status
 {
-    public class TempMonitorCmd : IStatusCommand
+    public class MonitorsStatus : IStatus
     {
         public string Execute()
         {

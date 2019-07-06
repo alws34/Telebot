@@ -14,12 +14,13 @@ namespace Telebot.Presenters
         private readonly IMainFormView mainFormView;
         private readonly ITelebotClient telebotClient;
 
-        public MainFormPresenter(
+        public MainFormPresenter
+        (
             IMainFormView mainFormView,
             ITelebotClient telebotClient,
             IScreenCapture screenCapture,
             ITemperatureMonitor[] temperatureMonitors
-            )
+        )
         {
             this.mainFormView = mainFormView;
             this.mainFormView.Load += mainFormView_Load;

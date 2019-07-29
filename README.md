@@ -7,5 +7,5 @@ A Telegram bot that monitors system activity such as utilization and temperature
  ```
 [Telegram]
 Token = <Bot_Token>
-AdminId = <User_ID>
+AdminId = <User_ID> // The telegram user who will command the bot.
 ```

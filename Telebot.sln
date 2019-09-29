@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telebot", "Telebot\Telebot.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecInfo", "SpecInfo\SpecInfo.csproj", "{9E005723-6DE8-4E46-A4FD-794ED84978D2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CPUID", "CPUID\CPUID.csproj", "{BE642C45-8519-49FD-A45D-B5BF07C9FF96}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{9E005723-6DE8-4E46-A4FD-794ED84978D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E005723-6DE8-4E46-A4FD-794ED84978D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9E005723-6DE8-4E46-A4FD-794ED84978D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE642C45-8519-49FD-A45D-B5BF07C9FF96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE642C45-8519-49FD-A45D-B5BF07C9FF96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE642C45-8519-49FD-A45D-B5BF07C9FF96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE642C45-8519-49FD-A45D-B5BF07C9FF96}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

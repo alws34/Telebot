@@ -1,6 +1,6 @@
-﻿using System;
+﻿using CPUID.Contracts;
+using System;
 using System.Timers;
-using Telebot.Devices;
 
 namespace Telebot.Temperature
 {
@@ -8,13 +8,13 @@ namespace Telebot.Temperature
     {
         private DateTime dtStop;
 
-        public TemperatureMonitorDurated(params IDevice[][] deviceProviders)
+        public TemperatureMonitorDurated(params IDevice[][] devicesArr)
         {
             timer.Elapsed += Elapsed;
 
-            foreach (IDevice[] devices in deviceProviders)
+            foreach (IDevice[] devices in devicesArr)
             {
-                this.deviceProviders.AddRange(devices);
+                this.devices.AddRange(devices);
             }
         }
 
@@ -28,7 +28,7 @@ namespace Telebot.Temperature
 
             var parameter = new TemperatureChangedArgs
             {
-                Devices = this.deviceProviders
+                Devices = this.devices
             };
 
             RaiseTemperatureChanged(parameter);

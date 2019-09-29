@@ -1,7 +1,7 @@
-﻿using System;
+﻿using CPUID.Contracts;
+using System;
 using System.Collections.Generic;
 using System.Timers;
-using Telebot.Devices;
 
 namespace Telebot.Temperature
 {
@@ -15,7 +15,7 @@ namespace Telebot.Temperature
             protected set { timer.Enabled = value; }
         }
 
-        protected readonly List<IDevice> deviceProviders;
+        protected readonly List<IDevice> devices;
 
         public event EventHandler<TemperatureChangedArgs> TemperatureChanged;
 
@@ -27,7 +27,7 @@ namespace Telebot.Temperature
         protected TemperatureMonitorBase()
         {
             timer = new Timer();
-            deviceProviders = new List<IDevice>();
+            devices = new List<IDevice>();
         }
 
         public void Start()

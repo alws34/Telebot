@@ -1,6 +1,6 @@
-﻿using System;
+﻿using CPUID.Contracts;
+using System;
 using System.Collections.Generic;
-using Telebot.Devices;
 
 namespace Telebot.Temperature
 {

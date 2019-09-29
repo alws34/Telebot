@@ -1,9 +1,8 @@
-﻿using System;
+﻿using CPUID.Contracts;
+using CPUID.Models;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Timers;
-using Telebot.Devices;
-using Telebot.Models;
 
 namespace Telebot.Temperature
 {
@@ -12,11 +11,11 @@ namespace Telebot.Temperature
         private float CPU_TEMPERATURE_WARNING = 65.0f;
         private float GPU_TEMPERATURE_WARNING = 65.0f;
 
-        public TemperatureMonitorWarning(params IDevice[][] deviceProviders)
+        public TemperatureMonitorWarning(params IDevice[][] devicesArr)
         {
-            foreach (IDevice[] devices in deviceProviders)
+            foreach (IDevice[] devices in devicesArr)
             {
-                this.deviceProviders.AddRange(devices);
+                this.devices.AddRange(devices);
             }
 
             CPU_TEMPERATURE_WARNING = Program.appSettings.CPUTemperature;
@@ -39,21 +38,20 @@ namespace Telebot.Temperature
         {
             var result = new List<IDevice>();
 
-            foreach (IDevice deviceProvider in deviceProviders)
+            foreach (IDevice device in devices)
             {
-                var sensors = deviceProvider.GetTemperatureSensors();
-                SensorInfo package = sensors.ElementAt(0);
-                float temperature = package.Value;
+                var sensors = device.GetSensors(CPUIDSDK.SENSOR_CLASS_TEMPERATURE);
+                Sensor sensor = sensors[0];
 
-                switch (deviceProvider.DeviceClass)
+                switch (device.DeviceClass)
                 {
                     case CPUIDSDK.CLASS_DEVICE_PROCESSOR:
-                        if (temperature >= CPU_TEMPERATURE_WARNING)
-                            result.Add(deviceProvider);
+                        if (sensor.Value >= CPU_TEMPERATURE_WARNING)
+                            result.Add(device);
                         break;
                     case CPUIDSDK.CLASS_DEVICE_DISPLAY_ADAPTER:
-                        if (temperature >= GPU_TEMPERATURE_WARNING)
-                            result.Add(deviceProvider);
+                        if (sensor.Value >= GPU_TEMPERATURE_WARNING)
+                            result.Add(device);
                         break;
                 }
             }

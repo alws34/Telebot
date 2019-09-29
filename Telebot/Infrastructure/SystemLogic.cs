@@ -1,8 +1,8 @@
-﻿using System;
+﻿using CPUID.Contracts;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
-using Telebot.Devices;
 using Telebot.Extensions;
 
 namespace Telebot.Infrastructure

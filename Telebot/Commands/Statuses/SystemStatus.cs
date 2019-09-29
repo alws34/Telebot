@@ -1,4 +1,4 @@
-﻿using Telebot.Devices;
+﻿using CPUID.Contracts;
 using Telebot.Infrastructure;
 
 namespace Telebot.Commands.Status
@@ -7,11 +7,11 @@ namespace Telebot.Commands.Status
     {
         private readonly SystemLogic systemLogic;
 
-        public SystemStatus(params IDevice[][] deviceProviders)
+        public SystemStatus(params IDevice[][] devices)
         {
             systemLogic = new SystemLogic
             (
-                deviceProviders
+                devices
             );
         }
 

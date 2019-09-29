@@ -1,23 +1,23 @@
-﻿using System;
+﻿using CPUID.Factories;
+using System;
 using System.Threading;
 using System.Windows.Forms;
 using Telebot.Clients;
 using Telebot.Commands;
 using Telebot.Commands.Factories;
 using Telebot.Commands.Status;
-using Telebot.Devices;
 using Telebot.Loggers;
 using Telebot.Presenters;
 using Telebot.ScreenCapture;
 using Telebot.Settings;
 using Telebot.Temperature;
 
+using static CPUID.CPUIDCore;
+
 namespace Telebot
 {
     static class Program
     {
-        public static CPUIDSDK pSDK;
-
         public static ILogger logger;
         public static ISettings appSettings;
 
@@ -35,15 +35,6 @@ namespace Telebot
             Application.SetCompatibleTextRenderingDefault(false);
 
             var RefreshThread = new Thread(RefreshThreadProc);
-
-            pSDK = new CPUIDSDK();
-            pSDK.InitDLL();
-            bool sdkLoaded = pSDK.InitSDK_Quick();
-
-            if (!sdkLoaded)
-            {
-                throw new Exception("Couldn't init cpuidsdk module.");
-            }
 
             RefreshThread.Start();
 
@@ -91,8 +82,6 @@ namespace Telebot
             _shouldStop = true;
             RefreshThread.Join();
 
-            pSDK.UninitSDK();
-
             appSettings.CommitChanges();
         }
 
@@ -119,7 +108,7 @@ namespace Telebot
                             (
                                 DeviceFactory.RAMDevices,
                                 DeviceFactory.CPUDevices,
-                                DeviceFactory.DrvDevices,
+                                DeviceFactory.HDDDevices,
                                 DeviceFactory.GPUDevices
                             ),
                             new IPAddrStatus(),

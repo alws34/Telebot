@@ -1,8 +1,7 @@
-﻿using System.Linq;
+﻿using CPUID.Contracts;
+using CPUID.Models;
 using System.Text;
 using Telebot.Clients;
-using Telebot.Devices;
-using Telebot.Models;
 using Telegram.Bot.Types.Enums;
 
 namespace Telebot.Temperature
@@ -32,12 +31,10 @@ namespace Telebot.Temperature
         {
             foreach (IDevice device in e.Devices)
             {
-                string deviceName = device.DeviceName;
-                var sensors = device.GetTemperatureSensors();
-                SensorInfo package = sensors.ElementAt(0);
-                float temperature = package.Value;
+                var sensors = device.GetSensors(CPUIDSDK.SENSOR_CLASS_TEMPERATURE);
+                Sensor sensor = sensors[0];
 
-                string text = $"*[WARNING] {deviceName}*: {temperature}°C\nFrom *Telebot*";
+                string text = $"*[WARNING] {device.DeviceName}*: {sensor.Value}°C\nFrom *Telebot*";
 
                 await telebotClient.SendTextMessageAsync(telebotClient.AdminID, text, ParseMode.Markdown);
             }
@@ -49,12 +46,10 @@ namespace Telebot.Temperature
 
             foreach (IDevice device in e.Devices)
             {
-                string deviceName = device.DeviceName;
-                var sensors = device.GetTemperatureSensors();
-                SensorInfo package = sensors.ElementAt(0);
-                float temperature = package.Value;
+                var sensors = device.GetSensors(CPUIDSDK.SENSOR_CLASS_TEMPERATURE);
+                Sensor sensor = sensors[0];
 
-                text.AppendLine($"*{deviceName}*: {temperature}°C");
+                text.AppendLine($"*{device.DeviceName}*: {sensor.Value}°C");
             }
 
             text.AppendLine("\nFrom *Telebot*");

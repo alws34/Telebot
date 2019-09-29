@@ -1,5 +1,4 @@
-﻿using CPUID.Factories;
-using System;
+﻿using System;
 using System.Threading;
 using System.Windows.Forms;
 using Telebot.Clients;
@@ -13,6 +12,7 @@ using Telebot.Settings;
 using Telebot.Temperature;
 
 using static CPUID.CPUIDCore;
+using static CPUID.Factories.DeviceFactory;
 
 namespace Telebot
 {
@@ -51,14 +51,14 @@ namespace Telebot
 
             temperatureMonitorWarning = new TemperatureMonitorWarning
             (
-                DeviceFactory.CPUDevices,
-                DeviceFactory.GPUDevices
+                CPUDevices,
+                GPUDevices
             );
 
             temperatureMonitorDurated = new TemperatureMonitorDurated
             (
-                DeviceFactory.CPUDevices,
-                DeviceFactory.GPUDevices
+                CPUDevices,
+                GPUDevices
             );
 
             var temperatureMonitors = new ITemperatureMonitor[]
@@ -79,10 +79,10 @@ namespace Telebot
 
             Application.Run(mainForm);
 
+            appSettings.CommitChanges();
+
             _shouldStop = true;
             RefreshThread.Join();
-
-            appSettings.CommitChanges();
         }
 
         private static void RefreshThreadProc()
@@ -106,10 +106,10 @@ namespace Telebot
                         {
                             new SystemStatus
                             (
-                                DeviceFactory.RAMDevices,
-                                DeviceFactory.CPUDevices,
-                                DeviceFactory.HDDDevices,
-                                DeviceFactory.GPUDevices
+                                RAMDevices,
+                                CPUDevices,
+                                HDDDevices,
+                                GPUDevices
                             ),
                             new IPAddrStatus(),
                             new UptimeStatus(),

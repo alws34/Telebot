@@ -1,23 +1,33 @@
 ﻿using CPUID.Contracts;
-using Telebot.Infrastructure;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Telebot.Commands.Status
 {
     public class SystemStatus : IStatus
     {
-        private readonly SystemLogic systemLogic;
+        private readonly List<IDevice> devices;
 
-        public SystemStatus(params IDevice[][] devices)
+        public SystemStatus(params IDevice[][] devicesArg)
         {
-            systemLogic = new SystemLogic
-            (
-                devices
-            );
+            devices = new List<IDevice>();
+
+            foreach (IDevice[] devicesArr in devicesArg)
+            {
+                devices.AddRange(devicesArr);
+            }
         }
 
         public string Execute()
         {
-            return systemLogic.GetDevicesInfo();
+            var strBuilder = new StringBuilder();
+
+            foreach (IDevice device in devices)
+            {
+                strBuilder.AppendLine(device.ToString());
+            }
+
+            return strBuilder.ToString().TrimEnd();
         }
     }
 }

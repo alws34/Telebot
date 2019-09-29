@@ -70,7 +70,7 @@ public class CPUIDSDK
     // Token: 0x06000475 RID: 1141 RVA: 0x0002A75B File Offset: 0x0002895B
     public void InitDLL()
     {
-        this._dllHandle = CPUIDSDK.LoadLibrary(AppDomain.CurrentDomain.BaseDirectory + "cpuidsdk64.dll");
+        this._dllHandle = CPUIDSDK.LoadLibrary(@".\cpuidsdk64.dll");
     }
 
     // Token: 0x06000476 RID: 1142 RVA: 0x0002A780 File Offset: 0x00028980
@@ -115,7 +115,7 @@ public class CPUIDSDK
         this.CreateInstance();
         int num = 0;
         int num2 = 0;
-        return this.Init(null, "cpuidsdk64.dll", uint.MaxValue, ref num, ref num2);
+        return this.Init(@".\", "cpuidsdk64.dll", uint.MaxValue, ref num, ref num2);
     }
 
     // Token: 0x06000478 RID: 1144 RVA: 0x0002A900 File Offset: 0x00028B00
@@ -123,7 +123,7 @@ public class CPUIDSDK
     {
         this.CPUIDSDK_fp_QueryInterface = (CPUIDSDK.CPUIDSDKfpQueryInterface)Marshal.GetDelegateForFunctionPointer(CPUIDSDK.GetProcAddress(this._dllHandle, "QueryInterface"), typeof(CPUIDSDK.CPUIDSDKfpQueryInterface));
         this.CreateInstance();
-        return this.Init(null, "cpuidsdk64.dll", 4294967039u, ref num, ref num2);
+        return this.Init(@".\", "cpuidsdk64.dll", 4294967039u, ref num, ref num2);
     }
 
     // Token: 0x06000479 RID: 1145 RVA: 0x0002A95C File Offset: 0x00028B5C
@@ -133,7 +133,7 @@ public class CPUIDSDK
         this.CreateInstance();
         int num = 0;
         int num2 = 0;
-        return this.Init(null, "cpuidsdk64.dll", 2147483567u, ref num, ref num2);
+        return this.Init(@".\", "cpuidsdk64.dll", 2147483567u, ref num, ref num2);
     }
 
     // Token: 0x0600047A RID: 1146 RVA: 0x0002A9B5 File Offset: 0x00028BB5

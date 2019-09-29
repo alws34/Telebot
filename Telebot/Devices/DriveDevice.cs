@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using Telebot.Models;
 
-namespace Telebot.DeviceProviders
+namespace Telebot.Devices
 {
-    public class DriveProvider : ProviderBase
+    public class DriveDevice : DeviceBase
     {
-        public DriveProvider()
+        public DriveDevice()
         {
 
         }
 
-        public DriveProvider(string DeviceName, int DeviceIndex, uint DeviceClass, int SensorCount)
+        public DriveDevice(string DeviceName, int DeviceIndex, uint DeviceClass, int SensorCount)
         {
             this.DeviceName = DeviceName;
             this.DeviceIndex = DeviceIndex;

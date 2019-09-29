@@ -18,7 +18,7 @@ namespace Telebot.Commands.Factories
             }
         }
 
-        public ICommand GetCommand(string pattern)
+        public ICommand Dispatch(string pattern)
         {
             return _commands.SingleOrDefault(x => x.Key.IsMatch(pattern)).Value;
         }

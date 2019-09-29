@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Telebot.Models;
 
-namespace Telebot.DeviceProviders
+namespace Telebot.Devices
 {
-    public class CPUProvider : ProviderBase
+    public class CPUDevice : DeviceBase
     {
-        public CPUProvider()
+        public CPUDevice()
         {
 
         }
 
-        public CPUProvider(string DeviceName, int DeviceIndex, uint DeviceClass, int SensorCount)
+        public CPUDevice(string DeviceName, int DeviceIndex, uint DeviceClass, int SensorCount)
         {
             this.DeviceName = DeviceName;
             this.DeviceIndex = DeviceIndex;
@@ -41,7 +42,7 @@ namespace Telebot.DeviceProviders
 
             float cpu_temp = GetTemperatureSensors().ElementAt(0).Value;
 
-            strBuilder.AppendLine($"*CPU Temp*: {cpu_temp}°C");
+            strBuilder.AppendLine($"*CPU Temp.*: {cpu_temp}°C");
 
             return strBuilder.ToString().TrimEnd();
         }

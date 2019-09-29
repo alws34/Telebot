@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Timers;
-using Telebot.Devices;
-using Telebot.Models;
+using Telebot.DeviceProviders;
 
 namespace Telebot.Temperature
 {
@@ -12,9 +11,9 @@ namespace Telebot.Temperature
         private float CPU_TEMPERATURE_WARNING = 65.0f;
         private float GPU_TEMPERATURE_WARNING = 65.0f;
 
-        public TemperatureMonitorWarning(params IDevice[][] deviceProviders)
+        public TemperatureMonitorWarning(params IDeviceProvider[][] deviceProviders)
         {
-            foreach (IDevice[] devices in deviceProviders)
+            foreach (IDeviceProvider[] devices in deviceProviders)
             {
                 this.deviceProviders.AddRange(devices);
             }
@@ -37,9 +36,9 @@ namespace Telebot.Temperature
 
         private void Elapsed(object sender, ElapsedEventArgs e)
         {
-            var result = new List<IDevice>();
+            var result = new List<IDeviceProvider>();
 
-            foreach (IDevice deviceProvider in deviceProviders)
+            foreach (IDeviceProvider deviceProvider in deviceProviders)
             {
                 var sensors = deviceProvider.GetTemperatureSensors();
                 SensorInfo package = sensors.ElementAt(0);

@@ -1,38 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
-using Telebot.Devices;
+using Telebot.DeviceProviders;
 using Telebot.Extensions;
 
 namespace Telebot.Infrastructure
 {
     public class SystemLogic
     {
-        private readonly List<IDevice> devices;
+        private readonly List<IDeviceProvider> deviceProviders;
 
         public SystemLogic()
         {
 
         }
 
-        public SystemLogic(params IDevice[][] devicesArg)
+        public SystemLogic(params IDeviceProvider[][] deviceProvidersArg)
         {
-            devices = new List<IDevice>();
+            deviceProviders = new List<IDeviceProvider>();
 
-            foreach (IDevice[] devicesArr in devicesArg)
+            foreach (IDeviceProvider[] deviceProvidersArr in deviceProvidersArg)
             {
-                devices.AddRange(devicesArr);
+                deviceProviders.AddRange(deviceProvidersArr);
             }
         }
 
-        public string GetDevicesInfo()
+        public string GetProvidersInfo()
         {
             var strBuilder = new StringBuilder();
 
-            foreach (IDevice device in devices)
+            foreach(IDeviceProvider deviceProvider in deviceProviders)
             {
-                strBuilder.AppendLine(device.ToString());
+                strBuilder.AppendLine(deviceProvider.ToString());
             }
 
             return strBuilder.ToString().TrimEnd();

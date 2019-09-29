@@ -13,7 +13,7 @@ namespace Telebot.Commands.Status
 
         public string Execute()
         {
-            return $"*IP*: {networkLogic.IP}";
+            return $"*IP*: {networkLogic.LocalIPv4Address}";
         }
     }
 }

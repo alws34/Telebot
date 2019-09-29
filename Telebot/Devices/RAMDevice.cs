@@ -1,17 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Telebot.Models;
 
-namespace Telebot.DeviceProviders
+namespace Telebot.Devices
 {
-    public class GPUProvider : ProviderBase
+    public class RAMDevice : DeviceBase
     {
-        public GPUProvider()
+        public RAMDevice()
         {
 
         }
 
-        public GPUProvider(string DeviceName, int DeviceIndex, uint DeviceClass, int SensorCount)
+        public RAMDevice(string DeviceName, int DeviceIndex, uint DeviceClass, int SensorCount)
         {
             this.DeviceName = DeviceName;
             this.DeviceIndex = DeviceIndex;
@@ -33,11 +34,10 @@ namespace Telebot.DeviceProviders
         {
             var strBuilder = new StringBuilder();
 
-            var gpuBrand = DeviceName.Split(' ')[0];
-            float gpu_temp = GetTemperatureSensors().ElementAt(0).Value;
-            strBuilder.AppendLine($"*GPU {gpuBrand}*: {gpu_temp}°C");
+            float ram_util = GetUtilizationSensors().ElementAt(0).Value;
+            strBuilder.AppendLine($"*RAM Used.*: {ram_util}%");
 
-            return strBuilder.ToString();
+            return strBuilder.ToString().TrimEnd();
         }
     }
 }

@@ -72,6 +72,12 @@ namespace Telebot.Clients
 
             if (string.IsNullOrEmpty(cmdPattern))
             {
+                var cmdResult = new CommandResult
+                {
+                    SendType = SendType.Text,
+                    Text = "Command pattern is null or empty."
+                };
+                executeCallback(cmdResult);
                 return;
             }
 
@@ -90,7 +96,7 @@ namespace Telebot.Clients
 
             RaiseRequestArrival(arrival);
 
-            var command = Program.commandFactory.GetCommand(cmdPattern);
+            var command = Program.commandFactory.Dispatch(cmdPattern);
 
             if (command != null)
             {

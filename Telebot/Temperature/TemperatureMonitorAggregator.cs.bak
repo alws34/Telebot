@@ -1,8 +1,7 @@
 ﻿using System.Linq;
 using System.Text;
 using Telebot.Clients;
-using Telebot.Devices;
-using Telebot.Models;
+using Telebot.DeviceProviders;
 using Telegram.Bot.Types.Enums;
 
 namespace Telebot.Temperature
@@ -30,7 +29,7 @@ namespace Telebot.Temperature
 
         private async void WarningTemperatureChanged(object sender, TemperatureChangedArgs e)
         {
-            foreach (IDevice device in e.Devices)
+            foreach (IDeviceProvider device in e.Devices)
             {
                 string deviceName = device.DeviceName;
                 var sensors = device.GetTemperatureSensors();
@@ -47,7 +46,7 @@ namespace Telebot.Temperature
         {
             var text = new StringBuilder();
 
-            foreach (IDevice device in e.Devices)
+            foreach (IDeviceProvider device in e.Devices)
             {
                 string deviceName = device.DeviceName;
                 var sensors = device.GetTemperatureSensors();

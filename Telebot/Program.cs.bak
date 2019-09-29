@@ -5,7 +5,7 @@ using Telebot.Clients;
 using Telebot.Commands;
 using Telebot.Commands.Factories;
 using Telebot.Commands.Status;
-using Telebot.Devices;
+using Telebot.DeviceProviders;
 using Telebot.Loggers;
 using Telebot.Presenters;
 using Telebot.ScreenCapture;
@@ -60,14 +60,14 @@ namespace Telebot
 
             temperatureMonitorWarning = new TemperatureMonitorWarning
             (
-                DeviceFactory.CPUDevices,
-                DeviceFactory.GPUDevices
+                ProvidersFactory.GetCPUProviders(),
+                ProvidersFactory.GetGPUProviders()
             );
 
             temperatureMonitorDurated = new TemperatureMonitorDurated
             (
-                DeviceFactory.CPUDevices,
-                DeviceFactory.GPUDevices
+                ProvidersFactory.GetCPUProviders(),
+                ProvidersFactory.GetGPUProviders()
             );
 
             var temperatureMonitors = new ITemperatureMonitor[]
@@ -117,10 +117,10 @@ namespace Telebot
                         {
                             new SystemStatus
                             (
-                                DeviceFactory.RAMDevices,
-                                DeviceFactory.CPUDevices,
-                                DeviceFactory.DrvDevices,
-                                DeviceFactory.GPUDevices
+                                ProvidersFactory.GetRAMProviders(),
+                                ProvidersFactory.GetCPUProviders(),
+                                ProvidersFactory.GetDriveProviders(),
+                                ProvidersFactory.GetGPUProviders()
                             ),
                             new IPAddrStatus(),
                             new UptimeStatus(),

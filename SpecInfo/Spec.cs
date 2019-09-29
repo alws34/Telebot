@@ -15,6 +15,11 @@ namespace SpecInfo
             pSDK.RefreshInformation();
         }
 
+        public void Dispose()
+        {
+            pSDK.UninitSDK();
+        }
+
         public string GetInfo()
         {
             var result = new StringBuilder();
@@ -143,11 +148,6 @@ namespace SpecInfo
                     }
                 }
             }
-        }
-
-        public void Dispose()
-        {
-            pSDK.UninitSDK();
         }
     }
 }

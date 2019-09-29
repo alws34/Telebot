@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using Telebot.Models;
 
-namespace Telebot.DeviceProviders
+namespace Telebot.Devices
 {
-    public interface IDeviceProvider
+    public interface IDevice
     {
         string DeviceName { get; }
         int DeviceIndex { get; }

@@ -6,22 +6,22 @@ namespace Telebot.Infrastructure
 {
     public class NetworkLogic
     {
-        public readonly string IP;
+        public string LocalIPv4Address { get; }
 
         public NetworkLogic()
         {
-            IP = GetLocalIPAddress();
+            LocalIPv4Address = GetLocalIPAddress();
         }
 
         private string GetLocalIPAddress()
         {
             var host = Dns.GetHostEntry(Dns.GetHostName());
 
-            foreach (var ip in host.AddressList)
+            foreach (var address in host.AddressList)
             {
-                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                if (address.AddressFamily == AddressFamily.InterNetwork)
                 {
-                    return ip.ToString();
+                    return address.ToString();
                 }
             }
 

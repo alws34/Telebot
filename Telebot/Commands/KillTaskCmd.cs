@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using Telebot.Infrastructure;
 using Telebot.Models;
 
 namespace Telebot.Commands

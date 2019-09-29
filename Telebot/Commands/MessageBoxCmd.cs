@@ -28,11 +28,11 @@ namespace Telebot.Commands
 
             MessageBox.Show
             (
-                msg, 
-                "Telebot", 
-                MessageBoxButtons.OK, 
-                MessageBoxIcon.Information, 
-                MessageBoxDefaultButton.Button1, 
+                msg,
+                "Telebot",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information,
+                MessageBoxDefaultButton.Button1,
                 MessageBoxOptions.DefaultDesktopOnly
             );
         }

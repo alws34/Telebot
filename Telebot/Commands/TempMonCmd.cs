@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Telebot.Models;
-using Telebot.Temperature;
 
 namespace Telebot.Commands
 {

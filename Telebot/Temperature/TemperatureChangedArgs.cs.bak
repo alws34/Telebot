@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Telebot.Devices;
+using Telebot.DeviceProviders;
 
 namespace Telebot.Temperature
 {
     public class TemperatureChangedArgs : EventArgs
     {
-        public IEnumerable<IDevice> Devices;
+        public IEnumerable<IDeviceProvider> Devices;
     }
 }

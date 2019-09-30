@@ -8,7 +8,8 @@ namespace CPUID.Contracts
         string DeviceName { get; }
         int DeviceIndex { get; }
         uint DeviceClass { get; }
-        List<Sensor> GetSensors(int SensorClass);
+        Sensor GetSensor(int sensorClass);
+        List<Sensor> GetSensors(int sensorClass);
         string ToString();
     }
 }

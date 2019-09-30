@@ -1,7 +1,6 @@
 ﻿using CPUID.Contracts;
 using CPUID.Models;
 using System;
-using System.Collections.Generic;
 using System.Timers;
 
 namespace Telebot.Temperature
@@ -36,32 +35,44 @@ namespace Telebot.Temperature
 
         private void Elapsed(object sender, ElapsedEventArgs e)
         {
-            var result = new List<IDevice>();
-
             foreach (IDevice device in devices)
             {
-                var sensors = device.GetSensors(CPUIDSDK.SENSOR_CLASS_TEMPERATURE);
-                Sensor sensor = sensors[0];
+                Sensor sensor = device.GetSensor(CPUIDSDK.SENSOR_CLASS_TEMPERATURE);
 
                 switch (device.DeviceClass)
                 {
                     case CPUIDSDK.CLASS_DEVICE_PROCESSOR:
                         if (sensor.Value >= CPU_TEMPERATURE_WARNING)
-                            result.Add(device);
+                        {
+                            var args = new TemperatureChangedArgs
+                            {
+                                DeviceName = device.DeviceName,
+                                Temperature = sensor.Value
+                            };
+
+                            RaiseTemperatureChanged(args);
+                        }
                         break;
                     case CPUIDSDK.CLASS_DEVICE_DISPLAY_ADAPTER:
                         if (sensor.Value >= GPU_TEMPERATURE_WARNING)
-                            result.Add(device);
+                        {
+                            var args = new TemperatureChangedArgs
+                            {
+                                DeviceName = device.DeviceName,
+                                Temperature = sensor.Value
+                            };
+
+                            RaiseTemperatureChanged(args);
+                        }
                         break;
                 }
             }
+        }
 
-            var parameter = new TemperatureChangedArgs
-            {
-                Devices = result
-            };
-
-            RaiseTemperatureChanged(parameter);
+        public override void Start()
+        {
+            base.Start();
+            Elapsed(this, null);
         }
     }
 }

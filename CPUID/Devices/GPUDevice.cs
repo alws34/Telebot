@@ -1,5 +1,5 @@
 ﻿using CPUID.Base;
-using System.Text;
+using CPUID.Models;
 
 namespace CPUID.Devices
 {
@@ -19,16 +19,12 @@ namespace CPUID.Devices
 
         public override string ToString()
         {
-            var strBuilder = new StringBuilder();
+            Sensor sensor = GetSensor(CPUIDSDK.SENSOR_CLASS_TEMPERATURE);
 
-            var tempSensor = GetSensors(CPUIDSDK.SENSOR_CLASS_TEMPERATURE);
+            string name = DeviceName.Split(' ')[0];
+            float value = sensor.Value;
 
-            var gpuBrand = DeviceName.Split(' ')[0];
-            float gpuTemp = tempSensor[0].Value;
-
-            strBuilder.AppendLine($"*GPU {gpuBrand}*: {gpuTemp}°C");
-
-            return strBuilder.ToString();
+            return $"*GPU {name}*: {value}°C";
         }
     }
 }

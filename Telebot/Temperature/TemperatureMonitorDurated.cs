@@ -1,4 +1,5 @@
 ﻿using CPUID.Contracts;
+using CPUID.Models;
 using System;
 using System.Timers;
 
@@ -26,12 +27,21 @@ namespace Telebot.Temperature
                 return;
             }
 
-            var parameter = new TemperatureChangedArgs
+            foreach (IDevice device in devices)
             {
-                Devices = this.devices
-            };
+                Sensor sensor = device.GetSensor(CPUIDSDK.SENSOR_CLASS_TEMPERATURE);
 
-            RaiseTemperatureChanged(parameter);
+                var args = new TemperatureChangedArgs
+                {
+                    DeviceName = device.DeviceName,
+                    Temperature = sensor.Value
+                };
+
+                RaiseTemperatureChanged(args);
+            }
+
+            // Notify the observer that we're done.
+            RaiseTemperatureChanged(null);
         }
 
         public override void Start(TimeSpan duration, TimeSpan interval)
@@ -39,6 +49,7 @@ namespace Telebot.Temperature
             dtStop = DateTime.Now.AddSeconds(duration.TotalSeconds);
             timer.Interval = interval.TotalMilliseconds;
             Start();
+            Elapsed(this, null);
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using CPUID.Base;
-using System.Text;
+using CPUID.Models;
 
 namespace CPUID.Devices
 {
@@ -19,15 +19,9 @@ namespace CPUID.Devices
 
         public override string ToString()
         {
-            var strBuilder = new StringBuilder();
+            Sensor sensor = GetSensor(CPUIDSDK.SENSOR_CLASS_UTILIZATION);
 
-            var utilSensor = GetSensors(CPUIDSDK.SENSOR_CLASS_UTILIZATION);
-
-            float ramUtil = utilSensor[0].Value;
-
-            strBuilder.AppendLine($"*RAM Used.*: {ramUtil}%");
-
-            return strBuilder.ToString().TrimEnd();
+            return $"*RAM Used.*: {sensor.Value}%";
         }
     }
 }

@@ -25,6 +25,7 @@ namespace Telebot
         public static IScreenCapture screenCapture;
         public static ITemperatureMonitor temperatureMonitorWarning;
         public static ITemperatureMonitor temperatureMonitorDurated;
+        public static ITemperatureMonitor[] temperatureMonitors;
 
         private static volatile bool _shouldStop = false;
 
@@ -34,18 +35,18 @@ namespace Telebot
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            var RefreshThread = new Thread(RefreshThreadProc);
+            Thread RefreshThread = new Thread(RefreshThreadProc);
 
             RefreshThread.Start();
 
             logger = new FileLogger();
             appSettings = new SettingsManager();
 
-            string admin_token = appSettings.TelegramToken;
+            string bot_token = appSettings.TelegramToken;
             int admin_id = appSettings.TelegramAdminId;
 
             MainForm mainForm = new MainForm();
-            TelebotClient telebotClient = new TelebotClient(admin_token, admin_id);
+            TelebotClient telebotClient = new TelebotClient(bot_token, admin_id);
 
             screenCapture = new ScreenCaptureDurated();
 
@@ -61,7 +62,7 @@ namespace Telebot
                 GPUDevices
             );
 
-            var temperatureMonitors = new ITemperatureMonitor[]
+            temperatureMonitors = new ITemperatureMonitor[]
             {
                 temperatureMonitorWarning,
                 temperatureMonitorDurated

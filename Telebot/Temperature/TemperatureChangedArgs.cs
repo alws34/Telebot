@@ -1,11 +1,10 @@
-﻿using CPUID.Contracts;
-using System;
-using System.Collections.Generic;
+﻿using System;
 
 namespace Telebot.Temperature
 {
     public class TemperatureChangedArgs : EventArgs
     {
-        public IEnumerable<IDevice> Devices;
+        public string DeviceName { get; set; }
+        public float Temperature { get; set; }
     }
 }

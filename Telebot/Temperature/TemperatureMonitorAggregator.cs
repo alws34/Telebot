@@ -1,6 +1,4 @@
-﻿using CPUID.Contracts;
-using CPUID.Models;
-using System.Text;
+﻿using System.Text;
 using Telebot.Clients;
 using Telegram.Bot.Types.Enums;
 
@@ -29,32 +27,27 @@ namespace Telebot.Temperature
 
         private async void WarningTemperatureChanged(object sender, TemperatureChangedArgs e)
         {
-            foreach (IDevice device in e.Devices)
-            {
-                var sensors = device.GetSensors(CPUIDSDK.SENSOR_CLASS_TEMPERATURE);
-                Sensor sensor = sensors[0];
+            string text = $"*[WARNING] {e.DeviceName}*: {e.Temperature}°C\nFrom *Telebot*";
 
-                string text = $"*[WARNING] {device.DeviceName}*: {sensor.Value}°C\nFrom *Telebot*";
-
-                await telebotClient.SendTextMessageAsync(telebotClient.AdminID, text, ParseMode.Markdown);
-            }
+            await telebotClient.SendTextMessageAsync(telebotClient.AdminID, text, ParseMode.Markdown);
         }
+
+        private StringBuilder text = new StringBuilder();
 
         private async void DuratedTemperatureChanged(object sender, TemperatureChangedArgs e)
         {
-            var text = new StringBuilder();
-
-            foreach (IDevice device in e.Devices)
+            if (e != null)
             {
-                var sensors = device.GetSensors(CPUIDSDK.SENSOR_CLASS_TEMPERATURE);
-                Sensor sensor = sensors[0];
-
-                text.AppendLine($"*{device.DeviceName}*: {sensor.Value}°C");
+                text.AppendLine($"*{e.DeviceName}*: {e.Temperature}°C");
             }
+            else
+            {
+                text.AppendLine("\nFrom *Telebot*");
 
-            text.AppendLine("\nFrom *Telebot*");
+                await telebotClient.SendTextMessageAsync(telebotClient.AdminID, text.ToString(), ParseMode.Markdown);
 
-            await telebotClient.SendTextMessageAsync(telebotClient.AdminID, text.ToString(), ParseMode.Markdown);
+                text.Clear();
+            }
         }
     }
 }

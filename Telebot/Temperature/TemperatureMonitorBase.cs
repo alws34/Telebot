@@ -30,7 +30,7 @@ namespace Telebot.Temperature
             devices = new List<IDevice>();
         }
 
-        public void Start()
+        public virtual void Start()
         {
             timer.Start();
         }

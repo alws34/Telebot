@@ -4,16 +4,16 @@ namespace Telebot.Infrastructure
 {
     public class MediaLogic
     {
-        private readonly CoreAudioDevice defaultPlaybackDevice;
+        private readonly CoreAudioController coreAudioController;
 
         public MediaLogic()
         {
-            defaultPlaybackDevice = new CoreAudioController().DefaultPlaybackDevice;
+            coreAudioController = new CoreAudioController();
         }
 
-        public void SetVolume(double percentage)
+        public async void SetVolume(double percentage)
         {
-            defaultPlaybackDevice.Volume = percentage;
+            await coreAudioController.DefaultPlaybackDevice.SetVolumeAsync(percentage);
         }
     }
 }

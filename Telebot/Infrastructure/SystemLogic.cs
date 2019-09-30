@@ -6,13 +6,17 @@ namespace Telebot.Infrastructure
 {
     public class SystemLogic
     {
+        private readonly PerformanceCounter sysUpTime;
+
+        public SystemLogic()
+        {
+            sysUpTime = new PerformanceCounter("System", "System Up Time");
+        }
+
         public string GetUptime()
         {
-            using (var uptime = new PerformanceCounter("System", "System Up Time"))
-            {
-                uptime.NextValue();
-                return TimeSpan.FromSeconds(uptime.NextValue()).ToReadable();
-            }
+            sysUpTime.NextValue();
+            return TimeSpan.FromSeconds(sysUpTime.NextValue()).ToReadable();
         }
     }
 }

@@ -20,18 +20,14 @@ namespace CPUID.Devices
 
         public override string ToString()
         {
-            var strBuilder = new StringBuilder();
+            var utilSensor = GetSensor(CPUIDSDK.SENSOR_CLASS_UTILIZATION);
+            var tempSensor = GetSensor(CPUIDSDK.SENSOR_CLASS_TEMPERATURE);
 
-            var utilSensors = GetSensors(CPUIDSDK.SENSOR_CLASS_UTILIZATION);
-            var tempSensors = GetSensors(CPUIDSDK.SENSOR_CLASS_TEMPERATURE);
+            string result = "";
+            result += $"*CPU Usage*: {Math.Round(utilSensor.Value, 0)}%\n";
+            result += $"*CPU Temp.*: {tempSensor.Value}°C";
 
-            float cpuUtil = utilSensors[0].Value;
-            float cpuTemp = tempSensors[0].Value;
-
-            strBuilder.AppendLine($"*CPU Usage*: {Math.Round(cpuUtil, 0)}%");
-            strBuilder.AppendLine($"*CPU Temp.*: {cpuTemp}°C");
-
-            return strBuilder.ToString().TrimEnd();
+            return result;
         }
     }
 }

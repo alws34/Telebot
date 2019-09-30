@@ -4,37 +4,31 @@ using CPUID.Models;
 using System.Collections.Generic;
 using System.Text;
 
+using static CPUID.CPUIDCore;
+using static CPUIDSDK;
+
 namespace SpecInfo
 {
     public class Spec
     {
         private StringBuilder result;
 
+        public Spec()
+        {
+            pSDK.RefreshInformation();
+        }
+
         public string GetInfo()
         {
             result = new StringBuilder();
 
-            GetMainboardInfo();
             GetProcessorInfo();
             GetStorageInfo();
             GetDisplayAdapterInfo();
             GetBatteryInfo();
+            GetMainboardInfo();
 
             return result.ToString();
-        }
-
-        private void GetMainboardInfo()
-        {
-            foreach (RAMDevice device in DeviceFactory.RAMDevices)
-            {
-                result.AppendLine($"+ {device.DeviceName}");
-
-                var sensors = device.GetSensors(CPUIDSDK.SENSOR_CLASS_TEMPERATURE);
-                AppendSensors("Temperatures:", sensors);
-
-                sensors = device.GetSensors(CPUIDSDK.SENSOR_CLASS_UTILIZATION);
-                AppendSensors("Utilization:", sensors);
-            }
         }
 
         private void GetProcessorInfo()
@@ -43,19 +37,19 @@ namespace SpecInfo
             {
                 result.AppendLine($"+ {device.DeviceName}");
 
-                var sensors = device.GetSensors(CPUIDSDK.SENSOR_CLASS_VOLTAGE);
+                var sensors = device.GetSensors(SENSOR_CLASS_VOLTAGE);
                 AppendSensors("Voltages:", sensors);
 
-                sensors = device.GetSensors(CPUIDSDK.SENSOR_CLASS_TEMPERATURE);
+                sensors = device.GetSensors(SENSOR_CLASS_TEMPERATURE);
                 AppendSensors("Temperatures:", sensors);
 
-                sensors = device.GetSensors(CPUIDSDK.SENSOR_CLASS_POWER);
+                sensors = device.GetSensors(SENSOR_CLASS_POWER);
                 AppendSensors("Powers:", sensors);
 
-                sensors = device.GetSensors(CPUIDSDK.SENSOR_CLASS_UTILIZATION);
+                sensors = device.GetSensors(SENSOR_CLASS_UTILIZATION);
                 AppendSensors("Utilization:", sensors);
 
-                sensors = device.GetSensors(CPUIDSDK.SENSOR_CLASS_CLOCK_SPEED);
+                sensors = device.GetSensors(SENSOR_CLASS_CLOCK_SPEED);
                 AppendSensors("Clocks:", sensors);
             }
         }
@@ -66,10 +60,10 @@ namespace SpecInfo
             {
                 result.AppendLine($"+ {device.DeviceName}");
 
-                var sensors = device.GetSensors(CPUIDSDK.SENSOR_CLASS_TEMPERATURE);
+                var sensors = device.GetSensors(SENSOR_CLASS_TEMPERATURE);
                 AppendSensors("Temperatures:", sensors);
 
-                sensors = device.GetSensors(CPUIDSDK.SENSOR_CLASS_UTILIZATION);
+                sensors = device.GetSensors(SENSOR_CLASS_UTILIZATION);
                 AppendSensors("Utilization:", sensors);
             }
         }
@@ -80,14 +74,8 @@ namespace SpecInfo
             {
                 result.AppendLine($"+ {device.DeviceName}");
 
-                var sensors = device.GetSensors(CPUIDSDK.SENSOR_CLASS_TEMPERATURE);
+                var sensors = device.GetSensors(SENSOR_CLASS_TEMPERATURE);
                 AppendSensors("Temperatures:", sensors);
-
-                sensors = device.GetSensors(CPUIDSDK.SENSOR_CLASS_CLOCK_SPEED);
-                AppendSensors("Clocks:", sensors);
-
-                sensors = device.GetSensors(CPUIDSDK.SENSOR_CLASS_UTILIZATION);
-                AppendSensors("Utilization:", sensors);
             }
         }
 
@@ -97,14 +85,25 @@ namespace SpecInfo
             {
                 result.AppendLine($"+ {device.DeviceName}");
 
-                var sensors = device.GetSensors(CPUIDSDK.SENSOR_CLASS_VOLTAGE);
+                var sensors = device.GetSensors(SENSOR_CLASS_VOLTAGE);
                 AppendSensors("Voltages:", sensors);
 
-                sensors = device.GetSensors(CPUIDSDK.SENSOR_CLASS_CAPACITY);
+                sensors = device.GetSensors(SENSOR_CLASS_CAPACITY);
                 AppendSensors("Capacities:", sensors);
 
-                sensors = device.GetSensors(CPUIDSDK.SENSOR_CLASS_LEVEL);
+                sensors = device.GetSensors(SENSOR_CLASS_LEVEL);
                 AppendSensors("Levels:", sensors);
+            }
+        }
+
+        private void GetMainboardInfo()
+        {
+            foreach (RAMDevice device in DeviceFactory.RAMDevices)
+            {
+                result.AppendLine($"+ {device.DeviceName}");
+
+                var sensors = device.GetSensors(SENSOR_CLASS_UTILIZATION);
+                AppendSensors("Utilization:", sensors);
             }
         }
 

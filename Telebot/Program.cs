@@ -68,12 +68,13 @@ namespace Telebot
                 temperatureMonitorDurated
             };
 
+            var screenCaptureAggregator = new ScreenCaptureAggregator(telebotClient, screenCapture);
+            var temperatureMonitorAggregator = new TemperatureMonitorAggregator(telebotClient, temperatureMonitors);
+
             var presenter = new MainFormPresenter
             (
                 mainForm,
-                telebotClient,
-                screenCapture,
-                temperatureMonitors
+                telebotClient
             );
 
             buildCommandFactory();

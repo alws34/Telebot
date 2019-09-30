@@ -17,9 +17,7 @@ namespace Telebot.Presenters
         public MainFormPresenter
         (
             IMainFormView mainFormView,
-            ITelebotClient telebotClient,
-            IScreenCapture screenCapture,
-            ITemperatureMonitor[] temperatureMonitors
+            ITelebotClient telebotClient
         )
         {
             this.mainFormView = mainFormView;
@@ -30,9 +28,6 @@ namespace Telebot.Presenters
 
             this.telebotClient = telebotClient;
             this.telebotClient.RequestArrival += TelebotClient_RequestArrival;
-
-            var screenCaptureAggregator = new ScreenCaptureAggregator(telebotClient, screenCapture);
-            var temperatureMonitorAggregator = new TemperatureMonitorAggregator(telebotClient, temperatureMonitors);
         }
 
         private void TelebotClient_RequestArrival(object sender, RequestArrivalArgs e)

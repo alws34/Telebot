@@ -18,7 +18,7 @@ namespace Telebot.Commands
         {
             Process.Start("SpecInfo.exe").WaitForExit();
 
-            string filePath = Path.Combine(Application.StartupPath, "info.txt");
+            string filePath = @".\spec.txt";
 
             var fileStream = new FileStream(filePath, FileMode.Open);
 

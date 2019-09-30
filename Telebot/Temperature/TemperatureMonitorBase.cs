@@ -11,8 +11,8 @@ namespace Telebot.Temperature
 
         public bool IsActive
         {
-            get { return timer.Enabled; }
-            protected set { timer.Enabled = value; }
+            get => timer.Enabled;
+            protected set => timer.Enabled = value;
         }
 
         protected readonly List<IDevice> devices;

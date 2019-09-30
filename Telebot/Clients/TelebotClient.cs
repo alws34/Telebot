@@ -28,7 +28,7 @@ namespace Telebot.Clients
             RequestArrival?.Invoke(this, e);
         }
 
-        private async void BotMessageHandler(object sender, MessageEventArgs e)
+        private void BotMessageHandler(object sender, MessageEventArgs e)
         {
             async void executeCallback(CommandResult result)
             {
@@ -107,7 +107,7 @@ namespace Telebot.Clients
                     Groups = groups
                 };
 
-                await command.ExecuteAsync(cmdParams, executeCallback);
+                command.Execute(cmdParams, executeCallback);
             }
             else
             {

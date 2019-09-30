@@ -1,6 +1,5 @@
 ﻿using CPUID.Base;
 using System;
-using System.Text;
 
 namespace CPUID.Devices
 {

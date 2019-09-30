@@ -8,9 +8,9 @@ namespace Telebot.ScreenCapture
     public class ScreenCaptureDurated : IScreenCapture
     {
         private readonly Timer timer;
-        private DateTime stopTime;
+        private DateTime dtStop;
 
-        public bool IsActive { get { return timer.Enabled; } }
+        public bool IsActive => timer.Enabled;
 
         public event EventHandler<ScreenCaptureArgs> ScreenCaptured;
 
@@ -26,7 +26,7 @@ namespace Telebot.ScreenCapture
 
         private void Elapsed(object sender, ElapsedEventArgs e)
         {
-            if (DateTime.Now >= stopTime)
+            if (DateTime.Now >= dtStop)
             {
                 timer.Stop();
                 return;
@@ -47,9 +47,10 @@ namespace Telebot.ScreenCapture
 
         public void Start(TimeSpan duration, TimeSpan interval)
         {
-            stopTime = DateTime.Now.AddSeconds(duration.TotalSeconds);
+            dtStop = DateTime.Now.AddSeconds(duration.TotalSeconds);
             timer.Interval = interval.TotalMilliseconds;
             timer.Start();
+            Elapsed(this, null);
         }
 
         public void Stop()

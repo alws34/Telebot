@@ -80,10 +80,14 @@ namespace Telebot
 
             Application.Run(mainForm);
 
-            appSettings.CommitChanges();
-
             _shouldStop = true;
             RefreshThread.Join();
+
+            // wait for finalizers to "save" settings before committing
+            GC.WaitForPendingFinalizers();
+
+            // commit settings changes to disk
+            appSettings.CommitChanges();
         }
 
         private static void RefreshThreadProc()

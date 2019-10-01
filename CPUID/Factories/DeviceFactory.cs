@@ -7,17 +7,17 @@ using static CPUID.CPUIDCore;
 
 namespace CPUID.Factories
 {
-    public static class DeviceFactory
+    public class DeviceFactory
     {
-        public static IDevice[] CPUDevices { get; }
-        public static IDevice[] GPUDevices { get; }
-        public static IDevice[] RAMDevices { get; }
-        public static IDevice[] HDDDevices { get; }
-        public static IDevice[] BATDevices { get; }
+        public IDevice[] CPUDevices { get; }
+        public IDevice[] GPUDevices { get; }
+        public IDevice[] RAMDevices { get; }
+        public IDevice[] HDDDevices { get; }
+        public IDevice[] BATDevices { get; }
 
-        private static int deviceCount;
+        private readonly int deviceCount;
 
-        static DeviceFactory()
+        public DeviceFactory()
         {
             deviceCount = pSDK.GetNumberOfDevices();
 
@@ -28,7 +28,7 @@ namespace CPUID.Factories
             BATDevices = GetDevices<BATDevice>(CPUIDSDK.CLASS_DEVICE_BATTERY);
         }
 
-        private static IDevice[] GetDevices<T>(uint deviceClass) where T : IDevice, new()
+        private IDevice[] GetDevices<T>(uint deviceClass) where T : IDevice, new()
         {
             var devArr = new List<IDevice>();
 

@@ -2,7 +2,7 @@
 using CPUID.Models;
 using System;
 using System.Timers;
-using static CPUIDSDK;
+using static CPUID.CPUIDSDK;
 using static Telebot.Settings.SettingsFactory;
 
 namespace Telebot.Temperature

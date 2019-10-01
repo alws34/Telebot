@@ -13,7 +13,7 @@ namespace Telebot.Infrastructure
 
             ProcessStartInfo si = new ProcessStartInfo
             {
-                CreateNoWindow = false,
+                CreateNoWindow = true,
                 UseShellExecute = true,
                 WindowStyle = ProcessWindowStyle.Hidden,
                 FileName = "CMD.exe",

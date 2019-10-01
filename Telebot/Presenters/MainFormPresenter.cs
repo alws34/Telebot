@@ -79,18 +79,18 @@ namespace Telebot.Presenters
 
         private void viewFormClosed(object sender, FormClosedEventArgs e)
         {
-            telebotClient.StopReceiving();
+            if (telebotClient.IsReceiving)
+                telebotClient.StopReceiving();
         }
 
         private void viewLoad(object sender, EventArgs e)
         {
-            // to reduce load time
+            // delay job to reduce startup time
             Task.Delay(2000).ContinueWith((o) =>
             {
                 SendClientHello();
+                telebotClient.StartReceiving();
             });
-
-            telebotClient.StartReceiving();
         }
 
         private void viewShown(object sender, EventArgs e)

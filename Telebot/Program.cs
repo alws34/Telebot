@@ -9,7 +9,6 @@ using Telebot.Presenters;
 using Telebot.ScreenCapture;
 using Telebot.Temperature;
 using static CPUID.CPUIDCore;
-using static CPUID.Factories.DeviceFactory;
 using static Telebot.Settings.SettingsFactory;
 
 namespace Telebot
@@ -44,14 +43,14 @@ namespace Telebot
 
             tempMonWarning = new TempMonWarning
             (
-                CPUDevices,
-                GPUDevices
+                DeviceFactory.CPUDevices,
+                DeviceFactory.GPUDevices
             );
 
             tempMonDurated = new TempMonDurated
             (
-                CPUDevices,
-                GPUDevices
+                DeviceFactory.CPUDevices,
+                DeviceFactory.GPUDevices
             );
 
             tempMons = new ITempMon[]
@@ -113,10 +112,10 @@ namespace Telebot
                         {
                             new SystemStatus
                             (
-                                RAMDevices,
-                                CPUDevices,
-                                HDDDevices,
-                                GPUDevices
+                                DeviceFactory.RAMDevices,
+                                DeviceFactory.CPUDevices,
+                                DeviceFactory.HDDDevices,
+                                DeviceFactory.GPUDevices
                             ),
                             new IPAddrStatus(),
                             new UptimeStatus(),

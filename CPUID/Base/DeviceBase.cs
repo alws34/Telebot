@@ -20,11 +20,9 @@ namespace CPUID.Base
             float minVal = 0.0f;
             float maxVal = 0.0f;
 
-            pSDK.GetSensorInfos
-            (
-                this.DeviceIndex, 0, sensorClass,
-                ref sensorId, ref sensorName, ref rvalue,
-                ref value, ref minVal, ref maxVal
+            pSDK.GetSensorInfos(
+                this.DeviceIndex, 0, sensorClass, ref sensorId, 
+                ref sensorName, ref rvalue, ref value, ref minVal, ref maxVal
              );
 
             return new Sensor(sensorName, value, minVal, maxVal);
@@ -44,11 +42,9 @@ namespace CPUID.Base
                 float minVal = 0.0f;
                 float maxVal = 0.0f;
 
-                pSDK.GetSensorInfos
-                (
-                    this.DeviceIndex, sensorIndex, sensorClass,
-                    ref sensorId, ref sensorName, ref rvalue,
-                    ref value, ref minVal, ref maxVal
+                pSDK.GetSensorInfos(
+                    this.DeviceIndex, sensorIndex, sensorClass, ref sensorId, 
+                    ref sensorName, ref rvalue, ref value, ref minVal, ref maxVal
                  );
 
                 var sensor = new Sensor(sensorName, value, minVal, maxVal);

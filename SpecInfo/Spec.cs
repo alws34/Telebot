@@ -1,11 +1,10 @@
 ﻿using CPUID.Devices;
-using CPUID.Factories;
 using CPUID.Models;
 using System.Collections.Generic;
 using System.Text;
 
 using static CPUID.CPUIDCore;
-using static CPUIDSDK;
+using static CPUID.CPUIDSDK;
 
 namespace SpecInfo
 {

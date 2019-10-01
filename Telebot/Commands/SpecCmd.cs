@@ -15,7 +15,15 @@ namespace Telebot.Commands
 
         public override void Execute(object parameter, Action<CommandResult> callback)
         {
-            Process.Start("SpecInfo.exe").WaitForExit();
+            var si = new ProcessStartInfo
+            {
+                CreateNoWindow = true,
+                UseShellExecute = true,
+                WindowStyle = ProcessWindowStyle.Hidden,
+                FileName = ".\\SpecInfo.exe"
+            };
+
+            Process.Start(si).WaitForExit();
 
             string filePath = @".\spec.txt";
 

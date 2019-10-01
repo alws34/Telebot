@@ -10,7 +10,7 @@ namespace Telebot.Commands
 
         public VolCmd()
         {
-            Pattern = "/vol (\\d+)";
+            Pattern = "/vol (\\d{1,3})";
             Description = "Adjust the workstation volume.";
 
             mediaLogic = new MediaLogic();
@@ -20,17 +20,17 @@ namespace Telebot.Commands
         {
             var parameters = parameter as CommandParam;
 
-            double volume = Convert.ToDouble(parameters.Groups[1].Value);
+            int vol = Convert.ToInt32(parameters.Groups[1].Value);
 
             var cmdResult = new CommandResult
             {
                 SendType = SendType.Text,
-                Text = "Successfully adjusted the workstation volume."
+                Text = $"Successfully adjusted volume to {vol}%."
             };
 
             callback(cmdResult);
 
-            mediaLogic.SetVolume(volume);
+            mediaLogic.SetVolume(vol);
         }
     }
 }

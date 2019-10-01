@@ -1,19 +1,12 @@
-﻿using AudioSwitcher.AudioApi.CoreAudio;
+﻿using System.Diagnostics;
 
 namespace Telebot.Infrastructure
 {
     public class MediaLogic
     {
-        private readonly CoreAudioController coreAudioController;
-
-        public MediaLogic()
+        public void SetVolume(int percentage)
         {
-            coreAudioController = new CoreAudioController();
-        }
-
-        public async void SetVolume(double percentage)
-        {
-            await coreAudioController.DefaultPlaybackDevice.SetVolumeAsync(percentage);
+            Process.Start(@".\SoundVolumeView.exe", $"/SetVolume Speakers {percentage}");
         }
     }
 }

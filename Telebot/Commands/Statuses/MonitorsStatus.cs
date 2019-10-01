@@ -11,9 +11,9 @@ namespace Telebot.Commands.Status
 
             foreach (ITempMon tempMon in Program.tempMons)
             {
-                string name = tempMon.GetType().Name.Replace("TemperatureMonitor", "");
+                string name = tempMon.GetType().Name.Replace("TempMon", "");
                 string active = BoolToStr(tempMon.IsActive);
-                result.AppendLine($"*{name} Monitor (°C)*: {active}");
+                result.AppendLine($"*{name} (°C)*: {active}");
             }
 
             return result.ToString();

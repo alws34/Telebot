@@ -7,11 +7,10 @@ using Telegram.Bot.Args;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.InputFiles;
-using static Telebot.Settings.SettingsFactory;
 
 namespace Telebot.Clients
 {
-    public class TelebotClient : TelegramBotClient, ITelebotClient, Settings.IProfile
+    public class TelebotClient : TelegramBotClient, ITelebotClient
     {
         public int AdminId { get; }
 
@@ -122,12 +121,6 @@ namespace Telebot.Clients
         private void RaiseRequestArrival(RequestArrivalArgs e)
         {
             RequestArrival?.Invoke(this, e);
-        }
-
-        public void SaveChanges()
-        {
-            TelegramSettings.SaveAdminId(AdminId);
-            TelegramSettings.SaveBotToken(token);
         }
     }
 }

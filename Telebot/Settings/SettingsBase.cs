@@ -1,8 +1,8 @@
 ﻿using IniParser;
 using IniParser.Model;
-using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
+using System.Web.Script.Serialization;
 
 namespace Telebot.Settings
 {
@@ -13,10 +13,12 @@ namespace Telebot.Settings
         private readonly IniData iniData;
 
         private readonly List<IProfile> profiles;
+        private readonly JavaScriptSerializer serializer;
 
         public SettingsBase()
         {
             profiles = new List<IProfile>();
+            serializer = new JavaScriptSerializer();
 
             if (!File.Exists(iniPath))
             {
@@ -50,12 +52,12 @@ namespace Telebot.Settings
             if (string.IsNullOrEmpty(value))
                 return default;
 
-            return JsonConvert.DeserializeObject<T>(value);
+            return serializer.Deserialize<T>(value);
         }
 
         public void WriteObject<T>(string section, string key, T value)
         {
-            string valueStr = JsonConvert.SerializeObject(value);
+            string valueStr = serializer.Serialize(value);
 
             WriteString(section, key, valueStr);
         }

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Telebot.Clients;
 using Telebot.Extensions;
@@ -32,7 +33,7 @@ namespace Telebot.Presenters
             this.mainFormView.Shown += viewShown;
             this.mainFormView.FormClosed += viewFormClosed;
             this.mainFormView.Resize += viewResize;
-            this.mainFormView.NotifyIcon.MouseClick += NotifyIcon_MouseClick;
+            this.mainFormView.TrayIcon.MouseClick += NotifyIcon_MouseClick;
 
             this.telebotClient = telebotClient;
             this.telebotClient.RequestArrival += TelebotClient_RequestArrival;
@@ -50,11 +51,11 @@ namespace Telebot.Presenters
 
         private void TelebotClient_RequestArrival(object sender, RequestArrivalArgs e)
         {
-            mainFormView.ObjectListView.AddObject(e.Item);
+            mainFormView.ListView.AddObject(e.Item);
 
             if (mainFormView.WindowState == FormWindowState.Minimized)
             {
-                mainFormView.NotifyIcon.ShowBalloonTip(
+                mainFormView.TrayIcon.ShowBalloonTip(
                     1000, mainFormView.Text, e.Item.Text, ToolTipIcon.Info
                 );
             }
@@ -64,7 +65,7 @@ namespace Telebot.Presenters
         {
             mainFormView.Show();
             mainFormView.WindowState = FormWindowState.Normal;
-            mainFormView.NotifyIcon.Visible = false;
+            mainFormView.TrayIcon.Visible = false;
         }
 
         private void viewResize(object sender, EventArgs e)
@@ -72,7 +73,7 @@ namespace Telebot.Presenters
             if (mainFormView.WindowState == FormWindowState.Minimized)
             {
                 mainFormView.Hide();
-                mainFormView.NotifyIcon.Visible = true;
+                mainFormView.TrayIcon.Visible = true;
             }
         }
 
@@ -83,14 +84,18 @@ namespace Telebot.Presenters
 
         private void viewLoad(object sender, EventArgs e)
         {
-            RestoreGuiSettings();
-            SendClientHello();
-            telebotClient.StartReceiving();
+            // to reduce load time
+            Task.Delay(2000).ContinueWith((o) =>
+            {
+                SendClientHello();
+                telebotClient.StartReceiving();
+            });
         }
 
         private void viewShown(object sender, EventArgs e)
         {
-            SetTitleUsername();
+            RestoreGuiSettings();
+            AddBotNameTitle();
         }
 
         private async void SendClientHello()
@@ -100,7 +105,7 @@ namespace Telebot.Presenters
             );
         }
 
-        private async void SetTitleUsername()
+        private async void AddBotNameTitle()
         {
             var me = await telebotClient.GetMeAsync();
             mainFormView.Text += $" - {me.Username}";
@@ -112,7 +117,7 @@ namespace Telebot.Presenters
 
             var widths = new List<int>();
 
-            foreach (OLVColumn column in mainFormView.ObjectListView.AllColumns)
+            foreach (OLVColumn column in mainFormView.ListView.AllColumns)
             {
                 widths.Add(column.Width);
             }
@@ -130,7 +135,7 @@ namespace Telebot.Presenters
             {
                 for (int i = 0; i < widths.Count; i++)
                 {
-                    mainFormView.ObjectListView.Columns[i].Width = widths[i];
+                    mainFormView.ListView.Columns[i].Width = widths[i];
                 }
             }
         }

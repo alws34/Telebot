@@ -15,8 +15,12 @@ namespace CPUID.Factories
         public static IDevice[] HDDDevices { get; }
         public static IDevice[] BATDevices { get; }
 
+        private static int deviceCount;
+
         static DeviceFactory()
         {
+            deviceCount = pSDK.GetNumberOfDevices();
+
             CPUDevices = GetDevices<CPUDevice>(CPUIDSDK.CLASS_DEVICE_PROCESSOR);
             GPUDevices = GetDevices<GPUDevice>(CPUIDSDK.CLASS_DEVICE_DISPLAY_ADAPTER);
             RAMDevices = GetDevices<RAMDevice>(CPUIDSDK.CLASS_DEVICE_MAINBOARD);
@@ -28,7 +32,7 @@ namespace CPUID.Factories
         {
             var devArr = new List<IDevice>();
 
-            for (int deviceIndex = 0; deviceIndex < pSDK.GetNumberOfDevices(); deviceIndex++)
+            for (int deviceIndex = 0; deviceIndex < deviceCount; deviceIndex++)
             {
                 if (pSDK.GetDeviceClass(deviceIndex) == deviceClass)
                 {

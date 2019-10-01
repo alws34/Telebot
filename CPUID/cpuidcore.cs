@@ -8,7 +8,7 @@
         {
             pSDK = new CPUIDSDK();
             pSDK.InitDLL();
-            pSDK.InitSDK();
+            pSDK.InitSDK_Quick();
         }
     }
 }

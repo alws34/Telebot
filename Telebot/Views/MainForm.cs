@@ -6,8 +6,8 @@ namespace Telebot
 {
     public partial class MainForm : Form, IMainFormView
     {
-        public ObjectListView ObjectListView => objectListView1;
-        public NotifyIcon NotifyIcon => notifyIcon1;
+        public ObjectListView ListView => fastOlv;
+        public NotifyIcon TrayIcon => notifyIcon1;
 
         public MainForm()
         {

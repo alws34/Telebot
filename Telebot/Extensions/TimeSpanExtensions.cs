@@ -8,21 +8,22 @@ namespace Telebot.Extensions
         {
             if (t.TotalSeconds <= 1)
             {
-                return $@"{t:s\.ff} seconds";
+                return $@"{t:s\.ff} second(s)";
             }
             else if (t.TotalMinutes <= 1)
             {
-                return $@"{t:%s} seconds";
+                return $@"{t:%s} second(s)";
             }
             else if (t.TotalHours <= 1)
             {
-                return $@"{t:%m} minutes";
+                return $@"{t:%m} minute(s)";
             }
             else if (t.TotalDays <= 1)
             {
-                return $@"{t:%h} hours";
+                return $@"{t:%h} hour(s)";
             }
-            else return $@"{t:%d} days";
+            else
+                return $@"{t:%d} day(s)";
         }
     }
 }

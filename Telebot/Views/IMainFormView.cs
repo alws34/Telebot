@@ -15,8 +15,8 @@ namespace Telebot.Views
         string Text { get; set; }
         void Hide();
         void Show();
-        ObjectListView ObjectListView { get; }
-        NotifyIcon NotifyIcon { get; }
+        ObjectListView ListView { get; }
+        NotifyIcon TrayIcon { get; }
         Rectangle Bounds { get; set; }
         FormWindowState WindowState { get; set; }
     }

@@ -31,10 +31,10 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
-            this.objectListView1 = new BrightIdeasSoftware.ObjectListView();
-            this.olvColumn1 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.olvColumn2 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            ((System.ComponentModel.ISupportInitialize)(this.objectListView1)).BeginInit();
+            this.fastOlv = new BrightIdeasSoftware.FastObjectListView();
+            this.olvDate = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvText = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            ((System.ComponentModel.ISupportInitialize)(this.fastOlv)).BeginInit();
             this.SuspendLayout();
             // 
             // notifyIcon1
@@ -42,55 +42,57 @@
             this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
             this.notifyIcon1.Text = "Telebot";
             // 
-            // objectListView1
+            // fastOlv
             // 
-            this.objectListView1.AllColumns.Add(this.olvColumn1);
-            this.objectListView1.AllColumns.Add(this.olvColumn2);
-            this.objectListView1.CellEditUseWholeCell = false;
-            this.objectListView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.olvColumn1,
-            this.olvColumn2});
-            this.objectListView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.objectListView1.FullRowSelect = true;
-            this.objectListView1.Location = new System.Drawing.Point(0, 0);
-            this.objectListView1.Name = "objectListView1";
-            this.objectListView1.Size = new System.Drawing.Size(487, 355);
-            this.objectListView1.TabIndex = 0;
-            this.objectListView1.UseCompatibleStateImageBehavior = false;
-            this.objectListView1.View = System.Windows.Forms.View.Details;
+            this.fastOlv.AllColumns.Add(this.olvDate);
+            this.fastOlv.AllColumns.Add(this.olvText);
+            this.fastOlv.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.olvDate,
+            this.olvText});
+            this.fastOlv.Cursor = System.Windows.Forms.Cursors.Default;
+            this.fastOlv.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fastOlv.HideSelection = false;
+            this.fastOlv.Location = new System.Drawing.Point(0, 0);
+            this.fastOlv.Name = "fastOlv";
+            this.fastOlv.ShowGroups = false;
+            this.fastOlv.Size = new System.Drawing.Size(693, 346);
+            this.fastOlv.TabIndex = 0;
+            this.fastOlv.UseCompatibleStateImageBehavior = false;
+            this.fastOlv.View = System.Windows.Forms.View.Details;
+            this.fastOlv.VirtualMode = true;
             // 
-            // olvColumn1
+            // olvDate
             // 
-            this.olvColumn1.AspectName = "DateTime";
-            this.olvColumn1.Text = "Date";
-            this.olvColumn1.Width = 90;
+            this.olvDate.AspectName = "DateTime";
+            this.olvDate.Text = "Date";
+            this.olvDate.Width = 147;
             // 
-            // olvColumn2
+            // olvText
             // 
-            this.olvColumn2.AspectName = "Text";
-            this.olvColumn2.Text = "Information";
-            this.olvColumn2.Width = 240;
+            this.olvText.AspectName = "Text";
+            this.olvText.Text = "Details";
+            this.olvText.Width = 285;
             // 
-            // Form1
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(487, 355);
-            this.Controls.Add(this.objectListView1);
+            this.ClientSize = new System.Drawing.Size(693, 346);
+            this.Controls.Add(this.fastOlv);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.Text = "Telebot";
-            ((System.ComponentModel.ISupportInitialize)(this.objectListView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fastOlv)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
         private System.Windows.Forms.NotifyIcon notifyIcon1;
-        private BrightIdeasSoftware.ObjectListView objectListView1;
-        private BrightIdeasSoftware.OLVColumn olvColumn1;
-        private BrightIdeasSoftware.OLVColumn olvColumn2;
+        private BrightIdeasSoftware.FastObjectListView fastOlv;
+        private BrightIdeasSoftware.OLVColumn olvDate;
+        private BrightIdeasSoftware.OLVColumn olvText;
     }
 }
 

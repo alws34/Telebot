@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace Telebot.Helpers
 {
-    public class User32Helper
+    public static class User32Helper
     {
         public const int HWND_BROADCAST = 0xFFFF;
         public const int WM_SYSCOMMAND = 0x112;

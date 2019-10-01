@@ -72,8 +72,7 @@ namespace Telebot
             );
 
             SettingsBase.AddProfiles(
-                presenter, 
-                telebotClient,
+                presenter,
                 (Settings.IProfile)tempMonWarning
             );
 

@@ -2,7 +2,7 @@
 
 namespace Telebot.Settings
 {
-    public class MonitorSettings : SettingsBase
+    public class MonitorSettings
     {
         private readonly ISettings settings;
 

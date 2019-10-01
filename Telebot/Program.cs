@@ -71,7 +71,11 @@ namespace Telebot
                 tempMonDurated
             );
 
-            SettingsBase.AddProfiles(presenter, (Settings.IProfile)tempMonWarning);
+            SettingsBase.AddProfiles(
+                presenter, 
+                telebotClient,
+                (Settings.IProfile)tempMonWarning
+            );
 
             buildCommandFactory();
 

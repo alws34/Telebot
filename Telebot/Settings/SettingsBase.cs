@@ -35,7 +35,7 @@ namespace Telebot.Settings
 
         public string ReadString(string section, string key)
         {
-            return iniData[section][key];
+            return iniData[section][key] ?? "";
         }
 
         public void WriteString(string section, string key, string value)

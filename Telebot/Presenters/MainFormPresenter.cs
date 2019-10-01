@@ -96,7 +96,7 @@ namespace Telebot.Presenters
         private async void SendClientHello()
         {
             await telebotClient.SendTextMessageAsync(
-                telebotClient.AdminID, "*Telebot*: I'm Up.", parseMode: ParseMode.Markdown
+                telebotClient.AdminId, "*Telebot*: I'm Up.", parseMode: ParseMode.Markdown
             );
         }
 
@@ -140,7 +140,7 @@ namespace Telebot.Presenters
             var document = new InputOnlineFile(e.Capture.ToStream(), "captime.jpg");
 
             await telebotClient.SendDocumentAsync(
-                telebotClient.AdminID, document, thumb: document as InputMedia
+                telebotClient.AdminId, document, thumb: document as InputMedia
             );
         }
 
@@ -149,7 +149,7 @@ namespace Telebot.Presenters
             string text = $"*[WARNING] {e.DeviceName}*: {e.Temperature}°C\nFrom *Telebot*";
 
             await telebotClient.SendTextMessageAsync(
-                telebotClient.AdminID, text, ParseMode.Markdown
+                telebotClient.AdminId, text, ParseMode.Markdown
             );
         }
 
@@ -162,7 +162,7 @@ namespace Telebot.Presenters
                 case null:
                     text.AppendLine("\nFrom *Telebot*");
                     await telebotClient.SendTextMessageAsync(
-                        telebotClient.AdminID, text.ToString(), ParseMode.Markdown
+                        telebotClient.AdminId, text.ToString(), ParseMode.Markdown
                     );
                     text.Clear();
                     break;

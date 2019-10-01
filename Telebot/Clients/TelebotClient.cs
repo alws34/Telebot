@@ -7,25 +7,24 @@ using Telegram.Bot.Args;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.InputFiles;
+using static Telebot.Settings.SettingsFactory;
 
 namespace Telebot.Clients
 {
-    public class TelebotClient : TelegramBotClient, ITelebotClient
+    public class TelebotClient : TelegramBotClient, ITelebotClient, Settings.IProfile
     {
-        public int AdminID { get; private set; }
+        public int AdminId { get; }
 
-        public TelebotClient(string bot_token, int admin_id) : base(bot_token)
-        {
-            this.AdminID = admin_id;
-
-            OnMessage += BotMessageHandler;
-        }
+        private readonly string token;
 
         public event EventHandler<RequestArrivalArgs> RequestArrival;
 
-        private void RaiseRequestArrival(RequestArrivalArgs e)
+        public TelebotClient(string token, int id) : base(token)
         {
-            RequestArrival?.Invoke(this, e);
+            this.AdminId = id;
+            this.token = token;
+
+            OnMessage += BotMessageHandler;
         }
 
         private void BotMessageHandler(object sender, MessageEventArgs e)
@@ -57,7 +56,7 @@ namespace Telebot.Clients
                 }
             }
 
-            if (e.Message.From.Id != AdminID)
+            if (e.Message.From.Id != AdminId)
             {
                 var cmdResult = new CommandResult
                 {
@@ -118,6 +117,17 @@ namespace Telebot.Clients
                 };
                 executeCallback(cmdResult);
             }
+        }
+
+        private void RaiseRequestArrival(RequestArrivalArgs e)
+        {
+            RequestArrival?.Invoke(this, e);
+        }
+
+        public void SaveChanges()
+        {
+            TelegramSettings.SaveAdminId(AdminId);
+            TelegramSettings.SaveBotToken(token);
         }
     }
 }

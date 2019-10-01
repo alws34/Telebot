@@ -67,7 +67,7 @@ namespace Telebot.Settings
             this.profiles.AddRange(profiles);
         }
 
-        public void SaveProfilesChanges()
+        public void CommitChanges()
         {
             foreach (IProfile profile in profiles)
             {
@@ -75,7 +75,7 @@ namespace Telebot.Settings
             }
         }
 
-        public void CommitChanges()
+        public void WriteChanges()
         {
             WriteFile(iniPath, iniData);
         }

@@ -82,11 +82,11 @@ namespace Telebot
             // stop thread and wait for it AFTER operations to save time
             _shouldStop = true;
 
-            // commit changes to ini
-            SettingsBase.SaveProfilesChanges();
+            // commit profiles changes
+            SettingsBase.CommitChanges();
 
             // write changes to disk
-            SettingsBase.CommitChanges();
+            SettingsBase.WriteChanges();
 
             // wait for thread to complete
             RefreshThread.Join();

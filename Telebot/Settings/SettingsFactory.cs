@@ -2,7 +2,7 @@
 {
     public static class SettingsFactory
     {
-        public static SettingsBase SettingsBase { get; }
+        public static ISettings SettingsBase { get; }
         public static GuiSettings GuiSettings { get; }
         public static TelegramSettings TelegramSettings { get; }
         public static MonitorSettings MonitorSettings { get; }

@@ -6,7 +6,16 @@ namespace Telebot.Infrastructure
     {
         public void SetVolume(int percentage)
         {
-            Process.Start(@".\SoundVolumeView.exe", $"/SetVolume Speakers {percentage}");
+            var si = new ProcessStartInfo
+            {
+                CreateNoWindow = false,
+                UseShellExecute = true,
+                WindowStyle = ProcessWindowStyle.Hidden,
+                FileName = @".\SetVol.exe",
+                Arguments = $"{percentage}"
+            };
+
+            Process.Start(si);
         }
     }
 }

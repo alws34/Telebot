@@ -124,6 +124,7 @@ namespace Telebot
                         }
                     ),
                     new AppsCmd(),
+                    new BrightCmd(),
                     new CaptureCmd(),
                     new CapAppCmd(),
                     new CapTimeCmd(),

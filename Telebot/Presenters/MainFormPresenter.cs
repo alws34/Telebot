@@ -88,8 +88,9 @@ namespace Telebot.Presenters
             Task.Delay(2000).ContinueWith((o) =>
             {
                 SendClientHello();
-                telebotClient.StartReceiving();
             });
+
+            telebotClient.StartReceiving();
         }
 
         private void viewShown(object sender, EventArgs e)

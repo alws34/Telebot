@@ -11,7 +11,7 @@ namespace Telebot.Commands
         public VolCmd()
         {
             Pattern = "/vol (\\d{1,3})";
-            Description = "Adjust the workstation volume.";
+            Description = "Adjust workstation's volume.";
 
             mediaLogic = new MediaLogic();
         }

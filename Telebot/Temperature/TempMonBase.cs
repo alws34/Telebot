@@ -5,7 +5,7 @@ using System.Timers;
 
 namespace Telebot.Temperature
 {
-    public abstract class TemperatureMonitorBase : ITemperatureMonitor
+    public abstract class TempMonBase : ITempMon
     {
         protected readonly Timer timer;
 
@@ -17,14 +17,14 @@ namespace Telebot.Temperature
 
         protected readonly List<IDevice> devices;
 
-        public event EventHandler<TemperatureChangedArgs> TemperatureChanged;
+        public event EventHandler<TempChangedArgs> TemperatureChanged;
 
-        protected void RaiseTemperatureChanged(TemperatureChangedArgs e)
+        protected void RaiseTemperatureChanged(TempChangedArgs e)
         {
             TemperatureChanged?.Invoke(this, e);
         }
 
-        protected TemperatureMonitorBase()
+        protected TempMonBase()
         {
             timer = new Timer();
             devices = new List<IDevice>();

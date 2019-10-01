@@ -3,13 +3,15 @@ using CPUID.Models;
 using System;
 using System.Timers;
 
+using static CPUIDSDK;
+
 namespace Telebot.Temperature
 {
-    public class TemperatureMonitorDurated : TemperatureMonitorBase
+    public class TempMonDurated : TempMonBase
     {
         private DateTime dtStop;
 
-        public TemperatureMonitorDurated(params IDevice[][] devicesArr)
+        public TempMonDurated(params IDevice[][] devicesArr)
         {
             timer.Elapsed += Elapsed;
 
@@ -29,9 +31,9 @@ namespace Telebot.Temperature
 
             foreach (IDevice device in devices)
             {
-                Sensor sensor = device.GetSensor(CPUIDSDK.SENSOR_CLASS_TEMPERATURE);
+                Sensor sensor = device.GetSensor(SENSOR_CLASS_TEMPERATURE);
 
-                var args = new TemperatureChangedArgs
+                var args = new TempChangedArgs
                 {
                     DeviceName = device.DeviceName,
                     Temperature = sensor.Value

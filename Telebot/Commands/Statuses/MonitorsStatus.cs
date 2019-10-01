@@ -9,10 +9,10 @@ namespace Telebot.Commands.Status
         {
             var result = new StringBuilder();
 
-            foreach (ITemperatureMonitor temperatureMonitor in Program.temperatureMonitors)
+            foreach (ITempMon tempMon in Program.tempMons)
             {
-                string name = temperatureMonitor.GetType().Name.Replace("TemperatureMonitor", "");
-                string active = BoolToStr(temperatureMonitor.IsActive);
+                string name = tempMon.GetType().Name.Replace("TemperatureMonitor", "");
+                string active = BoolToStr(tempMon.IsActive);
                 result.AppendLine($"*{name} Monitor (°C)*: {active}");
             }
 

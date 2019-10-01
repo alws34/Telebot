@@ -1,17 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
-
-namespace Telebot.Settings
+﻿namespace Telebot.Settings
 {
     public interface ISettings
     {
-        string TelegramToken { get; }
-        int TelegramAdminId { get; }
-        Rectangle Form1Bounds { get; set; }
-        List<int> ListView1ColumnsWidth { get; set; }
-        float CPUTemperature { get; set; }
-        float GPUTemperature { get; set; }
-        bool TempMonEnabled { get; set; }
-        void CommitChanges();
+        string ReadString(string section, string key);
+        void WriteString(string section, string key, string value);
+
+        T ReadObject<T>(string section, string key);
+        void WriteObject<T>(string section, string key, T value);
+
+        void CommitSettings();
     }
 }

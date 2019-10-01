@@ -2,9 +2,9 @@
 
 namespace Telebot.Temperature
 {
-    public interface ITemperatureMonitor
+    public interface ITempMon
     {
-        event EventHandler<TemperatureChangedArgs> TemperatureChanged;
+        event EventHandler<TempChangedArgs> TemperatureChanged;
         bool IsActive { get; }
         void Start();
         void Start(TimeSpan duration, TimeSpan interval);

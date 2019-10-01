@@ -1,33 +1,51 @@
-﻿using System;
+﻿using BrightIdeasSoftware;
+using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Windows.Forms;
 using Telebot.Clients;
+using Telebot.Extensions;
 using Telebot.ScreenCapture;
 using Telebot.Temperature;
 using Telebot.Views;
+using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
+using Telegram.Bot.Types.InputFiles;
+using static Telebot.Settings.SettingsFactory;
 
 namespace Telebot.Presenters
 {
-    public class MainFormPresenter
+    public class MainFormPresenter : Settings.IProfile
     {
         private readonly IMainFormView mainFormView;
         private readonly ITelebotClient telebotClient;
 
-        public MainFormPresenter
-        (
+        public MainFormPresenter(
             IMainFormView mainFormView,
-            ITelebotClient telebotClient
+            ITelebotClient telebotClient,
+            IScreenCapture screenCapture,
+            params ITempMon[] tempMonitors
         )
         {
             this.mainFormView = mainFormView;
-            this.mainFormView.Load += mainFormView_Load;
-            this.mainFormView.FormClosed += mainFormView_FormClosed;
-            this.mainFormView.Resize += mainFormView_Resize;
+            this.mainFormView.Load += viewLoad;
+            this.mainFormView.Shown += viewShown;
+            this.mainFormView.FormClosed += viewFormClosed;
+            this.mainFormView.Resize += viewResize;
             this.mainFormView.NotifyIcon.MouseClick += NotifyIcon_MouseClick;
 
             this.telebotClient = telebotClient;
             this.telebotClient.RequestArrival += TelebotClient_RequestArrival;
+
+            screenCapture.ScreenCaptured += ScreenCaptured;
+
+            foreach (ITempMon tempMon in tempMonitors)
+            {
+                if (tempMon is TempMonWarning)
+                    tempMon.TemperatureChanged += WarningTemperatureChanged;
+                else if (tempMon is TempMonDurated)
+                    tempMon.TemperatureChanged += DuratedTemperatureChanged;
+            }
         }
 
         private void TelebotClient_RequestArrival(object sender, RequestArrivalArgs e)
@@ -37,7 +55,8 @@ namespace Telebot.Presenters
             if (mainFormView.WindowState == FormWindowState.Minimized)
             {
                 mainFormView.NotifyIcon.ShowBalloonTip(
-                    1000, mainFormView.Text, e.Item.Text, ToolTipIcon.Info);
+                    1000, mainFormView.Text, e.Item.Text, ToolTipIcon.Info
+                );
             }
         }
 
@@ -48,7 +67,7 @@ namespace Telebot.Presenters
             mainFormView.NotifyIcon.Visible = false;
         }
 
-        private void mainFormView_Resize(object sender, EventArgs e)
+        private void viewResize(object sender, EventArgs e)
         {
             if (mainFormView.WindowState == FormWindowState.Minimized)
             {
@@ -57,55 +76,99 @@ namespace Telebot.Presenters
             }
         }
 
-        private void mainFormView_FormClosed(object sender, FormClosedEventArgs e)
+        private void viewFormClosed(object sender, FormClosedEventArgs e)
         {
-            SaveSettings();
             telebotClient.StopReceiving();
         }
 
-        private void mainFormView_Load(object sender, EventArgs e)
+        private void viewLoad(object sender, EventArgs e)
         {
-            LoadSettings();
-            SetTitleUsername();
+            RestoreGuiSettings();
             SendClientHello();
             telebotClient.StartReceiving();
         }
 
+        private void viewShown(object sender, EventArgs e)
+        {
+            SetTitleUsername();
+        }
+
         private async void SendClientHello()
         {
-            await telebotClient.SendTextMessageAsync
-            (
-                telebotClient.AdminID,
-                "*Telebot*: I'm Up.",
-                parseMode: ParseMode.Markdown
+            await telebotClient.SendTextMessageAsync(
+                telebotClient.AdminID, "*Telebot*: I'm Up.", parseMode: ParseMode.Markdown
             );
         }
 
         private async void SetTitleUsername()
         {
             var me = await telebotClient.GetMeAsync();
-            mainFormView.Text += $" ({me.Username})";
+            mainFormView.Text += $" - {me.Username}";
         }
 
-        private void SaveSettings()
+        public void SaveChanges()
         {
-            Program.appSettings.Form1Bounds = mainFormView.Bounds;
+            GuiSettings.SaveFormBounds(mainFormView.Bounds);
 
-            var widths = new List<int>(mainFormView.ObjectListView.Columns.Count);
-            foreach (ColumnHeader column in mainFormView.ObjectListView.Columns)
+            var widths = new List<int>();
+
+            foreach (OLVColumn column in mainFormView.ObjectListView.AllColumns)
             {
                 widths.Add(column.Width);
             }
-            Program.appSettings.ListView1ColumnsWidth = widths;
+
+            GuiSettings.SaveListView1ColumnsWidth(widths);
         }
 
-        private void LoadSettings()
+        private void RestoreGuiSettings()
         {
-            mainFormView.Bounds = Program.appSettings.Form1Bounds;
-            var w = Program.appSettings.ListView1ColumnsWidth;
-            for (int i = 0; i < w.Count; i++)
+            mainFormView.Bounds = GuiSettings.GetFormBounds();
+
+            var widths = GuiSettings.GetListView1ColumnsWidth();
+
+            if (widths.Count > 0)
             {
-                mainFormView.ObjectListView.Columns[i].Width = w[i];
+                for (int i = 0; i < widths.Count; i++)
+                {
+                    mainFormView.ObjectListView.Columns[i].Width = widths[i];
+                }
+            }
+        }
+
+        private async void ScreenCaptured(object sender, ScreenCaptureArgs e)
+        {
+            var document = new InputOnlineFile(e.Capture.ToStream(), "captime.jpg");
+
+            await telebotClient.SendDocumentAsync(
+                telebotClient.AdminID, document, thumb: document as InputMedia
+            );
+        }
+
+        private async void WarningTemperatureChanged(object sender, TempChangedArgs e)
+        {
+            string text = $"*[WARNING] {e.DeviceName}*: {e.Temperature}°C\nFrom *Telebot*";
+
+            await telebotClient.SendTextMessageAsync(
+                telebotClient.AdminID, text, ParseMode.Markdown
+            );
+        }
+
+        private StringBuilder text = new StringBuilder();
+
+        private async void DuratedTemperatureChanged(object sender, TempChangedArgs e)
+        {
+            switch (e)
+            {
+                case null:
+                    text.AppendLine("\nFrom *Telebot*");
+                    await telebotClient.SendTextMessageAsync(
+                        telebotClient.AdminID, text.ToString(), ParseMode.Markdown
+                    );
+                    text.Clear();
+                    break;
+                default:
+                    text.AppendLine($"*{e.DeviceName}*: {e.Temperature}°C");
+                    break;
             }
         }
     }

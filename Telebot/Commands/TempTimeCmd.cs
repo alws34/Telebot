@@ -27,7 +27,7 @@ namespace Telebot.Commands
 
                 callback(cmdResult);
 
-                Program.temperatureMonitorDurated.Stop();
+                Program.tempMonDurated.Stop();
 
                 return;
             }
@@ -48,7 +48,7 @@ namespace Telebot.Commands
 
             callback(result);
 
-            Program.temperatureMonitorDurated.Start(tsDuration, tsInterval);
+            Program.tempMonDurated.Start(tsDuration, tsInterval);
         }
     }
 }

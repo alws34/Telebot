@@ -5,27 +5,23 @@ using Telebot.Clients;
 using Telebot.Commands;
 using Telebot.Commands.Factories;
 using Telebot.Commands.Status;
-using Telebot.Loggers;
 using Telebot.Presenters;
 using Telebot.ScreenCapture;
-using Telebot.Settings;
 using Telebot.Temperature;
-
 using static CPUID.CPUIDCore;
 using static CPUID.Factories.DeviceFactory;
+using static Telebot.Settings.SettingsFactory;
 
 namespace Telebot
 {
     static class Program
     {
-        public static ILogger logger;
-        public static ISettings appSettings;
-
         public static CommandFactory commandFactory;
+
         public static IScreenCapture screenCapture;
-        public static ITemperatureMonitor temperatureMonitorWarning;
-        public static ITemperatureMonitor temperatureMonitorDurated;
-        public static ITemperatureMonitor[] temperatureMonitors;
+        public static ITempMon tempMonWarning;
+        public static ITempMon tempMonDurated;
+        public static ITempMon[] tempMons;
 
         private static volatile bool _shouldStop = false;
 
@@ -39,56 +35,59 @@ namespace Telebot
 
             RefreshThread.Start();
 
-            logger = new FileLogger();
-            appSettings = new SettingsManager();
-
-            string bot_token = appSettings.TelegramToken;
-            int admin_id = appSettings.TelegramAdminId;
-
             MainForm mainForm = new MainForm();
-            TelebotClient telebotClient = new TelebotClient(bot_token, admin_id);
+
+            string token = TelegramSettings.GetBotToken();
+            int id = TelegramSettings.GetAdminId();
+
+            TelebotClient telebotClient = new TelebotClient(token, id);
 
             screenCapture = new ScreenCaptureDurated();
 
-            temperatureMonitorWarning = new TemperatureMonitorWarning
+            tempMonWarning = new TempMonWarning
             (
                 CPUDevices,
                 GPUDevices
             );
 
-            temperatureMonitorDurated = new TemperatureMonitorDurated
+            tempMonDurated = new TempMonDurated
             (
                 CPUDevices,
                 GPUDevices
             );
 
-            temperatureMonitors = new ITemperatureMonitor[]
+            tempMons = new ITempMon[]
             {
-                temperatureMonitorWarning,
-                temperatureMonitorDurated
+                tempMonWarning,
+                tempMonDurated
             };
-
-            var screenCaptureAggregator = new ScreenCaptureAggregator(telebotClient, screenCapture);
-            var temperatureMonitorAggregator = new TemperatureMonitorAggregator(telebotClient, temperatureMonitors);
 
             var presenter = new MainFormPresenter
             (
                 mainForm,
-                telebotClient
+                telebotClient,
+                screenCapture,
+                tempMonWarning,
+                tempMonDurated
             );
+
+            SettingsBase.AddProfiles(presenter, (Settings.IProfile)tempMonWarning);
 
             buildCommandFactory();
 
             Application.Run(mainForm);
 
+            // stop thread and wait for it AFTER operations to save time
             _shouldStop = true;
+
+            // commit changes to ini
+            SettingsBase.SaveProfilesChanges();
+
+            // write changes to disk
+            SettingsBase.CommitSettings();
+
+            // wait for thread to complete
             RefreshThread.Join();
-
-            // wait for finalizers to "save" settings before committing
-            GC.WaitForPendingFinalizers();
-
-            // commit settings changes to disk
-            appSettings.CommitChanges();
         }
 
         private static void RefreshThreadProc()

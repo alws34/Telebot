@@ -119,9 +119,6 @@
     <Compile Include="Commands\TempTimeCmd.cs" />
     <Compile Include="Commands\VolCmd.cs" />
     <Compile Include="Clients\RequestArrivalArgs.cs" />
-    <Compile Include="Loggers\ILogger.cs" />
-    <Compile Include="ScreenCapture\ScreenCaptureAggregator.cs" />
-    <Compile Include="Settings\ISettings.cs" />
     <Compile Include="Commands\Statuses\IStatus.cs" />
     <Compile Include="ScreenCapture\IScreenCapture.cs" />
     <Compile Include="Infrastructure\CaptureLogic.cs" />
@@ -137,20 +134,24 @@
     <Compile Include="Presenters\MainFormPresenter.cs" />
     <Compile Include="ScreenCapture\ScreenCaptureArgs.cs" />
     <Compile Include="Clients\TelebotClient.cs" />
-    <Compile Include="Temperature\ITemperatureMonitor.cs" />
-    <Compile Include="Temperature\TemperatureChangedArgs.cs" />
-    <Compile Include="Temperature\TemperatureMonitorAggregator.cs" />
-    <Compile Include="Temperature\TemperatureMonitorBase.cs" />
-    <Compile Include="Temperature\TemperatureMonitorDurated.cs" />
-    <Compile Include="Temperature\TemperatureMonitorWarning.cs" />
+    <Compile Include="Settings\IProfile.cs" />
+    <Compile Include="Settings\ISettings.cs" />
+    <Compile Include="Settings\GuiSettings.cs" />
+    <Compile Include="Settings\MonitorSettings.cs" />
+    <Compile Include="Settings\SettingsFactory.cs" />
+    <Compile Include="Settings\TelegramSettings.cs" />
+    <Compile Include="Temperature\ITempMon.cs" />
+    <Compile Include="Temperature\TempChangedArgs.cs" />
+    <Compile Include="Temperature\TempMonBase.cs" />
+    <Compile Include="Temperature\TempMonDurated.cs" />
+    <Compile Include="Temperature\TempMonWarning.cs" />
     <Compile Include="Views\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Views\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Loggers\FileLogger.cs" />
-    <Compile Include="Settings\SettingsManager.cs" />
+    <Compile Include="Settings\SettingsBase.cs" />
     <Compile Include="Models\CommandParam.cs" />
     <Compile Include="Models\CommandResult.cs" />
     <Compile Include="Program.cs" />

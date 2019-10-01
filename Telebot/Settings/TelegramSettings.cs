@@ -16,11 +16,6 @@ namespace Telebot.Settings
             return settings.ReadString("Telegram", "Token");
         }
 
-        public void SaveBotToken(string token)
-        {
-            settings.WriteString("Telegram", "Token", token);
-        }
-
         public int GetAdminId()
         {
             string idStr = settings.ReadString("Telegram", "AdminId");
@@ -30,13 +25,6 @@ namespace Telebot.Settings
             int.TryParse(idStr, out result);
 
             return result;
-        }
-
-        public void SaveAdminId(int id)
-        {
-            string idStr = Convert.ToString(id);
-
-            settings.WriteString("Telegram", "Token", idStr);
         }
     }
 }

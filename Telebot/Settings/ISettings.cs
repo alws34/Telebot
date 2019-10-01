@@ -8,6 +8,6 @@
         T ReadObject<T>(string section, string key);
         void WriteObject<T>(string section, string key, T value);
 
-        void CommitSettings();
+        void CommitChanges();
     }
 }

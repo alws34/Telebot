@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Telebot.Settings
+﻿namespace Telebot.Settings
 {
     public class TelegramSettings
     {

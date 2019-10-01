@@ -33,8 +33,6 @@ namespace Telebot
 
             Thread RefreshThread = new Thread(RefreshThreadProc);
 
-            RefreshThread.Start();
-
             MainForm mainForm = new MainForm();
 
             string token = TelegramSettings.GetBotToken();
@@ -62,8 +60,7 @@ namespace Telebot
                 tempMonDurated
             };
 
-            var presenter = new MainFormPresenter
-            (
+            var presenter = new MainFormPresenter(
                 mainForm,
                 telebotClient,
                 screenCapture,
@@ -78,6 +75,8 @@ namespace Telebot
 
             buildCommandFactory();
 
+            RefreshThread.Start();
+
             Application.Run(mainForm);
 
             // stop thread and wait for it AFTER operations to save time
@@ -87,7 +86,7 @@ namespace Telebot
             SettingsBase.SaveProfilesChanges();
 
             // write changes to disk
-            SettingsBase.CommitSettings();
+            SettingsBase.CommitChanges();
 
             // wait for thread to complete
             RefreshThread.Join();

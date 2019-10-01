@@ -73,7 +73,7 @@ namespace Telebot.Settings
             }
         }
 
-        public void CommitSettings()
+        public void CommitChanges()
         {
             WriteFile(iniPath, iniData);
         }

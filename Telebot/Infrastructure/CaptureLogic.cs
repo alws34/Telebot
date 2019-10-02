@@ -32,7 +32,7 @@ namespace Telebot.Infrastructure
                 int width = screen.Bounds.Width;
                 int height = screen.Bounds.Height;
 
-                var result = new Bitmap(width, height);
+                Bitmap result = new Bitmap(width, height);
 
                 using (var graphic = Graphics.FromImage(result))
                 {
@@ -45,8 +45,6 @@ namespace Telebot.Infrastructure
 
         public Bitmap CaptureWindow(IntPtr hWnd)
         {
-            var rect = new Rect();
-
             if (isWindowMinized(hWnd))
             {
                 ShowWindow(hWnd, SW_RESTORE);
@@ -58,12 +56,14 @@ namespace Telebot.Infrastructure
 
             Thread.Sleep(250);
 
+            Rect rect = new Rect();
+
             GetWindowRect(hWnd, ref rect);
 
             int width = rect.right - rect.left;
             int height = rect.bottom - rect.top;
 
-            var result = new Bitmap(width, height);
+            Bitmap result = new Bitmap(width, height);
 
             using (var graphics = Graphics.FromImage(result))
             {

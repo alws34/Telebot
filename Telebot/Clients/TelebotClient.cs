@@ -14,14 +14,11 @@ namespace Telebot.Clients
     {
         public int AdminId { get; }
 
-        private readonly string token;
-
         public event EventHandler<RequestArrivalArgs> RequestArrival;
 
         public TelebotClient(string token, int id) : base(token)
         {
             this.AdminId = id;
-            this.token = token;
 
             OnMessage += BotMessageHandler;
         }

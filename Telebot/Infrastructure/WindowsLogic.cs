@@ -42,8 +42,8 @@ namespace Telebot.Infrastructure
                 if (isTopLevelWindow(hWnd))
                 {
                     string wndCaption = GetWndText(hWnd);
-                    uint wndPid;
 
+                    uint wndPid;
                     GetWindowThreadProcessId(hWnd, out wndPid);
 
                     builder.AppendLine($"- {wndCaption} ({wndPid})");
@@ -69,7 +69,7 @@ namespace Telebot.Infrastructure
                 {
                     string name = process.MainModule.FileVersionInfo.ProductName;
                     int pid = process.Id;
-                    result.AppendLine($"{name} ({pid})");
+                    result.AppendLine($"- {name} ({pid})");
                 }
                 catch
                 {

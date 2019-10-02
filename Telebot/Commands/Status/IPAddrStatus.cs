@@ -4,11 +4,11 @@ namespace Telebot.Commands.Status
 {
     public class IPAddrStatus : IStatus
     {
-        private readonly NetworkLogic networkLogic;
+        private readonly NetworkApi networkLogic;
 
         public IPAddrStatus()
         {
-            networkLogic = new NetworkLogic();
+            networkLogic = new NetworkApi();
         }
 
         public string Execute()

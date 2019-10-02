@@ -7,7 +7,7 @@ using static Telebot.Helpers.User32Helper;
 
 namespace Telebot.Infrastructure
 {
-    public class CaptureLogic
+    public class DesktopApi
     {
         public IEnumerable<Bitmap> CaptureDesktop()
         {

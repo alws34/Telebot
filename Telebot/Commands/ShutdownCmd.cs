@@ -6,14 +6,14 @@ namespace Telebot.Commands
 {
     public class ShutdownCmd : CommandBase
     {
-        private readonly PowerLogic powerLogic;
+        private readonly PowerApi powerLogic;
 
         public ShutdownCmd()
         {
             Pattern = "/shutdown (\\d+)";
             Description = "Schedule the workstation to shutdown.";
 
-            powerLogic = new PowerLogic();
+            powerLogic = new PowerApi();
         }
 
         public override void Execute(object parameter, Action<CommandResult> callback)

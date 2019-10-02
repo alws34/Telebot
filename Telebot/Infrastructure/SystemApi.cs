@@ -5,7 +5,7 @@ using static Telebot.Helpers.Kernel32Helper;
 
 namespace Telebot.Infrastructure
 {
-    public class SystemLogic
+    public class SystemApi
     {
         public void SetBrightness(int percentage)
         {

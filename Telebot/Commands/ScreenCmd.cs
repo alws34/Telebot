@@ -8,14 +8,14 @@ namespace Telebot.Commands
     public class ScreenCmd : CommandBase
     {
         private readonly Dictionary<string, Action> actions;
-        private readonly DisplayLogic displayLogic;
+        private readonly DisplayApi displayLogic;
 
         public ScreenCmd()
         {
             Pattern = "/screen (on|off)";
             Description = "Turn off or on the monitor.";
 
-            displayLogic = new DisplayLogic();
+            displayLogic = new DisplayApi();
 
             actions = new Dictionary<string, Action>()
             {

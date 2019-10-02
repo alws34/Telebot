@@ -8,7 +8,7 @@ namespace Telebot.Infrastructure
         DisplayStateOff = 2
     }
 
-    public class DisplayLogic
+    public class DisplayApi
     {
         public void SetDisplayOn()
         {

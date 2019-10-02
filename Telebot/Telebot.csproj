@@ -96,7 +96,7 @@
     <Compile Include="Commands\Status\CaptureStatus.cs" />
     <Compile Include="Contracts\IScheduledJob.cs" />
     <Compile Include="Helpers\Kernel32Helper.cs" />
-    <Compile Include="Infrastructure\MediaLogic.cs" />
+    <Compile Include="Infrastructure\MediaApi.cs" />
     <Compile Include="Clients\ITelebotClient.cs" />
     <Compile Include="Commands\AppsCmd.cs" />
     <Compile Include="Commands\CapAppCmd.cs" />
@@ -123,12 +123,12 @@
     <Compile Include="Clients\RequestArrivalArgs.cs" />
     <Compile Include="Commands\Status\IStatus.cs" />
     <Compile Include="ScreenCapture\IScreenCapture.cs" />
-    <Compile Include="Infrastructure\CaptureLogic.cs" />
-    <Compile Include="Infrastructure\NetworkLogic.cs" />
-    <Compile Include="Infrastructure\PowerLogic.cs" />
-    <Compile Include="Infrastructure\DisplayLogic.cs" />
-    <Compile Include="Infrastructure\SystemLogic.cs" />
-    <Compile Include="Infrastructure\WindowsLogic.cs" />
+    <Compile Include="Infrastructure\DesktopApi.cs" />
+    <Compile Include="Infrastructure\NetworkApi.cs" />
+    <Compile Include="Infrastructure\PowerApi.cs" />
+    <Compile Include="Infrastructure\DisplayApi.cs" />
+    <Compile Include="Infrastructure\SystemApi.cs" />
+    <Compile Include="Infrastructure\WindowsApi.cs" />
     <Compile Include="Extensions\BitmapExtensions.cs" />
     <Compile Include="Extensions\TimeSpanExtensions.cs" />
     <Compile Include="Models\ObjListViewItem.cs" />

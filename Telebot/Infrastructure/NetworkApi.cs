@@ -4,11 +4,11 @@ using System.Net.Sockets;
 
 namespace Telebot.Infrastructure
 {
-    public class NetworkLogic
+    public class NetworkApi
     {
         public string LocalIPv4Address { get; }
 
-        public NetworkLogic()
+        public NetworkApi()
         {
             LocalIPv4Address = GetLocalIPAddress();
         }

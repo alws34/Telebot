@@ -4,7 +4,7 @@ using Telebot.Helpers;
 
 namespace Telebot.Infrastructure
 {
-    public class PowerLogic
+    public class PowerApi
     {
         public void ShutdownWorkstation()
         {

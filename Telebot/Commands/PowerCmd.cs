@@ -9,14 +9,14 @@ namespace Telebot.Commands
     {
         private readonly Dictionary<string, Action> actions;
 
-        private readonly PowerLogic powerLogic;
+        private readonly PowerApi powerLogic;
 
         public PowerCmd()
         {
             Pattern = "/(lock|logoff|sleep|reboot|shutdown)";
             Description = "Lock, logoff, sleep, reboot or shutdown the workstation.";
 
-            powerLogic = new PowerLogic();
+            powerLogic = new PowerApi();
 
             actions = new Dictionary<string, Action>()
             {

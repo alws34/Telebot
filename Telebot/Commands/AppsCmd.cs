@@ -7,7 +7,7 @@ namespace Telebot.Commands
 {
     public class AppsCmd : CommandBase
     {
-        private readonly WindowsLogic windowsLogic;
+        private readonly WindowsApi windowsLogic;
         public readonly Dictionary<string, Func<string>> actions;
 
         public AppsCmd()
@@ -15,7 +15,7 @@ namespace Telebot.Commands
             Pattern = "/apps (fg|all)";
             Description = "List of active applications.";
 
-            windowsLogic = new WindowsLogic();
+            windowsLogic = new WindowsApi();
 
             actions = new Dictionary<string, Func<string>>
             {

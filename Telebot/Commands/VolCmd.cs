@@ -6,14 +6,14 @@ namespace Telebot.Commands
 {
     public class VolCmd : CommandBase
     {
-        private readonly MediaLogic mediaLogic;
+        private readonly MediaApi mediaLogic;
 
         public VolCmd()
         {
             Pattern = "/vol (\\d{1,3})";
             Description = "Adjust workstation's volume.";
 
-            mediaLogic = new MediaLogic();
+            mediaLogic = new MediaApi();
         }
 
         public override void Execute(object parameter, Action<CommandResult> callback)

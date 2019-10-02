@@ -77,6 +77,7 @@ namespace Telebot.Temperature
         public override void Stop()
         {
             JobManager.RemoveJob(GetType().Name);
+
             IsActive = false;
         }
 

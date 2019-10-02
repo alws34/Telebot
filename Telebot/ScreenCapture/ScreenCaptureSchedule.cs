@@ -14,11 +14,11 @@ namespace Telebot.ScreenCapture
 
         public event EventHandler<ScreenCaptureArgs> ScreenCaptured;
 
-        private readonly CaptureLogic captureLogic;
+        private readonly DesktopApi captureLogic;
 
         public ScreenCaptureSchedule()
         {
-            captureLogic = new CaptureLogic();
+            captureLogic = new DesktopApi();
         }
 
         private void Elapsed()

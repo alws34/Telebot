@@ -6,7 +6,7 @@ using static Telebot.Helpers.User32Helper;
 
 namespace Telebot.Infrastructure
 {
-    public class WindowsLogic
+    public class WindowsApi
     {
         public string GetForegroundApps()
         {

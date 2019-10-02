@@ -8,14 +8,14 @@ namespace Telebot.Commands
 {
     public class CaptureCmd : CommandBase
     {
-        private readonly CaptureLogic captureLogic;
+        private readonly DesktopApi captureLogic;
 
         public CaptureCmd()
         {
             Pattern = "/capture";
             Description = "Get a screenshot of the workstation.";
 
-            captureLogic = new CaptureLogic();
+            captureLogic = new DesktopApi();
         }
 
         public override void Execute(object parameter, Action<CommandResult> callback)

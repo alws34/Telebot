@@ -4,11 +4,11 @@ namespace Telebot.Commands.Status
 {
     public class UptimeStatus : IStatus
     {
-        private readonly SystemLogic systemLogic;
+        private readonly SystemApi systemLogic;
 
         public UptimeStatus()
         {
-            systemLogic = new SystemLogic();
+            systemLogic = new SystemApi();
         }
 
         public string Execute()

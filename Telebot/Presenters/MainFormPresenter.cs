@@ -1,4 +1,5 @@
 ﻿using BrightIdeasSoftware;
+using FluentScheduler;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -30,7 +31,6 @@ namespace Telebot.Presenters
         {
             this.mainFormView = mainFormView;
             this.mainFormView.Load += viewLoad;
-            this.mainFormView.Shown += viewShown;
             this.mainFormView.FormClosed += viewFormClosed;
             this.mainFormView.Resize += viewResize;
             this.mainFormView.TrayIcon.MouseClick += NotifyIcon_MouseClick;
@@ -86,17 +86,20 @@ namespace Telebot.Presenters
         private void viewLoad(object sender, EventArgs e)
         {
             // delay job to reduce startup time
-            Task.Delay(2000).ContinueWith((o) =>
-            {
-                SendClientHello();
-                telebotClient.StartReceiving();
-            });
-        }
+            JobManager.AddJob(
+                () => {
+                    SendClientHello();
+                    telebotClient.StartReceiving();
 
-        private void viewShown(object sender, EventArgs e)
-        {
+                    mainFormView.ListView.Invoke((MethodInvoker)delegate
+                    {
+                        AddBotNameTitle();
+                    });
+                },
+                (s) => s.ToRunOnceIn(3).Seconds()
+            );
+
             RestoreGuiSettings();
-            AddBotNameTitle();
         }
 
         private async void SendClientHello()

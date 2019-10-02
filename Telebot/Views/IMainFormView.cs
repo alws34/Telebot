@@ -8,7 +8,6 @@ namespace Telebot.Views
     public interface IMainFormView
     {
         event EventHandler Load;
-        event EventHandler Shown;
         event FormClosedEventHandler FormClosed;
         event EventHandler Resize;
 

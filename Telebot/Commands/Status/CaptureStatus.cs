@@ -13,7 +13,7 @@
 
             string active = BoolToStr(screenCapture.IsActive);
 
-            return $"*Screen* 📷: {active}";
+            return $"*Screen* 🖼️: {active}";
         }
     }
 }

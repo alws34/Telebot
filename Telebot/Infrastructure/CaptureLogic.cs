@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Threading;
 using System.Windows.Forms;
 using static Telebot.Helpers.User32Helper;
 
@@ -8,6 +9,9 @@ namespace Telebot.Infrastructure
 {
     public class CaptureLogic
     {
+        private const byte SW_RESTORE = 9;
+        private const byte SW_MINIMIZE = 6;
+
         public IEnumerable<Bitmap> CaptureDesktop()
         {
             //int width = SystemInformation.VirtualScreen.Width;
@@ -43,6 +47,17 @@ namespace Telebot.Infrastructure
         {
             var rect = new Rect();
 
+            if (isWindowMinized(hWnd))
+            {
+                ShowWindow(hWnd, SW_RESTORE);
+            }
+            else
+            {
+                SetForegroundWindow(hWnd);
+            }
+
+            Thread.Sleep(250);
+
             GetWindowRect(hWnd, ref rect);
 
             int width = rect.right - rect.left;
@@ -56,6 +71,15 @@ namespace Telebot.Infrastructure
             }
 
             return result;
+        }
+
+        private bool isWindowMinized(IntPtr hWnd)
+        {
+            const uint WS_MINIMIZE = 0x20000000;
+
+            IntPtr wndStyles = GetWindowLongPtr(hWnd, (int)GWL.GWL_STYLE);
+
+            return (wndStyles.ToInt64() & WS_MINIMIZE) != 0;
         }
     }
 }

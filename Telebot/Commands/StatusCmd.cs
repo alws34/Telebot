@@ -8,7 +8,7 @@ namespace Telebot.Commands
 {
     public class StatusCmd : CommandBase
     {
-        private readonly IEnumerable<IStatus> statuses;
+        private readonly IStatus[] statuses;
 
         public StatusCmd(IStatus[] statuses)
         {

@@ -19,8 +19,8 @@ namespace Telebot.Commands
 
             actions = new Dictionary<string, Func<string>>
             {
-                { "fg", windowsLogic.GetForegroundProcesses },
-                { "all", windowsLogic.GetBackgroundProcesses }
+                { "fg", windowsLogic.GetForegroundApps },
+                { "all", windowsLogic.GetBackgroundApps }
             };
         }
 

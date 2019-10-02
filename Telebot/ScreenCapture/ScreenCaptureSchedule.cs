@@ -6,7 +6,7 @@ using Telebot.Infrastructure;
 
 namespace Telebot.ScreenCapture
 {
-    public class ScreenCaptureDurated : IScreenCapture, IScheduledJob
+    public class ScreenCaptureSchedule : IScreenCapture, IScheduledJob
     {
         private DateTime timeStop;
 
@@ -16,7 +16,7 @@ namespace Telebot.ScreenCapture
 
         private readonly CaptureLogic captureLogic;
 
-        public ScreenCaptureDurated()
+        public ScreenCaptureSchedule()
         {
             captureLogic = new CaptureLogic();
         }

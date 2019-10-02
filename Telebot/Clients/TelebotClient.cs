@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text.RegularExpressions;
+using Telebot.Commands;
 using Telebot.Models;
 using Telegram.Bot;
 using Telegram.Bot.Args;
@@ -91,7 +92,7 @@ namespace Telebot.Clients
 
             RaiseRequestArrival(arrival);
 
-            var command = Program.commandFactory.Dispatch(cmdPattern);
+            ICommand command = Program.commandFactory.Dispatch(cmdPattern);
 
             if (command != null)
             {

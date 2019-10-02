@@ -18,9 +18,9 @@ namespace Telebot
     {
         public static CommandFactory commandFactory;
 
-        public static IScreenCapture screenCapture;
+        public static IScreenCapture screenCaptureSchedule;
         public static ITempMon tempMonWarning;
-        public static ITempMon tempMonDurated;
+        public static ITempMon tempMonSchedule;
         public static ITempMon[] tempMons;
 
         private static volatile bool _shouldStop = false;
@@ -40,7 +40,7 @@ namespace Telebot
 
             TelebotClient telebotClient = new TelebotClient(token, id);
 
-            screenCapture = new ScreenCaptureDurated();
+            screenCaptureSchedule = new ScreenCaptureSchedule();
 
             tempMonWarning = new TempMonWarning
             (
@@ -48,7 +48,7 @@ namespace Telebot
                 DeviceFactory.GPUDevices
             );
 
-            tempMonDurated = new TempMonDurated
+            tempMonSchedule = new TempMonSchedule
             (
                 DeviceFactory.CPUDevices,
                 DeviceFactory.GPUDevices
@@ -57,15 +57,15 @@ namespace Telebot
             tempMons = new ITempMon[]
             {
                 tempMonWarning,
-                tempMonDurated
+                tempMonSchedule
             };
 
             var presenter = new MainFormPresenter(
                 mainForm,
                 telebotClient,
-                screenCapture,
+                screenCaptureSchedule,
                 tempMonWarning,
-                tempMonDurated
+                tempMonSchedule
             );
 
             SettingsBase.AddProfiles(

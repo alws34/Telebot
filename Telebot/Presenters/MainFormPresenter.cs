@@ -43,7 +43,7 @@ namespace Telebot.Presenters
             {
                 if (tempMon is TempMonWarning)
                     tempMon.TemperatureChanged += WarningTemperatureChanged;
-                else if (tempMon is TempMonDurated)
+                else if (tempMon is TempMonSchedule)
                     tempMon.TemperatureChanged += DuratedTemperatureChanged;
             }
         }

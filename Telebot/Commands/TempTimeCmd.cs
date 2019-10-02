@@ -28,7 +28,7 @@ namespace Telebot.Commands
 
                 callback(cmdResult);
 
-                Program.tempMonDurated.Stop();
+                Program.tempMonSchedule.Stop();
 
                 return;
             }
@@ -49,7 +49,7 @@ namespace Telebot.Commands
 
             callback(result);
 
-            ((IScheduledJob)Program.tempMonDurated).Start(tsDuration, tsInterval);
+            ((IScheduledJob)Program.tempMonSchedule).Start(tsDuration, tsInterval);
         }
     }
 }

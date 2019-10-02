@@ -7,11 +7,11 @@ using static CPUID.CPUIDSDK;
 
 namespace Telebot.Temperature
 {
-    public class TempMonDurated : TempMonBase, IScheduledJob
+    public class TempMonSchedule : TempMonBase, IScheduledJob
     {
         private DateTime timeStop;
 
-        public TempMonDurated(params IDevice[][] devicesArr)
+        public TempMonSchedule(params IDevice[][] devicesArr)
         {
             foreach (IDevice[] devices in devicesArr)
             {

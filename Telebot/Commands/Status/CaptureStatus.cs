@@ -9,11 +9,11 @@
                 return condition ? "Active" : "Inactive";
             }
 
-            var screenCapture = Program.screenCapture;
+            var screenCapture = Program.screenCaptureSchedule;
 
             string active = BoolToStr(screenCapture.IsActive);
 
-            return $"*Screen* 🖼️: {active}";
+            return $"*Schedule* 🖼️: {active}";
         }
     }
 }

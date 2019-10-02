@@ -132,7 +132,7 @@
     <Compile Include="Extensions\BitmapExtensions.cs" />
     <Compile Include="Extensions\TimeSpanExtensions.cs" />
     <Compile Include="Models\ObjListViewItem.cs" />
-    <Compile Include="ScreenCapture\ScreenCaptureDurated.cs" />
+    <Compile Include="ScreenCapture\ScreenCaptureSchedule.cs" />
     <Compile Include="Presenters\MainFormPresenter.cs" />
     <Compile Include="ScreenCapture\ScreenCaptureArgs.cs" />
     <Compile Include="Clients\TelebotClient.cs" />
@@ -145,7 +145,7 @@
     <Compile Include="Temperature\ITempMon.cs" />
     <Compile Include="Temperature\TempChangedArgs.cs" />
     <Compile Include="Temperature\TempMonBase.cs" />
-    <Compile Include="Temperature\TempMonDurated.cs" />
+    <Compile Include="Temperature\TempMonSchedule.cs" />
     <Compile Include="Temperature\TempMonWarning.cs" />
     <Compile Include="Views\MainForm.cs">
       <SubType>Form</SubType>

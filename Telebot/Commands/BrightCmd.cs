@@ -6,14 +6,14 @@ namespace Telebot.Commands
 {
     public class BrightCmd : CommandBase
     {
-        private readonly SystemLogic mediaLogic;
+        private readonly SystemLogic systemLogic;
 
         public BrightCmd()
         {
             Pattern = "/bright (\\d{1,3})";
             Description = "Adjust workstation's brightness.";
 
-            mediaLogic = new SystemLogic();
+            systemLogic = new SystemLogic();
         }
         public override void Execute(object parameter, Action<CommandResult> callback)
         {
@@ -29,7 +29,7 @@ namespace Telebot.Commands
 
             callback(cmdResult);
 
-            mediaLogic.SetBrightness(bright);
+            systemLogic.SetBrightness(bright);
         }
     }
 }

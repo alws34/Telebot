@@ -2,7 +2,7 @@
 using System.Net;
 using System.Net.Sockets;
 
-namespace Telebot.Infrastructure
+namespace Telebot.CoreApis
 {
     public class NetworkApi
     {

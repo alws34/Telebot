@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Telebot.Infrastructure;
+using Telebot.CoreApis;
 using Telebot.Models;
 
 namespace Telebot.Commands
@@ -8,19 +8,18 @@ namespace Telebot.Commands
     public class ScreenCmd : CommandBase
     {
         private readonly Dictionary<string, Action> actions;
-        private readonly DisplayApi displayLogic;
 
         public ScreenCmd()
         {
             Pattern = "/screen (on|off)";
             Description = "Turn off or on the monitor.";
 
-            displayLogic = new DisplayApi();
+            var displayApi = ApiLocator.Instance.GetService<DisplayApi>();
 
             actions = new Dictionary<string, Action>()
             {
-                { "on", displayLogic.SetDisplayOn },
-                { "off", displayLogic.SetDisplayOff }
+                { "on", displayApi.SetDisplayOn },
+                { "off", displayApi.SetDisplayOff }
             };
         }
 

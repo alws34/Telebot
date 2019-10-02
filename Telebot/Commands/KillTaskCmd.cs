@@ -41,9 +41,9 @@ namespace Telebot.Commands
                 target.Kill();
                 cmdResult.Text = $"Successfully killed {target.ProcessName}.";
             }
-            catch
+            catch (Exception e)
             {
-                cmdResult.Text = $"Unsuccessfully killed {target.ProcessName}.";
+                cmdResult.Text = e.Message;
             }
 
             callback(cmdResult);

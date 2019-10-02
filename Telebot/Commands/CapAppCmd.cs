@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Diagnostics;
 using Telebot.Extensions;
-using Telebot.Infrastructure;
+using Telebot.CoreApis;
 using Telebot.Models;
 
 namespace Telebot.Commands
 {
     public class CapAppCmd : CommandBase
     {
-        private readonly DesktopApi captureLogic;
+        private readonly DesktopApi desktopApi;
 
         public CapAppCmd()
         {
             Pattern = "/capapp (\\d+)";
             Description = "Get a screenshot of the specified application (by pid).";
 
-            captureLogic = new DesktopApi();
+            desktopApi = ApiLocator.Instance.GetService<DesktopApi>();
         }
 
         public override void Execute(object parameter, Action<CommandResult> callback)
@@ -26,7 +26,7 @@ namespace Telebot.Commands
 
             var hWnd = Process.GetProcessById(pid).MainWindowHandle;
 
-            var photo = captureLogic.CaptureWindow(hWnd);
+            var photo = desktopApi.CaptureWindow(hWnd);
 
             var cmdResult = new CommandResult
             {

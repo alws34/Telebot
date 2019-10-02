@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Telebot.Infrastructure;
+using Telebot.CoreApis;
 using Telebot.Models;
 
 namespace Telebot.Commands
@@ -9,22 +9,20 @@ namespace Telebot.Commands
     {
         private readonly Dictionary<string, Action> actions;
 
-        private readonly PowerApi powerLogic;
-
         public PowerCmd()
         {
             Pattern = "/(lock|logoff|sleep|reboot|shutdown)";
             Description = "Lock, logoff, sleep, reboot or shutdown the workstation.";
 
-            powerLogic = new PowerApi();
+            var powerApi = ApiLocator.Instance.GetService<PowerApi>();
 
             actions = new Dictionary<string, Action>()
             {
-                { "lock", powerLogic.LockWorkstation },
-                { "logoff", powerLogic.LogoffWorkstation },
-                { "sleep", powerLogic.SleepWorkstation },
-                { "reboot", powerLogic.RestartWorkstation },
-                { "shutdown", powerLogic.ShutdownWorkstation }
+                { "lock", powerApi.LockWorkstation },
+                { "logoff", powerApi.LogoffWorkstation },
+                { "sleep", powerApi.SleepWorkstation },
+                { "reboot", powerApi.RestartWorkstation },
+                { "shutdown", powerApi.ShutdownWorkstation }
             };
         }
 

@@ -1,6 +1,6 @@
 ﻿using static Telebot.Helpers.User32Helper;
 
-namespace Telebot.Infrastructure
+namespace Telebot.CoreApis
 {
     public enum DisplayState
     {

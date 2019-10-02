@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using static Telebot.Helpers.User32Helper;
 
-namespace Telebot.Infrastructure
+namespace Telebot.CoreApis
 {
     public class WindowsApi
     {
@@ -32,8 +32,11 @@ namespace Telebot.Infrastructure
             string GetWndText(IntPtr hWnd)
             {
                 int length = GetWindowTextLength(hWnd);
+
                 var sb = new StringBuilder(length + 1);
+
                 GetWindowText(hWnd, sb, sb.Capacity);
+
                 return sb.ToString();
             }
 

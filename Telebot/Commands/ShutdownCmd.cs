@@ -1,19 +1,19 @@
 ﻿using System;
-using Telebot.Infrastructure;
+using Telebot.CoreApis;
 using Telebot.Models;
 
 namespace Telebot.Commands
 {
     public class ShutdownCmd : CommandBase
     {
-        private readonly PowerApi powerLogic;
+        private readonly PowerApi powerApi;
 
         public ShutdownCmd()
         {
             Pattern = "/shutdown (\\d+)";
             Description = "Schedule the workstation to shutdown.";
 
-            powerLogic = new PowerApi();
+            powerApi = ApiLocator.Instance.GetService<PowerApi>();
         }
 
         public override void Execute(object parameter, Action<CommandResult> callback)
@@ -30,7 +30,7 @@ namespace Telebot.Commands
 
             callback(cmdResult);
 
-            powerLogic.ShutdownWorkstation(time);
+            powerApi.ShutdownWorkstation(time);
         }
     }
 }

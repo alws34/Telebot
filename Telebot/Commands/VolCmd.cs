@@ -1,19 +1,19 @@
 ﻿using System;
-using Telebot.Infrastructure;
+using Telebot.CoreApis;
 using Telebot.Models;
 
 namespace Telebot.Commands
 {
     public class VolCmd : CommandBase
     {
-        private readonly MediaApi mediaLogic;
+        private readonly MediaApi mediaApi;
 
         public VolCmd()
         {
             Pattern = "/vol (\\d{1,3})";
             Description = "Adjust workstation's volume.";
 
-            mediaLogic = new MediaApi();
+            mediaApi = ApiLocator.Instance.GetService<MediaApi>();
         }
 
         public override void Execute(object parameter, Action<CommandResult> callback)
@@ -30,7 +30,7 @@ namespace Telebot.Commands
 
             callback(cmdResult);
 
-            mediaLogic.SetVolume(vol);
+            mediaApi.SetVolume(vol);
         }
     }
 }

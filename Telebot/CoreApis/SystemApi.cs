@@ -3,7 +3,7 @@ using System.Diagnostics;
 using Telebot.Extensions;
 using static Telebot.Helpers.Kernel32Helper;
 
-namespace Telebot.Infrastructure
+namespace Telebot.CoreApis
 {
     public class SystemApi
     {

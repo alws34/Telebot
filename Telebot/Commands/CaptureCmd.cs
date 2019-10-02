@@ -1,26 +1,26 @@
 ﻿using System;
 using System.Drawing;
 using Telebot.Extensions;
-using Telebot.Infrastructure;
+using Telebot.CoreApis;
 using Telebot.Models;
 
 namespace Telebot.Commands
 {
     public class CaptureCmd : CommandBase
     {
-        private readonly DesktopApi captureLogic;
+        private readonly DesktopApi desktopApi;
 
         public CaptureCmd()
         {
             Pattern = "/capture";
             Description = "Get a screenshot of the workstation.";
 
-            captureLogic = new DesktopApi();
+            desktopApi = ApiLocator.Instance.GetService<DesktopApi>();
         }
 
         public override void Execute(object parameter, Action<CommandResult> callback)
         {
-            var photos = captureLogic.CaptureDesktop();
+            var photos = desktopApi.CaptureDesktop();
 
             foreach (Bitmap photo in photos)
             {

@@ -1,20 +1,21 @@
 ﻿using System;
-using Telebot.Infrastructure;
+using Telebot.CoreApis;
 using Telebot.Models;
 
 namespace Telebot.Commands
 {
     public class BrightCmd : CommandBase
     {
-        private readonly SystemApi systemLogic;
+        private readonly SystemApi systemApi;
 
         public BrightCmd()
         {
             Pattern = "/bright (\\d{1,3})";
             Description = "Adjust workstation's brightness.";
 
-            systemLogic = new SystemApi();
+            systemApi = ApiLocator.Instance.GetService<SystemApi>();
         }
+
         public override void Execute(object parameter, Action<CommandResult> callback)
         {
             var parameters = parameter as CommandParam;
@@ -29,7 +30,7 @@ namespace Telebot.Commands
 
             callback(cmdResult);
 
-            systemLogic.SetBrightness(bright);
+            systemApi.SetBrightness(bright);
         }
     }
 }

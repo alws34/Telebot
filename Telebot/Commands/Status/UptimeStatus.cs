@@ -1,4 +1,4 @@
-﻿using Telebot.Infrastructure;
+﻿using Telebot.CoreApis;
 
 namespace Telebot.Commands.Status
 {

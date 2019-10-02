@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace Telebot.Infrastructure
+namespace Telebot.CoreApis
 {
     public class MediaApi
     {

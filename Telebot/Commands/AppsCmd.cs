@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using Telebot.Infrastructure;
+using Telebot.CoreApis;
 using Telebot.Models;
 
 namespace Telebot.Commands
 {
     public class AppsCmd : CommandBase
     {
-        private readonly WindowsApi windowsLogic;
         public readonly Dictionary<string, Func<string>> actions;
 
         public AppsCmd()
@@ -15,12 +14,12 @@ namespace Telebot.Commands
             Pattern = "/apps (fg|all)";
             Description = "List of active applications.";
 
-            windowsLogic = new WindowsApi();
+            var windowsApi = ApiLocator.Instance.GetService<WindowsApi>();
 
             actions = new Dictionary<string, Func<string>>
             {
-                { "fg", windowsLogic.GetForegroundApps },
-                { "all", windowsLogic.GetBackgroundApps }
+                { "fg", windowsApi.GetForegroundApps },
+                { "all", windowsApi.GetBackgroundApps }
             };
         }
 

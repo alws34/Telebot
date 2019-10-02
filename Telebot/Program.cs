@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FluentScheduler;
+using System;
 using System.Threading;
 using System.Windows.Forms;
 using Telebot.Clients;
@@ -87,6 +88,9 @@ namespace Telebot
             // write changes to disk
             SettingsBase.WriteChanges();
 
+            // stop job manager
+            JobManager.Stop();
+
             // wait for thread to complete
             RefreshThread.Join();
         }
@@ -119,7 +123,8 @@ namespace Telebot
                             ),
                             new IPAddrStatus(),
                             new UptimeStatus(),
-                            new MonitorsStatus()
+                            new MonitorsStatus(),
+                            new CaptureStatus()
                         }
                     ),
                     new AppsCmd(),

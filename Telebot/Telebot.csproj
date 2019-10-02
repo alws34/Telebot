@@ -59,6 +59,9 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FluentScheduler, Version=5.3.0.0, Culture=neutral, PublicKeyToken=b76503528a14ebd1, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentScheduler.5.3.0\lib\net40\FluentScheduler.dll</HintPath>
+    </Reference>
     <Reference Include="INIFileParser, Version=2.5.2.0, Culture=neutral, PublicKeyToken=79af7b307b65cf3c, processorArchitecture=MSIL">
       <HintPath>..\packages\ini-parser.2.5.2\lib\net20\INIFileParser.dll</HintPath>
     </Reference>
@@ -90,6 +93,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\BrightCmd.cs" />
+    <Compile Include="Commands\Status\CaptureStatus.cs" />
+    <Compile Include="Contracts\IScheduledJob.cs" />
     <Compile Include="Helpers\Kernel32Helper.cs" />
     <Compile Include="Infrastructure\MediaLogic.cs" />
     <Compile Include="Clients\ITelebotClient.cs" />
@@ -107,16 +112,16 @@
     <Compile Include="Commands\ShutdownCmd.cs" />
     <Compile Include="Commands\SpecCmd.cs" />
     <Compile Include="Commands\StatusCmd.cs" />
-    <Compile Include="Commands\Statuses\IPAddrStatus.cs" />
-    <Compile Include="Commands\Statuses\SystemStatus.cs" />
-    <Compile Include="Commands\Statuses\MonitorsStatus.cs" />
-    <Compile Include="Commands\Statuses\UptimeStatus.cs" />
+    <Compile Include="Commands\Status\IPAddrStatus.cs" />
+    <Compile Include="Commands\Status\SystemStatus.cs" />
+    <Compile Include="Commands\Status\MonitorsStatus.cs" />
+    <Compile Include="Commands\Status\UptimeStatus.cs" />
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\TempMonCmd.cs" />
     <Compile Include="Commands\TempTimeCmd.cs" />
     <Compile Include="Commands\VolCmd.cs" />
     <Compile Include="Clients\RequestArrivalArgs.cs" />
-    <Compile Include="Commands\Statuses\IStatus.cs" />
+    <Compile Include="Commands\Status\IStatus.cs" />
     <Compile Include="ScreenCapture\IScreenCapture.cs" />
     <Compile Include="Infrastructure\CaptureLogic.cs" />
     <Compile Include="Infrastructure\NetworkLogic.cs" />

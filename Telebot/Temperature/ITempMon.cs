@@ -7,7 +7,6 @@ namespace Telebot.Temperature
         event EventHandler<TempChangedArgs> TemperatureChanged;
         bool IsActive { get; }
         void Start();
-        void Start(TimeSpan duration, TimeSpan interval);
         void Stop();
     }
 }

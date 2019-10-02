@@ -1,31 +1,29 @@
 ﻿using CPUID.Contracts;
 using CPUID.Models;
+using FluentScheduler;
 using System;
-using System.Timers;
-
+using Telebot.Contracts;
 using static CPUID.CPUIDSDK;
 
 namespace Telebot.Temperature
 {
-    public class TempMonDurated : TempMonBase
+    public class TempMonDurated : TempMonBase, IScheduledJob
     {
-        private DateTime dtStop;
+        private DateTime timeStop;
 
         public TempMonDurated(params IDevice[][] devicesArr)
         {
-            timer.Elapsed += Elapsed;
-
             foreach (IDevice[] devices in devicesArr)
             {
                 this.devices.AddRange(devices);
             }
         }
 
-        private void Elapsed(object sender, ElapsedEventArgs e)
+        private void Elapsed()
         {
-            if (DateTime.Now >= dtStop)
+            if (DateTime.Now >= timeStop)
             {
-                timer.Stop();
+                Stop();
                 return;
             }
 
@@ -46,12 +44,27 @@ namespace Telebot.Temperature
             RaiseTemperatureChanged(null);
         }
 
-        public override void Start(TimeSpan duration, TimeSpan interval)
+        public void Start(TimeSpan duration, TimeSpan interval)
         {
-            dtStop = DateTime.Now.AddSeconds(duration.TotalSeconds);
-            timer.Interval = interval.TotalMilliseconds;
-            Start();
-            Elapsed(this, null);
+            timeStop = DateTime.Now.AddSeconds(duration.TotalSeconds);
+
+            JobManager.AddJob(
+                Elapsed,
+                (s) => s.WithName(GetType().Name).ToRunNow().AndEvery(interval.Seconds).Seconds()
+            );
+
+            IsActive = true;
+        }
+
+        public override void Start()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Stop()
+        {
+            JobManager.RemoveJob(GetType().Name);
+            IsActive = false;
         }
     }
 }

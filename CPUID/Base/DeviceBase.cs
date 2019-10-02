@@ -21,7 +21,7 @@ namespace CPUID.Base
             float maxVal = 0.0f;
 
             pSDK.GetSensorInfos(
-                this.DeviceIndex, 0, sensorClass, ref sensorId, 
+                this.DeviceIndex, 0, sensorClass, ref sensorId,
                 ref sensorName, ref rvalue, ref value, ref minVal, ref maxVal
              );
 
@@ -43,7 +43,7 @@ namespace CPUID.Base
                 float maxVal = 0.0f;
 
                 pSDK.GetSensorInfos(
-                    this.DeviceIndex, sensorIndex, sensorClass, ref sensorId, 
+                    this.DeviceIndex, sensorIndex, sensorClass, ref sensorId,
                     ref sensorName, ref rvalue, ref value, ref minVal, ref maxVal
                  );
 

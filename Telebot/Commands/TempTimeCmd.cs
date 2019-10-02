@@ -1,4 +1,5 @@
 ﻿using System;
+using Telebot.Contracts;
 using Telebot.Models;
 
 namespace Telebot.Commands
@@ -48,7 +49,7 @@ namespace Telebot.Commands
 
             callback(result);
 
-            Program.tempMonDurated.Start(tsDuration, tsInterval);
+            ((IScheduledJob)Program.tempMonDurated).Start(tsDuration, tsInterval);
         }
     }
 }

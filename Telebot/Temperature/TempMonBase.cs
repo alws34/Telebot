@@ -1,19 +1,12 @@
 ﻿using CPUID.Contracts;
 using System;
 using System.Collections.Generic;
-using System.Timers;
 
 namespace Telebot.Temperature
 {
     public abstract class TempMonBase : ITempMon
     {
-        protected readonly Timer timer;
-
-        public bool IsActive
-        {
-            get => timer.Enabled;
-            protected set => timer.Enabled = value;
-        }
+        public bool IsActive { get; set; }
 
         protected readonly List<IDevice> devices;
 
@@ -26,23 +19,11 @@ namespace Telebot.Temperature
 
         protected TempMonBase()
         {
-            timer = new Timer();
             devices = new List<IDevice>();
         }
 
-        public virtual void Start()
-        {
-            timer.Start();
-        }
+        public abstract void Start();
 
-        public virtual void Start(TimeSpan duration, TimeSpan interval)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Stop()
-        {
-            timer.Stop();
-        }
+        public abstract void Stop();
     }
 }

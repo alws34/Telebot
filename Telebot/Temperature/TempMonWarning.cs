@@ -1,7 +1,6 @@
 ﻿using CPUID.Contracts;
 using CPUID.Models;
-using System;
-using System.Timers;
+using FluentScheduler;
 using static CPUID.CPUIDSDK;
 using static Telebot.Settings.SettingsFactory;
 
@@ -21,14 +20,15 @@ namespace Telebot.Temperature
 
             CPU_TEMPERATURE_WARNING = MonitorSettings.GetCPUWarningLevel();
             GPU_TEMPERATURE_WARNING = MonitorSettings.GetGPUWarningLevel();
-
-            timer.Interval = TimeSpan.FromSeconds(10).TotalMilliseconds;
-            timer.Elapsed += Elapsed;
-
             IsActive = MonitorSettings.GetTempMonitorStatus();
+
+            if (IsActive)
+            {
+                Start();
+            }
         }
 
-        private void Elapsed(object sender, ElapsedEventArgs e)
+        private void Elapsed()
         {
             foreach (IDevice device in devices)
             {
@@ -66,8 +66,18 @@ namespace Telebot.Temperature
 
         public override void Start()
         {
-            base.Start();
-            Elapsed(this, null);
+            JobManager.AddJob(
+                Elapsed,
+                (s) => s.WithName(GetType().Name).ToRunNow().AndEvery(7).Seconds()
+            );
+
+            IsActive = true;
+        }
+
+        public override void Stop()
+        {
+            JobManager.RemoveJob(GetType().Name);
+            IsActive = false;
         }
 
         public void SaveChanges()

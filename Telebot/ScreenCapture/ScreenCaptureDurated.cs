@@ -1,16 +1,16 @@
-﻿using System;
+﻿using FluentScheduler;
+using System;
 using System.Drawing;
-using System.Timers;
+using Telebot.Contracts;
 using Telebot.Infrastructure;
 
 namespace Telebot.ScreenCapture
 {
-    public class ScreenCaptureDurated : IScreenCapture
+    public class ScreenCaptureDurated : IScreenCapture, IScheduledJob
     {
-        private readonly Timer timer;
-        private DateTime dtStop;
+        private DateTime timeStop;
 
-        public bool IsActive => timer.Enabled;
+        public bool IsActive { get; private set; }
 
         public event EventHandler<ScreenCaptureArgs> ScreenCaptured;
 
@@ -19,16 +19,13 @@ namespace Telebot.ScreenCapture
         public ScreenCaptureDurated()
         {
             captureLogic = new CaptureLogic();
-
-            timer = new Timer();
-            timer.Elapsed += Elapsed;
         }
 
-        private void Elapsed(object sender, ElapsedEventArgs e)
+        private void Elapsed()
         {
-            if (DateTime.Now >= dtStop)
+            if (DateTime.Now >= timeStop)
             {
-                timer.Stop();
+                Stop();
                 return;
             }
 
@@ -47,15 +44,26 @@ namespace Telebot.ScreenCapture
 
         public void Start(TimeSpan duration, TimeSpan interval)
         {
-            dtStop = DateTime.Now.AddSeconds(duration.TotalSeconds);
-            timer.Interval = interval.TotalMilliseconds;
-            timer.Start();
-            Elapsed(this, null);
+            timeStop = DateTime.Now.AddSeconds(duration.TotalSeconds);
+
+            JobManager.AddJob(
+                Elapsed,
+                (s) => s.WithName(GetType().Name).ToRunNow().AndEvery(interval.Seconds).Seconds()
+            );
+
+            IsActive = true;
         }
 
         public void Stop()
         {
-            timer.Stop();
+            JobManager.RemoveJob(GetType().Name);
+
+            IsActive = false;
+        }
+
+        public void Start()
+        {
+            throw new NotImplementedException();
         }
     }
 }

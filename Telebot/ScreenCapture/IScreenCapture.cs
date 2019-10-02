@@ -6,7 +6,7 @@ namespace Telebot.ScreenCapture
     {
         event EventHandler<ScreenCaptureArgs> ScreenCaptured;
         bool IsActive { get; }
-        void Start(TimeSpan duration, TimeSpan interval);
+        void Start();
         void Stop();
     }
 }

@@ -79,9 +79,6 @@ namespace Telebot
 
             Application.Run(mainForm);
 
-            // stop thread and wait for it AFTER operations to save time
-            _shouldStop = true;
-
             // commit profiles changes
             SettingsBase.CommitChanges();
 
@@ -92,6 +89,7 @@ namespace Telebot
             JobManager.Stop();
 
             // wait for thread to complete
+            _shouldStop = true;
             RefreshThread.Join();
         }
 

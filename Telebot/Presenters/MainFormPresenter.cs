@@ -3,7 +3,6 @@ using FluentScheduler;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Telebot.Clients;
 using Telebot.Extensions;
@@ -87,7 +86,8 @@ namespace Telebot.Presenters
         {
             // delay job to reduce startup time
             JobManager.AddJob(
-                () => {
+                () =>
+                {
                     SendClientHello();
                     telebotClient.StartReceiving();
 

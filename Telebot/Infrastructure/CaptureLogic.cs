@@ -9,9 +9,6 @@ namespace Telebot.Infrastructure
 {
     public class CaptureLogic
     {
-        private const byte SW_RESTORE = 9;
-        private const byte SW_MINIMIZE = 6;
-
         public IEnumerable<Bitmap> CaptureDesktop()
         {
             //int width = SystemInformation.VirtualScreen.Width;
@@ -45,9 +42,15 @@ namespace Telebot.Infrastructure
 
         public Bitmap CaptureWindow(IntPtr hWnd)
         {
+            const byte SW_RESTORE = 9;
+            const byte SW_MINIMIZE = 6;
+
+            bool minimize = false;
+
             if (isWindowMinized(hWnd))
             {
                 ShowWindow(hWnd, SW_RESTORE);
+                minimize = true;
             }
             else
             {
@@ -69,6 +72,9 @@ namespace Telebot.Infrastructure
             {
                 graphics.CopyFromScreen(rect.left, rect.top, 0, 0, result.Size);
             }
+
+            if (minimize)
+                ShowWindow(hWnd, SW_MINIMIZE);
 
             return result;
         }

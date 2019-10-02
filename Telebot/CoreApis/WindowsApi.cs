@@ -29,27 +29,18 @@ namespace Telebot.CoreApis
                 return isBitSet(value, WS_CAPTION) && isBitSet(value, WS_VISIBLE);
             }
 
-            string GetWndText(IntPtr hWnd)
-            {
-                int length = GetWindowTextLength(hWnd);
-
-                var sb = new StringBuilder(length + 1);
-
-                GetWindowText(hWnd, sb, sb.Capacity);
-
-                return sb.ToString();
-            }
-
             bool EnumWindowProc(IntPtr hWnd, IntPtr lParam)
             {
                 if (isTopLevelWindow(hWnd))
                 {
-                    string wndCaption = GetWndText(hWnd);
+                    uint pid;
+                    GetWindowThreadProcessId(hWnd, out pid);
 
-                    uint wndPid;
-                    GetWindowThreadProcessId(hWnd, out wndPid);
+                    var process = Process.GetProcessById((int)pid);
 
-                    builder.AppendLine($"- {wndCaption} ({wndPid})");
+                    string description = process.MainModule.FileVersionInfo.FileDescription;
+
+                    builder.AppendLine($"- {description} ({pid})");
                 }
 
                 return true;
@@ -70,7 +61,7 @@ namespace Telebot.CoreApis
             {
                 try
                 {
-                    string name = process.MainModule.FileVersionInfo.ProductName;
+                    string name = process.MainModule.FileVersionInfo.FileDescription;
                     int pid = process.Id;
                     result.AppendLine($"- {name} ({pid})");
                 }
@@ -80,7 +71,7 @@ namespace Telebot.CoreApis
                 }
             }
 
-            return result.ToString().TrimEnd();
+            return result.ToString();
         }
     }
 }

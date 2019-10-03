@@ -21,4 +21,4 @@ The application is a single-view WinForms application based on [MVP architecture
 The application that fetches full computer hardware information and saves it within same directory to file *spec.txt*. This program is used with the **/spec** command.
 
 #### CPUID module (Core functionality):
-This module is an abstraction for the cpuid library which is the core of the entire application to perform hardware analyzations tasks.
+This module is an abstraction to the cpuid library which is the core of the entire application to perform hardware analyzations tasks.

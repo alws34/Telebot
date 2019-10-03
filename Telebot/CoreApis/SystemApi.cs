@@ -25,7 +25,7 @@ namespace Telebot.CoreApis
 
         public string GetUptime()
         {
-            long tickCount = GetTickCount();
+            long tickCount = GetTickCount64();
             return TimeSpan.FromMilliseconds(tickCount).ToReadable();
         }
     }

@@ -34,13 +34,19 @@ namespace Telebot.CoreApis
                 if (isTopLevelWindow(hWnd))
                 {
                     uint pid;
+
                     GetWindowThreadProcessId(hWnd, out pid);
 
                     var process = Process.GetProcessById((int)pid);
 
-                    string description = process.MainModule.FileVersionInfo.FileDescription;
+                    var fi = process.MainModule.FileVersionInfo;
 
-                    builder.AppendLine($"- {description} ({pid})");
+                    string name = fi.FileDescription;
+
+                    if (string.IsNullOrEmpty(name))
+                        name = fi.ProductName;
+
+                    builder.AppendLine($"- {name} ({pid})");
                 }
 
                 return true;
@@ -61,8 +67,12 @@ namespace Telebot.CoreApis
             {
                 try
                 {
-                    string name = process.MainModule.FileVersionInfo.FileDescription;
+                    var fi = process.MainModule.FileVersionInfo;
+
+                    string name = fi.FileDescription;
+
                     int pid = process.Id;
+
                     result.AppendLine($"- {name} ({pid})");
                 }
                 catch

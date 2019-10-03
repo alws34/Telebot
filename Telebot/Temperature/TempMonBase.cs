@@ -6,7 +6,7 @@ namespace Telebot.Temperature
 {
     public abstract class TempMonBase : ITempMon
     {
-        public bool IsActive { get; set; }
+        public bool IsActive { get; protected set; }
 
         protected readonly List<IDevice> devices;
 

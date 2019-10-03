@@ -85,8 +85,9 @@ namespace Telebot
             // write changes to disk
             SettingsBase.WriteChanges();
 
-            // stop job manager
+            // stop job manager and remove all jobs
             JobManager.Stop();
+            JobManager.RemoveAllJobs();
 
             // wait for thread to complete
             _shouldStop = true;

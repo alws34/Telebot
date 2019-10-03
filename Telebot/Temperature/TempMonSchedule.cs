@@ -40,7 +40,7 @@ namespace Telebot.Temperature
                 RaiseTemperatureChanged(args);
             }
 
-            // Notify the observer that we're done.
+            // Notify the observer(s) that we're done.
             RaiseTemperatureChanged(null);
         }
 
@@ -64,6 +64,7 @@ namespace Telebot.Temperature
         public override void Stop()
         {
             JobManager.RemoveJob(GetType().Name);
+
             IsActive = false;
         }
     }

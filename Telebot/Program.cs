@@ -1,6 +1,7 @@
 ﻿using FluentScheduler;
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Telebot.Clients;
 using Telebot.Commands;
@@ -31,8 +32,14 @@ namespace Telebot
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Thread RefreshThread = new Thread(RefreshThreadProc);
-            RefreshThread.Start();
+            Task RefreshTask = Task.Factory.StartNew(() =>
+            {
+                while (!_shouldStop)
+                {
+                    pSDK.RefreshInformation();
+                    Thread.Sleep(1000);
+                }
+            });
 
             screenCaptureSchedule = new ScreenCaptureSchedule();
 
@@ -88,18 +95,9 @@ namespace Telebot
             JobManager.Stop();
             JobManager.RemoveAllJobs();
 
-            // wait for thread to complete
+            // wait for task to complete
             _shouldStop = true;
-            RefreshThread.Join();
-        }
-
-        private static void RefreshThreadProc()
-        {
-            while (!_shouldStop)
-            {
-                pSDK.RefreshInformation();
-                Thread.Sleep(1000);
-            }
+            RefreshTask.Wait();
         }
 
         private static void buildCommandFactory()

@@ -936,7 +936,7 @@ namespace CPUID
                 if (flag)
                 {
                     CPUIDSDK.CPUIDSDK_fp_Init cpuidsdk_fp_Init = (CPUIDSDK.CPUIDSDK_fp_Init)Marshal.GetDelegateForFunctionPointer(intPtr, typeof(CPUIDSDK.CPUIDSDK_fp_Init));
-                    int num = cpuidsdk_fp_Init(this.objptr, AppDomain.CurrentDomain.BaseDirectory + "DLLs\\", _szDllFilename, (int)_config_flag, ref _errorcode, ref _extended_errorcode);
+                    int num = cpuidsdk_fp_Init(this.objptr, _szDllPath, _szDllFilename, (int)_config_flag, ref _errorcode, ref _extended_errorcode);
                     bool flag2 = num == 1;
                     if (flag2)
                     {

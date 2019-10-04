@@ -1,6 +1,5 @@
 ﻿using FluentScheduler;
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Telebot.Clients;
@@ -20,7 +19,7 @@ namespace Telebot
     {
         public static IFactory<ICommand> commandFactory;
         public static IFactory<ITempMon> tempMonFactory;
-        public static IScreenCapture screenCaptureSchedule;
+        public static IFactory<IScreenCapture> screenCapFactory;
 
         private static volatile bool _shouldStop = false;
 
@@ -39,10 +38,13 @@ namespace Telebot
                 }
             });
 
-            screenCaptureSchedule = new ScreenCaptureSchedule();
-
             tempMonFactory = new TempMonFactory();
+            screenCapFactory = new ScreenCapFactory();
+
+            buildCommandFactory();
+
             ITempMon[] tempMons = tempMonFactory.GetAllEntities();
+            IScreenCapture[] screenCaps = screenCapFactory.GetAllEntities();
 
             MainForm mainForm = new MainForm();
 
@@ -54,11 +56,9 @@ namespace Telebot
             var presenter = new MainFormPresenter(
                 mainForm,
                 telebotClient,
-                screenCaptureSchedule,
+                screenCaps,
                 tempMons
             );
-
-            buildCommandFactory();
 
             Application.Run(mainForm);
 

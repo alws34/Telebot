@@ -135,6 +135,8 @@
     <Compile Include="Extensions\BitmapExtensions.cs" />
     <Compile Include="Extensions\TimeSpanExtensions.cs" />
     <Compile Include="Models\ObjListViewItem.cs" />
+    <Compile Include="ScreenCapture\ScreenCapFactory.cs" />
+    <Compile Include="ScreenCapture\ScreenCaptureBase.cs" />
     <Compile Include="ScreenCapture\ScreenCaptureSchedule.cs" />
     <Compile Include="Presenters\MainFormPresenter.cs" />
     <Compile Include="ScreenCapture\ScreenCaptureArgs.cs" />

@@ -24,7 +24,7 @@ namespace Telebot.Presenters
         public MainFormPresenter(
             IMainFormView mainFormView,
             ITelebotClient telebotClient,
-            IScreenCapture screenCapture,
+            IScreenCapture[] screenCaps,
             ITempMon[] tempMonitors
         )
         {
@@ -39,7 +39,11 @@ namespace Telebot.Presenters
 
             SettingsBase.AddProfile(this);
 
-            screenCapture.ScreenCaptured += ScreenCaptured;
+            foreach (IScreenCapture screenCap in screenCaps)
+            {
+                // event handler assigning needs to be generic
+                screenCap.ScreenCaptured += ScreenCaptured;
+            }
 
             foreach (ITempMon tempMon in tempMonitors)
             {

@@ -1,15 +1,22 @@
 ﻿using System;
 using Telebot.Contracts;
 using Telebot.Models;
+using Telebot.ScreenCapture;
 
 namespace Telebot.Commands
 {
     public class CapTimeCmd : CommandBase
     {
+        private readonly IScreenCapture screenCapture;
+
         public CapTimeCmd()
         {
             Pattern = "/captime (off|(\\d+) (\\d+))";
             Description = "Schedules screen capture session.";
+
+            screenCapture = Program.screenCapFactory.FindEntity(
+                x => x.ScreenCapType == ScreenCapType.Scheduled
+            );
         }
 
         public override void Execute(object parameter, Action<CommandResult> callback)
@@ -28,7 +35,7 @@ namespace Telebot.Commands
 
                 callback(cmdResult);
 
-                Program.screenCaptureSchedule.Stop();
+                screenCapture.Stop();
 
                 return;
             }
@@ -49,7 +56,7 @@ namespace Telebot.Commands
 
             callback(result);
 
-            ((IScheduledJob)Program.screenCaptureSchedule).Start(tsDuration, tsInterval);
+            ((IScheduledJob)screenCapture).Start(tsDuration, tsInterval);
         }
     }
 }

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Telebot.Contracts;
 using static CPUID.CPUIDCore;
 
@@ -16,13 +14,13 @@ namespace Telebot.Temperature
         {
             tempMons = new List<ITempMon>
             {
-                { 
+                {
                     new TempMonWarning(
                         DeviceFactory.CPUDevices,
                         DeviceFactory.GPUDevices
                     )
                 },
-                { 
+                {
                     new TempMonSchedule(
                         DeviceFactory.CPUDevices,
                         DeviceFactory.GPUDevices

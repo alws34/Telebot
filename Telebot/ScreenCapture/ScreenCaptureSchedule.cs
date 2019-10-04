@@ -6,19 +6,17 @@ using Telebot.CoreApis;
 
 namespace Telebot.ScreenCapture
 {
-    public class ScreenCaptureSchedule : IScreenCapture, IScheduledJob
+    public class ScreenCaptureSchedule : ScreenCaptureBase, IScheduledJob
     {
         private DateTime timeStop;
 
-        public bool IsActive { get; private set; }
-
-        public event EventHandler<ScreenCaptureArgs> ScreenCaptured;
-
-        private readonly DesktopApi captureLogic;
+        private readonly DesktopApi desktopApi;
 
         public ScreenCaptureSchedule()
         {
-            captureLogic = new DesktopApi();
+            ScreenCapType = ScreenCapType.Scheduled;
+
+            desktopApi = ApiLocator.Instance.GetService<DesktopApi>();
         }
 
         private void Elapsed()
@@ -29,7 +27,7 @@ namespace Telebot.ScreenCapture
                 return;
             }
 
-            var desktops = captureLogic.CaptureDesktop();
+            var desktops = desktopApi.CaptureDesktop();
 
             foreach (Bitmap desktop in desktops)
             {
@@ -38,7 +36,7 @@ namespace Telebot.ScreenCapture
                     Capture = desktop
                 };
 
-                ScreenCaptured?.Invoke(this, result);
+                RaiseScreenCaptured(result);
             }
         }
 
@@ -54,14 +52,14 @@ namespace Telebot.ScreenCapture
             IsActive = true;
         }
 
-        public void Stop()
+        public override void Stop()
         {
             JobManager.RemoveJob(GetType().Name);
 
             IsActive = false;
         }
 
-        public void Start()
+        public override void Start()
         {
             throw new NotImplementedException();
         }

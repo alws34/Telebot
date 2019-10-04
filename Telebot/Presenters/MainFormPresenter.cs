@@ -160,7 +160,7 @@ namespace Telebot.Presenters
             }
         }
 
-        public async void ScreenCaptureScheduleHandler(object sender, ScreenCaptureArgs e)
+        private async void ScreenCaptureScheduleHandler(object sender, ScreenCaptureArgs e)
         {
             var document = new InputOnlineFile(e.Capture.ToStream(), "captime.jpg");
 

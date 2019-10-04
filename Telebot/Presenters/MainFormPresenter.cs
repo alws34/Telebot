@@ -41,16 +41,26 @@ namespace Telebot.Presenters
 
             foreach (IScreenCapture screenCap in screenCaps)
             {
-                // event handler assigning needs to be generic
-                screenCap.ScreenCaptured += ScreenCaptured;
+                string className = screenCap.GetType().Name;
+                string handlerName = $"{className}Handler";
+                var handler = Delegate.CreateDelegate(
+                    typeof(EventHandler<ScreenCaptureArgs>),
+                    this,
+                    handlerName
+                ) as EventHandler<ScreenCaptureArgs>;
+                screenCap.ScreenCaptured += handler;
             }
 
             foreach (ITempMon tempMon in tempMonitors)
             {
-                if (tempMon is TempMonWarning)
-                    tempMon.TemperatureChanged += WarningTemperatureChanged;
-                else if (tempMon is TempMonSchedule)
-                    tempMon.TemperatureChanged += DuratedTemperatureChanged;
+                string className = tempMon.GetType().Name;
+                string handlerName = $"{className}Handler";
+                var handler = Delegate.CreateDelegate(
+                    typeof(EventHandler<TempChangedArgs>),
+                    this,
+                    handlerName
+                ) as EventHandler<TempChangedArgs>;
+                tempMon.TemperatureChanged += handler;
             }
         }
 
@@ -150,7 +160,7 @@ namespace Telebot.Presenters
             }
         }
 
-        private async void ScreenCaptured(object sender, ScreenCaptureArgs e)
+        public async void ScreenCaptureScheduleHandler(object sender, ScreenCaptureArgs e)
         {
             var document = new InputOnlineFile(e.Capture.ToStream(), "captime.jpg");
 
@@ -159,7 +169,7 @@ namespace Telebot.Presenters
             );
         }
 
-        private async void WarningTemperatureChanged(object sender, TempChangedArgs e)
+        private async void TempMonWarningHandler(object sender, TempChangedArgs e)
         {
             string text = $"*[WARNING] {e.DeviceName}*: {e.Temperature}°C\nFrom *Telebot*";
 
@@ -170,7 +180,7 @@ namespace Telebot.Presenters
 
         private StringBuilder text = new StringBuilder();
 
-        private async void DuratedTemperatureChanged(object sender, TempChangedArgs e)
+        private async void TempMonScheduleHandler(object sender, TempChangedArgs e)
         {
             switch (e)
             {

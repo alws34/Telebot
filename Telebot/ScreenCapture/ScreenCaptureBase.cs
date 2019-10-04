@@ -5,6 +5,7 @@ namespace Telebot.ScreenCapture
     public abstract class ScreenCaptureBase : IScreenCapture
     {
         public ScreenCapType ScreenCapType { get; protected set; }
+
         public bool IsActive { get; protected set; }
 
         public event EventHandler<ScreenCaptureArgs> ScreenCaptured;

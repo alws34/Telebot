@@ -2,7 +2,6 @@
 using FluentScheduler;
 using System;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Telebot.Clients;
 using Telebot.Commands;

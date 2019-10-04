@@ -1,31 +1,32 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
+using Telebot.Contracts;
 
 namespace Telebot.Commands.Factories
 {
-    public class CommandFactory
+    public class CommandFactory : IFactory<ICommand>
     {
-        private readonly Dictionary<Regex, ICommand> _commands;
+        private readonly List<ICommand> _commands;
 
         public CommandFactory(ICommand[] commands)
         {
-            _commands = new Dictionary<Regex, ICommand>();
+            _commands = new List<ICommand>();
 
             foreach (ICommand command in commands)
             {
-                _commands.Add(new Regex($"^{command.Pattern}$"), command);
+                _commands.Add(command);
             }
         }
 
-        public ICommand Dispatch(string pattern)
+        public ICommand FindEntity(Predicate<ICommand> predicate)
         {
-            return _commands.SingleOrDefault(x => x.Key.IsMatch(pattern)).Value;
+            return _commands.SingleOrDefault(c => predicate(c));
         }
 
-        public ICommand[] GetAllCommands()
+        public ICommand[] GetAllEntities()
         {
-            return _commands.Values.ToArray();
+            return _commands.ToArray();
         }
     }
 }

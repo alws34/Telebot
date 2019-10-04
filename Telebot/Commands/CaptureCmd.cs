@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
-using Telebot.Extensions;
 using Telebot.CoreApis;
+using Telebot.Extensions;
 using Telebot.Models;
 
 namespace Telebot.Commands

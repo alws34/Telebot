@@ -92,7 +92,9 @@ namespace Telebot.Clients
 
             RaiseRequestArrival(arrival);
 
-            ICommand command = Program.commandFactory.Dispatch(cmdPattern);
+            ICommand command = Program.commandFactory.FindEntity(
+                x => Regex.IsMatch(cmdPattern, $"^{x.Pattern}$")
+            );
 
             if (command != null)
             {

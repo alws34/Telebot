@@ -94,6 +94,7 @@
   <ItemGroup>
     <Compile Include="Commands\BrightCmd.cs" />
     <Compile Include="Commands\Status\CaptureStatus.cs" />
+    <Compile Include="Contracts\IFactory.cs" />
     <Compile Include="Contracts\IScheduledJob.cs" />
     <Compile Include="Contracts\IServiceLocator.cs" />
     <Compile Include="Helpers\Kernel32Helper.cs" />
@@ -104,7 +105,7 @@
     <Compile Include="Commands\CapAppCmd.cs" />
     <Compile Include="Commands\CapTimeCmd.cs" />
     <Compile Include="Commands\CaptureCmd.cs" />
-    <Compile Include="Commands\CommandBase.cs" />
+    <Compile Include="Commands\Base\CommandBase.cs" />
     <Compile Include="Commands\Factories\CommandFactory.cs" />
     <Compile Include="Commands\HelpCmd.cs" />
     <Compile Include="Commands\KillTaskCmd.cs" />
@@ -118,7 +119,7 @@
     <Compile Include="Commands\Status\SystemStatus.cs" />
     <Compile Include="Commands\Status\MonitorsStatus.cs" />
     <Compile Include="Commands\Status\UptimeStatus.cs" />
-    <Compile Include="Commands\ICommand.cs" />
+    <Compile Include="Commands\Contracts\ICommand.cs" />
     <Compile Include="Commands\TempMonCmd.cs" />
     <Compile Include="Commands\TempTimeCmd.cs" />
     <Compile Include="Commands\VolCmd.cs" />

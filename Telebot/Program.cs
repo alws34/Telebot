@@ -6,6 +6,7 @@ using Telebot.Clients;
 using Telebot.Commands;
 using Telebot.Commands.Factories;
 using Telebot.Commands.Status;
+using Telebot.Contracts;
 using Telebot.Presenters;
 using Telebot.ScreenCapture;
 using Telebot.Temperature;
@@ -16,8 +17,7 @@ namespace Telebot
 {
     static class Program
     {
-        public static CommandFactory commandFactory;
-
+        public static IFactory<ICommand> commandFactory;
         public static IScreenCapture screenCaptureSchedule;
         public static ITempMon tempMonWarning;
         public static ITempMon tempMonSchedule;
@@ -32,13 +32,7 @@ namespace Telebot
             Application.SetCompatibleTextRenderingDefault(false);
 
             Thread RefreshThread = new Thread(RefreshThreadProc);
-
-            MainForm mainForm = new MainForm();
-
-            string token = TelegramSettings.GetBotToken();
-            int id = TelegramSettings.GetAdminId();
-
-            TelebotClient telebotClient = new TelebotClient(token, id);
+            RefreshThread.Start();
 
             screenCaptureSchedule = new ScreenCaptureSchedule();
 
@@ -60,6 +54,13 @@ namespace Telebot
                 tempMonSchedule
             };
 
+            MainForm mainForm = new MainForm();
+
+            string token = TelegramSettings.GetBotToken();
+            int id = TelegramSettings.GetAdminId();
+
+            TelebotClient telebotClient = new TelebotClient(token, id);
+
             var presenter = new MainFormPresenter(
                 mainForm,
                 telebotClient,
@@ -74,8 +75,6 @@ namespace Telebot
             );
 
             buildCommandFactory();
-
-            RefreshThread.Start();
 
             Application.Run(mainForm);
 

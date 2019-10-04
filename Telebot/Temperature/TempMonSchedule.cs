@@ -13,6 +13,8 @@ namespace Telebot.Temperature
 
         public TempMonSchedule(params IDevice[][] devicesArr)
         {
+            TempMonType = TempMonType.Scheduled;
+
             foreach (IDevice[] devices in devicesArr)
             {
                 this.devices.AddRange(devices);

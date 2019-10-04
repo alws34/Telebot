@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Telebot.Models;
+using Telebot.Temperature;
 
 namespace Telebot.Commands
 {
@@ -13,10 +14,14 @@ namespace Telebot.Commands
             Pattern = "/tempmon (on|off)";
             Description = "Turn on or off the temperature monitor.";
 
+            ITempMon tempMonWarning = Program.tempMonFactory.FindEntity(
+                x => x.TempMonType == TempMonType.Warning
+            );
+
             actions = new Dictionary<string, Action>()
             {
-                { "on", Program.tempMonWarning.Start },
-                { "off", Program.tempMonWarning.Stop }
+                { "on", tempMonWarning.Start },
+                { "off", tempMonWarning.Stop }
             };
         }
 

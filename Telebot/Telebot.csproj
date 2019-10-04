@@ -148,6 +148,7 @@
     <Compile Include="Temperature\ITempMon.cs" />
     <Compile Include="Temperature\TempChangedArgs.cs" />
     <Compile Include="Temperature\TempMonBase.cs" />
+    <Compile Include="Temperature\TempMonFactory.cs" />
     <Compile Include="Temperature\TempMonSchedule.cs" />
     <Compile Include="Temperature\TempMonWarning.cs" />
     <Compile Include="Views\MainForm.cs">

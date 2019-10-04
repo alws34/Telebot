@@ -5,6 +5,13 @@ namespace Telebot.Commands.Status
 {
     public class MonitorsStatus : IStatus
     {
+        private readonly ITempMon[] tempMons;
+
+        public MonitorsStatus()
+        {
+            tempMons = Program.tempMonFactory.GetAllEntities();
+        }
+
         public string Execute()
         {
             string BoolToStr(bool condition)
@@ -14,7 +21,7 @@ namespace Telebot.Commands.Status
 
             var result = new StringBuilder();
 
-            foreach (ITempMon tempMon in Program.tempMons)
+            foreach (ITempMon tempMon in tempMons)
             {
                 string name = tempMon.GetType().Name.Replace("TempMon", "");
                 string active = BoolToStr(tempMon.IsActive);

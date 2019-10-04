@@ -25,7 +25,7 @@ namespace Telebot.Presenters
             IMainFormView mainFormView,
             ITelebotClient telebotClient,
             IScreenCapture screenCapture,
-            params ITempMon[] tempMonitors
+            ITempMon[] tempMonitors
         )
         {
             this.mainFormView = mainFormView;
@@ -36,6 +36,8 @@ namespace Telebot.Presenters
 
             this.telebotClient = telebotClient;
             this.telebotClient.RequestArrival += TelebotClient_RequestArrival;
+
+            SettingsBase.AddProfile(this);
 
             screenCapture.ScreenCaptured += ScreenCaptured;
 

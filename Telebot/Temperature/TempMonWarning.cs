@@ -13,6 +13,10 @@ namespace Telebot.Temperature
 
         public TempMonWarning(params IDevice[][] devicesArr)
         {
+            TempMonType = TempMonType.Warning;
+
+            SettingsBase.AddProfile(this);
+
             foreach (IDevice[] devices in devicesArr)
             {
                 this.devices.AddRange(devices);

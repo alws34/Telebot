@@ -19,10 +19,8 @@ namespace Telebot
     static class Program
     {
         public static IFactory<ICommand> commandFactory;
+        public static IFactory<ITempMon> tempMonFactory;
         public static IScreenCapture screenCaptureSchedule;
-        public static ITempMon tempMonWarning;
-        public static ITempMon tempMonSchedule;
-        public static ITempMon[] tempMons;
 
         private static volatile bool _shouldStop = false;
 
@@ -32,34 +30,19 @@ namespace Telebot
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Task RefreshTask = Task.Factory.StartNew(() =>
+            Task RefreshTask = Task.Factory.StartNew(async () =>
             {
                 while (!_shouldStop)
                 {
                     pSDK.RefreshInformation();
-                    Thread.Sleep(1000);
+                    await Task.Delay(1000);
                 }
             });
 
             screenCaptureSchedule = new ScreenCaptureSchedule();
 
-            tempMonWarning = new TempMonWarning
-            (
-                DeviceFactory.CPUDevices,
-                DeviceFactory.GPUDevices
-            );
-
-            tempMonSchedule = new TempMonSchedule
-            (
-                DeviceFactory.CPUDevices,
-                DeviceFactory.GPUDevices
-            );
-
-            tempMons = new ITempMon[]
-            {
-                tempMonWarning,
-                tempMonSchedule
-            };
+            tempMonFactory = new TempMonFactory();
+            ITempMon[] tempMons = tempMonFactory.GetAllEntities();
 
             MainForm mainForm = new MainForm();
 
@@ -72,13 +55,7 @@ namespace Telebot
                 mainForm,
                 telebotClient,
                 screenCaptureSchedule,
-                tempMonWarning,
-                tempMonSchedule
-            );
-
-            SettingsBase.AddProfiles(
-                presenter,
-                (Settings.IProfile)tempMonWarning
+                tempMons
             );
 
             buildCommandFactory();

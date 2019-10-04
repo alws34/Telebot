@@ -62,9 +62,9 @@ namespace Telebot.Settings
             WriteString(section, key, valueStr);
         }
 
-        public void AddProfiles(params IProfile[] profiles)
+        public void AddProfile(IProfile profile)
         {
-            this.profiles.AddRange(profiles);
+            this.profiles.Add(profile);
         }
 
         public void CommitChanges()

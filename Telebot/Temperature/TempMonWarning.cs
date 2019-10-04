@@ -11,16 +11,13 @@ namespace Telebot.Temperature
         private float CPU_TEMPERATURE_WARNING = 65.0f;
         private float GPU_TEMPERATURE_WARNING = 65.0f;
 
-        public TempMonWarning(params IDevice[][] devicesArr)
+        public TempMonWarning(IDevice[] devicesArr)
         {
             TempMonType = TempMonType.Warning;
 
             SettingsBase.AddProfile(this);
 
-            foreach (IDevice[] devices in devicesArr)
-            {
-                this.devices.AddRange(devices);
-            }
+            this.devices.AddRange(devicesArr);
 
             CPU_TEMPERATURE_WARNING = MonitorSettings.GetCPUWarningLevel();
             GPU_TEMPERATURE_WARNING = MonitorSettings.GetGPUWarningLevel();

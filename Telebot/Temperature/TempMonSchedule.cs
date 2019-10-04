@@ -11,14 +11,11 @@ namespace Telebot.Temperature
     {
         private DateTime timeStop;
 
-        public TempMonSchedule(params IDevice[][] devicesArr)
+        public TempMonSchedule(IDevice[] devicesArr)
         {
             TempMonType = TempMonType.Scheduled;
 
-            foreach (IDevice[] devices in devicesArr)
-            {
-                this.devices.AddRange(devices);
-            }
+            this.devices.AddRange(devicesArr);
         }
 
         private void Elapsed()

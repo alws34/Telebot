@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CPUID.Builder;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Telebot.Contracts;
@@ -12,20 +13,15 @@ namespace Telebot.Temperature
 
         public TempMonFactory()
         {
+            var builder = new DeviceBuilder()
+                .AddItems(DeviceFactory.CPUDevices)
+                .AddItems(DeviceFactory.GPUDevices)
+                .Build();
+
             tempMons = new List<ITempMon>
             {
-                {
-                    new TempMonWarning(
-                        DeviceFactory.CPUDevices,
-                        DeviceFactory.GPUDevices
-                    )
-                },
-                {
-                    new TempMonSchedule(
-                        DeviceFactory.CPUDevices,
-                        DeviceFactory.GPUDevices
-                    )
-                }
+                { new TempMonWarning(builder) },
+                { new TempMonSchedule(builder) }
             };
         }
 

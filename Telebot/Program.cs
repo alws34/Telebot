@@ -1,5 +1,7 @@
-﻿using FluentScheduler;
+﻿using CPUID.Builder;
+using FluentScheduler;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Telebot.Clients;
@@ -29,12 +31,12 @@ namespace Telebot
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Task RefreshTask = Task.Factory.StartNew(async () =>
+            Thread RefreshThread = new Thread(() =>
             {
                 while (!_shouldStop)
                 {
                     pSDK.RefreshInformation();
-                    await Task.Delay(1000);
+                    Thread.Sleep(1000);
                 }
             });
 
@@ -43,8 +45,8 @@ namespace Telebot
 
             buildCommandFactory();
 
-            ITempMon[] tempMons = tempMonFactory.GetAllEntities();
-            IScreenCapture[] screenCaps = screenCapFactory.GetAllEntities();
+            var tempMons = tempMonFactory.GetAllEntities();
+            var screenCaps = screenCapFactory.GetAllEntities();
 
             MainForm mainForm = new MainForm();
 
@@ -60,6 +62,8 @@ namespace Telebot
                 tempMons
             );
 
+            RefreshThread.Start();
+
             Application.Run(mainForm);
 
             // commit profiles changes
@@ -72,13 +76,20 @@ namespace Telebot
             JobManager.Stop();
             JobManager.RemoveAllJobs();
 
-            // wait for task to complete
+            // wait for thread to complete
             _shouldStop = true;
-            RefreshTask.Wait();
+            RefreshThread.Join();
         }
 
         private static void buildCommandFactory()
         {
+            var builder = new DeviceBuilder()
+                .AddItems(DeviceFactory.RAMDevices)
+                .AddItems(DeviceFactory.CPUDevices)
+                .AddItems(DeviceFactory.HDDDevices)
+                .AddItems(DeviceFactory.GPUDevices)
+                .Build();
+
             commandFactory = new CommandFactory
             (
                 new ICommand[]
@@ -87,13 +98,7 @@ namespace Telebot
                     (
                         new IStatus[]
                         {
-                            new SystemStatus
-                            (
-                                DeviceFactory.RAMDevices,
-                                DeviceFactory.CPUDevices,
-                                DeviceFactory.HDDDevices,
-                                DeviceFactory.GPUDevices
-                            ),
+                            new SystemStatus(builder),
                             new IPAddrStatus(),
                             new UptimeStatus(),
                             new MonitorsStatus(),

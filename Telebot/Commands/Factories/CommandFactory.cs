@@ -13,10 +13,7 @@ namespace Telebot.Commands.Factories
         {
             _commands = new List<ICommand>();
 
-            foreach (ICommand command in commands)
-            {
-                _commands.Add(command);
-            }
+            _commands.AddRange(commands);
         }
 
         public ICommand FindEntity(Predicate<ICommand> predicate)

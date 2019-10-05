@@ -14,8 +14,8 @@ namespace Telebot.Temperature
         public TempMonFactory()
         {
             var devices = new DeviceBuilder()
-                .AddItems(DeviceFactory.CPUDevices)
-                .AddItems(DeviceFactory.GPUDevices)
+                .AddRange(DeviceFactory.CPUDevices)
+                .AddRange(DeviceFactory.GPUDevices)
                 .Build();
 
             tempMons = new List<ITempMon>

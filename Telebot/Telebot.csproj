@@ -93,6 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\BrightCmd.cs" />
+    <Compile Include="Commands\Builder\CmdBuilder.cs" />
     <Compile Include="Commands\Status\Builder\StatusBuilder.cs" />
     <Compile Include="Commands\Status\CaptureStatus.cs" />
     <Compile Include="Contracts\IFactory.cs" />

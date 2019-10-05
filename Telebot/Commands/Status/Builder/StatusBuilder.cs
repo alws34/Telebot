@@ -15,13 +15,13 @@ namespace Telebot.Commands.Status.Builder
             _statuses = new List<IStatus>();
         }
 
-        public StatusBuilder AddItem(IStatus status)
+        public StatusBuilder Add(IStatus status)
         {
             _statuses.Add(status);
             return this;
         }
 
-        public StatusBuilder AddItems(IStatus[] statuses)
+        public StatusBuilder AddRange(IStatus[] statuses)
         {
             _statuses.AddRange(statuses);
             return this;

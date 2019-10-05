@@ -12,15 +12,15 @@ namespace CPUID.Builder
             devices = new List<IDevice>();
         }
 
-        public DeviceBuilder AddItem(IDevice item)
+        public DeviceBuilder Add(IDevice device)
         {
-            devices.Add(item);
+            devices.Add(device);
             return this;
         }
 
-        public DeviceBuilder AddItems(IDevice[] items)
+        public DeviceBuilder AddRange(IDevice[] devices)
         {
-            devices.AddRange(items);
+            this.devices.AddRange(devices);
             return this;
         }
 

@@ -5,6 +5,7 @@ using System.Threading;
 using System.Windows.Forms;
 using Telebot.Clients;
 using Telebot.Commands;
+using Telebot.Commands.Builder;
 using Telebot.Commands.Factories;
 using Telebot.Commands.Status;
 using Telebot.Commands.Status.Builder;
@@ -67,42 +68,40 @@ namespace Telebot
         private static void buildCommandFactory()
         {
             var devices = new DeviceBuilder()
-                .AddItems(DeviceFactory.RAMDevices)
-                .AddItems(DeviceFactory.CPUDevices)
-                .AddItems(DeviceFactory.HDDDevices)
-                .AddItems(DeviceFactory.GPUDevices)
+                .AddRange(DeviceFactory.RAMDevices)
+                .AddRange(DeviceFactory.CPUDevices)
+                .AddRange(DeviceFactory.HDDDevices)
+                .AddRange(DeviceFactory.GPUDevices)
                 .Build();
 
             var statuses = new StatusBuilder()
-                .AddItem(new SystemStatus(devices))
-                .AddItem(new IPAddrStatus())
-                .AddItem(new UptimeStatus())
-                .AddItem(new MonitorsStatus())
-                .AddItem(new CaptureStatus())
+                .Add(new SystemStatus(devices))
+                .Add(new IPAddrStatus())
+                .Add(new UptimeStatus())
+                .Add(new MonitorsStatus())
+                .Add(new CaptureStatus())
                 .Build();
 
-            commandFactory = new CommandFactory
-            (
-                new ICommand[]
-                {
-                    new StatusCmd(statuses),
-                    new AppsCmd(),
-                    new BrightCmd(),
-                    new CaptureCmd(),
-                    new CapAppCmd(),
-                    new CapTimeCmd(),
-                    new ScreenCmd(),
-                    new TempMonCmd(),
-                    new TempTimeCmd(),
-                    new PowerCmd(),
-                    new ShutdownCmd(),
-                    new MessageBoxCmd(),
-                    new KillTaskCmd(),
-                    new VolCmd(),
-                    new SpecCmd(),
-                    new HelpCmd()
-                }
-            );
+            var commands = new CmdBuilder()
+                .Add(new StatusCmd(statuses))
+                .Add(new AppsCmd())
+                .Add(new BrightCmd())
+                .Add(new CaptureCmd())
+                .Add(new CapAppCmd())
+                .Add(new CapTimeCmd())
+                .Add(new ScreenCmd())
+                .Add(new TempMonCmd())
+                .Add(new TempTimeCmd())
+                .Add(new PowerCmd())
+                .Add(new ShutdownCmd())
+                .Add(new MessageBoxCmd())
+                .Add(new KillTaskCmd())
+                .Add(new VolCmd())
+                .Add(new SpecCmd())
+                .Add(new HelpCmd())
+                .Build();
+
+            commandFactory = new CommandFactory(commands);
         }
     }
 }

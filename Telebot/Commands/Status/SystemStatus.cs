@@ -8,11 +8,11 @@ namespace Telebot.Commands.Status
     {
         private readonly List<IDevice> devices;
 
-        public SystemStatus(IDevice[] devicesArr)
+        public SystemStatus(IDevice[] devices)
         {
-            devices = new List<IDevice>();
+            this.devices = new List<IDevice>();
 
-            devices.AddRange(devicesArr);
+            this.devices.AddRange(devices);
         }
 
         public string Execute()

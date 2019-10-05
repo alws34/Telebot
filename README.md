@@ -1,7 +1,7 @@
 # Telebot
 A 64-Bit Windows Telegram bot that monitors system activity such as utilization and temperature and reports them to the client upon request (from commander).
 
-# Setup instructions:
+# Setup instructions
  - Create a settings.ini file and place it within the same folder as binaries. Make sure you have the bot token and the user id (who will control the bot) in the following format:
  
  ```

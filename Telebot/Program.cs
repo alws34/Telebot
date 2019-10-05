@@ -1,7 +1,6 @@
 ﻿using CPUID.Builder;
 using FluentScheduler;
 using System;
-using System.Threading;
 using System.Windows.Forms;
 using Telebot.Clients;
 using Telebot.Commands;
@@ -30,7 +29,8 @@ namespace Telebot
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            JobManager.AddJob(() => {
+            JobManager.AddJob(() =>
+            {
                 pSDK.RefreshInformation();
             }, (s) => s.ToRunNow().AndEvery(1).Seconds());
 

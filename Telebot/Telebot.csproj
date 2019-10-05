@@ -93,6 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\BrightCmd.cs" />
+    <Compile Include="Commands\Status\Builder\StatusBuilder.cs" />
     <Compile Include="Commands\Status\CaptureStatus.cs" />
     <Compile Include="Contracts\IFactory.cs" />
     <Compile Include="Contracts\IScheduledJob.cs" />
@@ -141,11 +142,11 @@
     <Compile Include="Presenters\MainFormPresenter.cs" />
     <Compile Include="ScreenCapture\ScreenCaptureArgs.cs" />
     <Compile Include="Clients\TelebotClient.cs" />
-    <Compile Include="Settings\IProfile.cs" />
-    <Compile Include="Settings\ISettings.cs" />
+    <Compile Include="Settings\Contracts\IProfile.cs" />
+    <Compile Include="Settings\Contracts\ISettings.cs" />
     <Compile Include="Settings\GuiSettings.cs" />
     <Compile Include="Settings\MonitorSettings.cs" />
-    <Compile Include="Settings\SettingsFactory.cs" />
+    <Compile Include="Settings\Factories\SettingsFactory.cs" />
     <Compile Include="Settings\TelegramSettings.cs" />
     <Compile Include="Temperature\ITempMon.cs" />
     <Compile Include="Temperature\TempChangedArgs.cs" />

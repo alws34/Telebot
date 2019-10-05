@@ -13,15 +13,15 @@ namespace Telebot.Temperature
 
         public TempMonFactory()
         {
-            var builder = new DeviceBuilder()
+            var devices = new DeviceBuilder()
                 .AddItems(DeviceFactory.CPUDevices)
                 .AddItems(DeviceFactory.GPUDevices)
                 .Build();
 
             tempMons = new List<ITempMon>
             {
-                { new TempMonWarning(builder) },
-                { new TempMonSchedule(builder) }
+                { new TempMonWarning(devices) },
+                { new TempMonSchedule(devices) }
             };
         }
 

@@ -7,6 +7,7 @@ using Telebot.Clients;
 using Telebot.Commands;
 using Telebot.Commands.Factories;
 using Telebot.Commands.Status;
+using Telebot.Commands.Status.Builder;
 using Telebot.Contracts;
 using Telebot.Presenters;
 using Telebot.ScreenCapture;
@@ -22,22 +23,15 @@ namespace Telebot
         public static IFactory<ITempMon> tempMonFactory;
         public static IFactory<IScreenCapture> screenCapFactory;
 
-        private static volatile bool _shouldStop = false;
-
         [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Thread RefreshThread = new Thread(() =>
-            {
-                while (!_shouldStop)
-                {
-                    pSDK.RefreshInformation();
-                    Thread.Sleep(1000);
-                }
-            });
+            JobManager.AddJob(() => {
+                pSDK.RefreshInformation();
+            }, (s) => s.ToRunNow().AndEvery(1).Seconds());
 
             tempMonFactory = new TempMonFactory();
             screenCapFactory = new ScreenCapFactory();
@@ -61,49 +55,37 @@ namespace Telebot
                 tempMons
             );
 
-            RefreshThread.Start();
-
             Application.Run(mainForm);
 
-            // commit profiles changes
             SettingsBase.CommitChanges();
 
-            // write changes to disk
             SettingsBase.WriteChanges();
 
-            // stop job manager and remove all jobs
-            JobManager.Stop();
-            JobManager.RemoveAllJobs();
-
-            // wait for thread to complete
-            _shouldStop = true;
-            RefreshThread.Join();
+            JobManager.StopAndBlock();
         }
 
         private static void buildCommandFactory()
         {
-            var builder = new DeviceBuilder()
+            var devices = new DeviceBuilder()
                 .AddItems(DeviceFactory.RAMDevices)
                 .AddItems(DeviceFactory.CPUDevices)
                 .AddItems(DeviceFactory.HDDDevices)
                 .AddItems(DeviceFactory.GPUDevices)
                 .Build();
 
+            var statuses = new StatusBuilder()
+                .AddItem(new SystemStatus(devices))
+                .AddItem(new IPAddrStatus())
+                .AddItem(new UptimeStatus())
+                .AddItem(new MonitorsStatus())
+                .AddItem(new CaptureStatus())
+                .Build();
+
             commandFactory = new CommandFactory
             (
                 new ICommand[]
                 {
-                    new StatusCmd
-                    (
-                        new IStatus[]
-                        {
-                            new SystemStatus(builder),
-                            new IPAddrStatus(),
-                            new UptimeStatus(),
-                            new MonitorsStatus(),
-                            new CaptureStatus()
-                        }
-                    ),
+                    new StatusCmd(statuses),
                     new AppsCmd(),
                     new BrightCmd(),
                     new CaptureCmd(),

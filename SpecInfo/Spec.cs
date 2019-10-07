@@ -112,7 +112,7 @@ namespace SpecInfo
 
             foreach (Sensor sensor in sensors)
             {
-                result.AppendLine($"{sensor.Name} Value:{sensor.Value} Min:{sensor.Max} Max:{sensor.Max}");
+                result.AppendLine($"{sensor.Name} Value:{sensor.Value} Min:{sensor.Min} Max:{sensor.Max}");
             }
 
             result.AppendLine();

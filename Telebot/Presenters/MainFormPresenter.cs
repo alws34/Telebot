@@ -32,12 +32,12 @@ namespace Telebot.Presenters
         {
             this.mainFormView = mainFormView;
             this.mainFormView.Load += viewLoad;
-            this.mainFormView.FormClosed += viewFormClosed;
+            this.mainFormView.FormClosed += viewClosed;
             this.mainFormView.Resize += viewResize;
-            this.mainFormView.TrayIcon.MouseClick += NotifyIcon_MouseClick;
+            this.mainFormView.TrayIcon.MouseClick += TrayMouseClick;
 
             this.telebotClient = telebotClient;
-            this.telebotClient.RequestArrival += TelebotClient_RequestArrival;
+            this.telebotClient.RequestArrival += BotRequestArrival;
 
             SettingsBase.AddProfile(this);
 
@@ -65,7 +65,7 @@ namespace Telebot.Presenters
             ) as EventHandler<T>;
         }
 
-        private void TelebotClient_RequestArrival(object sender, RequestArrivalArgs e)
+        private void BotRequestArrival(object sender, RequestArrivalArgs e)
         {
             mainFormView.ListView.AddObject(e.Item);
 
@@ -77,7 +77,7 @@ namespace Telebot.Presenters
             }
         }
 
-        private void NotifyIcon_MouseClick(object sender, MouseEventArgs e)
+        private void TrayMouseClick(object sender, MouseEventArgs e)
         {
             mainFormView.Show();
             mainFormView.WindowState = FormWindowState.Normal;
@@ -93,7 +93,7 @@ namespace Telebot.Presenters
             }
         }
 
-        private void viewFormClosed(object sender, FormClosedEventArgs e)
+        private void viewClosed(object sender, FormClosedEventArgs e)
         {
             if (telebotClient.IsReceiving)
                 telebotClient.StopReceiving();

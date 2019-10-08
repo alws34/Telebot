@@ -19,7 +19,7 @@ namespace Telebot.Settings
 
         public void SaveFormBounds(Rectangle bounds)
         {
-            settings.WriteObject<Rectangle>("GUI", "Form1.Bounds", bounds);
+            settings.WriteObject("GUI", "Form1.Bounds", bounds);
         }
 
         public List<int> GetListView1ColumnsWidth()
@@ -29,7 +29,7 @@ namespace Telebot.Settings
 
         public void SaveListView1ColumnsWidth(List<int> widths)
         {
-            settings.WriteObject<List<int>>("GUI", "listview1.Columns.Width", widths);
+            settings.WriteObject("GUI", "listview1.Columns.Width", widths);
         }
     }
 }

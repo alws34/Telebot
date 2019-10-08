@@ -55,7 +55,7 @@ namespace Telebot.Settings
             return serializer.Deserialize<T>(value);
         }
 
-        public void WriteObject<T>(string section, string key, T value)
+        public void WriteObject(string section, string key, object value)
         {
             string valueStr = serializer.Serialize(value);
 

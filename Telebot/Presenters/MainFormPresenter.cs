@@ -42,27 +42,26 @@ namespace Telebot.Presenters
 
             foreach (IScreenCapture screenCap in screenCaps)
             {
-                string className = screenCap.GetType().Name;
-                string handlerName = $"{className}Handler";
-                var handler = Delegate.CreateDelegate(
-                    typeof(EventHandler<ScreenCaptureArgs>),
-                    this,
-                    handlerName
-                ) as EventHandler<ScreenCaptureArgs>;
+                var handler = CreateEventHandler<ScreenCaptureArgs>(screenCap.GetType());
                 screenCap.ScreenCaptured += handler;
             }
 
             foreach (ITempMon tempMon in tempMonitors)
             {
-                string className = tempMon.GetType().Name;
-                string handlerName = $"{className}Handler";
-                var handler = Delegate.CreateDelegate(
-                    typeof(EventHandler<TempChangedArgs>),
-                    this,
-                    handlerName
-                ) as EventHandler<TempChangedArgs>;
+                var handler = CreateEventHandler<TempChangedArgs>(tempMon.GetType());
                 tempMon.TemperatureChanged += handler;
             }
+        }
+
+        private EventHandler<T> CreateEventHandler<T>(Type type)
+        {
+            string className = type.Name;
+            string handlerName = $"{className}Handler";
+            return Delegate.CreateDelegate(
+                typeof(EventHandler<T>),
+                this,
+                handlerName
+            ) as EventHandler<T>;
         }
 
         private void TelebotClient_RequestArrival(object sender, RequestArrivalArgs e)

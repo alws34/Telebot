@@ -29,10 +29,21 @@ namespace Telebot
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            JobManager.AddJob(() =>
+            string token = TelegramSettings.GetBotToken();
+            int id = TelegramSettings.GetAdminId();
+
+            if (string.IsNullOrEmpty(token) || id == 0)
             {
-                pSDK.RefreshInformation();
-            }, (s) => s.ToRunNow().AndEvery(1).Seconds());
+                MessageBox.Show(
+                    "Please fill token and admin id in settings.ini.",
+                    "Missing info",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+                return;
+            }
+
+            TelebotClient telebotClient = new TelebotClient(token, id);
 
             tempMonFactory = new TempMonFactory();
             screenCapFactory = new ScreenCapFactory();
@@ -44,20 +55,16 @@ namespace Telebot
 
             MainForm mainForm = new MainForm();
 
-            string token = TelegramSettings.GetBotToken();
-            int id = TelegramSettings.GetAdminId();
-
-            if (string.IsNullOrEmpty(token) || id == 0)
-                throw new Exception("Please fill in token and admin id.");
-
-            TelebotClient telebotClient = new TelebotClient(token, id);
-
             var presenter = new MainFormPresenter(
                 mainForm,
                 telebotClient,
                 screenCaps,
                 tempMons
             );
+
+            JobManager.AddJob(() => {
+                pSDK.RefreshInformation();
+            }, (s) => s.ToRunNow().AndEvery(1).Seconds());
 
             Application.Run(mainForm);
 

@@ -13,7 +13,7 @@ namespace Telebot.Temperature
 
         public TempMonSchedule(IDevice[] devices)
         {
-            TempMonType = TempMonType.Scheduled;
+            JobType = Common.JobType.Scheduled;
 
             this.devices.AddRange(devices);
         }

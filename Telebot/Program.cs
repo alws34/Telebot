@@ -20,8 +20,8 @@ namespace Telebot
     static class Program
     {
         public static IFactory<ICommand> commandFactory;
-        public static IFactory<ITempMon> tempMonFactory;
-        public static IFactory<IScreenCapture> screenCapFactory;
+        public static IFactory<IJob<TempChangedArgs>> tempMonFactory;
+        public static IFactory<IJob<ScreenCaptureArgs>> screenCapFactory;
 
         [STAThread]
         static void Main()

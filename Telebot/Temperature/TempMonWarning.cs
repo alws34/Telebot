@@ -13,7 +13,7 @@ namespace Telebot.Temperature
 
         public TempMonWarning(IDevice[] devices)
         {
-            TempMonType = TempMonType.Warning;
+            JobType = Common.JobType.Fixed;
 
             SettingsBase.AddProfile(this);
 

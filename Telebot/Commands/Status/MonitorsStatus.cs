@@ -1,30 +1,27 @@
 ﻿using System.Text;
+using Telebot.Contracts;
+using Telebot.Extensions;
 using Telebot.Temperature;
 
 namespace Telebot.Commands.Status
 {
     public class MonitorsStatus : IStatus
     {
-        private readonly ITempMon[] tempMons;
+        private readonly IJob<TempChangedArgs>[] _jobs;
 
         public MonitorsStatus()
         {
-            tempMons = Program.tempMonFactory.GetAllEntities();
+            _jobs = Program.tempMonFactory.GetAllEntities();
         }
 
         public string Execute()
         {
-            string BoolToStr(bool condition)
-            {
-                return condition ? "Active" : "Inactive";
-            }
-
             var result = new StringBuilder();
 
-            foreach (ITempMon tempMon in tempMons)
+            foreach (IJob<TempChangedArgs> job in _jobs)
             {
-                string name = tempMon.GetType().Name.Replace("TempMon", "");
-                string active = BoolToStr(tempMon.IsActive);
+                string name = job.GetType().Name.Replace("TempMon", "");
+                string active = job.IsActive.AsReadable();
                 result.AppendLine($"*{name}* 🌡️: {active}");
             }
 

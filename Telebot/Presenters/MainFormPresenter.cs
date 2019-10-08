@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Telebot.Clients;
+using Telebot.Contracts;
 using Telebot.Extensions;
 using Telebot.ScreenCapture;
 using Telebot.Temperature;
@@ -25,8 +26,8 @@ namespace Telebot.Presenters
         public MainFormPresenter(
             IMainFormView mainFormView,
             ITelebotClient telebotClient,
-            IScreenCapture[] screenCaps,
-            ITempMon[] tempMonitors
+            IJob<ScreenCaptureArgs>[] screenCaps,
+            IJob<TempChangedArgs>[] tempMonitors
         )
         {
             this.mainFormView = mainFormView;
@@ -40,16 +41,16 @@ namespace Telebot.Presenters
 
             SettingsBase.AddProfile(this);
 
-            foreach (IScreenCapture screenCap in screenCaps)
+            foreach (IJob<ScreenCaptureArgs> screenCap in screenCaps)
             {
                 var handler = CreateEventHandler<ScreenCaptureArgs>(screenCap.GetType());
-                screenCap.ScreenCaptured += handler;
+                screenCap.Update += handler;
             }
 
-            foreach (ITempMon tempMon in tempMonitors)
+            foreach (IJob<TempChangedArgs> tempMon in tempMonitors)
             {
                 var handler = CreateEventHandler<TempChangedArgs>(tempMon.GetType());
-                tempMon.TemperatureChanged += handler;
+                tempMon.Update += handler;
             }
         }
 

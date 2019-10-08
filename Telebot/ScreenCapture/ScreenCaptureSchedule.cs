@@ -14,7 +14,7 @@ namespace Telebot.ScreenCapture
 
         public ScreenCaptureSchedule()
         {
-            ScreenCapType = ScreenCapType.Scheduled;
+            JobType = Common.JobType.Scheduled;
 
             desktopApi = ApiLocator.Instance.GetService<DesktopApi>();
         }

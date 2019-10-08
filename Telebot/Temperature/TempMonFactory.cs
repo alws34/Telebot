@@ -7,9 +7,9 @@ using static CPUID.CPUIDCore;
 
 namespace Telebot.Temperature
 {
-    public class TempMonFactory : IFactory<ITempMon>
+    public class TempMonFactory : IFactory<IJob<TempChangedArgs>>
     {
-        private readonly List<ITempMon> tempMons;
+        private readonly List<IJob<TempChangedArgs>> _jobs;
 
         public TempMonFactory()
         {
@@ -18,21 +18,21 @@ namespace Telebot.Temperature
                 .AddRange(DeviceFactory.GPUDevices)
                 .Build();
 
-            tempMons = new List<ITempMon>
+            _jobs = new List<IJob<TempChangedArgs>>
             {
                 { new TempMonWarning(devices) },
                 { new TempMonSchedule(devices) }
             };
         }
 
-        public ITempMon FindEntity(Predicate<ITempMon> predicate)
+        public IJob<TempChangedArgs> FindEntity(Predicate<IJob<TempChangedArgs>> predicate)
         {
-            return tempMons.SingleOrDefault(x => predicate(x));
+            return _jobs.SingleOrDefault(x => predicate(x));
         }
 
-        public ITempMon[] GetAllEntities()
+        public IJob<TempChangedArgs>[] GetAllEntities()
         {
-            return tempMons.ToArray();
+            return _jobs.ToArray();
         }
     }
 }

@@ -1,30 +1,27 @@
 ﻿using System.Text;
+using Telebot.Contracts;
+using Telebot.Extensions;
 using Telebot.ScreenCapture;
 
 namespace Telebot.Commands.Status
 {
     public class CaptureStatus : IStatus
     {
-        private readonly IScreenCapture[] screenCaptures;
+        private readonly IJob<ScreenCaptureArgs>[] _jobs;
 
         public CaptureStatus()
         {
-            screenCaptures = Program.screenCapFactory.GetAllEntities();
+            _jobs = Program.screenCapFactory.GetAllEntities();
         }
 
         public string Execute()
         {
-            string BoolToStr(bool condition)
-            {
-                return condition ? "Active" : "Inactive";
-            }
-
             var result = new StringBuilder();
 
-            foreach (IScreenCapture screenCap in screenCaptures)
+            foreach (IJob<ScreenCaptureArgs> job in _jobs)
             {
-                string name = screenCap.GetType().Name.Replace("ScreenCapture", "");
-                string active = BoolToStr(screenCap.IsActive);
+                string name = job.GetType().Name.Replace("ScreenCapture", "");
+                string active = job.IsActive.AsReadable();
                 result.AppendLine($"*{name}* 🖼️: {active}");
             }
 

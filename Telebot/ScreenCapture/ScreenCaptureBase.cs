@@ -1,14 +1,16 @@
 ﻿using System;
+using Telebot.Common;
+using Telebot.Contracts;
 
 namespace Telebot.ScreenCapture
 {
-    public abstract class ScreenCaptureBase : IScreenCapture
+    public abstract class ScreenCaptureBase : IJob<ScreenCaptureArgs>
     {
-        public ScreenCapType ScreenCapType { get; protected set; }
+        public JobType JobType { get; protected set; }
 
         public bool IsActive { get; protected set; }
 
-        public event EventHandler<ScreenCaptureArgs> ScreenCaptured;
+        public event EventHandler<ScreenCaptureArgs> Update;
 
         public abstract void Start();
 
@@ -16,7 +18,7 @@ namespace Telebot.ScreenCapture
 
         protected void RaiseScreenCaptured(ScreenCaptureArgs args)
         {
-            ScreenCaptured?.Invoke(this, args);
+            Update?.Invoke(this, args);
         }
     }
 }

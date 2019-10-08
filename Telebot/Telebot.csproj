@@ -96,9 +96,12 @@
     <Compile Include="Commands\Builder\CmdBuilder.cs" />
     <Compile Include="Commands\Status\Builder\StatusBuilder.cs" />
     <Compile Include="Commands\Status\CaptureStatus.cs" />
+    <Compile Include="Common\Common.cs" />
     <Compile Include="Contracts\IFactory.cs" />
+    <Compile Include="Contracts\IJob.cs" />
     <Compile Include="Contracts\IScheduledJob.cs" />
     <Compile Include="Contracts\IServiceLocator.cs" />
+    <Compile Include="Extensions\PrimitiveExtensions.cs" />
     <Compile Include="Helpers\Kernel32Helper.cs" />
     <Compile Include="CoreApis\ApiLocator.cs" />
     <Compile Include="CoreApis\MediaApi.cs" />
@@ -127,7 +130,6 @@
     <Compile Include="Commands\VolCmd.cs" />
     <Compile Include="Clients\RequestArrivalArgs.cs" />
     <Compile Include="Commands\Status\IStatus.cs" />
-    <Compile Include="ScreenCapture\IScreenCapture.cs" />
     <Compile Include="CoreApis\DesktopApi.cs" />
     <Compile Include="CoreApis\NetworkApi.cs" />
     <Compile Include="CoreApis\PowerApi.cs" />
@@ -149,7 +151,6 @@
     <Compile Include="Settings\MonitorSettings.cs" />
     <Compile Include="Settings\Factories\SettingsFactory.cs" />
     <Compile Include="Settings\TelegramSettings.cs" />
-    <Compile Include="Temperature\ITempMon.cs" />
     <Compile Include="Temperature\TempChangedArgs.cs" />
     <Compile Include="Temperature\TempMonBase.cs" />
     <Compile Include="Temperature\TempMonFactory.cs" />

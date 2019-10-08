@@ -5,24 +5,24 @@ using Telebot.Contracts;
 
 namespace Telebot.ScreenCapture
 {
-    public class ScreenCapFactory : IFactory<IScreenCapture>
+    public class ScreenCapFactory : IFactory<IJob<ScreenCaptureArgs>>
     {
-        private readonly List<IScreenCapture> screenCaptures;
+        private readonly List<IJob<ScreenCaptureArgs>> screenCaptures;
 
         public ScreenCapFactory()
         {
-            screenCaptures = new List<IScreenCapture>
+            screenCaptures = new List<IJob<ScreenCaptureArgs>>
             {
                 { new ScreenCaptureSchedule() }
             };
         }
 
-        public IScreenCapture FindEntity(Predicate<IScreenCapture> predicate)
+        public IJob<ScreenCaptureArgs> FindEntity(Predicate<IJob<ScreenCaptureArgs>> predicate)
         {
             return screenCaptures.SingleOrDefault(x => predicate(x));
         }
 
-        public IScreenCapture[] GetAllEntities()
+        public IJob<ScreenCaptureArgs>[] GetAllEntities()
         {
             return screenCaptures.ToArray();
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Telebot.Common;
 using Telebot.Contracts;
 using Telebot.Models;
 using Telebot.Temperature;
@@ -8,15 +9,15 @@ namespace Telebot.Commands
 {
     public class TempTimeCmd : CommandBase
     {
-        private readonly ITempMon tempMon;
+        private readonly IJob<TempChangedArgs> _job;
 
         public TempTimeCmd()
         {
             Pattern = "/temptime (off|(\\d+) (\\d+))";
             Description = "Schedules temperature monitor.";
 
-            tempMon = Program.tempMonFactory.FindEntity(
-                x => x.TempMonType == TempMonType.Scheduled
+            _job = Program.tempMonFactory.FindEntity(
+                x => x.JobType == JobType.Scheduled
             );
         }
 
@@ -36,7 +37,7 @@ namespace Telebot.Commands
 
                 await callback(cmdResult);
 
-                tempMon.Stop();
+                _job.Stop();
 
                 return;
             }
@@ -57,7 +58,7 @@ namespace Telebot.Commands
 
             await callback(result);
 
-            ((IScheduledJob)tempMon).Start(tsDuration, tsInterval);
+            ((IScheduledJob)_job).Start(tsDuration, tsInterval);
         }
     }
 }

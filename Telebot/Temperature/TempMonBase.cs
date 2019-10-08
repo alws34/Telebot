@@ -1,22 +1,24 @@
 ﻿using CPUID.Contracts;
 using System;
 using System.Collections.Generic;
+using Telebot.Common;
+using Telebot.Contracts;
 
 namespace Telebot.Temperature
 {
-    public abstract class TempMonBase : ITempMon
+    public abstract class TempMonBase : IJob<TempChangedArgs>
     {
-        public TempMonType TempMonType { get; protected set; }
+        public JobType JobType { get; protected set; }
 
         public bool IsActive { get; protected set; }
 
         protected readonly List<IDevice> devices;
 
-        public event EventHandler<TempChangedArgs> TemperatureChanged;
+        public event EventHandler<TempChangedArgs> Update;
 
         protected void RaiseTemperatureChanged(TempChangedArgs e)
         {
-            TemperatureChanged?.Invoke(this, e);
+            Update?.Invoke(this, e);
         }
 
         protected TempMonBase()

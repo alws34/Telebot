@@ -3,6 +3,7 @@ using FluentScheduler;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Telebot.Clients;
 using Telebot.Extensions;
@@ -102,15 +103,11 @@ namespace Telebot.Presenters
         {
             // delay job to reduce startup time
             JobManager.AddJob(
-                () =>
+                async () =>
                 {
-                    SendClientHello();
                     telebotClient.StartReceiving();
-
-                    mainFormView.ListView.Invoke((MethodInvoker)delegate
-                    {
-                        AddBotNameTitle();
-                    });
+                    await AddBotNameTitle();
+                    await SendClientHello();
                 },
                 (s) => s.ToRunOnceIn(3).Seconds()
             );
@@ -118,17 +115,20 @@ namespace Telebot.Presenters
             RestoreGuiSettings();
         }
 
-        private async void SendClientHello()
+        private async Task SendClientHello()
         {
             await telebotClient.SendTextMessageAsync(
                 telebotClient.AdminId, "*Telebot*: I'm Up.", parseMode: ParseMode.Markdown
             );
         }
 
-        private async void AddBotNameTitle()
+        private async Task AddBotNameTitle()
         {
             var me = await telebotClient.GetMeAsync();
-            mainFormView.Text += $" - {me.Username}";
+            mainFormView.ListView.Invoke((MethodInvoker)delegate
+            {
+                mainFormView.Text += $" - {me.Username}";
+            });
         }
 
         public void SaveChanges()
@@ -147,11 +147,14 @@ namespace Telebot.Presenters
 
         private void RestoreGuiSettings()
         {
-            mainFormView.Bounds = GuiSettings.GetFormBounds();
+            var bounds = GuiSettings.GetFormBounds();
+
+            if (bounds != null)
+                mainFormView.Bounds = bounds;
 
             var widths = GuiSettings.GetListView1ColumnsWidth();
 
-            if (widths.Count > 0)
+            if (widths != null && widths.Count > 0)
             {
                 for (int i = 0; i < widths.Count; i++)
                 {

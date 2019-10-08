@@ -47,6 +47,9 @@ namespace Telebot
             string token = TelegramSettings.GetBotToken();
             int id = TelegramSettings.GetAdminId();
 
+            if (string.IsNullOrEmpty(token) || id == 0)
+                throw new Exception("Please fill in token and admin id.");
+
             TelebotClient telebotClient = new TelebotClient(token, id);
 
             var presenter = new MainFormPresenter(

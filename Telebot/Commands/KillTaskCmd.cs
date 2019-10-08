@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using Telebot.Models;
 
 namespace Telebot.Commands
@@ -12,7 +13,7 @@ namespace Telebot.Commands
             Description = "Kill a task with the specified pid.";
         }
 
-        public override void Execute(object parameter, Action<CommandResult> callback)
+        public async override void Execute(object parameter, Func<CommandResult, Task> callback)
         {
             var parameters = parameter as CommandParam;
 
@@ -32,7 +33,7 @@ namespace Telebot.Commands
             catch (Exception e)
             {
                 cmdResult.Text = e.Message;
-                callback(cmdResult);
+                await callback(cmdResult);
                 return;
             }
 
@@ -46,7 +47,7 @@ namespace Telebot.Commands
                 cmdResult.Text = e.Message;
             }
 
-            callback(cmdResult);
+            await callback(cmdResult);
         }
     }
 }

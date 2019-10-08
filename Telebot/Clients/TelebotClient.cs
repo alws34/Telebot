@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Telebot.Commands;
 using Telebot.Models;
 using Telegram.Bot;
@@ -24,9 +25,9 @@ namespace Telebot.Clients
             OnMessage += BotMessageHandler;
         }
 
-        private void BotMessageHandler(object sender, MessageEventArgs e)
+        private async void BotMessageHandler(object sender, MessageEventArgs e)
         {
-            async void executeCallback(CommandResult result)
+            async Task executeCallback(CommandResult result)
             {
                 switch (result.SendType)
                 {
@@ -60,7 +61,7 @@ namespace Telebot.Clients
                     SendType = SendType.Text,
                     Text = "Unauthorized."
                 };
-                executeCallback(cmdResult);
+                await executeCallback(cmdResult);
                 return;
             }
 
@@ -73,7 +74,7 @@ namespace Telebot.Clients
                     SendType = SendType.Text,
                     Text = "Command pattern is null or empty."
                 };
-                executeCallback(cmdResult);
+                await executeCallback(cmdResult);
                 return;
             }
 
@@ -114,7 +115,7 @@ namespace Telebot.Clients
                     SendType = SendType.Text,
                     Text = "Undefined command. For commands list, type */help*."
                 };
-                executeCallback(cmdResult);
+                await executeCallback(cmdResult);
             }
         }
 

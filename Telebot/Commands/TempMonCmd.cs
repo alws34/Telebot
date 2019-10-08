@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Telebot.Models;
 using Telebot.Temperature;
 
@@ -25,7 +26,7 @@ namespace Telebot.Commands
             };
         }
 
-        public override void Execute(object parameter, Action<CommandResult> callback)
+        public async override void Execute(object parameter, Func<CommandResult, Task> callback)
         {
             var parameters = parameter as CommandParam;
 
@@ -37,7 +38,7 @@ namespace Telebot.Commands
                 Text = $"Successfully turned {state} the temperature monitor."
             };
 
-            callback(result);
+            await callback(result);
 
             actions[state].Invoke();
         }

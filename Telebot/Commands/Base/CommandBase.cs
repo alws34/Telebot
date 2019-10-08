@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Telebot.Models;
 
 namespace Telebot.Commands
@@ -9,7 +10,7 @@ namespace Telebot.Commands
 
         public string Description { get; protected set; }
 
-        public abstract void Execute(object parameter, Action<CommandResult> callback);
+        public abstract void Execute(object parameter, Func<CommandResult, Task> callback);
 
         public override string ToString()
         {

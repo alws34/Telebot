@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Telebot.Contracts;
 using Telebot.Models;
 using Telebot.ScreenCapture;
@@ -19,7 +20,7 @@ namespace Telebot.Commands
             );
         }
 
-        public override void Execute(object parameter, Action<CommandResult> callback)
+        public async override void Execute(object parameter, Func<CommandResult, Task> callback)
         {
             var parameters = parameter as CommandParam;
 
@@ -33,7 +34,7 @@ namespace Telebot.Commands
                     Text = "Successfully disabled scheduled screen capture."
                 };
 
-                callback(cmdResult);
+                await callback(cmdResult);
 
                 screenCapture.Stop();
 
@@ -54,7 +55,7 @@ namespace Telebot.Commands
                 Text = "Successfully scheduled screen capture."
             };
 
-            callback(result);
+            await callback(result);
 
             ((IScheduledJob)screenCapture).Start(tsDuration, tsInterval);
         }

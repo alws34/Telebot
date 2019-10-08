@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using System.Threading.Tasks;
 using Telebot.Models;
 
 namespace Telebot.Commands
@@ -12,7 +13,7 @@ namespace Telebot.Commands
             Description = "List of available commands.";
         }
 
-        public override void Execute(object parameter, Action<CommandResult> callback)
+        public async override void Execute(object parameter, Func<CommandResult, Task> callback)
         {
             var commandsStr = new StringBuilder();
 
@@ -29,7 +30,7 @@ namespace Telebot.Commands
                 SendType = SendType.Text
             };
 
-            callback(result);
+            await callback(result);
         }
     }
 }

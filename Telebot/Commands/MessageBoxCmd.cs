@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Telebot.Models;
 
@@ -12,7 +13,7 @@ namespace Telebot.Commands
             Description = "Shows a message box with the specified text.";
         }
 
-        public override void Execute(object parameter, Action<CommandResult> callback)
+        public async override void Execute(object parameter, Func<CommandResult, Task> callback)
         {
             var parameters = parameter as CommandParam;
 
@@ -24,7 +25,7 @@ namespace Telebot.Commands
                 Text = "Successfully initiated a message box."
             };
 
-            callback(cmdResult);
+            await callback(cmdResult);
 
             MessageBox.Show
             (

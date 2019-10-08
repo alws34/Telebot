@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Threading.Tasks;
 using Telebot.Models;
 
 namespace Telebot.Commands
@@ -13,7 +14,7 @@ namespace Telebot.Commands
             Description = "Get full hardware information.";
         }
 
-        public override void Execute(object parameter, Action<CommandResult> callback)
+        public async override void Execute(object parameter, Func<CommandResult, Task> callback)
         {
             var si = new ProcessStartInfo
             {
@@ -35,7 +36,7 @@ namespace Telebot.Commands
                 Stream = fileStream
             };
 
-            callback(cmdResult);
+            await callback(cmdResult);
         }
     }
 }

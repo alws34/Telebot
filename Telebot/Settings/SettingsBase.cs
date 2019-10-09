@@ -23,15 +23,11 @@ namespace Telebot.Settings
             if (!File.Exists(iniPath))
             {
                 File.Create(iniPath);
+                iniData = new IniData();
             }
-
-            try
+            else
             {
                 iniData = ReadFile(iniPath);
-            }
-            catch
-            {
-
             }
         }
 

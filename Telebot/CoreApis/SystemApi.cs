@@ -11,7 +11,7 @@ namespace Telebot.CoreApis
         {
             string args = $"/C powershell (Get-WmiObject -Namespace root/WMI -Class WmiMonitorBrightnessMethods).WmiSetBrightness(1,{percentage})";
 
-            ProcessStartInfo si = new ProcessStartInfo
+            var si = new ProcessStartInfo
             {
                 CreateNoWindow = true,
                 UseShellExecute = true,

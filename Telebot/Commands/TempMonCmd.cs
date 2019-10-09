@@ -15,7 +15,7 @@ namespace Telebot.Commands
             Pattern = "/tempmon (on|off)";
             Description = "Turn on or off the temperature monitor.";
 
-            var tempMonWarning = Program.tempMonFactory.FindEntity(
+            var tempMonWarning = Program.TempFactory.FindEntity(
                 x => x.JobType == JobType.Fixed
             );
 

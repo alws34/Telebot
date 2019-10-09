@@ -19,9 +19,9 @@ namespace Telebot
 {
     static class Program
     {
-        public static IFactory<ICommand> commandFactory;
-        public static IFactory<IJob<TempChangedArgs>> tempMonFactory;
-        public static IFactory<IJob<ScreenCaptureArgs>> screenCapFactory;
+        public static IFactory<ICommand> CmdFactory { get; private set; }
+        public static IFactory<IJob<TempChangedArgs>> TempFactory { get; private set; }
+        public static IFactory<IJob<ScreenCaptureArgs>> ScreenFactory { get; private set; }
 
         [STAThread]
         static void Main()
@@ -45,13 +45,13 @@ namespace Telebot
 
             TelebotClient telebotClient = new TelebotClient(token, id);
 
-            tempMonFactory = new TempMonFactory();
-            screenCapFactory = new ScreenCapFactory();
+            TempFactory = new TempMonFactory();
+            ScreenFactory = new ScreenCapFactory();
 
             buildCommandFactory();
 
-            var tempMons = tempMonFactory.GetAllEntities();
-            var screenCaps = screenCapFactory.GetAllEntities();
+            var tempMons = TempFactory.GetAllEntities();
+            var screenCaps = ScreenFactory.GetAllEntities();
 
             MainForm mainForm = new MainForm();
 
@@ -62,7 +62,8 @@ namespace Telebot
                 tempMons
             );
 
-            JobManager.AddJob(() => {
+            JobManager.AddJob(() =>
+            {
                 pSDK.RefreshInformation();
             }, (s) => s.ToRunNow().AndEvery(1).Seconds());
 
@@ -111,7 +112,7 @@ namespace Telebot
                 .Add(new HelpCmd())
                 .Build();
 
-            commandFactory = new CommandFactory(commands);
+            CmdFactory = new CommandFactory(commands);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Telebot.Commands.Status
 
         public CaptureStatus()
         {
-            _jobs = Program.screenCapFactory.GetAllEntities();
+            _jobs = Program.ScreenFactory.GetAllEntities();
         }
 
         public string Execute()

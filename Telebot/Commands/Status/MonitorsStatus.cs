@@ -11,7 +11,7 @@ namespace Telebot.Commands.Status
 
         public MonitorsStatus()
         {
-            _jobs = Program.tempMonFactory.GetAllEntities();
+            _jobs = Program.TempFactory.GetAllEntities();
         }
 
         public string Execute()

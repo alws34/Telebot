@@ -92,6 +92,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Clients\MessageArrivedArgs.cs" />
     <Compile Include="Commands\BrightCmd.cs" />
     <Compile Include="Commands\Builder\CmdBuilder.cs" />
     <Compile Include="Commands\Status\Builder\StatusBuilder.cs" />
@@ -128,7 +129,6 @@
     <Compile Include="Commands\TempMonCmd.cs" />
     <Compile Include="Commands\TempTimeCmd.cs" />
     <Compile Include="Commands\VolCmd.cs" />
-    <Compile Include="Clients\RequestArrivalArgs.cs" />
     <Compile Include="Commands\Status\IStatus.cs" />
     <Compile Include="CoreApis\DesktopApi.cs" />
     <Compile Include="CoreApis\NetworkApi.cs" />
@@ -138,7 +138,6 @@
     <Compile Include="CoreApis\WindowsApi.cs" />
     <Compile Include="Extensions\BitmapExtensions.cs" />
     <Compile Include="Extensions\TimeSpanExtensions.cs" />
-    <Compile Include="Models\ObjListViewItem.cs" />
     <Compile Include="ScreenCapture\ScreenCapFactory.cs" />
     <Compile Include="ScreenCapture\ScreenCaptureBase.cs" />
     <Compile Include="ScreenCapture\ScreenCaptureSchedule.cs" />

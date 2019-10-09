@@ -43,7 +43,7 @@ namespace Telebot
                 return;
             }
 
-            TelebotClient telebotClient = new TelebotClient(token, id);
+            ITelebotClient telebotClient = new TelebotClient(token, id);
 
             TempFactory = new TempMonFactory();
             ScreenFactory = new ScreenCapFactory();

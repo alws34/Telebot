@@ -16,11 +16,11 @@ namespace Telebot.Clients
     {
         public int AdminId { get; }
 
-        public event EventHandler<RequestArrivalArgs> RequestArrival;
+        public event EventHandler<MessageArrivedArgs> MessageArrived;
 
         public TelebotClient(string token, int id) : base(token)
         {
-            this.AdminId = id;
+            AdminId = id;
 
             OnMessage += BotMessageHandler;
         }
@@ -78,20 +78,14 @@ namespace Telebot.Clients
                 return;
             }
 
-            string info = $"Received {cmdPattern} from {e.Message.From.Username}.";
+            string text = $"Received {cmdPattern} from {e.Message.From.Username}.";
 
-            var objlvitem = new ObjListViewItem
+            var data = new MessageArrivedArgs
             {
-                DateTime = DateTime.Now.ToString(),
-                Text = info
+                MessageText = text
             };
 
-            var arrival = new RequestArrivalArgs
-            {
-                Item = objlvitem
-            };
-
-            RaiseRequestArrival(arrival);
+            RaiseMessageArrived(data);
 
             ICommand command = Program.CmdFactory.FindEntity(
                 x => Regex.IsMatch(cmdPattern, $"^{x.Pattern}$")
@@ -99,14 +93,14 @@ namespace Telebot.Clients
 
             if (command != null)
             {
-                var groups = Regex.Match(cmdPattern, command.Pattern).Groups;
+                Match match = Regex.Match(cmdPattern, command.Pattern);
 
-                var cmdParams = new CommandParam
+                var cmdArgs = new CommandParam
                 {
-                    Groups = groups
+                    Groups = match.Groups
                 };
 
-                command.Execute(cmdParams, executeCallback);
+                command.Execute(cmdArgs, executeCallback);
             }
             else
             {
@@ -119,9 +113,9 @@ namespace Telebot.Clients
             }
         }
 
-        private void RaiseRequestArrival(RequestArrivalArgs e)
+        private void RaiseMessageArrived(MessageArrivedArgs e)
         {
-            RequestArrival?.Invoke(this, e);
+            MessageArrived?.Invoke(this, e);
         }
     }
 }

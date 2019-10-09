@@ -37,7 +37,7 @@ namespace Telebot.Presenters
             this.mainFormView.TrayIcon.MouseClick += TrayMouseClick;
 
             this.telebotClient = telebotClient;
-            this.telebotClient.RequestArrival += BotRequestArrival;
+            this.telebotClient.MessageArrived += BotRequestArrival;
 
             SettingsBase.AddProfile(this);
 
@@ -65,14 +65,22 @@ namespace Telebot.Presenters
             ) as EventHandler<T>;
         }
 
-        private void BotRequestArrival(object sender, RequestArrivalArgs e)
+        private void BotRequestArrival(object sender, MessageArrivedArgs e)
         {
-            mainFormView.ListView.AddObject(e.Item);
+            string date = DateTime.Now.ToString();
+
+            var lvObject = new
+            {
+                DateTime = date,
+                Text = e.MessageText
+            };
+
+            mainFormView.ListView.AddObject(lvObject);
 
             if (mainFormView.WindowState == FormWindowState.Minimized)
             {
                 mainFormView.TrayIcon.ShowBalloonTip(
-                    1000, mainFormView.Text, e.Item.Text, ToolTipIcon.Info
+                    1000, mainFormView.Text, e.MessageText, ToolTipIcon.Info
                 );
             }
         }

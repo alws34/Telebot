@@ -1,31 +1,32 @@
-﻿using System.Collections.Generic;
+﻿using CPUID.Contracts;
+using System.Collections.Generic;
 
 namespace Telebot.Commands.Builder
 {
-    public class CmdBuilder
+    public class CmdBuilder : IBuilder<ICommand>
     {
-        private readonly List<ICommand> commands;
+        private readonly List<ICommand> _items;
 
         public CmdBuilder()
         {
-            commands = new List<ICommand>();
+            _items = new List<ICommand>();
         }
 
-        public CmdBuilder Add(ICommand command)
+        public IBuilder<ICommand> Add(ICommand item)
         {
-            commands.Add(command);
+            _items.Add(item);
             return this;
         }
 
-        public CmdBuilder AddRange(ICommand[] commands)
+        public IBuilder<ICommand> AddRange(ICommand[] items)
         {
-            this.commands.AddRange(commands);
+            this._items.AddRange(items);
             return this;
         }
 
         public ICommand[] Build()
         {
-            return commands.ToArray();
+            return _items.ToArray();
         }
     }
 }

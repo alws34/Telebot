@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Builder\DeviceBuilder.cs" />
+    <Compile Include="Contracts\IBuilder.cs" />
     <Compile Include="cpuidcore.cs" />
     <Compile Include="cpuidsdk.cs" />
     <Compile Include="Devices\BATDevice.cs" />

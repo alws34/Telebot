@@ -1,31 +1,32 @@
-﻿using System.Collections.Generic;
+﻿using CPUID.Contracts;
+using System.Collections.Generic;
 
 namespace Telebot.Commands.Status.Builder
 {
-    public class StatusBuilder
+    public class StatusBuilder : IBuilder<IStatus>
     {
-        private readonly List<IStatus> _statuses;
+        private readonly List<IStatus> _items;
 
         public StatusBuilder()
         {
-            _statuses = new List<IStatus>();
+            _items = new List<IStatus>();
         }
 
-        public StatusBuilder Add(IStatus status)
+        public IBuilder<IStatus> Add(IStatus item)
         {
-            _statuses.Add(status);
+            _items.Add(item);
             return this;
         }
 
-        public StatusBuilder AddRange(IStatus[] statuses)
+        public IBuilder<IStatus> AddRange(IStatus[] items)
         {
-            _statuses.AddRange(statuses);
+            _items.AddRange(items);
             return this;
         }
 
         public IStatus[] Build()
         {
-            return _statuses.ToArray();
+            return _items.ToArray();
         }
     }
 }

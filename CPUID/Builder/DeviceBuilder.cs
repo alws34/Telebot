@@ -3,30 +3,30 @@ using System.Collections.Generic;
 
 namespace CPUID.Builder
 {
-    public class DeviceBuilder
+    public class DeviceBuilder : IBuilder<IDevice>
     {
-        private readonly List<IDevice> devices;
+        private readonly List<IDevice> _items;
 
         public DeviceBuilder()
         {
-            devices = new List<IDevice>();
+            _items = new List<IDevice>();
         }
 
-        public DeviceBuilder Add(IDevice device)
+        public IBuilder<IDevice> Add(IDevice item)
         {
-            devices.Add(device);
+            _items.Add(item);
             return this;
         }
 
-        public DeviceBuilder AddRange(IDevice[] devices)
+        public IBuilder<IDevice> AddRange(IDevice[] items)
         {
-            this.devices.AddRange(devices);
+            _items.AddRange(items);
             return this;
         }
 
         public IDevice[] Build()
         {
-            return devices.ToArray();
+            return _items.ToArray();
         }
     }
 }

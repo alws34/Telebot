@@ -144,6 +144,7 @@
     <Compile Include="Presenters\MainFormPresenter.cs" />
     <Compile Include="ScreenCapture\ScreenCaptureArgs.cs" />
     <Compile Include="Clients\TelebotClient.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="Settings\Contracts\IProfile.cs" />
     <Compile Include="Settings\Contracts\ISettings.cs" />
     <Compile Include="Settings\GuiSettings.cs" />

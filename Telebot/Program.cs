@@ -19,6 +19,7 @@ namespace Telebot
 {
     static class Program
     {
+        public static bool isFirstRun { get; private set; }
         public static IFactory<ICommand> CmdFactory { get; private set; }
         public static IFactory<IJob<TempChangedArgs>> TempFactory { get; private set; }
         public static IFactory<IJob<ScreenCaptureArgs>> ScreenFactory { get; private set; }
@@ -35,13 +36,15 @@ namespace Telebot
             if (string.IsNullOrEmpty(token) || id == 0)
             {
                 MessageBox.Show(
-                    "Please fill token and admin id in settings.ini.",
+                    "Missing Token and AdminId in settings.ini.",
                     "Missing info",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error
                 );
                 return;
             }
+
+            isFirstRun = Properties.Settings.Default.FirstRun;
 
             ITelebotClient telebotClient = new TelebotClient(token, id);
 
@@ -68,6 +71,12 @@ namespace Telebot
             }, (s) => s.ToRunNow().AndEvery(1).Seconds());
 
             Application.Run(mainForm);
+
+            if (isFirstRun)
+            {
+                Properties.Settings.Default["FirstRun"] = false;
+                Properties.Settings.Default.Save();
+            }
 
             SettingsBase.CommitChanges();
 

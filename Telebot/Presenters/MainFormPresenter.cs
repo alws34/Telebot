@@ -120,7 +120,10 @@ namespace Telebot.Presenters
                 (s) => s.ToRunOnceIn(3).Seconds()
             );
 
-            RestoreGuiSettings();
+            if (!Program.isFirstRun)
+            {
+                RestoreGuiSettings();
+            }
         }
 
         private async Task SendClientHello()

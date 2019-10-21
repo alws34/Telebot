@@ -19,12 +19,7 @@ namespace Telebot.Temperature
 
             this.devices.AddRange(devices);
 
-            if (Properties.Settings.Default.FirstRun)
-            {
-                Properties.Settings.Default["FirstRun"] = false;
-                Properties.Settings.Default.Save();
-            }
-            else
+            if (!Program.isFirstRun)
             {
                 CPU_TEMPERATURE_WARNING = MonitorSettings.GetCPUWarningLevel();
                 GPU_TEMPERATURE_WARNING = MonitorSettings.GetGPUWarningLevel();

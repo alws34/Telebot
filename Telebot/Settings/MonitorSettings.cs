@@ -15,11 +15,11 @@ namespace Telebot.Settings
         {
             string value = settings.ReadString("Temperature.Monitor", "CPU_TEMPERATURE_WARNING");
 
-            float fValue = 65.0f;
+            float fValue;
 
-            float.TryParse(value, out fValue);
+            bool success = float.TryParse(value, out fValue);
 
-            return fValue;
+            return success ? fValue : 65.0f;
         }
 
         public void SaveCPUWarningLevel(float level)
@@ -33,11 +33,11 @@ namespace Telebot.Settings
         {
             string value = settings.ReadString("Temperature.Monitor", "GPU_TEMPERATURE_WARNING");
 
-            float fValue = 65.0f;
+            float fValue;
 
-            float.TryParse(value, out fValue);
+            bool success = float.TryParse(value, out fValue);
 
-            return fValue;
+            return success ? fValue : 65.0f;
         }
 
         public void SaveGPUWarningLevel(float level)
@@ -51,11 +51,11 @@ namespace Telebot.Settings
         {
             string status = settings.ReadString("Temperature.Monitor", "Enabled");
 
-            bool bStatus = false;
+            bool bStatus;
 
-            bool.TryParse(status, out bStatus);
+            bool success = bool.TryParse(status, out bStatus);
 
-            return bStatus;
+            return success ? bStatus : false;
         }
 
         public void SaveTempMonitorStatus(bool status)

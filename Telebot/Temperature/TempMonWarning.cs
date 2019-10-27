@@ -1,6 +1,9 @@
 ﻿using CPUID.Contracts;
+using CPUID.Devices;
 using CPUID.Models;
 using FluentScheduler;
+using System;
+using System.Collections.Generic;
 using static CPUID.CPUIDSDK;
 using static Telebot.Settings.SettingsFactory;
 
@@ -8,19 +11,28 @@ namespace Telebot.Temperature
 {
     public class TempMonWarning : TempMonBase, Settings.IProfile
     {
-        private float CPU_TEMPERATURE_WARNING = 65.0f;
-        private float GPU_TEMPERATURE_WARNING = 65.0f;
+        private float CPUWarningLevel;
+        private float GPUWarningLevel;
+
+        private readonly Dictionary<Type, float> tempWarningLevels;
 
         public TempMonWarning(IDevice[] devices)
         {
             JobType = Common.JobType.Fixed;
 
+            CPUWarningLevel = MonitorSettings.GetCPUWarningLevel();
+            GPUWarningLevel = MonitorSettings.GetGPUWarningLevel();
+
+            tempWarningLevels = new Dictionary<Type, float>
+            {
+                { typeof(CPUDevice), CPUWarningLevel },
+                { typeof(GPUDevice), GPUWarningLevel }
+            };
+
             SettingsBase.AddProfile(this);
 
             this.devices.AddRange(devices);
 
-            CPU_TEMPERATURE_WARNING = MonitorSettings.GetCPUWarningLevel();
-            GPU_TEMPERATURE_WARNING = MonitorSettings.GetGPUWarningLevel();
             IsActive = MonitorSettings.GetTempMonitorStatus();
 
             if (IsActive)
@@ -35,34 +47,19 @@ namespace Telebot.Temperature
             {
                 Sensor sensor = device.GetSensor(SENSOR_CLASS_TEMPERATURE);
 
-                switch (device.DeviceClass)
+                bool success = tempWarningLevels.TryGetValue(device.GetType(), out float warningTemp);
+
+                if (success && sensor.Value >= warningTemp)
                 {
-                    case CLASS_DEVICE_PROCESSOR:
-                        if (sensor.Value >= CPU_TEMPERATURE_WARNING)
-                        {
-                            var args = new TempChangedArgs
-                            {
-                                DeviceName = device.DeviceName,
-                                Temperature = sensor.Value
-                            };
+                    var args = new TempChangedArgs
+                    {
+                        DeviceName = device.DeviceName,
+                        Temperature = sensor.Value
+                    };
 
-                            RaiseTemperatureChanged(args);
-                        }
-                        break;
-                    case CLASS_DEVICE_DISPLAY_ADAPTER:
-                        if (sensor.Value >= GPU_TEMPERATURE_WARNING)
-                        {
-                            var args = new TempChangedArgs
-                            {
-                                DeviceName = device.DeviceName,
-                                Temperature = sensor.Value
-                            };
-
-                            RaiseTemperatureChanged(args);
-                        }
-                        break;
+                    RaiseTemperatureChanged(args);
                 }
-            }
+            };
         }
 
         public override void Start()
@@ -85,8 +82,8 @@ namespace Telebot.Temperature
         public void SaveChanges()
         {
             MonitorSettings.SaveTempMonitorStatus(IsActive);
-            MonitorSettings.SaveCPUWarningLevel(CPU_TEMPERATURE_WARNING);
-            MonitorSettings.SaveGPUWarningLevel(GPU_TEMPERATURE_WARNING);
+            MonitorSettings.SaveCPUWarningLevel(CPUWarningLevel);
+            MonitorSettings.SaveGPUWarningLevel(GPUWarningLevel);
         }
     }
 }

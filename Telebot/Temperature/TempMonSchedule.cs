@@ -47,9 +47,11 @@ namespace Telebot.Temperature
         {
             timeStop = DateTime.Now.AddSeconds(duration.TotalSeconds);
 
+            int seconds = Convert.ToInt32(interval.TotalSeconds);
+
             JobManager.AddJob(
                 Elapsed,
-                (s) => s.WithName(GetType().Name).ToRunNow().AndEvery(interval.Seconds).Seconds()
+                (s) => s.WithName(GetType().Name).ToRunNow().AndEvery(seconds).Seconds()
             );
 
             IsActive = true;

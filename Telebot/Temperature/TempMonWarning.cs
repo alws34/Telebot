@@ -14,7 +14,7 @@ namespace Telebot.Temperature
         private float CPUWarningLevel;
         private float GPUWarningLevel;
 
-        private readonly Dictionary<Type, float> tempWarningLevels;
+        private readonly Dictionary<uint, float> tempWarningLevels;
 
         public TempMonWarning(IDevice[] devices)
         {
@@ -23,10 +23,10 @@ namespace Telebot.Temperature
             CPUWarningLevel = MonitorSettings.GetCPUWarningLevel();
             GPUWarningLevel = MonitorSettings.GetGPUWarningLevel();
 
-            tempWarningLevels = new Dictionary<Type, float>
+            tempWarningLevels = new Dictionary<uint, float>
             {
-                { typeof(CPUDevice), CPUWarningLevel },
-                { typeof(GPUDevice), GPUWarningLevel }
+                { CLASS_DEVICE_PROCESSOR, CPUWarningLevel },
+                { CLASS_DEVICE_DISPLAY_ADAPTER, GPUWarningLevel }
             };
 
             SettingsBase.AddProfile(this);
@@ -47,7 +47,7 @@ namespace Telebot.Temperature
             {
                 Sensor sensor = device.GetSensor(SENSOR_CLASS_TEMPERATURE);
 
-                bool success = tempWarningLevels.TryGetValue(device.GetType(), out float warningTemp);
+                bool success = tempWarningLevels.TryGetValue(device.DeviceClass, out float warningTemp);
 
                 if (success && sensor.Value >= warningTemp)
                 {

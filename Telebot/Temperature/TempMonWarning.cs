@@ -1,8 +1,6 @@
 ﻿using CPUID.Contracts;
-using CPUID.Devices;
 using CPUID.Models;
 using FluentScheduler;
-using System;
 using System.Collections.Generic;
 using static CPUID.CPUIDSDK;
 using static Telebot.Settings.SettingsFactory;

@@ -4,16 +4,16 @@ namespace Telebot.Commands.Status
 {
     public class IPAddrStatus : IStatus
     {
-        private readonly NetworkApi networkLogic;
+        private readonly NetworkApi networkApi;
 
         public IPAddrStatus()
         {
-            networkLogic = new NetworkApi();
+            networkApi = ApiLocator.Instance.GetService<NetworkApi>();
         }
 
         public string Execute()
         {
-            return $"*IP*: {networkLogic.LocalIPv4Address}";
+            return $"*IP*: {networkApi.LocalIPv4Address}";
         }
     }
 }

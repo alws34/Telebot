@@ -4,16 +4,16 @@ namespace Telebot.Commands.Status
 {
     public class UptimeStatus : IStatus
     {
-        private readonly SystemApi systemLogic;
+        private readonly SystemApi systemApi;
 
         public UptimeStatus()
         {
-            systemLogic = new SystemApi();
+            systemApi = ApiLocator.Instance.GetService<SystemApi>();
         }
 
         public string Execute()
         {
-            return $"*Uptime*: {systemLogic.GetUptime()}";
+            return $"*Uptime*: {systemApi.GetUptime()}";
         }
     }
 }

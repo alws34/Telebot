@@ -48,6 +48,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\Battery.cs" />
+    <Compile Include="Components\Display.cs" />
+    <Compile Include="Components\IComponent.cs" />
+    <Compile Include="Components\Mainboard.cs" />
+    <Compile Include="Components\Processor.cs" />
+    <Compile Include="Components\Storage.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Spec.cs" />

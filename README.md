@@ -1,4 +1,4 @@
-# Telebot <img src="https://github.com/jdahan91/Telebot/blob/master/Telebot/icon.ico" width="24" height="24" />
+# Telebot
 A 64-Bit Windows Telegram bot that monitors system activity such as utilization and temperature and reports them to the client upon request (from commander).
 
 # Setup instructions

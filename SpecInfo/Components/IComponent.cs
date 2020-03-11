@@ -13,9 +13,9 @@ namespace SpecInfo.Components
             stringResult = new StringBuilder();
         }
 
-        protected void AppendSensors(string sensorType, IEnumerable<Sensor> sensors)
+        protected void AppendSensors(string sensorName, IEnumerable<Sensor> sensors)
         {
-            stringResult.AppendLine(sensorType);
+            stringResult.AppendLine(sensorName);
 
             foreach (Sensor sensor in sensors)
             {

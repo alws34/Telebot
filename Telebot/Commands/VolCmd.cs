@@ -14,7 +14,7 @@ namespace Telebot.Commands
             Pattern = "/vol (\\d{1,3})";
             Description = "Adjust workstation's volume.";
 
-            mediaApi = ApiLocator.Instance.GetService<MediaApi>();
+            mediaApi = new MediaApi();
         }
 
         public async override void Execute(CommandParam info, Func<CommandResult, Task> cbResult)

@@ -1,13 +1,8 @@
-﻿using static Telebot.Native.User32;
+﻿using Telebot.Common;
+using static Telebot.Native.User32;
 
 namespace Telebot.Infrastructure
 {
-    public enum DisplayState
-    {
-        DisplayStateOn = -1,
-        DisplayStateOff = 2
-    }
-
     public class DisplayApi
     {
         public void SetDisplayOn()

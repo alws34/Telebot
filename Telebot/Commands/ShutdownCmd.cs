@@ -14,7 +14,7 @@ namespace Telebot.Commands
             Pattern = "/shutdown (\\d+)";
             Description = "Schedule the workstation to shutdown.";
 
-            powerApi = ApiLocator.Instance.GetService<PowerApi>();
+            powerApi = new PowerApi();
         }
 
         public async override void Execute(CommandParam info, Func<CommandResult, Task> cbResult)

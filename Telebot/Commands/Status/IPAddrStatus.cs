@@ -8,7 +8,7 @@ namespace Telebot.Commands.Status
 
         public IPAddrStatus()
         {
-            networkApi = ApiLocator.Instance.GetService<NetworkApi>();
+            networkApi = new NetworkApi();
         }
 
         public string Execute()

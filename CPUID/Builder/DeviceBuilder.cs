@@ -1,4 +1,5 @@
 ﻿using Common;
+using CPUID.Base;
 
 namespace CPUID.Builder
 {

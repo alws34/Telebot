@@ -15,7 +15,7 @@ namespace Telebot.Commands
             Pattern = "/apps (fg|all)";
             Description = "List of active applications.";
 
-            var windowsApi = ApiLocator.Instance.GetService<WindowsApi>();
+            var windowsApi = new WindowsApi();
 
             actions = new Dictionary<string, Func<string>>
             {

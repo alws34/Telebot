@@ -8,7 +8,7 @@ namespace Telebot.Commands.Status
 
         public UptimeStatus()
         {
-            systemApi = ApiLocator.Instance.GetService<SystemApi>();
+            systemApi = new SystemApi();
         }
 
         public string Execute()

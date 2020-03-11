@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using CPUID.Base;
+using System.Collections.Generic;
 using System.Text;
 
 namespace Telebot.Commands.Status

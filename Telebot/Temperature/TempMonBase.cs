@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CPUID.Base;
+using System;
 using System.Collections.Generic;
 using Telebot.Common;
 using Telebot.Contracts;

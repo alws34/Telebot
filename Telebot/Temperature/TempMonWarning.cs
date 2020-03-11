@@ -1,4 +1,5 @@
-﻿using CPUID.Models;
+﻿using CPUID.Base;
+using CPUID.Models;
 using FluentScheduler;
 using System.Collections.Generic;
 using Telebot.Settings;

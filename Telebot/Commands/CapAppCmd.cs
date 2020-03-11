@@ -16,7 +16,7 @@ namespace Telebot.Commands
             Pattern = "/capapp (\\d+)";
             Description = "Get a screenshot of the specified application (by pid).";
 
-            desktopApi = ApiLocator.Instance.GetService<DesktopApi>();
+            desktopApi = new DesktopApi();
         }
 
         public async override void Execute(CommandParam info, Func<CommandResult, Task> cbResult)

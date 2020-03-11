@@ -14,7 +14,7 @@ namespace Telebot.Commands
             Pattern = "/bright (\\d{1,3})";
             Description = "Adjust workstation's brightness.";
 
-            systemApi = ApiLocator.Instance.GetService<SystemApi>();
+            systemApi = new SystemApi();
         }
 
         public async override void Execute(CommandParam info, Func<CommandResult, Task> cbResult)

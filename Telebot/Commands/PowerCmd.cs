@@ -15,7 +15,7 @@ namespace Telebot.Commands
             Pattern = "/power (lock|logoff|sleep|reboot|shutdown)";
             Description = "Lock, logoff, sleep, reboot or shutdown the workstation.";
 
-            var powerApi = ApiLocator.Instance.GetService<PowerApi>();
+            var powerApi = new PowerApi();
 
             actions = new Dictionary<string, Action>()
             {

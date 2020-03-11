@@ -104,10 +104,9 @@
     <Compile Include="Common\JobType.cs" />
     <Compile Include="Contracts\IJob.cs" />
     <Compile Include="Contracts\IScheduledJob.cs" />
-    <Compile Include="Contracts\IServiceLocator.cs" />
     <Compile Include="Extensions\PrimitiveExtensions.cs" />
+    <Compile Include="Common\DisplayState.cs" />
     <Compile Include="Native\Kernel32.cs" />
-    <Compile Include="Infrastructure\ApiLocator.cs" />
     <Compile Include="Infrastructure\MediaApi.cs" />
     <Compile Include="Clients\IBotClient.cs" />
     <Compile Include="Commands\AppsCmd.cs" />

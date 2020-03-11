@@ -15,7 +15,7 @@ namespace Telebot.Commands
             Pattern = "/screen (on|off)";
             Description = "Turn off or on the monitor.";
 
-            var displayApi = ApiLocator.Instance.GetService<DisplayApi>();
+            var displayApi = new DisplayApi();
 
             actions = new Dictionary<string, Action>()
             {

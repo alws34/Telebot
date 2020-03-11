@@ -66,10 +66,7 @@
       <HintPath>..\packages\ini-parser.2.5.2\lib\net20\INIFileParser.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.3-beta1\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="ObjectListView, Version=2.9.1.25410, Culture=neutral, PublicKeyToken=b1c5bf581481bcd4, processorArchitecture=MSIL">
-      <HintPath>..\packages\ObjectListView.Official.2.9.2-alpha2\lib\net20\ObjectListView.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -86,13 +83,18 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="Telegram.Bot, Version=15.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Telegram.Bot.15.0.0\lib\net45\Telegram.Bot.dll</HintPath>
+    <Reference Include="Telegram.Bot, Version=15.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Telegram.Bot.15.4.0\lib\net45\Telegram.Bot.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Clients\ITransmitter.cs" />
     <Compile Include="Clients\MessageArrivedArgs.cs" />
+    <Compile Include="Clients\Transmitable.cs" />
+    <Compile Include="Clients\TransmitDocument.cs" />
+    <Compile Include="Clients\TransmitPhoto.cs" />
+    <Compile Include="Clients\TransmitText.cs" />
     <Compile Include="Commands\BrightCmd.cs" />
     <Compile Include="Commands\Builder\CmdBuilder.cs" />
     <Compile Include="Commands\Status\Builder\StatusBuilder.cs" />
@@ -147,7 +149,6 @@
     <Compile Include="Settings.cs" />
     <Compile Include="Settings\Contracts\IProfile.cs" />
     <Compile Include="Settings\Contracts\ISettings.cs" />
-    <Compile Include="Settings\MainViewSettings.cs" />
     <Compile Include="Settings\MonitorSettings.cs" />
     <Compile Include="Settings\Factories\SettingsFactory.cs" />
     <Compile Include="Settings\TelegramSettings.cs" />

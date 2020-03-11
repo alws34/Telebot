@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Drawing;
 using System.Threading.Tasks;
-using Telebot.Infrastructure;
 using Telebot.Extensions;
+using Telebot.Infrastructure;
 using Telebot.Models;
 
 namespace Telebot.Commands
@@ -27,8 +27,8 @@ namespace Telebot.Commands
             {
                 var result = new CommandResult
                 {
-                    Stream = photo.ToStream(),
-                    ResultType = ResultType.Photo
+                    ResultType = ResultType.Photo,
+                    Raw = photo.ToStream()
                 };
 
                 await cbResult(result);

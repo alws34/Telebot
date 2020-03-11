@@ -3,7 +3,6 @@ using IniParser.Model;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
-using System.Web.Script.Serialization;
 
 namespace Telebot.Settings
 {

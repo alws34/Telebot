@@ -14,7 +14,6 @@ using Telebot.ScreenCapture;
 using Telebot.Settings;
 using Telebot.Temperature;
 using static CPUID.CPUIDCore;
-using static Telebot.Settings.SettingsFactory;
 
 namespace Telebot
 {
@@ -40,7 +39,7 @@ namespace Telebot
             if (string.IsNullOrEmpty(token) || id == 0)
             {
                 MessageBox.Show(
-                    "Missing Token and AdminId in settings.ini.",
+                    "Missing Token or AdminId in settings.ini.",
                     "Missing info",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error
@@ -50,7 +49,7 @@ namespace Telebot
 
             isFirstRun = Properties.Settings.Default.FirstRun;
 
-            ITelebotClient telebotClient = new TelebotClient(token, id);
+            ITelebotClient client = new TelebotClient(token, id);
 
             TempFactory = new TempMonFactory();
             ScreenFactory = new ScreenCapFactory();
@@ -63,12 +62,12 @@ namespace Telebot
 
             var presenter = new MainFormPresenter(
                 mainView,
-                telebotClient,
+                client,
                 screenCaps,
                 tempMons
             );
 
-            JobManager.AddJob(() => { pSDK.RefreshInformation(); }, 
+            JobManager.AddJob(() => { pSDK.RefreshInformation(); },
                 (s) => s.ToRunNow().AndEvery(1).Seconds()
             );
 

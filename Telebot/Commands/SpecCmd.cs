@@ -33,7 +33,7 @@ namespace Telebot.Commands
             var result = new CommandResult
             {
                 ResultType = ResultType.Document,
-                Stream = fileStream
+                Raw = fileStream
             };
 
             await cbResult(result);

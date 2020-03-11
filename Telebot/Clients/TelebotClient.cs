@@ -1,67 +1,52 @@
 ﻿using System;
-using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Telebot.Commands;
 using Telebot.Models;
 using Telegram.Bot;
 using Telegram.Bot.Args;
-using Telegram.Bot.Types;
-using Telegram.Bot.Types.Enums;
-using Telegram.Bot.Types.InputFiles;
 
 namespace Telebot.Clients
 {
     public class TelebotClient : TelegramBotClient, ITelebotClient
     {
         public int AdminId { get; }
+        protected readonly Transmitable transmitable;
 
         public event EventHandler<MessageArrivedArgs> MessageArrived;
 
         public TelebotClient(string token, int id) : base(token)
         {
             AdminId = id;
+            transmitable = new Transmitable(this);
 
             OnMessage += BotMessageHandler;
         }
 
         private async void BotMessageHandler(object sender, MessageEventArgs e)
         {
-            async Task executeCallback(CommandResult result)
+            async Task CallbackHandler(CommandResult result)
             {
-                switch (result.ResultType)
-                {
-                    case ResultType.Text:
-                        await SendTextMessageAsync(e.Message.Chat.Id, result.Text.TrimEnd(),
-                            parseMode: ParseMode.Markdown, replyToMessageId: e.Message.MessageId);
-                        break;
-                    case ResultType.Photo:
-                        var photo = new InputOnlineFile(result.Stream, "capture.jpg");
-                        await SendDocumentAsync(e.Message.Chat.Id, photo,
-                            parseMode: ParseMode.Markdown, replyToMessageId: e.Message.MessageId,
-                            caption: "From *Telebot*", thumb: photo as InputMedia);
-                        result.Stream.Close();
-                        result.Stream.Dispose();
-                        break;
-                    case ResultType.Document:
-                        var document = new InputOnlineFile(result.Stream, (result.Stream as FileStream).Name);
-                        await SendDocumentAsync(e.Message.Chat.Id, document,
-                            parseMode: ParseMode.Markdown, replyToMessageId: e.Message.MessageId,
-                            caption: "From *Telebot*", thumb: document as InputMedia);
-                        result.Stream.Close();
-                        result.Stream.Dispose();
-                        break;
-                }
+                result.ChatId = e.Message.Chat.Id;
+                result.FromId = e.Message.From.Id;
+                result.MsgId = e.Message.MessageId;
+
+                await transmitable.Transmit(result);
             }
 
             if (e.Message.From.Id != AdminId)
             {
-                var cmdResult = new CommandResult
+                var result = new CommandResult
                 {
                     ResultType = ResultType.Text,
-                    Text = "Unauthorized."
+                    Text = "Unauthorized.",
+                    ChatId = e.Message.Chat.Id,
+                    FromId = e.Message.From.Id,
+                    MsgId = e.Message.MessageId
                 };
-                await executeCallback(cmdResult);
+
+                await transmitable.Transmit(result);
+
                 return;
             }
 
@@ -69,12 +54,17 @@ namespace Telebot.Clients
 
             if (string.IsNullOrEmpty(pattern))
             {
-                var cmdResult = new CommandResult
+                var result = new CommandResult
                 {
                     ResultType = ResultType.Text,
-                    Text = "Command pattern is null or empty."
+                    Text = "Command pattern is null or empty.",
+                    ChatId = e.Message.Chat.Id,
+                    FromId = e.Message.From.Id,
+                    MsgId = e.Message.MessageId
                 };
-                await executeCallback(cmdResult);
+
+                await transmitable.Transmit(result);
+
                 return;
             }
 
@@ -100,16 +90,20 @@ namespace Telebot.Clients
                     Groups = match.Groups
                 };
 
-                command.Execute(cmdArgs, executeCallback);
+                command.Execute(cmdArgs, CallbackHandler);
             }
             else
             {
-                var cmdResult = new CommandResult
+                var result = new CommandResult
                 {
                     ResultType = ResultType.Text,
-                    Text = "Undefined command. For commands list, type */help*."
+                    Text = "Undefined command. For commands list, type */help*.",
+                    ChatId = e.Message.Chat.Id,
+                    FromId = e.Message.From.Id,
+                    MsgId = e.Message.MessageId
                 };
-                await executeCallback(cmdResult);
+
+                await transmitable.Transmit(result);
             }
         }
 

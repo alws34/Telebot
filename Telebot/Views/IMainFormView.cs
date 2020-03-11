@@ -1,6 +1,4 @@
-﻿using BrightIdeasSoftware;
-using System;
-using System.Drawing;
+﻿using System;
 using System.Windows.Forms;
 
 namespace Telebot.Views
@@ -9,14 +7,11 @@ namespace Telebot.Views
     {
         event EventHandler Load;
         event FormClosedEventHandler FormClosed;
-        event EventHandler Resize;
+
+        void Hide();
 
         string Text { get; set; }
-        void Hide();
-        void Show();
-        ObjectListView ListView { get; }
+        Button Button1 { get; }
         NotifyIcon TrayIcon { get; }
-        Rectangle Bounds { get; set; }
-        FormWindowState WindowState { get; set; }
     }
 }

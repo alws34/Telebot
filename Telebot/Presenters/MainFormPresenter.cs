@@ -1,7 +1,5 @@
-﻿using BrightIdeasSoftware;
-using FluentScheduler;
+﻿using FluentScheduler;
 using System;
-using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -9,7 +7,6 @@ using Telebot.Clients;
 using Telebot.Contracts;
 using Telebot.Extensions;
 using Telebot.ScreenCapture;
-using Telebot.Settings;
 using Telebot.Temperature;
 using Telebot.Views;
 using Telegram.Bot.Types;
@@ -18,14 +15,14 @@ using Telegram.Bot.Types.InputFiles;
 
 namespace Telebot.Presenters
 {
-    public class MainFormPresenter : IProfile
+    public class MainFormPresenter
     {
         private readonly IMainFormView mainView;
-        private readonly ITelebotClient telebotClient;
+        private readonly ITelebotClient client;
 
         public MainFormPresenter(
             IMainFormView mainView,
-            ITelebotClient telebotClient,
+            ITelebotClient client,
             IJob<ScreenCaptureArgs>[] screenCaps,
             IJob<TempChangedArgs>[] tempMonitors
         )
@@ -33,13 +30,9 @@ namespace Telebot.Presenters
             this.mainView = mainView;
             this.mainView.Load += viewLoad;
             this.mainView.FormClosed += viewClosed;
-            this.mainView.Resize += viewResize;
-            this.mainView.TrayIcon.MouseClick += TrayMouseClick;
 
-            this.telebotClient = telebotClient;
-            this.telebotClient.MessageArrived += BotRequestArrival;
-
-            Program.Settings.Handler.AddProfile(this);
+            this.client = client;
+            this.client.MessageArrived += BotMessageArrived;
 
             foreach (IJob<ScreenCaptureArgs> screenCap in screenCaps)
             {
@@ -65,119 +58,58 @@ namespace Telebot.Presenters
             ) as EventHandler<T>;
         }
 
-        private void BotRequestArrival(object sender, MessageArrivedArgs e)
+        private void BotMessageArrived(object sender, MessageArrivedArgs e)
         {
-            string date = DateTime.Now.ToString();
-
-            var lvObject = new
-            {
-                DateTime = date,
-                Text = e.MessageText
-            };
-
-            mainView.ListView.AddObject(lvObject);
-
-            if (mainView.WindowState == FormWindowState.Minimized)
-            {
-                mainView.TrayIcon.ShowBalloonTip(
-                    1000, mainView.Text, e.MessageText, ToolTipIcon.Info
-                );
-            }
-        }
-
-        private void TrayMouseClick(object sender, MouseEventArgs e)
-        {
-            mainView.Show();
-            mainView.WindowState = FormWindowState.Normal;
-            mainView.TrayIcon.Visible = false;
-        }
-
-        private void viewResize(object sender, EventArgs e)
-        {
-            if (mainView.WindowState == FormWindowState.Minimized)
-            {
-                mainView.Hide();
-                mainView.TrayIcon.Visible = true;
-            }
+            mainView.TrayIcon.ShowBalloonTip(
+               1000, mainView.Text, e.MessageText, ToolTipIcon.Info
+           );
         }
 
         private void viewClosed(object sender, FormClosedEventArgs e)
         {
-            if (telebotClient.IsReceiving)
-                telebotClient.StopReceiving();
+            if (client.IsReceiving)
+                client.StopReceiving();
         }
 
         private void viewLoad(object sender, EventArgs e)
         {
+            mainView.Hide();
+            mainView.TrayIcon.Visible = true;
+
             // Delay job to reduce startup time
             JobManager.AddJob(
-                async () => {
-                    telebotClient.StartReceiving();
+                async () =>
+                {
+                    client.StartReceiving();
                     await AddBotNameTitle();
                     await SendClientHello();
                 }, (s) => s.ToRunOnceIn(3).Seconds()
             );
-
-            if (!Program.isFirstRun)
-            {
-                RestoreGuiSettings();
-            }
         }
 
         private async Task SendClientHello()
         {
-            await telebotClient.SendTextMessageAsync(
-                telebotClient.AdminId, "*Telebot*: I'm Up.", parseMode: ParseMode.Markdown
+            await client.SendTextMessageAsync(
+                client.AdminId, "*Telebot*: I'm Up.", parseMode: ParseMode.Markdown
             );
         }
 
         private async Task AddBotNameTitle()
         {
-            var me = await telebotClient.GetMeAsync();
-            mainView.ListView.Invoke((MethodInvoker)delegate
+            var me = await client.GetMeAsync();
+
+            mainView.Button1.Invoke((MethodInvoker)delegate
             {
-                mainView.Text += $" - {me.Username}";
+                mainView.TrayIcon.Text += $" - {me.Username}";
             });
-        }
-
-        public void SaveChanges()
-        {
-            Program.Settings.MainView.SaveFormBounds(mainView.Bounds);
-
-            var widths = new List<int>();
-
-            foreach (OLVColumn column in mainView.ListView.AllColumns)
-            {
-                widths.Add(column.Width);
-            }
-
-            Program.Settings.MainView.SaveListView1ColumnsWidth(widths);
-        }
-
-        private void RestoreGuiSettings()
-        {
-            var bounds = Program.Settings.MainView.GetFormBounds();
-
-            if (bounds != null)
-                mainView.Bounds = bounds;
-
-            var widths = Program.Settings.MainView.GetListView1ColumnsWidth();
-
-            if (widths != null && widths.Count > 0)
-            {
-                for (int i = 0; i < widths.Count; i++)
-                {
-                    mainView.ListView.Columns[i].Width = widths[i];
-                }
-            }
         }
 
         private async void ScreenCaptureScheduleHandler(object sender, ScreenCaptureArgs e)
         {
             var document = new InputOnlineFile(e.Capture.ToStream(), "captime.jpg");
 
-            await telebotClient.SendDocumentAsync(
-                telebotClient.AdminId, document, thumb: document as InputMedia
+            await client.SendDocumentAsync(
+                client.AdminId, document, thumb: document as InputMedia
             );
         }
 
@@ -185,8 +117,8 @@ namespace Telebot.Presenters
         {
             string text = $"*[WARNING] {e.DeviceName}*: {e.Temperature}°C\nFrom *Telebot*";
 
-            await telebotClient.SendTextMessageAsync(
-                telebotClient.AdminId, text, ParseMode.Markdown
+            await client.SendTextMessageAsync(
+                client.AdminId, text, ParseMode.Markdown
             );
         }
 
@@ -198,8 +130,8 @@ namespace Telebot.Presenters
             {
                 case null:
                     text.AppendLine("\nFrom *Telebot*");
-                    await telebotClient.SendTextMessageAsync(
-                        telebotClient.AdminId, text.ToString(), ParseMode.Markdown
+                    await client.SendTextMessageAsync(
+                        client.AdminId, text.ToString(), ParseMode.Markdown
                     );
                     text.Clear();
                     break;

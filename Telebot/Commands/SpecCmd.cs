@@ -6,7 +6,7 @@ using Telebot.Models;
 
 namespace Telebot.Commands
 {
-    public class SpecCmd : CommandBase
+    public class SpecCmd : BaseCommand
     {
         public SpecCmd()
         {

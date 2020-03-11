@@ -5,7 +5,7 @@ using Telebot.Models;
 
 namespace Telebot.Commands
 {
-    public class ShutdownCmd : CommandBase
+    public class ShutdownCmd : BaseCommand
     {
         private readonly PowerApi powerApi;
 

@@ -7,7 +7,7 @@ using Telebot.ScreenCapture;
 
 namespace Telebot.Commands
 {
-    public class CapTimeCmd : CommandBase
+    public class CapTimeCmd : BaseCommand
     {
         private readonly IJob<ScreenCaptureArgs> _job;
 

@@ -7,7 +7,7 @@ using Telebot.Temperature;
 
 namespace Telebot.Commands
 {
-    public class TempTimeCmd : CommandBase
+    public class TempTimeCmd : BaseCommand
     {
         private readonly IJob<TempChangedArgs> _job;
 

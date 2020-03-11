@@ -5,7 +5,7 @@ using Telebot.Models;
 
 namespace Telebot.Commands
 {
-    public class VolCmd : CommandBase
+    public class VolCmd : BaseCommand
     {
         private readonly MediaApi mediaApi;
 

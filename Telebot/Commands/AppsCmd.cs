@@ -6,7 +6,7 @@ using Telebot.Models;
 
 namespace Telebot.Commands
 {
-    public class AppsCmd : CommandBase
+    public class AppsCmd : BaseCommand
     {
         public readonly Dictionary<string, Func<string>> actions;
 

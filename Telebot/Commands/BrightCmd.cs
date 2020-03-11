@@ -5,7 +5,7 @@ using Telebot.Models;
 
 namespace Telebot.Commands
 {
-    public class BrightCmd : CommandBase
+    public class BrightCmd : BaseCommand
     {
         private readonly SystemApi systemApi;
 

@@ -7,7 +7,7 @@ using Telebot.Models;
 
 namespace Telebot.Commands
 {
-    public class CapAppCmd : CommandBase
+    public class CapAppCmd : BaseCommand
     {
         private readonly DesktopApi desktopApi;
 

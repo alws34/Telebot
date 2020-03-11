@@ -97,6 +97,8 @@
     <Compile Include="Clients\TransmitText.cs" />
     <Compile Include="Commands\BrightCmd.cs" />
     <Compile Include="Commands\Builder\CmdBuilder.cs" />
+    <Compile Include="Commands\ExitCmd.cs" />
+    <Compile Include="Commands\RestartCmd.cs" />
     <Compile Include="Commands\Status\Builder\StatusBuilder.cs" />
     <Compile Include="Commands\Status\CaptureStatus.cs" />
     <Compile Include="Common\Common.cs" />
@@ -113,7 +115,7 @@
     <Compile Include="Commands\CapAppCmd.cs" />
     <Compile Include="Commands\CapTimeCmd.cs" />
     <Compile Include="Commands\CaptureCmd.cs" />
-    <Compile Include="Commands\Base\CommandBase.cs" />
+    <Compile Include="Commands\Base\BaseCommand.cs" />
     <Compile Include="Commands\Factories\CommandFactory.cs" />
     <Compile Include="Commands\HelpCmd.cs" />
     <Compile Include="Commands\KillTaskCmd.cs" />

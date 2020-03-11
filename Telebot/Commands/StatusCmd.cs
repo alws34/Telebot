@@ -6,7 +6,7 @@ using Telebot.Models;
 
 namespace Telebot.Commands
 {
-    public class StatusCmd : CommandBase
+    public class StatusCmd : BaseCommand
     {
         private readonly IStatus[] statuses;
 

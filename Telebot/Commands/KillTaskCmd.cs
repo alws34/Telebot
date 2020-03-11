@@ -5,7 +5,7 @@ using Telebot.Models;
 
 namespace Telebot.Commands
 {
-    public class KillTaskCmd : CommandBase
+    public class KillTaskCmd : BaseCommand
     {
         public KillTaskCmd()
         {

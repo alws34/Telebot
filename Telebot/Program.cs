@@ -28,8 +28,8 @@ namespace Telebot
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
+            //Application.EnableVisualStyles();
+            //Application.SetCompatibleTextRenderingDefault(false);
 
             Settings = new SettingsFactory();
 
@@ -110,10 +110,12 @@ namespace Telebot
                 .Add(new CaptureCmd())
                 .Add(new CapAppCmd())
                 .Add(new CapTimeCmd())
+                .Add(new ExitCmd())
                 .Add(new ScreenCmd())
                 .Add(new TempMonCmd())
                 .Add(new TempTimeCmd())
                 .Add(new PowerCmd())
+                .Add(new RestartCmd())
                 .Add(new ShutdownCmd())
                 .Add(new MessageBoxCmd())
                 .Add(new KillTaskCmd())

@@ -4,7 +4,7 @@ using Telebot.Models;
 
 namespace Telebot.Commands
 {
-    public abstract class CommandBase : ICommand
+    public abstract class BaseCommand : ICommand
     {
         public string Pattern { get; protected set; }
 

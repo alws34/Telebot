@@ -5,7 +5,7 @@ using Telebot.Models;
 
 namespace Telebot.Commands
 {
-    public class HelpCmd : CommandBase
+    public class HelpCmd : BaseCommand
     {
         public HelpCmd()
         {

@@ -6,13 +6,13 @@ using Telebot.Models;
 
 namespace Telebot.Commands
 {
-    public class PowerCmd : CommandBase
+    public class PowerCmd : BaseCommand
     {
         private readonly Dictionary<string, Action> actions;
 
         public PowerCmd()
         {
-            Pattern = "/(lock|logoff|sleep|reboot|shutdown)";
+            Pattern = "/power (lock|logoff|sleep|reboot|shutdown)";
             Description = "Lock, logoff, sleep, reboot or shutdown the workstation.";
 
             var powerApi = ApiLocator.Instance.GetService<PowerApi>();

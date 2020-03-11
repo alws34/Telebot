@@ -1,4 +1,4 @@
-﻿using static Telebot.Helpers.User32Helper;
+﻿using static Telebot.Native.User32;
 
 namespace Telebot.Infrastructure
 {

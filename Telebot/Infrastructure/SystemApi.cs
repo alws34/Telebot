@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using Telebot.Extensions;
-using static Telebot.Helpers.Kernel32Helper;
+using static Telebot.Native.Kernel32;
 
 namespace Telebot.Infrastructure
 {

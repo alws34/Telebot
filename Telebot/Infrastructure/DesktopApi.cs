@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
-using static Telebot.Helpers.User32Helper;
+using static Telebot.Native.User32;
 
 namespace Telebot.Infrastructure
 {

@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Windows.Forms;
-using Telebot.Helpers;
+using Telebot.Native;
 
 namespace Telebot.Infrastructure
 {
@@ -46,12 +46,12 @@ namespace Telebot.Infrastructure
 
         public void LockWorkstation()
         {
-            User32Helper.LockWorkStation();
+            User32.LockWorkStation();
         }
 
         public void LogoffWorkstation()
         {
-            User32Helper.ExitWindowsEx(User32Helper.EWX_LOGOFF, 0);
+            User32.ExitWindowsEx(User32.EWX_LOGOFF, 0);
         }
     }
 }

@@ -15,7 +15,7 @@ AdminId = <User_ID> // The telegram user who will command the bot.
 # Application architecture
 
 #### Telebot module (Non-GUI):
-The application is a [Tray-based](https://docs.microsoft.com/en-us/windows/win32/shell/notification-area) application based on [Model–view–presenter (MVP) architectural pattern](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93presenter) (**Notification-view**). Each command is encapsulated by the [Command design pattern](https://en.wikipedia.org/wiki/Command_pattern).
+The application is a [Tray-based](https://docs.microsoft.com/en-us/windows/win32/shell/notification-area) <img src="https://github.com/jdahan91/Telebot/blob/master/Telebot/icon.ico" width="16" height="16" /> application based on [Model–view–presenter (MVP) architectural pattern](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93presenter) (**Notification-view**). Each command is encapsulated by the [Command design pattern](https://en.wikipedia.org/wiki/Command_pattern).
 
 #### SpecInfo module:
 The application that fetches full computer hardware information and saves it within same directory to file *spec.txt*. This program is used with the **/spec** command.

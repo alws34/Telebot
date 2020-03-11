@@ -1,5 +1,4 @@
-﻿using CPUID.Contracts;
-using CPUID.Models;
+﻿using CPUID.Models;
 using FluentScheduler;
 using System;
 using Telebot.Contracts;

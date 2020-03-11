@@ -3,7 +3,7 @@ using System;
 
 namespace CPUID.Devices
 {
-    public class CPUDevice : DeviceBase
+    public class CPUDevice : IDevice
     {
         public CPUDevice()
         {

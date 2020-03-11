@@ -3,7 +3,7 @@ using System;
 
 namespace CPUID.Devices
 {
-    public class BATDevice : DeviceBase
+    public class BATDevice : IDevice
     {
         public BATDevice()
         {

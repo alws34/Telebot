@@ -9,7 +9,7 @@ namespace SpecInfo
     {
         public Spec()
         {
-            pSDK.RefreshInformation();
+            Sdk.RefreshInformation();
         }
 
         public string GetInfo()

@@ -3,7 +3,7 @@ using CPUID.Models;
 
 namespace CPUID.Devices
 {
-    public class GPUDevice : DeviceBase
+    public class GPUDevice : IDevice
     {
         public GPUDevice()
         {

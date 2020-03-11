@@ -1,8 +1,8 @@
-﻿using Telebot.Common;
+﻿using Common;
 
 namespace Telebot.Commands.Factories
 {
-    public class CommandFactory : Factory<ICommand>
+    public class CommandFactory : IFactory<ICommand>
     {
         public CommandFactory(ICommand[] commands)
         {

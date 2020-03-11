@@ -1,11 +1,11 @@
-﻿using CPUID.Builder;
-using Telebot.Common;
+﻿using Common;
+using CPUID.Builder;
 using Telebot.Contracts;
 using static CPUID.CPUIDCore;
 
 namespace Telebot.Temperature
 {
-    public class TempMonFactory : Factory<IJob<TempChangedArgs>>
+    public class TempMonFactory : IFactory<IJob<TempChangedArgs>>
     {
         public TempMonFactory()
         {

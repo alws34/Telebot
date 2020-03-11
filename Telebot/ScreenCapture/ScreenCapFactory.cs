@@ -1,9 +1,9 @@
-﻿using Telebot.Common;
+﻿using Common;
 using Telebot.Contracts;
 
 namespace Telebot.ScreenCapture
 {
-    public class ScreenCapFactory : Factory<IJob<ScreenCaptureArgs>>
+    public class ScreenCapFactory : IFactory<IJob<ScreenCaptureArgs>>
     {
         public ScreenCapFactory()
         {

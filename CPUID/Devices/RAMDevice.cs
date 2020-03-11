@@ -3,7 +3,7 @@ using CPUID.Models;
 
 namespace CPUID.Devices
 {
-    public class RAMDevice : DeviceBase
+    public class RAMDevice : IDevice
     {
         public RAMDevice()
         {

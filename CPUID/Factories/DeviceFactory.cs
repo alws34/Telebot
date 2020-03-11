@@ -1,9 +1,10 @@
-﻿using CPUID.Contracts;
+﻿using CPUID.Base;
 using CPUID.Devices;
 using System;
 using System.Collections.Generic;
 
 using static CPUID.CPUIDCore;
+using static CPUID.CPUIDSDK;
 
 namespace CPUID.Factories
 {
@@ -19,13 +20,13 @@ namespace CPUID.Factories
 
         public DeviceFactory()
         {
-            deviceCount = pSDK.GetNumberOfDevices();
+            deviceCount = Sdk.GetNumberOfDevices();
 
-            CPUDevices = GetDevices<CPUDevice>(CPUIDSDK.CLASS_DEVICE_PROCESSOR);
-            GPUDevices = GetDevices<GPUDevice>(CPUIDSDK.CLASS_DEVICE_DISPLAY_ADAPTER);
-            RAMDevices = GetDevices<RAMDevice>(CPUIDSDK.CLASS_DEVICE_MAINBOARD);
-            HDDDevices = GetDevices<HDDDevice>(CPUIDSDK.CLASS_DEVICE_DRIVE);
-            BATDevices = GetDevices<BATDevice>(CPUIDSDK.CLASS_DEVICE_BATTERY);
+            CPUDevices = GetDevices<CPUDevice>(CLASS_DEVICE_PROCESSOR);
+            GPUDevices = GetDevices<GPUDevice>(CLASS_DEVICE_DISPLAY_ADAPTER);
+            RAMDevices = GetDevices<RAMDevice>(CLASS_DEVICE_MAINBOARD);
+            HDDDevices = GetDevices<HDDDevice>(CLASS_DEVICE_DRIVE);
+            BATDevices = GetDevices<BATDevice>(CLASS_DEVICE_BATTERY);
         }
 
         private IDevice[] GetDevices<T>(uint deviceClass) where T : IDevice, new()
@@ -34,9 +35,9 @@ namespace CPUID.Factories
 
             for (int deviceIndex = 0; deviceIndex < deviceCount; deviceIndex++)
             {
-                if (pSDK.GetDeviceClass(deviceIndex) == deviceClass)
+                if (Sdk.GetDeviceClass(deviceIndex) == deviceClass)
                 {
-                    string deviceName = pSDK.GetDeviceName(deviceIndex);
+                    string deviceName = Sdk.GetDeviceName(deviceIndex);
 
                     T device = (T)Activator.CreateInstance(typeof(T), new object[]
                     {

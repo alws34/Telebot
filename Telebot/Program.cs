@@ -1,4 +1,5 @@
-﻿using CPUID.Builder;
+﻿using Common;
+using CPUID.Builder;
 using FluentScheduler;
 using System;
 using System.Windows.Forms;
@@ -19,7 +20,7 @@ namespace Telebot
 {
     static class Program
     {
-        public static bool isFirstRun { get; private set; }
+        public static bool FirstRun { get; private set; }
         public static SettingsFactory Settings { get; private set; }
         public static IFactory<ICommand> CmdFactory { get; private set; }
         public static IFactory<IJob<TempChangedArgs>> TempFactory { get; private set; }
@@ -47,7 +48,7 @@ namespace Telebot
                 return;
             }
 
-            isFirstRun = Properties.Settings.Default.FirstRun;
+            FirstRun = Properties.Settings.Default.FirstRun;
 
             IBotClient client = new BotClient(token, id);
 
@@ -67,13 +68,13 @@ namespace Telebot
                 tempMons
             );
 
-            JobManager.AddJob(() => { pSDK.RefreshInformation(); },
+            JobManager.AddJob(() => { Sdk.RefreshInformation(); },
                 (s) => s.ToRunNow().AndEvery(1).Seconds()
             );
 
             Application.Run(mainView);
 
-            if (isFirstRun)
+            if (FirstRun)
             {
                 Properties.Settings.Default["FirstRun"] = false;
                 Properties.Settings.Default.Save();

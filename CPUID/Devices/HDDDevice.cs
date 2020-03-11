@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CPUID.Devices
 {
-    public class HDDDevice : DeviceBase
+    public class HDDDevice : IDevice
     {
         public HDDDevice()
         {

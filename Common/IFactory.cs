@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using Telebot.Contracts;
 
-namespace Telebot.Common
+namespace Common
 {
-    public abstract class Factory<T> : IFactory<T>
+    public abstract class IFactory<T>
     {
         protected readonly List<T> _items;
 
-        public Factory()
+        public IFactory()
         {
             _items = new List<T>();
         }

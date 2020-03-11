@@ -1,11 +1,10 @@
-﻿using CPUID.Contracts;
-using CPUID.Models;
+﻿using CPUID.Models;
 using System.Collections.Generic;
 using static CPUID.CPUIDCore;
 
 namespace CPUID.Base
 {
-    public abstract class DeviceBase : IDevice
+    public abstract class IDevice
     {
         public string DeviceName { get; protected set; }
         public int DeviceIndex { get; protected set; }
@@ -20,7 +19,7 @@ namespace CPUID.Base
             float minVal = 0.0f;
             float maxVal = 0.0f;
 
-            pSDK.GetSensorInfos(
+            Sdk.GetSensorInfos(
                 this.DeviceIndex, 0, sensorClass, ref sensorId,
                 ref sensorName, ref rvalue, ref value, ref minVal, ref maxVal
              );
@@ -29,7 +28,7 @@ namespace CPUID.Base
         }
         public List<Sensor> GetSensors(int sensorClass)
         {
-            int sensorCount = pSDK.GetNumberOfSensors(this.DeviceIndex, sensorClass);
+            int sensorCount = Sdk.GetNumberOfSensors(this.DeviceIndex, sensorClass);
 
             var result = new List<Sensor>(sensorCount);
 
@@ -42,7 +41,7 @@ namespace CPUID.Base
                 float minVal = 0.0f;
                 float maxVal = 0.0f;
 
-                pSDK.GetSensorInfos(
+                Sdk.GetSensorInfos(
                     this.DeviceIndex, sensorIndex, sensorClass, ref sensorId,
                     ref sensorName, ref rvalue, ref value, ref minVal, ref maxVal
                  );

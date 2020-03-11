@@ -42,16 +42,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Builder\DeviceBuilder.cs" />
-    <Compile Include="Contracts\IBuilder.cs" />
     <Compile Include="cpuidcore.cs" />
     <Compile Include="cpuidsdk.cs" />
     <Compile Include="Devices\BATDevice.cs" />
     <Compile Include="Devices\CPUDevice.cs" />
-    <Compile Include="Base\DeviceBase.cs" />
+    <Compile Include="Base\IDevice.cs" />
     <Compile Include="Factories\DeviceFactory.cs" />
     <Compile Include="Devices\HDDDevice.cs" />
     <Compile Include="Devices\GPUDevice.cs" />
-    <Compile Include="Contracts\IDevice.cs" />
     <Compile Include="Devices\RAMDevice.cs" />
     <Compile Include="Models\Sensor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -61,6 +59,12 @@
     <Content Include="cpuidsdk64.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{711F8DAA-2B41-4686-A11D-4F7995A1CC53}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

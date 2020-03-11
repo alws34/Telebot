@@ -101,9 +101,7 @@
     <Compile Include="Commands\RestartCmd.cs" />
     <Compile Include="Commands\Status\Builder\StatusBuilder.cs" />
     <Compile Include="Commands\Status\CaptureStatus.cs" />
-    <Compile Include="Common\Factory.cs" />
     <Compile Include="Common\JobType.cs" />
-    <Compile Include="Contracts\IFactory.cs" />
     <Compile Include="Contracts\IJob.cs" />
     <Compile Include="Contracts\IScheduledJob.cs" />
     <Compile Include="Contracts\IServiceLocator.cs" />
@@ -220,6 +218,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{711F8DAA-2B41-4686-A11D-4F7995A1CC53}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CPUID\CPUID.csproj">
       <Project>{BE642C45-8519-49FD-A45D-B5BF07C9FF96}</Project>
       <Name>CPUID</Name>

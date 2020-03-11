@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Threading.Tasks;
-using Telebot.CoreApis;
+using Telebot.Infrastructure;
 using Telebot.Extensions;
 using Telebot.Models;
 
@@ -19,7 +19,7 @@ namespace Telebot.Commands
             desktopApi = ApiLocator.Instance.GetService<DesktopApi>();
         }
 
-        public async override void Execute(object parameter, Func<CommandResult, Task> callback)
+        public async override void Execute(CommandParam info, Func<CommandResult, Task> cbResult)
         {
             var photos = desktopApi.CaptureDesktop();
 
@@ -28,10 +28,10 @@ namespace Telebot.Commands
                 var result = new CommandResult
                 {
                     Stream = photo.ToStream(),
-                    SendType = SendType.Photo
+                    ResultType = ResultType.Photo
                 };
 
-                await callback(result);
+                await cbResult(result);
             }
         }
     }

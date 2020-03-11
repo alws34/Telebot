@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Telebot.CoreApis;
+using Telebot.Infrastructure;
 using Telebot.Models;
 
 namespace Telebot.Commands
@@ -17,19 +17,17 @@ namespace Telebot.Commands
             mediaApi = ApiLocator.Instance.GetService<MediaApi>();
         }
 
-        public async override void Execute(object parameter, Func<CommandResult, Task> callback)
+        public async override void Execute(CommandParam info, Func<CommandResult, Task> cbResult)
         {
-            var parameters = parameter as CommandParam;
+            int vol = Convert.ToInt32(info.Groups[1].Value);
 
-            int vol = Convert.ToInt32(parameters.Groups[1].Value);
-
-            var cmdResult = new CommandResult
+            var result = new CommandResult
             {
-                SendType = SendType.Text,
+                ResultType = ResultType.Text,
                 Text = $"Successfully adjusted volume to {vol}%."
             };
 
-            await callback(cmdResult);
+            await cbResult(result);
 
             mediaApi.SetVolume(vol);
         }

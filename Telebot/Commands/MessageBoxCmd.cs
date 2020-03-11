@@ -13,19 +13,17 @@ namespace Telebot.Commands
             Description = "Shows a message box with the specified text.";
         }
 
-        public async override void Execute(object parameter, Func<CommandResult, Task> callback)
+        public async override void Execute(CommandParam info, Func<CommandResult, Task> cbResult)
         {
-            var parameters = parameter as CommandParam;
+            string msg = info.Groups[1].Value;
 
-            var msg = parameters.Groups[1].Value;
-
-            var cmdResult = new CommandResult
+            var result = new CommandResult
             {
-                SendType = SendType.Text,
+                ResultType = ResultType.Text,
                 Text = "Successfully initiated a message box."
             };
 
-            await callback(cmdResult);
+            await cbResult(result);
 
             MessageBox.Show
             (

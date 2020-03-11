@@ -3,11 +3,11 @@ using System.Drawing;
 
 namespace Telebot.Settings
 {
-    public class GuiSettings
+    public class MainViewSettings
     {
         private readonly ISettings settings;
 
-        public GuiSettings(ISettings settings)
+        public MainViewSettings(ISettings settings)
         {
             this.settings = settings;
         }

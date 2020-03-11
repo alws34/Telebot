@@ -1,18 +1,18 @@
 ﻿namespace Telebot.Settings
 {
-    public static class SettingsFactory
+    public class SettingsFactory
     {
-        public static ISettings SettingsBase { get; }
-        public static GuiSettings GuiSettings { get; }
-        public static TelegramSettings TelegramSettings { get; }
-        public static MonitorSettings MonitorSettings { get; }
+        public ISettings Handler { get; }
+        public MainViewSettings MainView { get; }
+        public TelegramSettings Telegram { get; }
+        public MonitorSettings WarnMon { get; }
 
-        static SettingsFactory()
+        public SettingsFactory()
         {
-            SettingsBase = new SettingsBase();
-            GuiSettings = new GuiSettings(SettingsBase);
-            TelegramSettings = new TelegramSettings(SettingsBase);
-            MonitorSettings = new MonitorSettings(SettingsBase);
+            Handler = new IniFileSettings();
+            MainView = new MainViewSettings(Handler);
+            Telegram = new TelegramSettings(Handler);
+            WarnMon = new MonitorSettings(Handler);
         }
     }
 }

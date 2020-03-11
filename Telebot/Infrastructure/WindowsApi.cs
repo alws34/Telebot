@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using static Telebot.Helpers.User32Helper;
 
-namespace Telebot.CoreApis
+namespace Telebot.Infrastructure
 {
     public class WindowsApi
     {
@@ -19,10 +19,7 @@ namespace Telebot.CoreApis
 
             bool isTopLevelWindow(IntPtr hWnd)
             {
-                const uint WS_CAPTION = 0x00C00000;
-                const uint WS_VISIBLE = 0x10000000;
-
-                IntPtr styles = GetWindowLongPtr(hWnd, (int)GWL.GWL_STYLE);
+                IntPtr styles = GetWindowLong(hWnd, (int)GWL.GWL_STYLE);
 
                 long value = styles.ToInt64();
 
@@ -33,9 +30,7 @@ namespace Telebot.CoreApis
             {
                 if (isTopLevelWindow(hWnd))
                 {
-                    uint pid;
-
-                    GetWindowThreadProcessId(hWnd, out pid);
+                    GetWindowThreadProcessId(hWnd, out uint pid);
 
                     var process = Process.GetProcessById((int)pid);
 

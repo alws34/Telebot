@@ -2,7 +2,7 @@
 
 namespace Telebot.Models
 {
-    public enum SendType
+    public enum ResultType
     {
         Text,
         Photo,
@@ -13,6 +13,6 @@ namespace Telebot.Models
     {
         public string Text { get; set; }
         public Stream Stream { get; set; }
-        public SendType SendType { get; set; }
+        public ResultType ResultType { get; set; }
     }
 }

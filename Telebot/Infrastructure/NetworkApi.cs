@@ -2,7 +2,7 @@
 using System.Net;
 using System.Net.Sockets;
 
-namespace Telebot.CoreApis
+namespace Telebot.Infrastructure
 {
     public class NetworkApi
     {
@@ -25,7 +25,7 @@ namespace Telebot.CoreApis
                 }
             }
 
-            throw new Exception("No network adapters with an IPv4 address in the system!");
+            return "No network adapters with an IPv4 address in the system!";
         }
     }
 }

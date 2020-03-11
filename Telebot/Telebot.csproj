@@ -104,8 +104,8 @@
     <Compile Include="Contracts\IServiceLocator.cs" />
     <Compile Include="Extensions\PrimitiveExtensions.cs" />
     <Compile Include="Helpers\Kernel32Helper.cs" />
-    <Compile Include="CoreApis\ApiLocator.cs" />
-    <Compile Include="CoreApis\MediaApi.cs" />
+    <Compile Include="Infrastructure\ApiLocator.cs" />
+    <Compile Include="Infrastructure\MediaApi.cs" />
     <Compile Include="Clients\ITelebotClient.cs" />
     <Compile Include="Commands\AppsCmd.cs" />
     <Compile Include="Commands\CapAppCmd.cs" />
@@ -130,12 +130,12 @@
     <Compile Include="Commands\TempTimeCmd.cs" />
     <Compile Include="Commands\VolCmd.cs" />
     <Compile Include="Commands\Status\IStatus.cs" />
-    <Compile Include="CoreApis\DesktopApi.cs" />
-    <Compile Include="CoreApis\NetworkApi.cs" />
-    <Compile Include="CoreApis\PowerApi.cs" />
-    <Compile Include="CoreApis\DisplayApi.cs" />
-    <Compile Include="CoreApis\SystemApi.cs" />
-    <Compile Include="CoreApis\WindowsApi.cs" />
+    <Compile Include="Infrastructure\DesktopApi.cs" />
+    <Compile Include="Infrastructure\NetworkApi.cs" />
+    <Compile Include="Infrastructure\PowerApi.cs" />
+    <Compile Include="Infrastructure\DisplayApi.cs" />
+    <Compile Include="Infrastructure\SystemApi.cs" />
+    <Compile Include="Infrastructure\WindowsApi.cs" />
     <Compile Include="Extensions\BitmapExtensions.cs" />
     <Compile Include="Extensions\TimeSpanExtensions.cs" />
     <Compile Include="ScreenCapture\ScreenCapFactory.cs" />
@@ -147,7 +147,7 @@
     <Compile Include="Settings.cs" />
     <Compile Include="Settings\Contracts\IProfile.cs" />
     <Compile Include="Settings\Contracts\ISettings.cs" />
-    <Compile Include="Settings\GuiSettings.cs" />
+    <Compile Include="Settings\MainViewSettings.cs" />
     <Compile Include="Settings\MonitorSettings.cs" />
     <Compile Include="Settings\Factories\SettingsFactory.cs" />
     <Compile Include="Settings\TelegramSettings.cs" />
@@ -162,7 +162,7 @@
     <Compile Include="Views\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Settings\SettingsBase.cs" />
+    <Compile Include="Settings\IniFileSettings.cs" />
     <Compile Include="Models\CommandParam.cs" />
     <Compile Include="Models\CommandResult.cs" />
     <Compile Include="Program.cs" />

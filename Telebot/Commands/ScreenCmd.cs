@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Telebot.CoreApis;
+using Telebot.Infrastructure;
 using Telebot.Models;
 
 namespace Telebot.Commands
@@ -24,19 +24,17 @@ namespace Telebot.Commands
             };
         }
 
-        public async override void Execute(object parameter, Func<CommandResult, Task> callback)
+        public async override void Execute(CommandParam info, Func<CommandResult, Task> cbResult)
         {
-            var parameters = parameter as CommandParam;
-
-            string state = parameters.Groups[1].Value;
+            string state = info.Groups[1].Value;
 
             var result = new CommandResult
             {
-                SendType = SendType.Text,
+                ResultType = ResultType.Text,
                 Text = $"Successfully turned {state} the monitor."
             };
 
-            await callback(result);
+            await cbResult(result);
 
             actions[state].Invoke();
         }

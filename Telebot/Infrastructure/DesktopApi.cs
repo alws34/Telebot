@@ -5,7 +5,7 @@ using System.Threading;
 using System.Windows.Forms;
 using static Telebot.Helpers.User32Helper;
 
-namespace Telebot.CoreApis
+namespace Telebot.Infrastructure
 {
     public class DesktopApi
     {
@@ -44,15 +44,10 @@ namespace Telebot.CoreApis
         {
             bool isWindowMinized(IntPtr wnd)
             {
-                const uint WS_MINIMIZE = 0x20000000;
-
-                IntPtr wndStyles = GetWindowLongPtr(wnd, (int)GWL.GWL_STYLE);
+                IntPtr wndStyles = GetWindowLong(wnd, (int)GWL.GWL_STYLE);
 
                 return (wndStyles.ToInt64() & WS_MINIMIZE) != 0;
             }
-
-            const byte SW_RESTORE = 9;
-            const byte SW_MINIMIZE = 6;
 
             bool minimize = false;
 

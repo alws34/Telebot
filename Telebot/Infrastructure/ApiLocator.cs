@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Telebot.Contracts;
 
-namespace Telebot.CoreApis
+namespace Telebot.Infrastructure
 {
     public class ApiLocator : IServiceLocator
     {

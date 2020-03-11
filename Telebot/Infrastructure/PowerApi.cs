@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using Telebot.Helpers;
 
-namespace Telebot.CoreApis
+namespace Telebot.Infrastructure
 {
     public class PowerApi
     {

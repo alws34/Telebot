@@ -18,7 +18,7 @@ namespace Telebot.Commands
             this.statuses = statuses;
         }
 
-        public async override void Execute(object parameter, Func<CommandResult, Task> callback)
+        public async override void Execute(CommandParam info, Func<CommandResult, Task> cbResult)
         {
             var statusBuilder = new StringBuilder();
 
@@ -29,11 +29,11 @@ namespace Telebot.Commands
 
             var result = new CommandResult
             {
-                Text = statusBuilder.ToString(),
-                SendType = SendType.Text
+                ResultType = ResultType.Text,
+                Text = statusBuilder.ToString()
             };
 
-            await callback(result);
+            await cbResult(result);
         }
     }
 }

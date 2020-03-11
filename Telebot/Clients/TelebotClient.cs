@@ -29,13 +29,13 @@ namespace Telebot.Clients
         {
             async Task executeCallback(CommandResult result)
             {
-                switch (result.SendType)
+                switch (result.ResultType)
                 {
-                    case SendType.Text:
+                    case ResultType.Text:
                         await SendTextMessageAsync(e.Message.Chat.Id, result.Text.TrimEnd(),
                             parseMode: ParseMode.Markdown, replyToMessageId: e.Message.MessageId);
                         break;
-                    case SendType.Photo:
+                    case ResultType.Photo:
                         var photo = new InputOnlineFile(result.Stream, "capture.jpg");
                         await SendDocumentAsync(e.Message.Chat.Id, photo,
                             parseMode: ParseMode.Markdown, replyToMessageId: e.Message.MessageId,
@@ -43,7 +43,7 @@ namespace Telebot.Clients
                         result.Stream.Close();
                         result.Stream.Dispose();
                         break;
-                    case SendType.Document:
+                    case ResultType.Document:
                         var document = new InputOnlineFile(result.Stream, (result.Stream as FileStream).Name);
                         await SendDocumentAsync(e.Message.Chat.Id, document,
                             parseMode: ParseMode.Markdown, replyToMessageId: e.Message.MessageId,
@@ -58,27 +58,27 @@ namespace Telebot.Clients
             {
                 var cmdResult = new CommandResult
                 {
-                    SendType = SendType.Text,
+                    ResultType = ResultType.Text,
                     Text = "Unauthorized."
                 };
                 await executeCallback(cmdResult);
                 return;
             }
 
-            string cmdPattern = e.Message.Text;
+            string pattern = e.Message.Text;
 
-            if (string.IsNullOrEmpty(cmdPattern))
+            if (string.IsNullOrEmpty(pattern))
             {
                 var cmdResult = new CommandResult
                 {
-                    SendType = SendType.Text,
+                    ResultType = ResultType.Text,
                     Text = "Command pattern is null or empty."
                 };
                 await executeCallback(cmdResult);
                 return;
             }
 
-            string text = $"Received {cmdPattern} from {e.Message.From.Username}.";
+            string text = $"Received {pattern} from {e.Message.From.Username}.";
 
             var data = new MessageArrivedArgs
             {
@@ -88,12 +88,12 @@ namespace Telebot.Clients
             RaiseMessageArrived(data);
 
             ICommand command = Program.CmdFactory.FindEntity(
-                x => Regex.IsMatch(cmdPattern, $"^{x.Pattern}$")
+                x => Regex.IsMatch(pattern, $"^{x.Pattern}$")
             );
 
             if (command != null)
             {
-                Match match = Regex.Match(cmdPattern, command.Pattern);
+                Match match = Regex.Match(pattern, command.Pattern);
 
                 var cmdArgs = new CommandParam
                 {
@@ -106,7 +106,7 @@ namespace Telebot.Clients
             {
                 var cmdResult = new CommandResult
                 {
-                    SendType = SendType.Text,
+                    ResultType = ResultType.Text,
                     Text = "Undefined command. For commands list, type */help*."
                 };
                 await executeCallback(cmdResult);

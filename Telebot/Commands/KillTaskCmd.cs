@@ -13,17 +13,15 @@ namespace Telebot.Commands
             Description = "Kill a task with the specified pid.";
         }
 
-        public async override void Execute(object parameter, Func<CommandResult, Task> callback)
+        public async override void Execute(CommandParam info, Func<CommandResult, Task> cbResult)
         {
-            var parameters = parameter as CommandParam;
-
-            var pid = Convert.ToInt32(parameters.Groups[1].Value);
+            int pid = Convert.ToInt32(info.Groups[1].Value);
 
             Process target;
 
-            var cmdResult = new CommandResult
+            var result = new CommandResult
             {
-                SendType = SendType.Text
+                ResultType = ResultType.Text
             };
 
             try
@@ -32,22 +30,22 @@ namespace Telebot.Commands
             }
             catch (Exception e)
             {
-                cmdResult.Text = e.Message;
-                await callback(cmdResult);
+                result.Text = e.Message;
+                await cbResult(result);
                 return;
             }
 
             try
             {
                 target.Kill();
-                cmdResult.Text = $"Successfully killed {target.ProcessName}.";
+                result.Text = $"Successfully killed {target.ProcessName}.";
             }
             catch (Exception e)
             {
-                cmdResult.Text = e.Message;
+                result.Text = e.Message;
             }
 
-            await callback(cmdResult);
+            await cbResult(result);
         }
     }
 }

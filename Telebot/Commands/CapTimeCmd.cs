@@ -21,28 +21,26 @@ namespace Telebot.Commands
             );
         }
 
-        public async override void Execute(object parameter, Func<CommandResult, Task> callback)
+        public async override void Execute(CommandParam info, Func<CommandResult, Task> cbResult)
         {
-            var parameters = parameter as CommandParam;
+            string arg = info.Groups[1].Value;
 
-            var reParam = parameters.Groups[1].Value;
-
-            if (reParam.Equals("off"))
+            if (arg.Equals("off"))
             {
-                var cmdResult = new CommandResult
+                var result1 = new CommandResult
                 {
-                    SendType = SendType.Text,
+                    ResultType = ResultType.Text,
                     Text = "Successfully disabled scheduled screen capture."
                 };
 
-                await callback(cmdResult);
+                await cbResult(result1);
 
                 _job.Stop();
 
                 return;
             }
 
-            var intParams = reParam.Split(' ');
+            var intParams = arg.Split(' ');
 
             int duration = Convert.ToInt32(intParams[0]);
             int interval = Convert.ToInt32(intParams[1]);
@@ -52,11 +50,11 @@ namespace Telebot.Commands
 
             var result = new CommandResult
             {
-                SendType = SendType.Text,
+                ResultType = ResultType.Text,
                 Text = "Successfully scheduled screen capture."
             };
 
-            await callback(result);
+            await cbResult(result);
 
             ((IScheduledJob)_job).Start(tsDuration, tsInterval);
         }

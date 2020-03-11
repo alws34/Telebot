@@ -13,7 +13,7 @@ namespace Telebot.Commands
             Description = "List of available commands.";
         }
 
-        public async override void Execute(object parameter, Func<CommandResult, Task> callback)
+        public async override void Execute(CommandParam info, Func<CommandResult, Task> cbResult)
         {
             var commandsStr = new StringBuilder();
 
@@ -26,11 +26,11 @@ namespace Telebot.Commands
 
             var result = new CommandResult
             {
-                Text = commandsStr.ToString(),
-                SendType = SendType.Text
+                ResultType = ResultType.Text,
+                Text = commandsStr.ToString()
             };
 
-            await callback(result);
+            await cbResult(result);
         }
     }
 }

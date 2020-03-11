@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using Telebot.CoreApis;
+using Telebot.Infrastructure;
 using Telebot.Extensions;
 using Telebot.Models;
 
@@ -19,23 +19,21 @@ namespace Telebot.Commands
             desktopApi = ApiLocator.Instance.GetService<DesktopApi>();
         }
 
-        public async override void Execute(object parameter, Func<CommandResult, Task> callback)
+        public async override void Execute(CommandParam info, Func<CommandResult, Task> cbResult)
         {
-            var parameters = parameter as CommandParam;
-
-            int pid = Convert.ToInt32(parameters.Groups[1].Value);
+            int pid = Convert.ToInt32(info.Groups[1].Value);
 
             var hWnd = Process.GetProcessById(pid).MainWindowHandle;
 
             var photo = desktopApi.CaptureWindow(hWnd);
 
-            var cmdResult = new CommandResult
+            var result = new CommandResult
             {
-                SendType = SendType.Photo,
+                ResultType = ResultType.Photo,
                 Stream = photo.ToStream()
             };
 
-            await callback(cmdResult);
+            await cbResult(result);
         }
     }
 }

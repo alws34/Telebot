@@ -10,7 +10,7 @@ namespace Telebot.Commands
 
         public string Description { get; protected set; }
 
-        public abstract void Execute(object parameter, Func<CommandResult, Task> callback);
+        public abstract void Execute(CommandParam info, Func<CommandResult, Task> cbResult);
 
         public override string ToString()
         {

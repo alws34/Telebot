@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Telebot.CoreApis;
+using Telebot.Infrastructure;
 using Telebot.Models;
 
 namespace Telebot.Commands
@@ -24,21 +24,19 @@ namespace Telebot.Commands
             };
         }
 
-        public async override void Execute(object parameter, Func<CommandResult, Task> callback)
+        public async override void Execute(CommandParam info, Func<CommandResult, Task> cbResult)
         {
-            var parameters = parameter as CommandParam;
+            string methName = info.Groups[1].Value;
 
-            var act = parameters.Groups[1].Value;
-
-            var res = actions[act].Invoke();
+            string methResult = actions[methName].Invoke();
 
             var result = new CommandResult
             {
-                Text = res,
-                SendType = SendType.Text
+                Text = methResult,
+                ResultType = ResultType.Text
             };
 
-            await callback(result);
+            await cbResult(result);
         }
     }
 }

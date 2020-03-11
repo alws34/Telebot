@@ -11,6 +11,7 @@ using Telebot.Commands.Status.Builder;
 using Telebot.Contracts;
 using Telebot.Presenters;
 using Telebot.ScreenCapture;
+using Telebot.Settings;
 using Telebot.Temperature;
 using static CPUID.CPUIDCore;
 using static Telebot.Settings.SettingsFactory;
@@ -20,6 +21,7 @@ namespace Telebot
     static class Program
     {
         public static bool isFirstRun { get; private set; }
+        public static SettingsFactory Settings { get; private set; }
         public static IFactory<ICommand> CmdFactory { get; private set; }
         public static IFactory<IJob<TempChangedArgs>> TempFactory { get; private set; }
         public static IFactory<IJob<ScreenCaptureArgs>> ScreenFactory { get; private set; }
@@ -30,8 +32,10 @@ namespace Telebot
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            string token = TelegramSettings.GetBotToken();
-            int id = TelegramSettings.GetAdminId();
+            Settings = new SettingsFactory();
+
+            string token = Settings.Telegram.GetBotToken();
+            int id = Settings.Telegram.GetAdminId();
 
             if (string.IsNullOrEmpty(token) || id == 0)
             {
@@ -50,27 +54,25 @@ namespace Telebot
 
             TempFactory = new TempMonFactory();
             ScreenFactory = new ScreenCapFactory();
-
-            buildCommandFactory();
+            CmdFactory = BuildCommandFactory();
 
             var tempMons = TempFactory.GetAllEntities();
             var screenCaps = ScreenFactory.GetAllEntities();
 
-            MainForm mainForm = new MainForm();
+            MainForm mainView = new MainForm();
 
             var presenter = new MainFormPresenter(
-                mainForm,
+                mainView,
                 telebotClient,
                 screenCaps,
                 tempMons
             );
 
-            JobManager.AddJob(() =>
-            {
-                pSDK.RefreshInformation();
-            }, (s) => s.ToRunNow().AndEvery(1).Seconds());
+            JobManager.AddJob(() => { pSDK.RefreshInformation(); }, 
+                (s) => s.ToRunNow().AndEvery(1).Seconds()
+            );
 
-            Application.Run(mainForm);
+            Application.Run(mainView);
 
             if (isFirstRun)
             {
@@ -78,14 +80,14 @@ namespace Telebot
                 Properties.Settings.Default.Save();
             }
 
-            SettingsBase.CommitChanges();
+            Settings.Handler.CommitChanges();
 
-            SettingsBase.WriteChanges();
+            Settings.Handler.WriteChanges();
 
             JobManager.StopAndBlock();
         }
 
-        private static void buildCommandFactory()
+        private static CommandFactory BuildCommandFactory()
         {
             var devices = new DeviceBuilder()
                 .AddRange(DeviceFactory.RAMDevices)
@@ -121,7 +123,7 @@ namespace Telebot
                 .Add(new HelpCmd())
                 .Build();
 
-            CmdFactory = new CommandFactory(commands);
+            return new CommandFactory(commands);
         }
     }
 }

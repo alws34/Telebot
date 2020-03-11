@@ -14,7 +14,7 @@ namespace Telebot.Commands
             Description = "Get full hardware information.";
         }
 
-        public async override void Execute(object parameter, Func<CommandResult, Task> callback)
+        public async override void Execute(CommandParam info, Func<CommandResult, Task> cbResult)
         {
             var si = new ProcessStartInfo
             {
@@ -30,13 +30,13 @@ namespace Telebot.Commands
 
             var fileStream = new FileStream(filePath, FileMode.Open);
 
-            var cmdResult = new CommandResult
+            var result = new CommandResult
             {
-                SendType = SendType.Document,
+                ResultType = ResultType.Document,
                 Stream = fileStream
             };
 
-            await callback(cmdResult);
+            await cbResult(result);
         }
     }
 }

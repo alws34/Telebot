@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Telebot.CoreApis;
+using Telebot.Infrastructure;
 using Telebot.Models;
 
 namespace Telebot.Commands
@@ -17,21 +17,19 @@ namespace Telebot.Commands
             systemApi = ApiLocator.Instance.GetService<SystemApi>();
         }
 
-        public async override void Execute(object parameter, Func<CommandResult, Task> callback)
+        public async override void Execute(CommandParam info, Func<CommandResult, Task> cbResult)
         {
-            var parameters = parameter as CommandParam;
+            int brvalue = Convert.ToInt32(info.Groups[1].Value);
 
-            int bright = Convert.ToInt32(parameters.Groups[1].Value);
-
-            var cmdResult = new CommandResult
+            var result = new CommandResult
             {
-                SendType = SendType.Text,
-                Text = $"Successfully adjusted brightness to {bright}%."
+                ResultType = ResultType.Text,
+                Text = $"Successfully adjusted brightness to {brvalue}%."
             };
 
-            await callback(cmdResult);
+            await cbResult(result);
 
-            systemApi.SetBrightness(bright);
+            systemApi.SetBrightness(brvalue);
         }
     }
 }

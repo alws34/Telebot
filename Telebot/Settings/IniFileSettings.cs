@@ -1,24 +1,22 @@
 ﻿using IniParser;
 using IniParser.Model;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
 using System.Web.Script.Serialization;
 
 namespace Telebot.Settings
 {
-    public class SettingsBase : FileIniDataParser, ISettings
+    public class IniFileSettings : FileIniDataParser, ISettings
     {
         private const string iniPath = @".\settings.ini";
 
         private readonly IniData iniData;
-
         private readonly List<IProfile> profiles;
-        private readonly JavaScriptSerializer serializer;
 
-        public SettingsBase()
+        public IniFileSettings()
         {
             profiles = new List<IProfile>();
-            serializer = new JavaScriptSerializer();
 
             if (!File.Exists(iniPath))
             {
@@ -48,12 +46,12 @@ namespace Telebot.Settings
             if (string.IsNullOrEmpty(value))
                 return default;
 
-            return serializer.Deserialize<T>(value);
+            return JsonConvert.DeserializeObject<T>(value);
         }
 
         public void WriteObject(string section, string key, object value)
         {
-            string valueStr = serializer.Serialize(value);
+            string valueStr = JsonConvert.SerializeObject(value);
 
             WriteString(section, key, valueStr);
         }

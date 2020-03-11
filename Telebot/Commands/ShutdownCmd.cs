@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Telebot.CoreApis;
+using Telebot.Infrastructure;
 using Telebot.Models;
 
 namespace Telebot.Commands
@@ -17,21 +17,19 @@ namespace Telebot.Commands
             powerApi = ApiLocator.Instance.GetService<PowerApi>();
         }
 
-        public async override void Execute(object parameter, Func<CommandResult, Task> callback)
+        public async override void Execute(CommandParam info, Func<CommandResult, Task> cbResult)
         {
-            var parameters = parameter as CommandParam;
+            int sec = Convert.ToInt32(info.Groups[1].Value);
 
-            var time = Convert.ToInt32(parameters.Groups[1].Value);
-
-            var cmdResult = new CommandResult
+            var result = new CommandResult
             {
-                SendType = SendType.Text,
-                Text = $"Successfully scheduled the workstation to shutdown in {time} seconds."
+                ResultType = ResultType.Text,
+                Text = $"Successfully scheduled the workstation to shutdown in {sec} seconds."
             };
 
-            await callback(cmdResult);
+            await cbResult(result);
 
-            powerApi.ShutdownWorkstation(time);
+            powerApi.ShutdownWorkstation(sec);
         }
     }
 }

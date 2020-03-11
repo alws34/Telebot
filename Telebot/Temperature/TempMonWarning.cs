@@ -2,12 +2,12 @@
 using CPUID.Models;
 using FluentScheduler;
 using System.Collections.Generic;
+using Telebot.Settings;
 using static CPUID.CPUIDSDK;
-using static Telebot.Settings.SettingsFactory;
 
 namespace Telebot.Temperature
 {
-    public class TempMonWarning : TempMonBase, Settings.IProfile
+    public class TempMonWarning : TempMonBase, IProfile
     {
         private float CPUWarningLevel;
         private float GPUWarningLevel;
@@ -18,8 +18,8 @@ namespace Telebot.Temperature
         {
             JobType = Common.JobType.Fixed;
 
-            CPUWarningLevel = MonitorSettings.GetCPUWarningLevel();
-            GPUWarningLevel = MonitorSettings.GetGPUWarningLevel();
+            CPUWarningLevel = Program.Settings.WarnMon.GetCPUWarningLevel();
+            GPUWarningLevel = Program.Settings.WarnMon.GetGPUWarningLevel();
 
             tempWarningLevels = new Dictionary<uint, float>
             {
@@ -27,11 +27,11 @@ namespace Telebot.Temperature
                 { CLASS_DEVICE_DISPLAY_ADAPTER, GPUWarningLevel }
             };
 
-            SettingsBase.AddProfile(this);
+            Program.Settings.Handler.AddProfile(this);
 
             this.devices.AddRange(devices);
 
-            IsActive = MonitorSettings.GetTempMonitorStatus();
+            IsActive = Program.Settings.WarnMon.GetTempMonitorStatus();
 
             if (IsActive)
             {
@@ -79,9 +79,9 @@ namespace Telebot.Temperature
 
         public void SaveChanges()
         {
-            MonitorSettings.SaveTempMonitorStatus(IsActive);
-            MonitorSettings.SaveCPUWarningLevel(CPUWarningLevel);
-            MonitorSettings.SaveGPUWarningLevel(GPUWarningLevel);
+            Program.Settings.WarnMon.SaveTempMonitorStatus(IsActive);
+            Program.Settings.WarnMon.SaveCPUWarningLevel(CPUWarningLevel);
+            Program.Settings.WarnMon.SaveGPUWarningLevel(GPUWarningLevel);
         }
     }
 }

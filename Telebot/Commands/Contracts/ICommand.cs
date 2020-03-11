@@ -8,7 +8,7 @@ namespace Telebot.Commands
     {
         string Pattern { get; }
         string Description { get; }
-        void Execute(object parameter, Func<CommandResult, Task> callback);
+        void Execute(CommandParam info, Func<CommandResult, Task> cbResult);
         string ToString();
     }
 }

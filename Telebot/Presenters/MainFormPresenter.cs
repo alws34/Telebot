@@ -9,37 +9,37 @@ using Telebot.Clients;
 using Telebot.Contracts;
 using Telebot.Extensions;
 using Telebot.ScreenCapture;
+using Telebot.Settings;
 using Telebot.Temperature;
 using Telebot.Views;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.InputFiles;
-using static Telebot.Settings.SettingsFactory;
 
 namespace Telebot.Presenters
 {
-    public class MainFormPresenter : Settings.IProfile
+    public class MainFormPresenter : IProfile
     {
-        private readonly IMainFormView mainFormView;
+        private readonly IMainFormView mainView;
         private readonly ITelebotClient telebotClient;
 
         public MainFormPresenter(
-            IMainFormView mainFormView,
+            IMainFormView mainView,
             ITelebotClient telebotClient,
             IJob<ScreenCaptureArgs>[] screenCaps,
             IJob<TempChangedArgs>[] tempMonitors
         )
         {
-            this.mainFormView = mainFormView;
-            this.mainFormView.Load += viewLoad;
-            this.mainFormView.FormClosed += viewClosed;
-            this.mainFormView.Resize += viewResize;
-            this.mainFormView.TrayIcon.MouseClick += TrayMouseClick;
+            this.mainView = mainView;
+            this.mainView.Load += viewLoad;
+            this.mainView.FormClosed += viewClosed;
+            this.mainView.Resize += viewResize;
+            this.mainView.TrayIcon.MouseClick += TrayMouseClick;
 
             this.telebotClient = telebotClient;
             this.telebotClient.MessageArrived += BotRequestArrival;
 
-            SettingsBase.AddProfile(this);
+            Program.Settings.Handler.AddProfile(this);
 
             foreach (IJob<ScreenCaptureArgs> screenCap in screenCaps)
             {
@@ -75,29 +75,29 @@ namespace Telebot.Presenters
                 Text = e.MessageText
             };
 
-            mainFormView.ListView.AddObject(lvObject);
+            mainView.ListView.AddObject(lvObject);
 
-            if (mainFormView.WindowState == FormWindowState.Minimized)
+            if (mainView.WindowState == FormWindowState.Minimized)
             {
-                mainFormView.TrayIcon.ShowBalloonTip(
-                    1000, mainFormView.Text, e.MessageText, ToolTipIcon.Info
+                mainView.TrayIcon.ShowBalloonTip(
+                    1000, mainView.Text, e.MessageText, ToolTipIcon.Info
                 );
             }
         }
 
         private void TrayMouseClick(object sender, MouseEventArgs e)
         {
-            mainFormView.Show();
-            mainFormView.WindowState = FormWindowState.Normal;
-            mainFormView.TrayIcon.Visible = false;
+            mainView.Show();
+            mainView.WindowState = FormWindowState.Normal;
+            mainView.TrayIcon.Visible = false;
         }
 
         private void viewResize(object sender, EventArgs e)
         {
-            if (mainFormView.WindowState == FormWindowState.Minimized)
+            if (mainView.WindowState == FormWindowState.Minimized)
             {
-                mainFormView.Hide();
-                mainFormView.TrayIcon.Visible = true;
+                mainView.Hide();
+                mainView.TrayIcon.Visible = true;
             }
         }
 
@@ -109,15 +109,13 @@ namespace Telebot.Presenters
 
         private void viewLoad(object sender, EventArgs e)
         {
-            // delay job to reduce startup time
+            // Delay job to reduce startup time
             JobManager.AddJob(
-                async () =>
-                {
+                async () => {
                     telebotClient.StartReceiving();
                     await AddBotNameTitle();
                     await SendClientHello();
-                },
-                (s) => s.ToRunOnceIn(3).Seconds()
+                }, (s) => s.ToRunOnceIn(3).Seconds()
             );
 
             if (!Program.isFirstRun)
@@ -136,40 +134,40 @@ namespace Telebot.Presenters
         private async Task AddBotNameTitle()
         {
             var me = await telebotClient.GetMeAsync();
-            mainFormView.ListView.Invoke((MethodInvoker)delegate
+            mainView.ListView.Invoke((MethodInvoker)delegate
             {
-                mainFormView.Text += $" - {me.Username}";
+                mainView.Text += $" - {me.Username}";
             });
         }
 
         public void SaveChanges()
         {
-            GuiSettings.SaveFormBounds(mainFormView.Bounds);
+            Program.Settings.MainView.SaveFormBounds(mainView.Bounds);
 
             var widths = new List<int>();
 
-            foreach (OLVColumn column in mainFormView.ListView.AllColumns)
+            foreach (OLVColumn column in mainView.ListView.AllColumns)
             {
                 widths.Add(column.Width);
             }
 
-            GuiSettings.SaveListView1ColumnsWidth(widths);
+            Program.Settings.MainView.SaveListView1ColumnsWidth(widths);
         }
 
         private void RestoreGuiSettings()
         {
-            var bounds = GuiSettings.GetFormBounds();
+            var bounds = Program.Settings.MainView.GetFormBounds();
 
             if (bounds != null)
-                mainFormView.Bounds = bounds;
+                mainView.Bounds = bounds;
 
-            var widths = GuiSettings.GetListView1ColumnsWidth();
+            var widths = Program.Settings.MainView.GetListView1ColumnsWidth();
 
             if (widths != null && widths.Count > 0)
             {
                 for (int i = 0; i < widths.Count; i++)
                 {
-                    mainFormView.ListView.Columns[i].Width = widths[i];
+                    mainView.ListView.Columns[i].Width = widths[i];
                 }
             }
         }

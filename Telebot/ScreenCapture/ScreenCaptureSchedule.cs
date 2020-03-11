@@ -2,7 +2,7 @@
 using System;
 using System.Drawing;
 using Telebot.Contracts;
-using Telebot.CoreApis;
+using Telebot.Infrastructure;
 
 namespace Telebot.ScreenCapture
 {

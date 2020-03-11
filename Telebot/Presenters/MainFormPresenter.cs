@@ -74,6 +74,7 @@ namespace Telebot.Presenters
         private void viewLoad(object sender, EventArgs e)
         {
             mainView.Hide();
+            mainView.TrayIcon.Icon = mainView.Icon;
             mainView.TrayIcon.Visible = true;
 
             // Delay job to reduce startup time

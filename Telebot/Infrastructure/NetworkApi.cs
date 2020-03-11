@@ -5,14 +5,16 @@ namespace Telebot.Infrastructure
 {
     public class NetworkApi
     {
-        public string LocalIPv4Address { get; }
+        public string LANIPv4 { get; }
+        public string WANIPv4 { get; }
 
         public NetworkApi()
         {
-            LocalIPv4Address = GetLocalIPAddress();
+            LANIPv4 = GetLocalIPv4();
+            WANIPv4 = GetPublicIPv4().TrimEnd();
         }
 
-        private string GetLocalIPAddress()
+        private string GetLocalIPv4()
         {
             var host = Dns.GetHostEntry(Dns.GetHostName());
 
@@ -24,7 +26,15 @@ namespace Telebot.Infrastructure
                 }
             }
 
-            return "No network adapters with an IPv4 address in the system!";
+            return "Issue @ GetLocalIPv4()";
+        }
+
+        public string GetPublicIPv4()
+        {
+            using (WebClient wc = new WebClient())
+            {
+                return wc.DownloadString("https://icanhazip.com");
+            }
         }
     }
 }

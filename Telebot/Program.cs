@@ -98,7 +98,8 @@ namespace Telebot
 
             var statuses = new StatusBuilder()
                 .Add(new SystemStatus(devices))
-                .Add(new IPAddrStatus())
+                .Add(new LanAddrStatus())
+                .Add(new WanAddrStatus())
                 .Add(new UptimeStatus())
                 .Add(new MonitorsStatus())
                 .Add(new CaptureStatus())

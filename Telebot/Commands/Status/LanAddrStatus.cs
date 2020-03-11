@@ -2,18 +2,18 @@
 
 namespace Telebot.Commands.Status
 {
-    public class IPAddrStatus : IStatus
+    public class LanAddrStatus : IStatus
     {
         private readonly NetworkApi networkApi;
 
-        public IPAddrStatus()
+        public LanAddrStatus()
         {
             networkApi = new NetworkApi();
         }
 
         public string Execute()
         {
-            return $"*IP*: {networkApi.LocalIPv4Address}";
+            return $"*LAN IPv4*: {networkApi.LANIPv4}";
         }
     }
 }

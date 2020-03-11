@@ -101,6 +101,7 @@
     <Compile Include="Commands\RestartCmd.cs" />
     <Compile Include="Commands\Status\Builder\StatusBuilder.cs" />
     <Compile Include="Commands\Status\CaptureStatus.cs" />
+    <Compile Include="Commands\Status\WanAddrStatus.cs" />
     <Compile Include="Common\JobType.cs" />
     <Compile Include="Contracts\IJob.cs" />
     <Compile Include="Contracts\IScheduledJob.cs" />
@@ -123,7 +124,7 @@
     <Compile Include="Commands\ShutdownCmd.cs" />
     <Compile Include="Commands\SpecCmd.cs" />
     <Compile Include="Commands\StatusCmd.cs" />
-    <Compile Include="Commands\Status\IPAddrStatus.cs" />
+    <Compile Include="Commands\Status\LanAddrStatus.cs" />
     <Compile Include="Commands\Status\SystemStatus.cs" />
     <Compile Include="Commands\Status\MonitorsStatus.cs" />
     <Compile Include="Commands\Status\UptimeStatus.cs" />

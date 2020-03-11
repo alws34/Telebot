@@ -49,7 +49,7 @@ namespace Telebot
 
             isFirstRun = Properties.Settings.Default.FirstRun;
 
-            ITelebotClient client = new TelebotClient(token, id);
+            IBotClient client = new BotClient(token, id);
 
             TempFactory = new TempMonFactory();
             ScreenFactory = new ScreenCapFactory();

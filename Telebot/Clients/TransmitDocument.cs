@@ -9,9 +9,9 @@ namespace Telebot.Clients
 {
     public class TransmitDocument : ITransmitter
     {
-        protected readonly ITelebotClient client;
+        protected readonly IBotClient client;
 
-        public TransmitDocument(ITelebotClient client)
+        public TransmitDocument(IBotClient client)
         {
             this.client = client;
         }

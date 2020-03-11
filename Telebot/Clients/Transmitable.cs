@@ -8,7 +8,7 @@ namespace Telebot.Clients
     {
         private readonly Dictionary<ResultType, ITransmitter> methods;
 
-        public Transmitable(ITelebotClient client)
+        public Transmitable(IBotClient client)
         {
             methods = new Dictionary<ResultType, ITransmitter>
             {

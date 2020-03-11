@@ -90,7 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Clients\ITransmitter.cs" />
-    <Compile Include="Clients\MessageArrivedArgs.cs" />
+    <Compile Include="Clients\ReceivedArgs.cs" />
     <Compile Include="Clients\Transmitable.cs" />
     <Compile Include="Clients\TransmitDocument.cs" />
     <Compile Include="Clients\TransmitPhoto.cs" />
@@ -110,7 +110,7 @@
     <Compile Include="Helpers\Kernel32Helper.cs" />
     <Compile Include="Infrastructure\ApiLocator.cs" />
     <Compile Include="Infrastructure\MediaApi.cs" />
-    <Compile Include="Clients\ITelebotClient.cs" />
+    <Compile Include="Clients\IBotClient.cs" />
     <Compile Include="Commands\AppsCmd.cs" />
     <Compile Include="Commands\CapAppCmd.cs" />
     <Compile Include="Commands\CapTimeCmd.cs" />
@@ -147,7 +147,7 @@
     <Compile Include="ScreenCapture\ScreenCaptureSchedule.cs" />
     <Compile Include="Presenters\MainFormPresenter.cs" />
     <Compile Include="ScreenCapture\ScreenCaptureArgs.cs" />
-    <Compile Include="Clients\TelebotClient.cs" />
+    <Compile Include="Clients\BotClient.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Settings\Contracts\IProfile.cs" />
     <Compile Include="Settings\Contracts\ISettings.cs" />

@@ -18,11 +18,11 @@ namespace Telebot.Presenters
     public class MainFormPresenter
     {
         private readonly IMainFormView mainView;
-        private readonly ITelebotClient client;
+        private readonly IBotClient client;
 
         public MainFormPresenter(
             IMainFormView mainView,
-            ITelebotClient client,
+            IBotClient client,
             IJob<ScreenCaptureArgs>[] screenCaps,
             IJob<TempChangedArgs>[] tempMonitors
         )
@@ -32,7 +32,7 @@ namespace Telebot.Presenters
             this.mainView.FormClosed += viewClosed;
 
             this.client = client;
-            this.client.MessageArrived += BotMessageArrived;
+            this.client.Received += BotMessageArrived;
 
             foreach (IJob<ScreenCaptureArgs> screenCap in screenCaps)
             {
@@ -58,7 +58,7 @@ namespace Telebot.Presenters
             ) as EventHandler<T>;
         }
 
-        private void BotMessageArrived(object sender, MessageArrivedArgs e)
+        private void BotMessageArrived(object sender, ReceivedArgs e)
         {
             mainView.TrayIcon.ShowBalloonTip(
                1000, mainView.Text, e.MessageText, ToolTipIcon.Info

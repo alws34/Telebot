@@ -8,14 +8,14 @@ using Telegram.Bot.Args;
 
 namespace Telebot.Clients
 {
-    public class TelebotClient : TelegramBotClient, ITelebotClient
+    public class BotClient : TelegramBotClient, IBotClient
     {
         public int AdminId { get; }
         protected readonly Transmitable transmitable;
 
-        public event EventHandler<MessageArrivedArgs> MessageArrived;
+        public event EventHandler<ReceivedArgs> Received;
 
-        public TelebotClient(string token, int id) : base(token)
+        public BotClient(string token, int id) : base(token)
         {
             AdminId = id;
             transmitable = new Transmitable(this);
@@ -70,18 +70,19 @@ namespace Telebot.Clients
 
             string text = $"Received {pattern} from {e.Message.From.Username}.";
 
-            var data = new MessageArrivedArgs
+            var data = new ReceivedArgs
             {
                 MessageText = text
             };
 
             RaiseMessageArrived(data);
 
-            ICommand command = Program.CmdFactory.FindEntity(
-                x => Regex.IsMatch(pattern, $"^{x.Pattern}$")
+            bool success = Program.CmdFactory.TryGetEntity(
+                x => Regex.IsMatch(pattern, $"^{x.Pattern}$"),
+                out ICommand command
             );
 
-            if (command != null)
+            if (success)
             {
                 Match match = Regex.Match(pattern, command.Pattern);
 
@@ -107,9 +108,9 @@ namespace Telebot.Clients
             }
         }
 
-        private void RaiseMessageArrived(MessageArrivedArgs e)
+        private void RaiseMessageArrived(ReceivedArgs e)
         {
-            MessageArrived?.Invoke(this, e);
+            Received?.Invoke(this, e);
         }
     }
 }

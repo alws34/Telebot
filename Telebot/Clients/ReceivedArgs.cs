@@ -2,7 +2,7 @@
 
 namespace Telebot.Clients
 {
-    public class MessageArrivedArgs : EventArgs
+    public class ReceivedArgs : EventArgs
     {
         public string MessageText { get; set; }
     }

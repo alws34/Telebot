@@ -7,11 +7,11 @@ namespace Telebot.ScreenCapture
 {
     public class ScreenCapFactory : IFactory<IJob<ScreenCaptureArgs>>
     {
-        private readonly List<IJob<ScreenCaptureArgs>> screenCaptures;
+        private readonly List<IJob<ScreenCaptureArgs>> _jobs;
 
         public ScreenCapFactory()
         {
-            screenCaptures = new List<IJob<ScreenCaptureArgs>>
+            _jobs = new List<IJob<ScreenCaptureArgs>>
             {
                 { new ScreenCaptureSchedule() }
             };
@@ -19,12 +19,18 @@ namespace Telebot.ScreenCapture
 
         public IJob<ScreenCaptureArgs> FindEntity(Predicate<IJob<ScreenCaptureArgs>> predicate)
         {
-            return screenCaptures.SingleOrDefault(x => predicate(x));
+            return _jobs.Find(x => predicate(x));
         }
 
         public IJob<ScreenCaptureArgs>[] GetAllEntities()
         {
-            return screenCaptures.ToArray();
+            return _jobs.ToArray();
+        }
+
+        public bool TryGetEntity(Predicate<IJob<ScreenCaptureArgs>> predicate, out IJob<ScreenCaptureArgs> entity)
+        {
+            entity = _jobs.Find(x => predicate(x));
+            return entity != null;
         }
     }
 }

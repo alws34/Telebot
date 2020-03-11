@@ -18,12 +18,18 @@ namespace Telebot.Commands.Factories
 
         public ICommand FindEntity(Predicate<ICommand> predicate)
         {
-            return _commands.SingleOrDefault(c => predicate(c));
+            return _commands.Find(c => predicate(c));
         }
 
         public ICommand[] GetAllEntities()
         {
             return _commands.ToArray();
+        }
+
+        public bool TryGetEntity(Predicate<ICommand> predicate, out ICommand entity)
+        {
+            entity = _commands.Find(c => predicate(c));
+            return entity != null;
         }
     }
 }

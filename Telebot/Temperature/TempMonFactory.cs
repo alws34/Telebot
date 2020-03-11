@@ -27,12 +27,18 @@ namespace Telebot.Temperature
 
         public IJob<TempChangedArgs> FindEntity(Predicate<IJob<TempChangedArgs>> predicate)
         {
-            return _jobs.SingleOrDefault(x => predicate(x));
+            return _jobs.Find(x => predicate(x));
         }
 
         public IJob<TempChangedArgs>[] GetAllEntities()
         {
             return _jobs.ToArray();
+        }
+
+        public bool TryGetEntity(Predicate<IJob<TempChangedArgs>> predicate, out IJob<TempChangedArgs> entity)
+        {
+            entity = _jobs.Find(x => predicate(x));
+            return entity != null;
         }
     }
 }

@@ -8,9 +8,9 @@ namespace Telebot.Clients
 {
     public class TransmitPhoto : ITransmitter
     {
-        protected readonly ITelebotClient client;
+        protected readonly IBotClient client;
 
-        public TransmitPhoto(ITelebotClient client)
+        public TransmitPhoto(IBotClient client)
         {
             this.client = client;
         }

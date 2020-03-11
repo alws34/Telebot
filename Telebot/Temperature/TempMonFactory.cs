@@ -1,16 +1,12 @@
 ﻿using CPUID.Builder;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Telebot.Common;
 using Telebot.Contracts;
 using static CPUID.CPUIDCore;
 
 namespace Telebot.Temperature
 {
-    public class TempMonFactory : IFactory<IJob<TempChangedArgs>>
+    public class TempMonFactory : Factory<IJob<TempChangedArgs>>
     {
-        private readonly List<IJob<TempChangedArgs>> _jobs;
-
         public TempMonFactory()
         {
             var devices = new DeviceBuilder()
@@ -18,27 +14,8 @@ namespace Telebot.Temperature
                 .AddRange(DeviceFactory.GPUDevices)
                 .Build();
 
-            _jobs = new List<IJob<TempChangedArgs>>
-            {
-                { new TempMonWarning(devices) },
-                { new TempMonSchedule(devices) }
-            };
-        }
-
-        public IJob<TempChangedArgs> FindEntity(Predicate<IJob<TempChangedArgs>> predicate)
-        {
-            return _jobs.Find(x => predicate(x));
-        }
-
-        public IJob<TempChangedArgs>[] GetAllEntities()
-        {
-            return _jobs.ToArray();
-        }
-
-        public bool TryGetEntity(Predicate<IJob<TempChangedArgs>> predicate, out IJob<TempChangedArgs> entity)
-        {
-            entity = _jobs.Find(x => predicate(x));
-            return entity != null;
+            _items.Add(new TempMonWarning(devices));
+            _items.Add(new TempMonSchedule(devices));
         }
     }
 }

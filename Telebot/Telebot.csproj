@@ -101,7 +101,8 @@
     <Compile Include="Commands\RestartCmd.cs" />
     <Compile Include="Commands\Status\Builder\StatusBuilder.cs" />
     <Compile Include="Commands\Status\CaptureStatus.cs" />
-    <Compile Include="Common\Common.cs" />
+    <Compile Include="Common\Factory.cs" />
+    <Compile Include="Common\JobType.cs" />
     <Compile Include="Contracts\IFactory.cs" />
     <Compile Include="Contracts\IJob.cs" />
     <Compile Include="Contracts\IScheduledJob.cs" />

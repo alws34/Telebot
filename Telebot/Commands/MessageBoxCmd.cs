@@ -14,9 +14,9 @@ namespace Telebot.Commands
             Description = "Shows a message box with the specified text.";
         }
 
-        public async override void Execute(Request info, Func<Response, Task> cbResult)
+        public async override void Execute(Request req, Func<Response, Task> resp)
         {
-            string msg = info.Groups[1].Value;
+            string msg = req.Groups[1].Value;
 
             var result = new Response
             {
@@ -24,7 +24,7 @@ namespace Telebot.Commands
                 Text = "Successfully initiated a message box."
             };
 
-            await cbResult(result);
+            await resp(result);
 
             MessageBox.Show
             (

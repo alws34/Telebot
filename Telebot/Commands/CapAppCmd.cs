@@ -20,9 +20,9 @@ namespace Telebot.Commands
             desktopApi = new DesktopApi();
         }
 
-        public async override void Execute(Request info, Func<Response, Task> cbResult)
+        public async override void Execute(Request req, Func<Response, Task> resp)
         {
-            int pid = Convert.ToInt32(info.Groups[1].Value);
+            int pid = Convert.ToInt32(req.Groups[1].Value);
 
             var hWnd = Process.GetProcessById(pid).MainWindowHandle;
 
@@ -34,7 +34,7 @@ namespace Telebot.Commands
                 Raw = photo.ToStream()
             };
 
-            await cbResult(result);
+            await resp(result);
         }
     }
 }

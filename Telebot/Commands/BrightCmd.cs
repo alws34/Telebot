@@ -18,9 +18,9 @@ namespace Telebot.Commands
             systemApi = new SystemApi();
         }
 
-        public async override void Execute(Request info, Func<Response, Task> cbResult)
+        public async override void Execute(Request req, Func<Response, Task> resp)
         {
-            int brvalue = Convert.ToInt32(info.Groups[1].Value);
+            int brvalue = Convert.ToInt32(req.Groups[1].Value);
 
             var result = new Response
             {
@@ -28,7 +28,7 @@ namespace Telebot.Commands
                 Text = $"Successfully adjusted brightness to {brvalue}%."
             };
 
-            await cbResult(result);
+            await resp(result);
 
             systemApi.SetBrightness(brvalue);
         }

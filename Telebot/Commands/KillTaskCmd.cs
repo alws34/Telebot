@@ -14,9 +14,9 @@ namespace Telebot.Commands
             Description = "Kill a task with the specified pid.";
         }
 
-        public async override void Execute(Request info, Func<Response, Task> cbResult)
+        public async override void Execute(Request req, Func<Response, Task> resp)
         {
-            int pid = Convert.ToInt32(info.Groups[1].Value);
+            int pid = Convert.ToInt32(req.Groups[1].Value);
 
             Process target;
 
@@ -32,7 +32,7 @@ namespace Telebot.Commands
             catch (Exception e)
             {
                 result.Text = e.Message;
-                await cbResult(result);
+                await resp(result);
                 return;
             }
 
@@ -46,7 +46,7 @@ namespace Telebot.Commands
                 result.Text = e.Message;
             }
 
-            await cbResult(result);
+            await resp(result);
         }
     }
 }

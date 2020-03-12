@@ -19,7 +19,7 @@ namespace Telebot.Commands
             this.statuses = statuses;
         }
 
-        public async override void Execute(Request info, Func<Response, Task> cbResult)
+        public async override void Execute(Request req, Func<Response, Task> resp)
         {
             var statusBuilder = new StringBuilder();
 
@@ -34,7 +34,7 @@ namespace Telebot.Commands
                 Text = statusBuilder.ToString()
             };
 
-            await cbResult(result);
+            await resp(result);
         }
     }
 }

@@ -57,7 +57,7 @@ namespace Telebot.Clients
 
             return SendDocumentAsync(
                 id,
-                content,
+                raw,
                 parseMode: ParseMode.Markdown,
                 replyToMessageId: replyId,
                 caption: "From *Telebot*",
@@ -67,7 +67,7 @@ namespace Telebot.Clients
 
         private async void BotMessageHandler(object sender, MessageEventArgs e)
         {
-            Task CallbackHandler(Response result)
+            Task RespHandler(Response result)
             {
                 switch(result.ResultType)
                 {
@@ -103,7 +103,7 @@ namespace Telebot.Clients
                 MessageText = text
             };
 
-            RaiseMessageArrived(data);
+            RaiseReceived(data);
 
             bool success = Program.CmdFactory.TryGetEntity(
                 x => Regex.IsMatch(pattern, $"^{x.Pattern}$"),
@@ -114,12 +114,12 @@ namespace Telebot.Clients
             {
                 Match match = Regex.Match(pattern, command.Pattern);
 
-                var cmdArgs = new Request
+                var req = new Request
                 {
                     Groups = match.Groups
                 };
 
-                command.Execute(cmdArgs, CallbackHandler);
+                command.Execute(req, RespHandler);
 
                 return;
             }
@@ -127,7 +127,7 @@ namespace Telebot.Clients
             await SendText("Undefined command. For commands list, type */help*.", e.Message.MessageId);
         }
 
-        private void RaiseMessageArrived(ReceivedArgs e)
+        private void RaiseReceived(ReceivedArgs e)
         {
             Received?.Invoke(this, e);
         }

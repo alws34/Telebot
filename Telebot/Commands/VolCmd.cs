@@ -18,9 +18,9 @@ namespace Telebot.Commands
             mediaApi = new MediaApi();
         }
 
-        public async override void Execute(Request info, Func<Response, Task> cbResult)
+        public async override void Execute(Request req, Func<Response, Task> resp)
         {
-            int vol = Convert.ToInt32(info.Groups[1].Value);
+            int vol = Convert.ToInt32(req.Groups[1].Value);
 
             var result = new Response
             {
@@ -28,7 +28,7 @@ namespace Telebot.Commands
                 Text = $"Successfully adjusted volume to {vol}%."
             };
 
-            await cbResult(result);
+            await resp(result);
 
             mediaApi.SetVolume(vol);
         }

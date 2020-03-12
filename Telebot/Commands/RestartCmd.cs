@@ -14,7 +14,7 @@ namespace Telebot.Commands
             Description = "Restart Telebot.";
         }
 
-        public async override void Execute(Request info, Func<Response, Task> cbResult)
+        public async override void Execute(Request req, Func<Response, Task> resp)
         {
             var result = new Response
             {
@@ -22,7 +22,7 @@ namespace Telebot.Commands
                 Text = "Telebot is restarting..."
             };
 
-            await cbResult(result);
+            await resp(result);
 
             Application.Restart();
         }

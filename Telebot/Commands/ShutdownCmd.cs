@@ -18,9 +18,9 @@ namespace Telebot.Commands
             powerApi = new PowerApi();
         }
 
-        public async override void Execute(Request info, Func<Response, Task> cbResult)
+        public async override void Execute(Request req, Func<Response, Task> resp)
         {
-            int sec = Convert.ToInt32(info.Groups[1].Value);
+            int sec = Convert.ToInt32(req.Groups[1].Value);
 
             var result = new Response
             {
@@ -28,7 +28,7 @@ namespace Telebot.Commands
                 Text = $"Successfully scheduled the workstation to shutdown in {sec} seconds."
             };
 
-            await cbResult(result);
+            await resp(result);
 
             powerApi.ShutdownWorkstation(sec);
         }

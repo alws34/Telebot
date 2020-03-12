@@ -21,9 +21,9 @@ namespace Telebot.Commands
             );
         }
 
-        public async override void Execute(Request info, Func<Response, Task> cbResult)
+        public async override void Execute(Request req, Func<Response, Task> resp)
         {
-            var arg = info.Groups[1].Value;
+            var arg = req.Groups[1].Value;
 
             if (arg.Equals("off"))
             {
@@ -33,7 +33,7 @@ namespace Telebot.Commands
                     Text = "Successfully disabled scheduled temperature monitor."
                 };
 
-                await cbResult(result1);
+                await resp(result1);
 
                 _job.Stop();
 
@@ -54,7 +54,7 @@ namespace Telebot.Commands
                 Text = "Successfully scheduled temperature monitor."
             };
 
-            await cbResult(result);
+            await resp(result);
 
             ((IScheduledJob)_job).Start(tsDuration, tsInterval);
         }

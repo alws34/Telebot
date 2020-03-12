@@ -6,16 +6,8 @@ namespace Telebot.Network
 {
     public class LanMonitor : INetMonitor
     {
-        private const string dir = ".\\wnetwatcher";
-
-        private readonly string utilPath;
-        private readonly string outputPath;
-
-        public LanMonitor()
-        {
-            utilPath = $"{dir}\\WNetWatcher.exe";
-            outputPath = $"{dir}\\output.xml";
-        }
+        private const string utilPath = ".\\WNetWatcher.exe";
+        private const string scanPath = ".\\scan.xml";
 
         public override void Disconnect()
         {
@@ -25,20 +17,18 @@ namespace Telebot.Network
         public override void Discover()
         {
             var si = new ProcessStartInfo(
-                utilPath, $"/sxml {outputPath}"
+                utilPath, $"/sxml {scanPath}"
             );
 
             Process exc = Process.Start(si);
             exc.WaitForExit();
 
-            var hosts = ParseOutput(outputPath);
-
-            RaiseDiscoveredHosts(hosts);
+            RaiseDiscoveredHosts(ParseOutput());
         }
 
-        private HostsArg ParseOutput(string path)
+        private HostsArg ParseOutput()
         {
-            using (var fileStream = new FileStream(path, FileMode.Open))
+            using (var fileStream = new FileStream(scanPath, FileMode.Open))
             {
                 var serializer = new XmlSerializer(typeof(HostsArg));
 

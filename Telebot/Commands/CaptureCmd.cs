@@ -20,7 +20,7 @@ namespace Telebot.Commands
             desktopApi = new DesktopApi();
         }
 
-        public async override void Execute(Request info, Func<Response, Task> cbResult)
+        public async override void Execute(Request req, Func<Response, Task> resp)
         {
             var photos = desktopApi.CaptureDesktop();
 
@@ -32,7 +32,7 @@ namespace Telebot.Commands
                     Raw = photo.ToStream()
                 };
 
-                await cbResult(result);
+                await resp(result);
             }
         }
     }

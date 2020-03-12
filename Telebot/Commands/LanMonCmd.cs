@@ -23,9 +23,9 @@ namespace Telebot.Commands
             };
         }
 
-        public async override void Execute(Request info, Func<Response, Task> cbResult)
+        public async override void Execute(Request req, Func<Response, Task> resp)
         {
-            string state = info.Groups[1].Value;
+            string state = req.Groups[1].Value;
 
             var result = new Response
             {
@@ -33,7 +33,7 @@ namespace Telebot.Commands
                 Text = $"Command {state} has been sent to network listener."
             };
 
-            await cbResult(result);
+            await resp(result);
 
             methods[state].Invoke();
         }

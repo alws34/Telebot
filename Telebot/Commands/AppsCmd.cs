@@ -25,9 +25,9 @@ namespace Telebot.Commands
             };
         }
 
-        public async override void Execute(Request info, Func<Response, Task> cbResult)
+        public async override void Execute(Request req, Func<Response, Task> resp)
         {
-            string methName = info.Groups[1].Value;
+            string methName = req.Groups[1].Value;
 
             string methResult = actions[methName].Invoke();
 
@@ -37,7 +37,7 @@ namespace Telebot.Commands
                 ResultType = ResultType.Text
             };
 
-            await cbResult(result);
+            await resp(result);
         }
     }
 }

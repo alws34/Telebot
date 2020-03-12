@@ -14,7 +14,7 @@ namespace Telebot.Commands
             Description = "List of available commands.";
         }
 
-        public async override void Execute(Request info, Func<Response, Task> cbResult)
+        public async override void Execute(Request req, Func<Response, Task> resp)
         {
             var commandsStr = new StringBuilder();
 
@@ -31,7 +31,7 @@ namespace Telebot.Commands
                 Text = commandsStr.ToString()
             };
 
-            await cbResult(result);
+            await resp(result);
         }
     }
 }

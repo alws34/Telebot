@@ -46,12 +46,12 @@ namespace Telebot.Infrastructure
 
         public void LockWorkstation()
         {
-            User32.LockWorkStation();
+            user32.LockWorkStation();
         }
 
         public void LogoffWorkstation()
         {
-            User32.ExitWindowsEx(User32.EWX_LOGOFF, 0);
+            user32.ExitWindowsEx(user32.EWX_LOGOFF, 0);
         }
     }
 }

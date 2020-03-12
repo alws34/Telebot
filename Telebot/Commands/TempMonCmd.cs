@@ -6,7 +6,7 @@ using Telebot.Models;
 
 namespace Telebot.Commands
 {
-    public class TempMonCmd : BaseCommand
+    public class TempMonCmd : ICommand
     {
         private readonly Dictionary<string, Action> actions;
 
@@ -26,11 +26,11 @@ namespace Telebot.Commands
             };
         }
 
-        public async override void Execute(CommandParam info, Func<CommandResult, Task> cbResult)
+        public async override void Execute(Request info, Func<Response, Task> cbResult)
         {
             string state = info.Groups[1].Value;
 
-            var result = new CommandResult
+            var result = new Response
             {
                 ResultType = ResultType.Text,
                 Text = $"Successfully turned {state} the temperature monitor."

@@ -2,6 +2,6 @@
 {
     public interface IStatus
     {
-        string Execute();
+        string GetStatus();
     }
 }

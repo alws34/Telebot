@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Text;
 using System.Threading.Tasks;
+using Telebot.Common;
 using Telebot.Models;
 
 namespace Telebot.Commands
 {
-    public class HelpCmd : BaseCommand
+    public class HelpCmd : ICommand
     {
         public HelpCmd()
         {
@@ -13,7 +14,7 @@ namespace Telebot.Commands
             Description = "List of available commands.";
         }
 
-        public async override void Execute(CommandParam info, Func<CommandResult, Task> cbResult)
+        public async override void Execute(Request info, Func<Response, Task> cbResult)
         {
             var commandsStr = new StringBuilder();
 
@@ -24,7 +25,7 @@ namespace Telebot.Commands
                 commandsStr.AppendLine(command.ToString());
             }
 
-            var result = new CommandResult
+            var result = new Response
             {
                 ResultType = ResultType.Text,
                 Text = commandsStr.ToString()

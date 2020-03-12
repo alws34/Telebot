@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Telebot.Common;
 using Telebot.Models;
 
 namespace Telebot.Commands
 {
-    public class KillTaskCmd : BaseCommand
+    public class KillTaskCmd : ICommand
     {
         public KillTaskCmd()
         {
@@ -13,13 +14,13 @@ namespace Telebot.Commands
             Description = "Kill a task with the specified pid.";
         }
 
-        public async override void Execute(CommandParam info, Func<CommandResult, Task> cbResult)
+        public async override void Execute(Request info, Func<Response, Task> cbResult)
         {
             int pid = Convert.ToInt32(info.Groups[1].Value);
 
             Process target;
 
-            var result = new CommandResult
+            var result = new Response
             {
                 ResultType = ResultType.Text
             };

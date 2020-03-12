@@ -2,11 +2,12 @@
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
+using Telebot.Common;
 using Telebot.Models;
 
 namespace Telebot.Commands
 {
-    public class SpecCmd : BaseCommand
+    public class SpecCmd : ICommand
     {
         public SpecCmd()
         {
@@ -14,7 +15,7 @@ namespace Telebot.Commands
             Description = "Get full hardware information.";
         }
 
-        public async override void Execute(CommandParam info, Func<CommandResult, Task> cbResult)
+        public async override void Execute(Request info, Func<Response, Task> cbResult)
         {
             var si = new ProcessStartInfo
             {
@@ -30,7 +31,7 @@ namespace Telebot.Commands
 
             var fileStream = new FileStream(filePath, FileMode.Open);
 
-            var result = new CommandResult
+            var result = new Response
             {
                 ResultType = ResultType.Document,
                 Raw = fileStream

@@ -2,7 +2,7 @@
 
 namespace Telebot.Models
 {
-    public class CommandParam
+    public class Request
     {
         public GroupCollection Groups { get; set; }
     }

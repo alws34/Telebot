@@ -5,18 +5,13 @@ using Telebot.ScreenCapture;
 
 namespace Telebot.Commands.Status
 {
-    public class CaptureStatus : IStatus
+    public class ScrnCapStatus : IStatus
     {
-        private readonly IJob<ScreenCaptureArgs>[] _jobs;
-
-        public CaptureStatus()
-        {
-            _jobs = Program.ScreenFactory.GetAllEntities();
-        }
-
-        public string Execute()
+        public string GetStatus()
         {
             var result = new StringBuilder();
+
+            var _jobs = Program.ScreenFactory.GetAllEntities();
 
             foreach (IJob<ScreenCaptureArgs> job in _jobs)
             {

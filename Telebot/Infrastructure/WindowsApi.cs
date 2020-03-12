@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using static Telebot.Native.User32;
+using static Telebot.Native.user32;
 
 namespace Telebot.Infrastructure
 {

@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Telebot.Common;
 using Telebot.Models;
 
 namespace Telebot.Commands
 {
-    public class RestartCmd : BaseCommand
+    public class RestartCmd : ICommand
     {
         public RestartCmd()
         {
@@ -13,9 +14,9 @@ namespace Telebot.Commands
             Description = "Restart Telebot.";
         }
 
-        public async override void Execute(CommandParam info, Func<CommandResult, Task> cbResult)
+        public async override void Execute(Request info, Func<Response, Task> cbResult)
         {
-            var result = new CommandResult
+            var result = new Response
             {
                 ResultType = ResultType.Text,
                 Text = "Telebot is restarting..."

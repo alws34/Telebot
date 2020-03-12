@@ -15,7 +15,7 @@ namespace Telebot.Commands.Status
             this.devices.AddRange(devices);
         }
 
-        public string Execute()
+        public string GetStatus()
         {
             var strBuilder = new StringBuilder();
 

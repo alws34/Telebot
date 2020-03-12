@@ -1,5 +1,5 @@
 ﻿using Telebot.Common;
-using static Telebot.Native.User32;
+using static Telebot.Native.user32;
 
 namespace Telebot.Infrastructure
 {

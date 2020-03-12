@@ -11,7 +11,7 @@ namespace Telebot.Commands.Status
             networkApi = new NetworkApi();
         }
 
-        public string Execute()
+        public string GetStatus()
         {
             return $"*LAN IPv4*: {networkApi.LANIPv4}";
         }

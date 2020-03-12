@@ -7,7 +7,7 @@ using Telebot.Temperature;
 
 namespace Telebot.Commands
 {
-    public class TempTimeCmd : BaseCommand
+    public class TempTimeCmd : ICommand
     {
         private readonly IJob<TempChangedArgs> _job;
 
@@ -21,13 +21,13 @@ namespace Telebot.Commands
             );
         }
 
-        public async override void Execute(CommandParam info, Func<CommandResult, Task> cbResult)
+        public async override void Execute(Request info, Func<Response, Task> cbResult)
         {
             var arg = info.Groups[1].Value;
 
             if (arg.Equals("off"))
             {
-                var result1 = new CommandResult
+                var result1 = new Response
                 {
                     ResultType = ResultType.Text,
                     Text = "Successfully disabled scheduled temperature monitor."
@@ -48,7 +48,7 @@ namespace Telebot.Commands
             TimeSpan tsDuration = TimeSpan.FromSeconds(duration);
             TimeSpan tsInterval = TimeSpan.FromSeconds(interval);
 
-            var result = new CommandResult
+            var result = new Response
             {
                 ResultType = ResultType.Text,
                 Text = "Successfully scheduled temperature monitor."

@@ -10,6 +10,7 @@ using Telebot.Commands.Factories;
 using Telebot.Commands.Status;
 using Telebot.Commands.Status.Builder;
 using Telebot.Contracts;
+using Telebot.Network;
 using Telebot.Presenters;
 using Telebot.ScreenCapture;
 using Telebot.Settings;
@@ -22,6 +23,7 @@ namespace Telebot
     {
         public static bool FirstRun { get; private set; }
         public static SettingsFactory Settings { get; private set; }
+        public static INetMonitor NetMonitor { get; private set; }
         public static IFactory<ICommand> CmdFactory { get; private set; }
         public static IFactory<IJob<TempChangedArgs>> TempFactory { get; private set; }
         public static IFactory<IJob<ScreenCaptureArgs>> ScreenFactory { get; private set; }
@@ -50,22 +52,19 @@ namespace Telebot
 
             FirstRun = Properties.Settings.Default.FirstRun;
 
-            IBotClient client = new BotClient(token, id);
+            IBotClient client = new Clients.Telebot(token, id);
+            NetMonitor = new LanMonitor();
 
             TempFactory = new TempMonFactory();
             ScreenFactory = new ScreenCapFactory();
             CmdFactory = BuildCommandFactory();
-
-            var tempMons = TempFactory.GetAllEntities();
-            var screenCaps = ScreenFactory.GetAllEntities();
 
             MainForm mainView = new MainForm();
 
             var presenter = new MainFormPresenter(
                 mainView,
                 client,
-                screenCaps,
-                tempMons
+                NetMonitor
             );
 
             JobManager.AddJob(() => { Sdk.RefreshInformation(); },
@@ -101,28 +100,29 @@ namespace Telebot
                 .Add(new LanAddrStatus())
                 .Add(new WanAddrStatus())
                 .Add(new UptimeStatus())
-                .Add(new MonitorsStatus())
-                .Add(new CaptureStatus())
+                .Add(new TemMonStatus())
+                .Add(new ScrnCapStatus())
                 .Build();
 
             var commands = new CmdBuilder()
                 .Add(new StatusCmd(statuses))
                 .Add(new AppsCmd())
                 .Add(new BrightCmd())
-                .Add(new CaptureCmd())
                 .Add(new CapAppCmd())
                 .Add(new CapTimeCmd())
-                .Add(new ExitCmd())
+                .Add(new CaptureCmd())
                 .Add(new ScreenCmd())
                 .Add(new TempMonCmd())
                 .Add(new TempTimeCmd())
                 .Add(new PowerCmd())
-                .Add(new RestartCmd())
                 .Add(new ShutdownCmd())
                 .Add(new MessageBoxCmd())
+                .Add(new LanMonCmd())
                 .Add(new KillTaskCmd())
-                .Add(new VolCmd())
                 .Add(new SpecCmd())
+                .Add(new VolCmd())
+                .Add(new RestartCmd())
+                .Add(new ExitCmd())
                 .Add(new HelpCmd())
                 .Build();
 

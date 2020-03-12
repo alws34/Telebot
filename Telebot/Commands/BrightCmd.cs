@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Telebot.Common;
 using Telebot.Infrastructure;
 using Telebot.Models;
 
 namespace Telebot.Commands
 {
-    public class BrightCmd : BaseCommand
+    public class BrightCmd : ICommand
     {
         private readonly SystemApi systemApi;
 
@@ -17,11 +18,11 @@ namespace Telebot.Commands
             systemApi = new SystemApi();
         }
 
-        public async override void Execute(CommandParam info, Func<CommandResult, Task> cbResult)
+        public async override void Execute(Request info, Func<Response, Task> cbResult)
         {
             int brvalue = Convert.ToInt32(info.Groups[1].Value);
 
-            var result = new CommandResult
+            var result = new Response
             {
                 ResultType = ResultType.Text,
                 Text = $"Successfully adjusted brightness to {brvalue}%."

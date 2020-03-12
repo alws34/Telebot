@@ -2,7 +2,7 @@
 
 namespace Telebot.Native
 {
-    public static class Kernel32
+    public static class kernel32
     {
         [DllImport("kernel32.dll")]
         public static extern uint GetTickCount64();

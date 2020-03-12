@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Telebot.Common;
 using Telebot.Extensions;
 using Telebot.Infrastructure;
 using Telebot.Models;
 
 namespace Telebot.Commands
 {
-    public class CapAppCmd : BaseCommand
+    public class CapAppCmd : ICommand
     {
         private readonly DesktopApi desktopApi;
 
@@ -19,7 +20,7 @@ namespace Telebot.Commands
             desktopApi = new DesktopApi();
         }
 
-        public async override void Execute(CommandParam info, Func<CommandResult, Task> cbResult)
+        public async override void Execute(Request info, Func<Response, Task> cbResult)
         {
             int pid = Convert.ToInt32(info.Groups[1].Value);
 
@@ -27,7 +28,7 @@ namespace Telebot.Commands
 
             var photo = desktopApi.CaptureWindow(hWnd);
 
-            var result = new CommandResult
+            var result = new Response
             {
                 ResultType = ResultType.Photo,
                 Raw = photo.ToStream()

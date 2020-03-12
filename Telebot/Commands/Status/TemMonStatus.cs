@@ -5,18 +5,13 @@ using Telebot.Temperature;
 
 namespace Telebot.Commands.Status
 {
-    public class MonitorsStatus : IStatus
+    public class TemMonStatus : IStatus
     {
-        private readonly IJob<TempChangedArgs>[] _jobs;
-
-        public MonitorsStatus()
-        {
-            _jobs = Program.TempFactory.GetAllEntities();
-        }
-
-        public string Execute()
+        public string GetStatus()
         {
             var result = new StringBuilder();
+
+            var _jobs = Program.TempFactory.GetAllEntities();
 
             foreach (IJob<TempChangedArgs> job in _jobs)
             {

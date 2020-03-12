@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Telebot.Common;
 using Telebot.Infrastructure;
 using Telebot.Models;
 
 namespace Telebot.Commands
 {
-    public class AppsCmd : BaseCommand
+    public class AppsCmd : ICommand
     {
         public readonly Dictionary<string, Func<string>> actions;
 
@@ -24,13 +25,13 @@ namespace Telebot.Commands
             };
         }
 
-        public async override void Execute(CommandParam info, Func<CommandResult, Task> cbResult)
+        public async override void Execute(Request info, Func<Response, Task> cbResult)
         {
             string methName = info.Groups[1].Value;
 
             string methResult = actions[methName].Invoke();
 
-            var result = new CommandResult
+            var result = new Response
             {
                 Text = methResult,
                 ResultType = ResultType.Text

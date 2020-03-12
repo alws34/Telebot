@@ -11,7 +11,7 @@ namespace Telebot.Commands.Status
             systemApi = new SystemApi();
         }
 
-        public string Execute()
+        public string GetStatus()
         {
             return $"*Uptime*: {systemApi.GetUptime()}";
         }

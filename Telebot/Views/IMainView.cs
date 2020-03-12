@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace Telebot.Views
 {
-    public interface IMainFormView
+    public interface IMainView
     {
         event EventHandler Load;
         event FormClosedEventHandler FormClosed;

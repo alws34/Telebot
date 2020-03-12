@@ -2,11 +2,12 @@
 using System.Text;
 using System.Threading.Tasks;
 using Telebot.Commands.Status;
+using Telebot.Common;
 using Telebot.Models;
 
 namespace Telebot.Commands
 {
-    public class StatusCmd : BaseCommand
+    public class StatusCmd : ICommand
     {
         private readonly IStatus[] statuses;
 
@@ -18,16 +19,16 @@ namespace Telebot.Commands
             this.statuses = statuses;
         }
 
-        public async override void Execute(CommandParam info, Func<CommandResult, Task> cbResult)
+        public async override void Execute(Request info, Func<Response, Task> cbResult)
         {
             var statusBuilder = new StringBuilder();
 
             foreach (IStatus status in statuses)
             {
-                statusBuilder.AppendLine(status.Execute());
+                statusBuilder.AppendLine(status.GetStatus());
             }
 
-            var result = new CommandResult
+            var result = new Response
             {
                 ResultType = ResultType.Text,
                 Text = statusBuilder.ToString()

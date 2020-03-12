@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace Telebot.Native
 {
-    public static partial class User32
+    public static partial class user32
     {
         [DllImport("user32.dll")]
         public static extern int PostMessage(int hWnd, int hMsg, int wParam, int lParam);
@@ -35,7 +35,7 @@ namespace Telebot.Native
         public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
     }
 
-    public static partial class User32
+    public static partial class user32
     {
         public delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
 

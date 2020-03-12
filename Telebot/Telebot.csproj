@@ -105,7 +105,7 @@
     <Compile Include="Common\DisplayState.cs" />
     <Compile Include="Common\ResultType.cs" />
     <Compile Include="Native\kernel32.cs" />
-    <Compile Include="Infrastructure\MediaApi.cs" />
+    <Compile Include="Infrastructure\MediaImpl.cs" />
     <Compile Include="Clients\IBotClient.cs" />
     <Compile Include="Commands\AppsCmd.cs" />
     <Compile Include="Commands\CapAppCmd.cs" />
@@ -129,12 +129,12 @@
     <Compile Include="Commands\TempTimeCmd.cs" />
     <Compile Include="Commands\VolCmd.cs" />
     <Compile Include="Commands\Status\IStatus.cs" />
-    <Compile Include="Infrastructure\DesktopApi.cs" />
-    <Compile Include="Infrastructure\NetworkApi.cs" />
-    <Compile Include="Infrastructure\PowerApi.cs" />
-    <Compile Include="Infrastructure\DisplayApi.cs" />
-    <Compile Include="Infrastructure\SystemApi.cs" />
-    <Compile Include="Infrastructure\WindowsApi.cs" />
+    <Compile Include="Infrastructure\ScreenImpl.cs" />
+    <Compile Include="Infrastructure\NetworkImpl.cs" />
+    <Compile Include="Infrastructure\PowerImpl.cs" />
+    <Compile Include="Infrastructure\DisplayImpl.cs" />
+    <Compile Include="Infrastructure\SystemImpl.cs" />
+    <Compile Include="Infrastructure\WindowsImpl.cs" />
     <Compile Include="Extensions\BitmapExtensions.cs" />
     <Compile Include="Extensions\TimeSpanExtensions.cs" />
     <Compile Include="Network\HostsArg.cs" />

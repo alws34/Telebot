@@ -16,12 +16,12 @@ namespace Telebot.Commands
             Pattern = "/screen (on|off)";
             Description = "Turn off or on the monitor.";
 
-            var displayApi = new DisplayApi();
+            var display = new DisplayImpl();
 
             actions = new Dictionary<string, Action>()
             {
-                { "on", displayApi.SetDisplayOn },
-                { "off", displayApi.SetDisplayOff }
+                { "on", display.SetDisplayOn },
+                { "off", display.SetDisplayOff }
             };
         }
 

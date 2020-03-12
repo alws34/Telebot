@@ -5,7 +5,7 @@ using static Telebot.Native.kernel32;
 
 namespace Telebot.Infrastructure
 {
-    public class SystemApi
+    public class SystemImpl
     {
         public void SetBrightness(int percentage)
         {

@@ -3,7 +3,7 @@ using static Telebot.Native.user32;
 
 namespace Telebot.Infrastructure
 {
-    public class DisplayApi
+    public class DisplayImpl
     {
         public void SetDisplayOn()
         {

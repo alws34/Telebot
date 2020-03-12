@@ -10,14 +10,14 @@ namespace Telebot.Commands
 {
     public class CapAppCmd : ICommand
     {
-        private readonly DesktopApi desktopApi;
+        private readonly ScreenImpl screen;
 
         public CapAppCmd()
         {
             Pattern = "/capapp (\\d+)";
             Description = "Get a screenshot of the specified application (by pid).";
 
-            desktopApi = new DesktopApi();
+            screen = new ScreenImpl();
         }
 
         public async override void Execute(Request req, Func<Response, Task> resp)
@@ -26,12 +26,12 @@ namespace Telebot.Commands
 
             var hWnd = Process.GetProcessById(pid).MainWindowHandle;
 
-            var photo = desktopApi.CaptureWindow(hWnd);
+            var wnd = screen.CaptureWindow(hWnd);
 
             var result = new Response
             {
                 ResultType = ResultType.Photo,
-                Raw = photo.ToStream()
+                Raw = wnd.ToStream()
             };
 
             await resp(result);

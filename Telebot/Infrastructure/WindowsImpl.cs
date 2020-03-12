@@ -6,7 +6,7 @@ using static Telebot.Native.user32;
 
 namespace Telebot.Infrastructure
 {
-    public class WindowsApi
+    public class WindowsImpl
     {
         public string GetForegroundApps()
         {

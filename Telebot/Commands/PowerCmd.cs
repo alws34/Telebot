@@ -16,15 +16,15 @@ namespace Telebot.Commands
             Pattern = "/power (lock|logoff|sleep|reboot|shutdown)";
             Description = "Lock, logoff, sleep, reboot or shutdown the workstation.";
 
-            var powerApi = new PowerApi();
+            var power = new PowerImpl();
 
             actions = new Dictionary<string, Action>()
             {
-                { "lock", powerApi.LockWorkstation },
-                { "logoff", powerApi.LogoffWorkstation },
-                { "sleep", powerApi.SleepWorkstation },
-                { "reboot", powerApi.RestartWorkstation },
-                { "shutdown", powerApi.ShutdownWorkstation }
+                { "lock", power.LockWorkstation },
+                { "logoff", power.LogoffWorkstation },
+                { "sleep", power.SleepWorkstation },
+                { "reboot", power.RestartWorkstation },
+                { "shutdown", power.ShutdownWorkstation }
             };
         }
 

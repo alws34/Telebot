@@ -2,7 +2,7 @@
 
 namespace Telebot.Infrastructure
 {
-    public class MediaApi
+    public class MediaImpl
     {
         public void SetVolume(int percentage)
         {

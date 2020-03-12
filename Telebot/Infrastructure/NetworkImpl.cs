@@ -3,12 +3,12 @@ using System.Net.Sockets;
 
 namespace Telebot.Infrastructure
 {
-    public class NetworkApi
+    public class NetworkImpl
     {
         public string LANIPv4 { get; }
         public string WANIPv4 { get; }
 
-        public NetworkApi()
+        public NetworkImpl()
         {
             LANIPv4 = GetLocalIPv4();
             WANIPv4 = GetPublicIPv4().TrimEnd();

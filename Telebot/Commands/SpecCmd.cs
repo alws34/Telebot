@@ -17,12 +17,11 @@ namespace Telebot.Commands
 
         public async override void Execute(Request req, Func<Response, Task> resp)
         {
-            var si = new ProcessStartInfo
+            var si = new ProcessStartInfo(".\\SpecInfo.exe")
             {
                 CreateNoWindow = true,
                 UseShellExecute = true,
                 WindowStyle = ProcessWindowStyle.Hidden,
-                FileName = ".\\SpecInfo.exe"
             };
 
             Process.Start(si).WaitForExit();

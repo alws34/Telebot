@@ -7,7 +7,7 @@ using static Telebot.Native.user32;
 
 namespace Telebot.Infrastructure
 {
-    public class DesktopApi
+    public class ScreenImpl
     {
         public IEnumerable<Bitmap> CaptureDesktop()
         {

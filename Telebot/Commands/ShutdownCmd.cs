@@ -8,14 +8,14 @@ namespace Telebot.Commands
 {
     public class ShutdownCmd : ICommand
     {
-        private readonly PowerApi powerApi;
+        private readonly PowerImpl power;
 
         public ShutdownCmd()
         {
             Pattern = "/shutdown (\\d+)";
             Description = "Schedule the workstation to shutdown.";
 
-            powerApi = new PowerApi();
+            power = new PowerImpl();
         }
 
         public async override void Execute(Request req, Func<Response, Task> resp)
@@ -30,7 +30,7 @@ namespace Telebot.Commands
 
             await resp(result);
 
-            powerApi.ShutdownWorkstation(sec);
+            power.ShutdownWorkstation(sec);
         }
     }
 }

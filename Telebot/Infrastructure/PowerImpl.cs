@@ -4,7 +4,7 @@ using Telebot.Native;
 
 namespace Telebot.Infrastructure
 {
-    public class PowerApi
+    public class PowerImpl
     {
         public void ShutdownWorkstation()
         {

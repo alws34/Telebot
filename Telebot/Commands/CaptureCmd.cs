@@ -10,26 +10,26 @@ namespace Telebot.Commands
 {
     public class CaptureCmd : ICommand
     {
-        private readonly DesktopApi desktopApi;
+        private readonly ScreenImpl screen;
 
         public CaptureCmd()
         {
             Pattern = "/capture";
             Description = "Get a screenshot of the workstation.";
 
-            desktopApi = new DesktopApi();
+            screen = new ScreenImpl();
         }
 
         public async override void Execute(Request req, Func<Response, Task> resp)
         {
-            var photos = desktopApi.CaptureDesktop();
+            var screens = screen.CaptureDesktop();
 
-            foreach (Bitmap photo in photos)
+            foreach (Bitmap scrn in screens)
             {
                 var result = new Response
                 {
                     ResultType = ResultType.Photo,
-                    Raw = photo.ToStream()
+                    Raw = scrn.ToStream()
                 };
 
                 await resp(result);

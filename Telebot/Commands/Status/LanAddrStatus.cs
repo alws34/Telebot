@@ -4,11 +4,11 @@ namespace Telebot.Commands.Status
 {
     public class LanAddrStatus : IStatus
     {
-        private readonly NetworkApi networkApi;
+        private readonly NetworkImpl networkApi;
 
         public LanAddrStatus()
         {
-            networkApi = new NetworkApi();
+            networkApi = new NetworkImpl();
         }
 
         public string GetStatus()

@@ -10,13 +10,13 @@ namespace Telebot.ScreenCapture
     {
         private DateTime timeStop;
 
-        private readonly DesktopApi desktopApi;
+        private readonly ScreenImpl desktopApi;
 
         public ScreenCaptureSchedule()
         {
             JobType = Common.JobType.Scheduled;
 
-            desktopApi = new DesktopApi();
+            desktopApi = new ScreenImpl();
         }
 
         private void Elapsed()

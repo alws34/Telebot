@@ -27,9 +27,9 @@ namespace Telebot.Clients
             OnMessage += BotMessageHandler;
         }
 
-        public Task SendText(string text, int replyId = 0)
+        public async Task SendText(string text, int replyId = 0)
         {
-            return SendTextMessageAsync(
+            await SendTextMessageAsync(
                id,
                text.TrimEnd(),
                parseMode: ParseMode.Markdown,
@@ -37,11 +37,11 @@ namespace Telebot.Clients
            );
         }
 
-        public Task SendPic(Stream content, int replyId = 0)
+        public async Task SendPic(Stream content, int replyId = 0)
         {
             var raw = new InputOnlineFile(content, "photo.jpg");
 
-            return SendDocumentAsync(
+            await SendDocumentAsync(
                 id,
                 raw,
                 parseMode: ParseMode.Markdown,
@@ -49,13 +49,15 @@ namespace Telebot.Clients
                 caption: "From *Telebot*",
                 thumb: raw as InputMedia
             );
+
+            content.Close();
         }
 
-        public Task SendDoc(Stream content, int replyId = 0)
+        public async Task SendDoc(Stream content, int replyId = 0)
         {
             var raw = new InputOnlineFile(content, (content as FileStream).Name);
 
-            return SendDocumentAsync(
+            await SendDocumentAsync(
                 id,
                 raw,
                 parseMode: ParseMode.Markdown,
@@ -63,6 +65,8 @@ namespace Telebot.Clients
                 caption: "From *Telebot*",
                 thumb: raw as InputMedia
             );
+
+            content.Close();
         }
 
         private async void BotMessageHandler(object sender, MessageEventArgs e)

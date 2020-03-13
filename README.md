@@ -38,3 +38,9 @@ GPU_TEMPERATURE_WARNING = 65
 #### Intranet Scanning and Monitoring 
 - Telebot has the capability to monitor the local area network for new connected/disconnected devices or just send you a static scan report of all connected device to the network.
 - This feature is using an external scanning utility from [nirsoft](http://www.nirsoft.net/utils/wireless_network_watcher.html) and reads the scan report in memory.
+- The utility by default will scan the entire network range (1..255) which will take time. In order to customize this you can configure this in the settings (wnet.cfg) by modifiying the entry:
+```
+UseIPAddressesRange=1 // 1 = enabled (true)
+IPAddressFrom=192.168.1.1
+IPAddressTo=192.168.1.55 // change this
+```

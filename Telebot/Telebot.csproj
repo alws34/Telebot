@@ -209,7 +209,7 @@
     <Content Include="SetVol.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="WNetWatcher.exe">
+    <Content Include="wnet.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

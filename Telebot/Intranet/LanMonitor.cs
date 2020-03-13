@@ -21,7 +21,7 @@ namespace Telebot.Intranet
         private void DoWork(object sender, DoWorkEventArgs e)
         {
             var si = new ProcessStartInfo(
-                utilPath, $"/cfg {wcfgPath} /sxml {scanPath}"
+                wnetPath, $"/cfg {wcfgPath} /sxml {scanPath}"
             );
 
             si.WorkingDirectory = ".\\";
@@ -40,7 +40,8 @@ namespace Telebot.Intranet
                 if (worker.CancellationPending)
                     break;
 
-                // we first must ensure we have a prev list to compare new list with
+                // initiate a first scan so we have a list (prevScan) to compare 
+                // the newely scanned list (lastScan)
                 if (prevScan.Count == 0)
                 {
                     prevScan.AddRange(ReadHosts(scanPath));

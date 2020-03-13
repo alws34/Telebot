@@ -10,7 +10,7 @@ namespace Telebot.Intranet
         public LanScanner()
         {
             si = new ProcessStartInfo(
-               utilPath, $"/cfg {wcfgPath} /sxml {scanPath}"
+               wnetPath, $"/cfg {wcfgPath} /sxml {scanPath}"
             );
 
             si.WorkingDirectory = ".\\";
@@ -19,9 +19,9 @@ namespace Telebot.Intranet
 
         public override void Discover()
         {
-            if (!File.Exists(utilPath))
+            if (!File.Exists(wnetPath))
             {
-                RaiseNotify($"{utilPath} does not exist.");
+                RaiseNotify($"{wnetPath} does not exist.");
                 return;
             };
 

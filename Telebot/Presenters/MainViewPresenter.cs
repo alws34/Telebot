@@ -73,16 +73,25 @@ namespace Telebot.Presenters
 
         private async void CheckForUpdateEvent(UpdateInfoEventArgs args)
         {
-            if (args != null && args.IsUpdateAvailable)
+            if (args != null)
             {
-                if (updateTimer.Enabled)
-                    updateTimer.Stop();
+                switch (args.IsUpdateAvailable)
+                {
+                    case true:
+                        if (updateTimer.Enabled)
+                            updateTimer.Stop();
 
-                string text = "";
-                text += "A new version of Telebot is available!\n";
-                text += "check /update for more info.";
+                        string updateTxt = "";
+                        updateTxt += "A new version of Telebot is available!\n";
+                        updateTxt += "check /update for more info.";
 
-                await client.SendText(text);
+                        await client.SendText(updateTxt);
+                        break;
+                    case false:
+                        string noUpdateTxt = "You are running the latest version of Telebot.";
+                        await client.SendText(noUpdateTxt);
+                        break;
+                }
             }
         }
 

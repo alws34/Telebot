@@ -1,7 +1,7 @@
 ﻿using System.Text;
+using Telebot.Capture;
 using Telebot.Contracts;
 using Telebot.Extensions;
-using Telebot.ScreenCapture;
 
 namespace Telebot.Commands.Status
 {
@@ -13,7 +13,7 @@ namespace Telebot.Commands.Status
 
             var _jobs = Program.ScreenFactory.GetAllEntities();
 
-            foreach (IJob<ScreenCaptureArgs> job in _jobs)
+            foreach (IJob<CaptureArgs> job in _jobs)
             {
                 string name = job.GetType().Name.Replace("ScreenCapture", "");
                 string active = job.IsActive.AsReadable();

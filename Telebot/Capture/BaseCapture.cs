@@ -1,22 +1,23 @@
-﻿using System;
+﻿using Common;
+using System;
 using Telebot.Common;
 using Telebot.Contracts;
 
-namespace Telebot.ScreenCapture
+namespace Telebot.Capture
 {
-    public abstract class ScreenCaptureBase : IJob<ScreenCaptureArgs>
+    public abstract class BaseCapture : INotifyable, IJob<CaptureArgs>
     {
         public JobType JobType { get; protected set; }
 
         public bool IsActive { get; protected set; }
 
-        public event EventHandler<ScreenCaptureArgs> Update;
+        public event EventHandler<CaptureArgs> Update;
 
         public abstract void Start();
 
         public abstract void Stop();
 
-        protected void RaiseScreenCaptured(ScreenCaptureArgs args)
+        protected void RaiseScreenCaptured(CaptureArgs args)
         {
             Update?.Invoke(this, args);
         }

@@ -13,7 +13,7 @@ namespace Telebot.Commands.Status
 
             var _jobs = Program.TempFactory.GetAllEntities();
 
-            foreach (IJob<TempChangedArgs> job in _jobs)
+            foreach (IJob<TempArgs> job in _jobs)
             {
                 string name = job.GetType().Name.Replace("TempMon", "");
                 string active = job.IsActive.AsReadable();

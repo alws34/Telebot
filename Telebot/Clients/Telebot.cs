@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -41,7 +40,7 @@ namespace Telebot.Clients
 
         public async Task SendPic(Stream content, int replyId = 0)
         {
-            var raw = new InputOnlineFile(content, "photo.jpg");
+            var raw = new InputOnlineFile(content, "preview.jpg");
 
             await SendDocumentAsync(
                 id,
@@ -73,18 +72,21 @@ namespace Telebot.Clients
 
         private async void BotMessageHandler(object sender, MessageEventArgs e)
         {
-            Task RespHandler(Response result)
+            async Task RespHandler(Response result)
             {
-                switch(result.ResultType)
+                switch (result.ResultType)
                 {
                     case ResultType.Text:
-                        return SendText(result.Text, e.Message.MessageId);
+                        await SendText(result.Text, e.Message.MessageId);
+                        break;
                     case ResultType.Photo:
-                        return SendPic(result.Raw, e.Message.MessageId);
+                        await SendPic(result.Raw, e.Message.MessageId);
+                        break;
                     case ResultType.Document:
-                        return SendDoc(result.Raw, e.Message.MessageId);
+                        await SendDoc(result.Raw, e.Message.MessageId);
+                        break;
                     default:
-                        return null;
+                        break;
                 }
             }
 
@@ -111,7 +113,7 @@ namespace Telebot.Clients
 
             RaiseReceived(data);
 
-            bool success = Program.CmdFactory.TryGetEntity(
+            bool success = Program.CommandFactory.TryGetEntity(
                 x => Regex.IsMatch(pattern, $"^{x.Pattern}$"),
                 out ICommand command
             );

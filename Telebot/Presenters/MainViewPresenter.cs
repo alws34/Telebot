@@ -1,14 +1,14 @@
-﻿using FluentScheduler;
+﻿using Common;
+using FluentScheduler;
 using System;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Telebot.Capture;
 using Telebot.Clients;
 using Telebot.Contracts;
 using Telebot.Extensions;
-using Telebot.Models;
-using Telebot.Network;
-using Telebot.ScreenCapture;
+using Telebot.Intranet;
 using Telebot.Temperature;
 using Telebot.Views;
 
@@ -18,12 +18,14 @@ namespace Telebot.Presenters
     {
         private readonly IMainView mainView;
         private readonly IBotClient client;
-        private readonly INetMonitor netMon;
 
         public MainViewPresenter(
             IMainView mainView,
             IBotClient client,
-            INetMonitor netMon
+            IInetScanner inetScan,
+            IINetMonitor inetMon,
+            IJob<CaptureArgs>[] caps,
+            IJob<TempArgs>[] temps
         )
         {
             this.mainView = mainView;
@@ -31,40 +33,75 @@ namespace Telebot.Presenters
             this.mainView.FormClosed += viewClosed;
 
             this.client = client;
-            this.client.Received += BotMessageArrived;
+            this.client.Received += ClientReceived;
 
-            this.netMon = netMon;
-            this.netMon.Discovered += NetMon_Discovered;
+            inetScan.Discovered += LanDiscovered;
+            inetScan.Notify += Notify;
 
-            var scrnCaps = Program.ScreenFactory.GetAllEntities();
+            inetMon.Connected += LanConnected;
+            inetMon.Disconnected += LanDisconnected;
+            inetMon.Notify += Notify;
 
-            foreach (IJob<ScreenCaptureArgs> scrnCap in scrnCaps)
+            foreach (BaseCapture cap in caps)
             {
-                var handler = CreateEventHandler<ScreenCaptureArgs>(scrnCap.GetType());
-                scrnCap.Update += handler;
+                var handler = CreateEventHandler<CaptureArgs>(cap.GetType());
+                cap.Update += handler;
+                cap.Notify += Notify;
             }
 
-            var tempMons = Program.TempFactory.GetAllEntities();
-
-            foreach (IJob<TempChangedArgs> tempMon in tempMons)
+            foreach (BaseTemp temp in temps)
             {
-                var handler = CreateEventHandler<TempChangedArgs>(tempMon.GetType());
-                tempMon.Update += handler;
+                var handler = CreateEventHandler<TempArgs>(temp.GetType());
+                temp.Update += handler;
+                temp.Notify += Notify;
             }
         }
 
-        private EventHandler<T> CreateEventHandler<T>(Type type)
+        private async void LanDisconnected(object sender, HostsArg e)
         {
-            string className = type.Name;
-            string handlerName = $"{className}Handler";
-            return Delegate.CreateDelegate(
-                typeof(EventHandler<T>),
-                this,
-                handlerName
-            ) as EventHandler<T>;
+            string text = "Disconnected devices..:\n";
+
+            foreach (Host host in e.Hosts)
+            {
+                text += host.ToString();
+                text += "\n";
+            }
+
+            await client.SendText(text);
         }
 
-        private void BotMessageArrived(object sender, ReceivedArgs e)
+        private async void LanConnected(object sender, HostsArg e)
+        {
+            string text = "Connected devices..:\n";
+
+            foreach (Host host in e.Hosts)
+            {
+                text += host.ToString();
+                text += "\n";
+            }
+
+            await client.SendText(text);
+        }
+
+        private async void LanDiscovered(object sender, HostsArg e)
+        {
+            string text = "";
+
+            foreach (Host host in e.Hosts)
+            {
+                text += host.ToString();
+                text += "\n\n";
+            }
+
+            await client.SendText(text);
+        }
+
+        private async void Notify(object sender, NotifyArg e)
+        {
+            await client.SendText(e.Text);
+        }
+
+        private void ClientReceived(object sender, ReceivedArgs e)
         {
             mainView.TrayIcon.ShowBalloonTip(
                1000, mainView.Text, e.MessageText, ToolTipIcon.Info
@@ -109,12 +146,12 @@ namespace Telebot.Presenters
             });
         }
 
-        private async void ScreenCaptureScheduleHandler(object sender, ScreenCaptureArgs e)
+        private async void ScreenCaptureScheduleHandler(object sender, CaptureArgs e)
         {
             await client.SendPic(e.Capture.ToStream());
         }
 
-        private async void TempMonWarningHandler(object sender, TempChangedArgs e)
+        private async void TempMonWarningHandler(object sender, TempArgs e)
         {
             string text = $"*[WARNING] {e.DeviceName}*: {e.Temperature}°C\nFrom *Telebot*";
 
@@ -123,7 +160,7 @@ namespace Telebot.Presenters
 
         private StringBuilder text = new StringBuilder();
 
-        private async void TempMonScheduleHandler(object sender, TempChangedArgs e)
+        private async void TempMonScheduleHandler(object sender, TempArgs e)
         {
             switch (e)
             {
@@ -138,17 +175,15 @@ namespace Telebot.Presenters
             }
         }
 
-        private async void NetMon_Discovered(object sender, HostsArg e)
+        private EventHandler<T> CreateEventHandler<T>(Type type)
         {
-            string text = "";
-
-            foreach (Host host in e.Hosts)
-            {
-                text += host.ToString();
-                text += "\n\n";
-            }
-
-            await client.SendText(text);
+            string className = type.Name;
+            string handlerName = $"{className}Handler";
+            return Delegate.CreateDelegate(
+                typeof(EventHandler<T>),
+                this,
+                handlerName
+            ) as EventHandler<T>;
         }
     }
 }

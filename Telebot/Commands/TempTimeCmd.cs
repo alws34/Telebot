@@ -9,7 +9,7 @@ namespace Telebot.Commands
 {
     public class TempTimeCmd : ICommand
     {
-        private readonly IJob<TempChangedArgs> _job;
+        private readonly IJob<TempArgs> _job;
 
         public TempTimeCmd()
         {
@@ -56,7 +56,7 @@ namespace Telebot.Commands
 
             await resp(result);
 
-            ((IScheduledJob)_job).Start(tsDuration, tsInterval);
+            ((IScheduled)_job).Start(tsDuration, tsInterval);
         }
     }
 }

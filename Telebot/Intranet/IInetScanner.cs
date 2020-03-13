@@ -1,0 +1,18 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace Telebot.Intranet
+{
+    public abstract class IInetScanner : IInetBase
+    {
+        public event EventHandler<HostsArg> Discovered;
+
+        protected void RaiseDiscovered(List<Host> hosts)
+        {
+            var arg = new HostsArg { Hosts = hosts };
+            Discovered?.Invoke(this, arg);
+        }
+
+        public abstract void Discover();
+    }
+}

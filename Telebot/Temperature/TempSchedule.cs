@@ -7,11 +7,11 @@ using static CPUID.CPUIDSDK;
 
 namespace Telebot.Temperature
 {
-    public class TempMonSchedule : TempMonBase, IScheduledJob
+    public class TempSchedule : BaseTemp, IScheduled
     {
         private DateTime timeStop;
 
-        public TempMonSchedule(IDevice[] devices)
+        public TempSchedule(IDevice[] devices)
         {
             JobType = Common.JobType.Scheduled;
 
@@ -30,7 +30,7 @@ namespace Telebot.Temperature
             {
                 Sensor sensor = device.GetSensor(SENSOR_CLASS_TEMPERATURE);
 
-                var args = new TempChangedArgs
+                var args = new TempArgs
                 {
                     DeviceName = device.DeviceName,
                     Temperature = sensor.Value
@@ -45,6 +45,12 @@ namespace Telebot.Temperature
 
         public void Start(TimeSpan duration, TimeSpan interval)
         {
+            if (IsActive)
+            {
+                RaiseNotify("Temperature monitor has already been scheduled.");
+                return;
+            }
+
             timeStop = DateTime.Now.AddSeconds(duration.TotalSeconds);
 
             int seconds = Convert.ToInt32(interval.TotalSeconds);
@@ -64,6 +70,12 @@ namespace Telebot.Temperature
 
         public override void Stop()
         {
+            if (!IsActive)
+            {
+                RaiseNotify("temperature monitor is not scheduled.");
+                return;
+            }
+
             JobManager.RemoveJob(GetType().Name);
 
             IsActive = false;

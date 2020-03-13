@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Telebot.Capture;
 using Telebot.Common;
 using Telebot.Contracts;
 using Telebot.Models;
-using Telebot.ScreenCapture;
 
 namespace Telebot.Commands
 {
     public class CapTimeCmd : ICommand
     {
-        private readonly IJob<ScreenCaptureArgs> _job;
+        private readonly IJob<CaptureArgs> _job;
 
         public CapTimeCmd()
         {
@@ -56,7 +56,7 @@ namespace Telebot.Commands
 
             await resp(result);
 
-            ((IScheduledJob)_job).Start(tsDuration, tsInterval);
+            ((IScheduled)_job).Start(tsDuration, tsInterval);
         }
     }
 }

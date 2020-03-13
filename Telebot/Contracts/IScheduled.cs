@@ -2,7 +2,7 @@
 
 namespace Telebot.Contracts
 {
-    public interface IScheduledJob
+    public interface IScheduled
     {
         void Start(TimeSpan duration, TimeSpan interval);
     }

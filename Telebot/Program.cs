@@ -3,6 +3,7 @@ using CPUID.Builder;
 using FluentScheduler;
 using System;
 using System.Windows.Forms;
+using Telebot.Capture;
 using Telebot.Clients;
 using Telebot.Commands;
 using Telebot.Commands.Builder;
@@ -10,9 +11,8 @@ using Telebot.Commands.Factories;
 using Telebot.Commands.Status;
 using Telebot.Commands.Status.Builder;
 using Telebot.Contracts;
-using Telebot.Network;
+using Telebot.Intranet;
 using Telebot.Presenters;
-using Telebot.ScreenCapture;
 using Telebot.Settings;
 using Telebot.Temperature;
 using static CPUID.CPUIDCore;
@@ -23,10 +23,11 @@ namespace Telebot
     {
         public static bool FirstRun { get; private set; }
         public static SettingsFactory Settings { get; private set; }
-        public static INetMonitor NetMonitor { get; private set; }
-        public static IFactory<ICommand> CmdFactory { get; private set; }
-        public static IFactory<IJob<TempChangedArgs>> TempFactory { get; private set; }
-        public static IFactory<IJob<ScreenCaptureArgs>> ScreenFactory { get; private set; }
+        public static IINetMonitor LanMonitor { get; private set; }
+        public static IInetScanner LanScanner { get; private set; }
+        public static IFactory<ICommand> CommandFactory { get; private set; }
+        public static IFactory<IJob<TempArgs>> TempFactory { get; private set; }
+        public static IFactory<IJob<CaptureArgs>> ScreenFactory { get; private set; }
 
         [STAThread]
         static void Main()
@@ -53,21 +54,32 @@ namespace Telebot
             FirstRun = Properties.Settings.Default.FirstRun;
 
             IBotClient client = new Clients.Telebot(token, id);
-            NetMonitor = new LanMonitor();
 
-            TempFactory = new TempMonFactory();
-            ScreenFactory = new ScreenCapFactory();
-            CmdFactory = BuildCommandFactory();
+            LanMonitor = new LanMonitor();
+            LanScanner = new LanScanner();
+
+            TempFactory = new TempFactory();
+            ScreenFactory = new CaptureFactory();
+            CommandFactory = BuildCommandFactory();
+
+            var screens = ScreenFactory.GetAllEntities();
+            var temperatures = TempFactory.GetAllEntities();
 
             MainView mainView = new MainView();
 
             var presenter = new MainViewPresenter(
                 mainView,
                 client,
-                NetMonitor
+                LanScanner,
+                LanMonitor,
+                screens,
+                temperatures
             );
 
-            JobManager.AddJob(() => { Sdk.RefreshInformation(); },
+            JobManager.AddJob(() =>
+            {
+                Sdk.RefreshInformation();
+            },
                 (s) => s.ToRunNow().AndEvery(1).Seconds()
             );
 
@@ -100,6 +112,7 @@ namespace Telebot
                 .Add(new LanAddrStatus())
                 .Add(new WanAddrStatus())
                 .Add(new UptimeStatus())
+                .Add(new LanMonStatus())
                 .Add(new TemMonStatus())
                 .Add(new ScrnCapStatus())
                 .Build();
@@ -117,7 +130,7 @@ namespace Telebot
                 .Add(new PowerCmd())
                 .Add(new ShutdownCmd())
                 .Add(new MessageBoxCmd())
-                .Add(new LanMonCmd())
+                .Add(new LanCmd())
                 .Add(new KillTaskCmd())
                 .Add(new SpecCmd())
                 .Add(new VolCmd())

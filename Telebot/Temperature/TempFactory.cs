@@ -5,17 +5,17 @@ using static CPUID.CPUIDCore;
 
 namespace Telebot.Temperature
 {
-    public class TempMonFactory : IFactory<IJob<TempChangedArgs>>
+    public class TempFactory : IFactory<IJob<TempArgs>>
     {
-        public TempMonFactory()
+        public TempFactory()
         {
             var devices = new DeviceBuilder()
                 .AddRange(DeviceFactory.CPUDevices)
                 .AddRange(DeviceFactory.GPUDevices)
                 .Build();
 
-            _items.Add(new TempMonWarning(devices));
-            _items.Add(new TempMonSchedule(devices));
+            _items.Add(new TempWarning(devices));
+            _items.Add(new TempSchedule(devices));
         }
     }
 }

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Drawing;
 
-namespace Telebot.ScreenCapture
+namespace Telebot.Capture
 {
-    public class ScreenCaptureArgs : EventArgs
+    public class CaptureArgs : EventArgs
     {
         public Bitmap Capture { get; set; }
     }

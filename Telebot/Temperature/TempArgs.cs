@@ -2,7 +2,7 @@
 
 namespace Telebot.Temperature
 {
-    public class TempChangedArgs : EventArgs
+    public class TempArgs : EventArgs
     {
         public string DeviceName { get; set; }
         public float Temperature { get; set; }

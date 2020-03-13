@@ -6,20 +6,20 @@ using Telebot.Models;
 
 namespace Telebot.Commands
 {
-    public class LanMonCmd : ICommand
+    public class LanCmd : ICommand
     {
         private readonly Dictionary<string, Action> methods;
 
-        public LanMonCmd()
+        public LanCmd()
         {
             Pattern = "/lan (mon|moff|scan)";
             Description = "Scan or listen for connected/disconnected devices on the LAN.";
 
             methods = new Dictionary<string, Action>
             {
-                { "mon", Program.NetMonitor.Listen },
-                { "moff", Program.NetMonitor.Disconnect },
-                { "scan", Program.NetMonitor.Discover }
+                { "mon", Program.LanMonitor.Listen },
+                { "moff", Program.LanMonitor.Disconnect },
+                { "scan", Program.LanScanner.Discover }
             };
         }
 
@@ -30,7 +30,7 @@ namespace Telebot.Commands
             var result = new Response
             {
                 ResultType = ResultType.Text,
-                Text = $"Command {state} has been sent to network listener."
+                Text = $"Command {state} has been sent to network manager."
             };
 
             await resp(result);

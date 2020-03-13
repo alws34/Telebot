@@ -4,15 +4,15 @@ using System.Drawing;
 using Telebot.Contracts;
 using Telebot.Infrastructure;
 
-namespace Telebot.ScreenCapture
+namespace Telebot.Capture
 {
-    public class ScreenCaptureSchedule : ScreenCaptureBase, IScheduledJob
+    public class CaptureSchedule : BaseCapture, IScheduled
     {
         private DateTime timeStop;
 
         private readonly ScreenImpl desktopApi;
 
-        public ScreenCaptureSchedule()
+        public CaptureSchedule()
         {
             JobType = Common.JobType.Scheduled;
 
@@ -31,7 +31,7 @@ namespace Telebot.ScreenCapture
 
             foreach (Bitmap desktop in desktops)
             {
-                var result = new ScreenCaptureArgs
+                var result = new CaptureArgs
                 {
                     Capture = desktop
                 };
@@ -42,6 +42,12 @@ namespace Telebot.ScreenCapture
 
         public void Start(TimeSpan duration, TimeSpan interval)
         {
+            if (IsActive)
+            {
+                RaiseNotify("Screen capture has already been scheduled.");
+                return;
+            }
+
             timeStop = DateTime.Now.AddSeconds(duration.TotalSeconds);
 
             int seconds = Convert.ToInt32(interval.TotalSeconds);

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Serialization;
 
-namespace Telebot.Network
+namespace Telebot.Intranet
 {
     [XmlRoot(ElementName = "devices_connected_to_your_network")]
     public class HostsArg

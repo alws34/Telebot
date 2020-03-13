@@ -7,14 +7,14 @@ using static CPUID.CPUIDSDK;
 
 namespace Telebot.Temperature
 {
-    public class TempMonWarning : TempMonBase, IProfile
+    public class TempWarning : BaseTemp, IProfile
     {
         private float CPUWarningLevel;
         private float GPUWarningLevel;
 
         private readonly Dictionary<uint, float> tempWarningLevels;
 
-        public TempMonWarning(IDevice[] devices)
+        public TempWarning(IDevice[] devices)
         {
             JobType = Common.JobType.Fixed;
 
@@ -49,7 +49,7 @@ namespace Telebot.Temperature
 
                 if (success && sensor.Value >= warningTemp)
                 {
-                    var args = new TempChangedArgs
+                    var args = new TempArgs
                     {
                         DeviceName = device.DeviceName,
                         Temperature = sensor.Value
@@ -62,6 +62,12 @@ namespace Telebot.Temperature
 
         public override void Start()
         {
+            if (IsActive)
+            {
+                RaiseNotify("Temperature monitor is already monitoring.");
+                return;
+            }
+
             JobManager.AddJob(
                 Elapsed,
                 (s) => s.WithName(GetType().Name).ToRunNow().AndEvery(7).Seconds()
@@ -72,6 +78,12 @@ namespace Telebot.Temperature
 
         public override void Stop()
         {
+            if (!IsActive)
+            {
+                RaiseNotify("Temperature monitor is not monitoring.");
+                return;
+            }
+
             JobManager.RemoveJob(GetType().Name);
 
             IsActive = false;

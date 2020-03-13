@@ -1,6 +1,6 @@
 ﻿using System.Xml.Serialization;
 
-namespace Telebot.Network
+namespace Telebot.Intranet
 {
     [XmlRoot(ElementName = "item")]
     public class Host
@@ -37,7 +37,17 @@ namespace Telebot.Network
 
         public override string ToString()
         {
-            return $"{Ip_address}\n{Network_adapter_company}\n{Device_name}";
+            string res = Ip_address;
+
+            if (!string.IsNullOrEmpty(Device_information))
+                res += $"\n{Device_information}";
+
+            if (!string.IsNullOrEmpty(Device_name))
+                res += $"\n{Device_name}";
+
+            res += $"\n{Network_adapter_company}";
+
+            return res;
         }
     }
 }

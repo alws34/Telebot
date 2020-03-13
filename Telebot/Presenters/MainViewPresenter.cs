@@ -193,14 +193,14 @@ namespace Telebot.Presenters
                     case true:
                         string text1 = "";
                         text1 += "A new version of Telebot is available!\n";
-                        text1 += "check /update for more info.";
+                        text1 += "run /update dl to update.";
 
                         await client.SendText(text1);
                         break;
-                    case false:
-                        string text = "You are running the latest version of Telebot.";
-                        await client.SendText(text);
-                        break;
+                    //case false:
+                    //    string text = "You are running the latest version of Telebot.";
+                    //    await client.SendText(text);
+                    //    break;
                 }
             }
         }

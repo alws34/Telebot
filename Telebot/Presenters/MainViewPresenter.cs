@@ -71,30 +71,6 @@ namespace Telebot.Presenters
             updateTimer.Start();
         }
 
-        private async void CheckForUpdateEvent(UpdateInfoEventArgs args)
-        {
-            if (args != null)
-            {
-                switch (args.IsUpdateAvailable)
-                {
-                    case true:
-                        if (updateTimer.Enabled)
-                            updateTimer.Stop();
-
-                        string updateTxt = "";
-                        updateTxt += "A new version of Telebot is available!\n";
-                        updateTxt += "check /update for more info.";
-
-                        await client.SendText(updateTxt);
-                        break;
-                    case false:
-                        string noUpdateTxt = "You are running the latest version of Telebot.";
-                        await client.SendText(noUpdateTxt);
-                        break;
-                }
-            }
-        }
-
         private void ClientReceived(object sender, ReceivedArgs e)
         {
             view.TrayIcon.ShowBalloonTip(
@@ -211,6 +187,30 @@ namespace Telebot.Presenters
                 default:
                     text.AppendLine($"*{e.DeviceName}*: {e.Temperature}°C");
                     break;
+            }
+        }
+
+        private async void CheckForUpdateEvent(UpdateInfoEventArgs args)
+        {
+            if (args != null)
+            {
+                switch (args.IsUpdateAvailable)
+                {
+                    case true:
+                        if (updateTimer.Enabled)
+                            updateTimer.Stop();
+
+                        string updateTxt = "";
+                        updateTxt += "A new version of Telebot is available!\n";
+                        updateTxt += "check /update for more info.";
+
+                        await client.SendText(updateTxt);
+                        break;
+                    case false:
+                        string noUpdateTxt = "You are running the latest version of Telebot.";
+                        await client.SendText(noUpdateTxt);
+                        break;
+                }
             }
         }
 

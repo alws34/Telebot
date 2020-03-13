@@ -1,5 +1,4 @@
-﻿using AutoUpdaterDotNET;
-using Common;
+﻿using Common;
 using CPUID.Builder;
 using FluentScheduler;
 using System;
@@ -30,15 +29,11 @@ namespace Telebot
         public static IFactory<IJob<TempArgs>> TempFactory { get; private set; }
         public static IFactory<IJob<CaptureArgs>> CaptureFactory { get; private set; }
 
-        private const string xml = "https://raw.githubusercontent.com/jdahan91/Telebot/master/Telebot/Update/updateinfo.xml";
-
         [STAThread]
         static void Main()
         {
-            //Application.EnableVisualStyles();
-            //Application.SetCompatibleTextRenderingDefault(false);
-
-            AutoUpdater.Start(xml);
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
 
             Settings = new SettingsFactory();
 
@@ -58,22 +53,22 @@ namespace Telebot
 
             FirstRun = Properties.Settings.Default.FirstRun;
 
-            IBotClient client = new Clients.Telebot(token, id);
-
-            LanMonitor = new LanMonitor();
-            LanScanner = new LanScanner();
-
             TempFactory = new TempFactory();
             CaptureFactory = new CaptureFactory();
+
+            LanScanner = new LanScanner();
+            LanMonitor = new LanMonitor();
+
             CommandFactory = BuildCommandFactory();
 
+            MainView view = new MainView();
+            IBotClient client = new Clients.Telebot(token, id);
+         
             var captures = CaptureFactory.GetAllEntities();
             var temperatures = TempFactory.GetAllEntities();
 
-            MainView mainView = new MainView();
-
             var presenter = new MainViewPresenter(
-                mainView,
+                view,
                 client,
                 LanScanner,
                 LanMonitor,
@@ -88,7 +83,7 @@ namespace Telebot
                 (s) => s.ToRunNow().AndEvery(1).Seconds()
             );
 
-            Application.Run(mainView);
+            Application.Run(view);
 
             if (FirstRun)
             {
@@ -118,30 +113,31 @@ namespace Telebot
                 .Add(new WanAddrStatus())
                 .Add(new UptimeStatus())
                 .Add(new LanMonStatus())
-                .Add(new TemMonStatus())
-                .Add(new ScrnCapStatus())
+                .Add(new TempStatus())
+                .Add(new CapsStatus())
                 .Build();
 
             var commands = new CmdBuilder()
-                .Add(new StatusCmd(statuses))
-                .Add(new AppsCmd())
-                .Add(new BrightCmd())
-                .Add(new CapAppCmd())
-                .Add(new CapTimeCmd())
-                .Add(new CaptureCmd())
-                .Add(new ScreenCmd())
-                .Add(new TempMonCmd())
-                .Add(new TempTimeCmd())
-                .Add(new PowerCmd())
-                .Add(new ShutdownCmd())
-                .Add(new MessageBoxCmd())
-                .Add(new LanCmd())
-                .Add(new KillTaskCmd())
-                .Add(new SpecCmd())
-                .Add(new VolCmd())
-                .Add(new RestartCmd())
-                .Add(new ExitCmd())
-                .Add(new HelpCmd())
+                .Add(new StatusCommand(statuses))
+                .Add(new AppsCommand())
+                .Add(new BrightCommand())
+                .Add(new CapAppCommand())
+                .Add(new CapTimeCommand())
+                .Add(new CapCommand())
+                .Add(new ScreenCommand())
+                .Add(new TempWarnCommand())
+                .Add(new TempTimeCommand())
+                .Add(new PowerCommand())
+                .Add(new ShutdownCommand())
+                .Add(new AlertCommand())
+                .Add(new LanCommand())
+                .Add(new KillTaskCommand())
+                .Add(new SpecCommand())
+                .Add(new VolCommand())
+                .Add(new RestartCommand())
+                .Add(new ExitCommand())
+                .Add(new UpdateCommand())
+                .Add(new HelpCommand())
                 .Build();
 
             return new CommandFactory(commands);

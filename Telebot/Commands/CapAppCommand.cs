@@ -8,11 +8,11 @@ using Telebot.Models;
 
 namespace Telebot.Commands
 {
-    public class CapAppCmd : ICommand
+    public class CapAppCommand : ICommand
     {
         private readonly ScreenImpl screen;
 
-        public CapAppCmd()
+        public CapAppCommand()
         {
             Pattern = "/capapp (\\d+)";
             Description = "Get a screenshot of the specified application (by pid).";

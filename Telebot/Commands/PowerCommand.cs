@@ -7,11 +7,11 @@ using Telebot.Models;
 
 namespace Telebot.Commands
 {
-    public class PowerCmd : ICommand
+    public class PowerCommand : ICommand
     {
         private readonly Dictionary<string, Action> actions;
 
-        public PowerCmd()
+        public PowerCommand()
         {
             Pattern = "/power (lock|logoff|sleep|reboot|shutdown)";
             Description = "Lock, logoff, sleep, reboot or shutdown the workstation.";

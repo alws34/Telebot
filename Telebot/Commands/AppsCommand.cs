@@ -7,11 +7,11 @@ using Telebot.Models;
 
 namespace Telebot.Commands
 {
-    public class AppsCmd : ICommand
+    public class AppsCommand : ICommand
     {
         public readonly Dictionary<string, Func<string>> actions;
 
-        public AppsCmd()
+        public AppsCommand()
         {
             Pattern = "/apps (fg|all)";
             Description = "List of active applications.";

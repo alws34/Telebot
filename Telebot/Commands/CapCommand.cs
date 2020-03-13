@@ -8,11 +8,11 @@ using Telebot.Models;
 
 namespace Telebot.Commands
 {
-    public class CaptureCmd : ICommand
+    public class CapCommand : ICommand
     {
         private readonly ScreenImpl screen;
 
-        public CaptureCmd()
+        public CapCommand()
         {
             Pattern = "/capture";
             Description = "Get a screenshot of the workstation.";

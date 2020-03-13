@@ -7,11 +7,11 @@ using Telebot.Models;
 
 namespace Telebot.Commands
 {
-    public class StatusCmd : ICommand
+    public class StatusCommand : ICommand
     {
         private readonly IStatus[] statuses;
 
-        public StatusCmd(IStatus[] statuses)
+        public StatusCommand(IStatus[] statuses)
         {
             Pattern = "/status";
             Description = "Receive workstation information.";

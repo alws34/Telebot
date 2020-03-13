@@ -7,11 +7,11 @@ using Telebot.Models;
 
 namespace Telebot.Commands
 {
-    public class ScreenCmd : ICommand
+    public class ScreenCommand : ICommand
     {
         private readonly Dictionary<string, Action> actions;
 
-        public ScreenCmd()
+        public ScreenCommand()
         {
             Pattern = "/screen (on|off)";
             Description = "Turn off or on the monitor.";

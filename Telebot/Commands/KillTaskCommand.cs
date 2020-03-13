@@ -6,9 +6,9 @@ using Telebot.Models;
 
 namespace Telebot.Commands
 {
-    public class KillTaskCmd : ICommand
+    public class KillTaskCommand : ICommand
     {
-        public KillTaskCmd()
+        public KillTaskCommand()
         {
             Pattern = "/killtask (\\d+)";
             Description = "Kill a task with the specified pid.";

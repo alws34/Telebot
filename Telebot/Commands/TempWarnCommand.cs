@@ -6,11 +6,11 @@ using Telebot.Models;
 
 namespace Telebot.Commands
 {
-    public class TempMonCmd : ICommand
+    public class TempWarnCommand : ICommand
     {
         private readonly Dictionary<string, Action> actions;
 
-        public TempMonCmd()
+        public TempWarnCommand()
         {
             Pattern = "/tempmon (on|off)";
             Description = "Turn on or off the temperature monitor.";

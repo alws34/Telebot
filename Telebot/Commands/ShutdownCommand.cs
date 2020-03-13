@@ -6,11 +6,11 @@ using Telebot.Models;
 
 namespace Telebot.Commands
 {
-    public class ShutdownCmd : ICommand
+    public class ShutdownCommand : ICommand
     {
         private readonly PowerImpl power;
 
-        public ShutdownCmd()
+        public ShutdownCommand()
         {
             Pattern = "/shutdown (\\d+)";
             Description = "Schedule the workstation to shutdown.";

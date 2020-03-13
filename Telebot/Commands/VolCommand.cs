@@ -6,11 +6,11 @@ using Telebot.Models;
 
 namespace Telebot.Commands
 {
-    public class VolCmd : ICommand
+    public class VolCommand : ICommand
     {
         private readonly MediaImpl media;
 
-        public VolCmd()
+        public VolCommand()
         {
             Pattern = "/vol (\\d{1,3})";
             Description = "Adjust workstation's volume.";

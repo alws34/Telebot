@@ -7,9 +7,9 @@ using Telebot.Models;
 
 namespace Telebot.Commands
 {
-    public class SpecCmd : ICommand
+    public class SpecCommand : ICommand
     {
-        public SpecCmd()
+        public SpecCommand()
         {
             Pattern = "/spec";
             Description = "Get full hardware information.";

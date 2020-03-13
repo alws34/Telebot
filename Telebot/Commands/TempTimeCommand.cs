@@ -1,36 +1,36 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Telebot.Capture;
 using Telebot.Common;
 using Telebot.Contracts;
 using Telebot.Models;
+using Telebot.Temperature;
 
 namespace Telebot.Commands
 {
-    public class CapTimeCmd : ICommand
+    public class TempTimeCommand : ICommand
     {
-        private readonly IJob<CaptureArgs> _job;
+        private readonly IJob<TempArgs> _job;
 
-        public CapTimeCmd()
+        public TempTimeCommand()
         {
-            Pattern = "/captime (off|(\\d+) (\\d+))";
-            Description = "Schedules screen capture session.";
+            Pattern = "/temptime (off|(\\d+) (\\d+))";
+            Description = "Schedules temperature monitor.";
 
-            _job = Program.CaptureFactory.FindEntity(
+            _job = Program.TempFactory.FindEntity(
                 x => x.JobType == JobType.Scheduled
             );
         }
 
         public async override void Execute(Request req, Func<Response, Task> resp)
         {
-            string arg = req.Groups[1].Value;
+            var arg = req.Groups[1].Value;
 
             if (arg.Equals("off"))
             {
                 var result1 = new Response
                 {
                     ResultType = ResultType.Text,
-                    Text = "Successfully disabled scheduled screen capture."
+                    Text = "Successfully disabled scheduled temperature monitor."
                 };
 
                 await resp(result1);
@@ -51,7 +51,7 @@ namespace Telebot.Commands
             var result = new Response
             {
                 ResultType = ResultType.Text,
-                Text = "Successfully scheduled screen capture."
+                Text = "Successfully scheduled temperature monitor."
             };
 
             await resp(result);

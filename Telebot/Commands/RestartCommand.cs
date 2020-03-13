@@ -6,9 +6,9 @@ using Telebot.Models;
 
 namespace Telebot.Commands
 {
-    public class RestartCmd : ICommand
+    public class RestartCommand : ICommand
     {
-        public RestartCmd()
+        public RestartCommand()
         {
             Pattern = "/restart";
             Description = "Restart Telebot.";

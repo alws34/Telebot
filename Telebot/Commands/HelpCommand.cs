@@ -6,9 +6,9 @@ using Telebot.Models;
 
 namespace Telebot.Commands
 {
-    public class HelpCmd : ICommand
+    public class HelpCommand : ICommand
     {
-        public HelpCmd()
+        public HelpCommand()
         {
             Pattern = "/help";
             Description = "List of available commands.";

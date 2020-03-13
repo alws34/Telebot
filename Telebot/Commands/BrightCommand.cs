@@ -6,11 +6,11 @@ using Telebot.Models;
 
 namespace Telebot.Commands
 {
-    public class BrightCmd : ICommand
+    public class BrightCommand : ICommand
     {
         private readonly SystemImpl systemApi;
 
-        public BrightCmd()
+        public BrightCommand()
         {
             Pattern = "/bright (\\d{1,3})";
             Description = "Adjust workstation's brightness.";

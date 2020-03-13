@@ -1,6 +1,8 @@
-﻿using Common;
+﻿using AutoUpdaterDotNET;
+using Common;
 using FluentScheduler;
 using System;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -18,6 +20,7 @@ namespace Telebot.Presenters
     {
         private readonly IMainView view;
         private readonly IBotClient client;
+        private readonly Timer updateTimer;
 
         public MainViewPresenter(
             IMainView view,
@@ -55,6 +58,78 @@ namespace Telebot.Presenters
                 temp.Update += Update;
                 temp.Notify += Notify;
             }
+
+            AutoUpdater.AppCastURL = File.ReadAllText(".\\xmlurl.txt");
+            AutoUpdater.CheckForUpdateEvent += CheckForUpdateEvent;
+
+            updateTimer = new Timer();
+            updateTimer.Interval = (int)TimeSpan.FromMinutes(15).TotalMilliseconds;
+            updateTimer.Tick += delegate
+            {
+                AutoUpdater.Start();
+            };
+            updateTimer.Start();
+        }
+
+        private async void CheckForUpdateEvent(UpdateInfoEventArgs args)
+        {
+            if (args != null && args.IsUpdateAvailable)
+            {
+                if (updateTimer.Enabled)
+                    updateTimer.Stop();
+
+                string text = "";
+                text += "A new version of Telebot is available!\n";
+                text += "check /update for more info.";
+
+                await client.SendText(text);
+            }
+        }
+
+        private void ClientReceived(object sender, ReceivedArgs e)
+        {
+            view.TrayIcon.ShowBalloonTip(
+               1000, view.Text, e.MessageText, ToolTipIcon.Info
+           );
+        }
+
+        private void viewClosed(object sender, FormClosedEventArgs e)
+        {
+            if (client.IsConnected)
+                client.Disconnect();
+        }
+
+        private void viewLoad(object sender, EventArgs e)
+        {
+            view.Hide();
+            view.TrayIcon.Icon = view.Icon;
+            view.TrayIcon.Visible = true;
+
+            // Delay job to reduce startup time
+            JobManager.AddJob(
+                async () =>
+                {
+                    client.Connect();
+                    await AddBotNameTitle();
+                    await SendClientHello();
+                },
+                (s) => s.ToRunOnceIn(3).Seconds()
+            );
+        }
+
+        private async Task SendClientHello()
+        {
+            await client.SendText("*Telebot*: I'm Up.");
+        }
+
+        private async Task AddBotNameTitle()
+        {
+            var me = await client.GetMeAsync();
+
+            view.Button1.Invoke((MethodInvoker)delegate
+            {
+                view.TrayIcon.Text += $" - {me.Username}";
+            });
         }
 
         private async void LanDisconnected(object sender, HostsArg e)
@@ -99,51 +174,6 @@ namespace Telebot.Presenters
         private async void Notify(object sender, NotifyArg e)
         {
             await client.SendText(e.Text);
-        }
-
-        private void ClientReceived(object sender, ReceivedArgs e)
-        {
-            view.TrayIcon.ShowBalloonTip(
-               1000, view.Text, e.MessageText, ToolTipIcon.Info
-           );
-        }
-
-        private void viewClosed(object sender, FormClosedEventArgs e)
-        {
-            if (client.IsConnected)
-                client.Disconnect();
-        }
-
-        private void viewLoad(object sender, EventArgs e)
-        {
-            view.Hide();
-            view.TrayIcon.Icon = view.Icon;
-            view.TrayIcon.Visible = true;
-
-            // Delay job to reduce startup time
-            JobManager.AddJob(
-                async () =>
-                {
-                    client.Connect();
-                    await AddBotNameTitle();
-                    await SendClientHello();
-                }, (s) => s.ToRunOnceIn(3).Seconds()
-            );
-        }
-
-        private async Task SendClientHello()
-        {
-            await client.SendText("*Telebot*: I'm Up.");
-        }
-
-        private async Task AddBotNameTitle()
-        {
-            var me = await client.GetMeAsync();
-
-            view.Button1.Invoke((MethodInvoker)delegate
-            {
-                view.TrayIcon.Text += $" - {me.Username}";
-            });
         }
 
         private async void CaptureScheduleHandler(object sender, CaptureArgs e)

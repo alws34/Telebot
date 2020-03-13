@@ -6,9 +6,9 @@ using Telebot.Models;
 
 namespace Telebot.Commands
 {
-    public class ExitCmd : ICommand
+    public class ExitCommand : ICommand
     {
-        public ExitCmd()
+        public ExitCommand()
         {
             Pattern = "/exit";
             Description = "Shutdown Telebot.";

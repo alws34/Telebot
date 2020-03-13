@@ -6,11 +6,11 @@ using Telebot.Models;
 
 namespace Telebot.Commands
 {
-    public class LanCmd : ICommand
+    public class LanCommand : ICommand
     {
         private readonly Dictionary<string, Action> methods;
 
-        public LanCmd()
+        public LanCommand()
         {
             Pattern = "/lan (mon|moff|scan)";
             Description = "Scan or listen for connected/disconnected devices on the LAN.";

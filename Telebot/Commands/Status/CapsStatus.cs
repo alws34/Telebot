@@ -1,23 +1,23 @@
 ﻿using System.Text;
+using Telebot.Capture;
 using Telebot.Contracts;
 using Telebot.Extensions;
-using Telebot.Temperature;
 
 namespace Telebot.Commands.Status
 {
-    public class TemMonStatus : IStatus
+    public class CapsStatus : IStatus
     {
         public string GetStatus()
         {
             var result = new StringBuilder();
 
-            var _jobs = Program.TempFactory.GetAllEntities();
+            var _jobs = Program.CaptureFactory.GetAllEntities();
 
-            foreach (IJob<TempArgs> job in _jobs)
+            foreach (IJob<CaptureArgs> job in _jobs)
             {
-                string name = job.GetType().Name.Replace("TempMon", "");
+                string name = job.GetType().Name.Replace("ScreenCapture", "");
                 string active = job.IsActive.AsReadable();
-                result.AppendLine($"*{name}* 🌡️: {active}");
+                result.AppendLine($"*{name}* 🖼️: {active}");
             }
 
             return result.ToString().TrimEnd();

@@ -6,9 +6,9 @@ using Telebot.Models;
 
 namespace Telebot.Commands
 {
-    public class MessageBoxCmd : ICommand
+    public class AlertCommand : ICommand
     {
-        public MessageBoxCmd()
+        public AlertCommand()
         {
             Pattern = "/message \"(.+?)\"";
             Description = "Shows a message box with the specified text.";

@@ -93,15 +93,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Clients\ReceivedArgs.cs" />
-    <Compile Include="Commands\BrightCmd.cs" />
+    <Compile Include="Commands\BrightCommand.cs" />
     <Compile Include="Commands\Builder\CmdBuilder.cs" />
-    <Compile Include="Commands\ExitCmd.cs" />
-    <Compile Include="Commands\LanCmd.cs" />
-    <Compile Include="Commands\RestartCmd.cs" />
+    <Compile Include="Commands\ExitCommand.cs" />
+    <Compile Include="Commands\LanCommand.cs" />
+    <Compile Include="Commands\RestartCommand.cs" />
     <Compile Include="Commands\Status\Builder\StatusBuilder.cs" />
     <Compile Include="Commands\Status\LanMonStatus.cs" />
-    <Compile Include="Commands\Status\ScrnCapStatus.cs" />
+    <Compile Include="Commands\Status\CapsStatus.cs" />
     <Compile Include="Commands\Status\WanAddrStatus.cs" />
+    <Compile Include="Commands\UpdateCommand.cs" />
     <Compile Include="Common\JobType.cs" />
     <Compile Include="Contracts\IJob.cs" />
     <Compile Include="Contracts\IScheduled.cs" />
@@ -115,27 +116,27 @@
     <Compile Include="Native\kernel32.cs" />
     <Compile Include="Infrastructure\MediaImpl.cs" />
     <Compile Include="Clients\IBotClient.cs" />
-    <Compile Include="Commands\AppsCmd.cs" />
-    <Compile Include="Commands\CapAppCmd.cs" />
-    <Compile Include="Commands\CapTimeCmd.cs" />
-    <Compile Include="Commands\CaptureCmd.cs" />
+    <Compile Include="Commands\AppsCommand.cs" />
+    <Compile Include="Commands\CapAppCommand.cs" />
+    <Compile Include="Commands\CapTimeCommand.cs" />
+    <Compile Include="Commands\CapCommand.cs" />
     <Compile Include="Commands\Base\ICommand.cs" />
     <Compile Include="Commands\Factories\CommandFactory.cs" />
-    <Compile Include="Commands\HelpCmd.cs" />
-    <Compile Include="Commands\KillTaskCmd.cs" />
-    <Compile Include="Commands\MessageBoxCmd.cs" />
-    <Compile Include="Commands\PowerCmd.cs" />
-    <Compile Include="Commands\ScreenCmd.cs" />
-    <Compile Include="Commands\ShutdownCmd.cs" />
-    <Compile Include="Commands\SpecCmd.cs" />
-    <Compile Include="Commands\StatusCmd.cs" />
+    <Compile Include="Commands\HelpCommand.cs" />
+    <Compile Include="Commands\KillTaskCommand.cs" />
+    <Compile Include="Commands\AlertCommand.cs" />
+    <Compile Include="Commands\PowerCommand.cs" />
+    <Compile Include="Commands\ScreenCommand.cs" />
+    <Compile Include="Commands\ShutdownCommand.cs" />
+    <Compile Include="Commands\SpecCommand.cs" />
+    <Compile Include="Commands\StatusCommand.cs" />
     <Compile Include="Commands\Status\LanAddrStatus.cs" />
     <Compile Include="Commands\Status\SystemStatus.cs" />
-    <Compile Include="Commands\Status\TemMonStatus.cs" />
+    <Compile Include="Commands\Status\TempStatus.cs" />
     <Compile Include="Commands\Status\UptimeStatus.cs" />
-    <Compile Include="Commands\TempMonCmd.cs" />
-    <Compile Include="Commands\TempTimeCmd.cs" />
-    <Compile Include="Commands\VolCmd.cs" />
+    <Compile Include="Commands\TempWarnCommand.cs" />
+    <Compile Include="Commands\TempTimeCommand.cs" />
+    <Compile Include="Commands\VolCommand.cs" />
     <Compile Include="Commands\Status\IStatus.cs" />
     <Compile Include="Infrastructure\ScreenImpl.cs" />
     <Compile Include="Infrastructure\NetworkImpl.cs" />
@@ -213,6 +214,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="wnet.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="xmlurl.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

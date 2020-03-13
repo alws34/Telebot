@@ -1,4 +1,5 @@
-﻿using Common;
+﻿using AutoUpdaterDotNET;
+using Common;
 using CPUID.Builder;
 using FluentScheduler;
 using System;
@@ -29,11 +30,15 @@ namespace Telebot
         public static IFactory<IJob<TempArgs>> TempFactory { get; private set; }
         public static IFactory<IJob<CaptureArgs>> CaptureFactory { get; private set; }
 
+        private const string xml = "https://raw.githubusercontent.com/jdahan91/Telebot/master/Telebot/Update/updateinfo.xml";
+
         [STAThread]
         static void Main()
         {
             //Application.EnableVisualStyles();
             //Application.SetCompatibleTextRenderingDefault(false);
+
+            AutoUpdater.Start(xml);
 
             Settings = new SettingsFactory();
 

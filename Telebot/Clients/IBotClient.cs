@@ -9,6 +9,11 @@ namespace Telebot.Clients
     {
         event EventHandler<ReceivedArgs> Received;
 
+        bool IsConnected { get; }
+
+        void Connect();
+        void Disconnect();
+
         Task SendText(string text, int replyId = 0);
         Task SendPic(Stream raw, int replyId = 0);
         Task SendDoc(Stream raw, int replyId = 0);

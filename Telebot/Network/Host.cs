@@ -37,7 +37,7 @@ namespace Telebot.Network
 
         public override string ToString()
         {
-            return $"{Ip_address}\n{Device_name}\n{Network_adapter_company}";
+            return $"{Ip_address}\n{Network_adapter_company}\n{Device_name}";
         }
     }
 }

@@ -14,13 +14,13 @@ using Telebot.Views;
 
 namespace Telebot.Presenters
 {
-    public class MainFormPresenter
+    public class MainViewPresenter
     {
         private readonly IMainView mainView;
         private readonly IBotClient client;
         private readonly INetMonitor netMon;
 
-        public MainFormPresenter(
+        public MainViewPresenter(
             IMainView mainView,
             IBotClient client,
             INetMonitor netMon
@@ -73,8 +73,8 @@ namespace Telebot.Presenters
 
         private void viewClosed(object sender, FormClosedEventArgs e)
         {
-            if (client.IsReceiving)
-                client.StopReceiving();
+            if (client.IsConnected)
+                client.Disconnect();
         }
 
         private void viewLoad(object sender, EventArgs e)
@@ -87,7 +87,7 @@ namespace Telebot.Presenters
             JobManager.AddJob(
                 async () =>
                 {
-                    client.StartReceiving();
+                    client.Connect();
                     await AddBotNameTitle();
                     await SendClientHello();
                 }, (s) => s.ToRunOnceIn(3).Seconds()

@@ -18,6 +18,8 @@ namespace Telebot.Clients
     {
         private readonly int id;
 
+        public bool IsConnected => IsReceiving;
+
         public event EventHandler<ReceivedArgs> Received;
 
         public Telebot(string token, int id) : base(token)
@@ -134,6 +136,16 @@ namespace Telebot.Clients
         private void RaiseReceived(ReceivedArgs e)
         {
             Received?.Invoke(this, e);
+        }
+
+        public void Connect()
+        {
+            StartReceiving();
+        }
+
+        public void Disconnect()
+        {
+            StopReceiving();
         }
     }
 }

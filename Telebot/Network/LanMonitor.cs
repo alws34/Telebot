@@ -16,12 +16,12 @@ namespace Telebot.Network
 
         public override void Discover()
         {
-            var si = new ProcessStartInfo(
-                utilPath, $"/sxml {scanPath}"
-            );
+            //var si = new ProcessStartInfo(
+            //    utilPath, $"/sxml {scanPath}"
+            //);
 
-            Process exc = Process.Start(si);
-            exc.WaitForExit();
+            //Process exc = Process.Start(si);
+            //exc.WaitForExit();
 
             RaiseDiscoveredHosts(ParseOutput());
         }

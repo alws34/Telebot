@@ -45,7 +45,7 @@ namespace Telebot
                     "Missing Token or AdminId in settings.ini.",
                     "Missing info",
                     MessageBoxButtons.OK,
-                    MessageBoxIcon.Error
+                    MessageBoxIcon.Warning
                 );
                 return;
             }
@@ -59,9 +59,9 @@ namespace Telebot
             ScreenFactory = new ScreenCapFactory();
             CmdFactory = BuildCommandFactory();
 
-            MainForm mainView = new MainForm();
+            MainView mainView = new MainView();
 
-            var presenter = new MainFormPresenter(
+            var presenter = new MainViewPresenter(
                 mainView,
                 client,
                 NetMonitor

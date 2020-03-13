@@ -2,7 +2,7 @@
 
 namespace Telebot.Commands.Builder
 {
-    public class CmdBuilder : IBuilder<ICommand>
+    public class CommandBuilder : IBuilder<ICommand>
     {
     }
 }

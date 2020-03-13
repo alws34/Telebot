@@ -117,7 +117,7 @@ namespace Telebot
                 .Add(new CapsStatus())
                 .Build();
 
-            var commands = new CmdBuilder()
+            var commands = new CommandBuilder()
                 .Add(new StatusCommand(statuses))
                 .Add(new AppsCommand())
                 .Add(new BrightCommand())

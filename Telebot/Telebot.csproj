@@ -94,7 +94,7 @@
   <ItemGroup>
     <Compile Include="Clients\ReceivedArgs.cs" />
     <Compile Include="Commands\BrightCommand.cs" />
-    <Compile Include="Commands\Builder\CmdBuilder.cs" />
+    <Compile Include="Commands\Builder\CommandBuilder.cs" />
     <Compile Include="Commands\ExitCommand.cs" />
     <Compile Include="Commands\LanCommand.cs" />
     <Compile Include="Commands\RestartCommand.cs" />

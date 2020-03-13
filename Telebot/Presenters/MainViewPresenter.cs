@@ -20,7 +20,6 @@ namespace Telebot.Presenters
     {
         private readonly IMainView view;
         private readonly IBotClient client;
-        private readonly Timer updateTimer;
 
         public MainViewPresenter(
             IMainView view,
@@ -60,15 +59,7 @@ namespace Telebot.Presenters
             }
 
             AutoUpdater.AppCastURL = File.ReadAllText(".\\xmlurl.txt");
-            AutoUpdater.CheckForUpdateEvent += CheckForUpdateEvent;
-
-            updateTimer = new Timer();
-            updateTimer.Interval = (int)TimeSpan.FromMinutes(15).TotalMilliseconds;
-            updateTimer.Tick += delegate
-            {
-                AutoUpdater.Start();
-            };
-            updateTimer.Start();
+            AutoUpdater.CheckForUpdateEvent += OnCheckUpdate;
         }
 
         private void ClientReceived(object sender, ReceivedArgs e)
@@ -92,13 +83,16 @@ namespace Telebot.Presenters
 
             // Delay job to reduce startup time
             JobManager.AddJob(
-                async () =>
-                {
+                async () => {
                     client.Connect();
                     await AddBotNameTitle();
                     await SendClientHello();
-                },
-                (s) => s.ToRunOnceIn(3).Seconds()
+                }, (s) => s.ToRunOnceIn(3).Seconds()
+            );
+
+            JobManager.AddJob(() => {
+                AutoUpdater.Start();
+            }, (s) => s.ToRunEvery(1).Hours()
             );
         }
 
@@ -190,25 +184,22 @@ namespace Telebot.Presenters
             }
         }
 
-        private async void CheckForUpdateEvent(UpdateInfoEventArgs args)
+        private async void OnCheckUpdate(UpdateInfoEventArgs args)
         {
             if (args != null)
             {
                 switch (args.IsUpdateAvailable)
                 {
                     case true:
-                        if (updateTimer.Enabled)
-                            updateTimer.Stop();
+                        string text1 = "";
+                        text1 += "A new version of Telebot is available!\n";
+                        text1 += "check /update for more info.";
 
-                        string updateTxt = "";
-                        updateTxt += "A new version of Telebot is available!\n";
-                        updateTxt += "check /update for more info.";
-
-                        await client.SendText(updateTxt);
+                        await client.SendText(text1);
                         break;
                     case false:
-                        string noUpdateTxt = "You are running the latest version of Telebot.";
-                        await client.SendText(noUpdateTxt);
+                        string text = "You are running the latest version of Telebot.";
+                        await client.SendText(text);
                         break;
                 }
             }

@@ -29,8 +29,9 @@ This module is an abstraction to the cpuid library which is the core of the enti
 - The application can monitor and warn you whether your cpu/gpu's temperature is above the limit defined in `settings.ini` as:
 
 ```
-CPU_TEMPERATURE_WARNING = 15 
-GPU_TEMPERATURE_WARNING = 16
+[Temperature]
+CPU_TEMPERATURE_WARNING = 65 
+GPU_TEMPERATURE_WARNING = 65
 ```
 
 - You can schedule to monitor for a specific duration using the command `/temptime`

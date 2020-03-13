@@ -5,6 +5,8 @@ namespace Telebot.Intranet
 {
     public abstract class IINetMonitor : IInetBase
     {
+        protected const string scanPath = ".\\wnetmon.xml";
+
         public event EventHandler<HostsArg> Connected;
         public event EventHandler<HostsArg> Disconnected;
 

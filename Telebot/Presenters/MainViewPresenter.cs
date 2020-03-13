@@ -16,11 +16,11 @@ namespace Telebot.Presenters
 {
     public class MainViewPresenter
     {
-        private readonly IMainView mainView;
+        private readonly IMainView view;
         private readonly IBotClient client;
 
         public MainViewPresenter(
-            IMainView mainView,
+            IMainView view,
             IBotClient client,
             IInetScanner inetScan,
             IINetMonitor inetMon,
@@ -28,9 +28,9 @@ namespace Telebot.Presenters
             IJob<TempArgs>[] temps
         )
         {
-            this.mainView = mainView;
-            this.mainView.Load += viewLoad;
-            this.mainView.FormClosed += viewClosed;
+            this.view = view;
+            this.view.Load += viewLoad;
+            this.view.FormClosed += viewClosed;
 
             this.client = client;
             this.client.Received += ClientReceived;
@@ -44,22 +44,22 @@ namespace Telebot.Presenters
 
             foreach (BaseCapture cap in caps)
             {
-                var handler = CreateEventHandler<CaptureArgs>(cap.GetType());
-                cap.Update += handler;
+                var Update = GetJobUpdate<CaptureArgs>(cap.GetType());
+                cap.Update += Update;
                 cap.Notify += Notify;
             }
 
             foreach (BaseTemp temp in temps)
             {
-                var handler = CreateEventHandler<TempArgs>(temp.GetType());
-                temp.Update += handler;
+                var Update = GetJobUpdate<TempArgs>(temp.GetType());
+                temp.Update += Update;
                 temp.Notify += Notify;
             }
         }
 
         private async void LanDisconnected(object sender, HostsArg e)
         {
-            string text = "Disconnected devices..:\n";
+            string text = "New device(s) disconnected on the local network:\n\n";
 
             foreach (Host host in e.Hosts)
             {
@@ -72,7 +72,7 @@ namespace Telebot.Presenters
 
         private async void LanConnected(object sender, HostsArg e)
         {
-            string text = "Connected devices..:\n";
+            string text = "New device(s) connected on the local network:\n\n";
 
             foreach (Host host in e.Hosts)
             {
@@ -85,7 +85,7 @@ namespace Telebot.Presenters
 
         private async void LanDiscovered(object sender, HostsArg e)
         {
-            string text = "";
+            string text = "Connected devices on the local network:\n\n";
 
             foreach (Host host in e.Hosts)
             {
@@ -103,8 +103,8 @@ namespace Telebot.Presenters
 
         private void ClientReceived(object sender, ReceivedArgs e)
         {
-            mainView.TrayIcon.ShowBalloonTip(
-               1000, mainView.Text, e.MessageText, ToolTipIcon.Info
+            view.TrayIcon.ShowBalloonTip(
+               1000, view.Text, e.MessageText, ToolTipIcon.Info
            );
         }
 
@@ -116,9 +116,9 @@ namespace Telebot.Presenters
 
         private void viewLoad(object sender, EventArgs e)
         {
-            mainView.Hide();
-            mainView.TrayIcon.Icon = mainView.Icon;
-            mainView.TrayIcon.Visible = true;
+            view.Hide();
+            view.TrayIcon.Icon = view.Icon;
+            view.TrayIcon.Visible = true;
 
             // Delay job to reduce startup time
             JobManager.AddJob(
@@ -140,18 +140,18 @@ namespace Telebot.Presenters
         {
             var me = await client.GetMeAsync();
 
-            mainView.Button1.Invoke((MethodInvoker)delegate
+            view.Button1.Invoke((MethodInvoker)delegate
             {
-                mainView.TrayIcon.Text += $" - {me.Username}";
+                view.TrayIcon.Text += $" - {me.Username}";
             });
         }
 
-        private async void ScreenCaptureScheduleHandler(object sender, CaptureArgs e)
+        private async void CaptureScheduleHandler(object sender, CaptureArgs e)
         {
             await client.SendPic(e.Capture.ToStream());
         }
 
-        private async void TempMonWarningHandler(object sender, TempArgs e)
+        private async void TempWarningHandler(object sender, TempArgs e)
         {
             string text = $"*[WARNING] {e.DeviceName}*: {e.Temperature}°C\nFrom *Telebot*";
 
@@ -160,7 +160,7 @@ namespace Telebot.Presenters
 
         private StringBuilder text = new StringBuilder();
 
-        private async void TempMonScheduleHandler(object sender, TempArgs e)
+        private async void TempScheduleHandler(object sender, TempArgs e)
         {
             switch (e)
             {
@@ -175,14 +175,11 @@ namespace Telebot.Presenters
             }
         }
 
-        private EventHandler<T> CreateEventHandler<T>(Type type)
+        private EventHandler<T> GetJobUpdate<T>(Type type)
         {
-            string className = type.Name;
-            string handlerName = $"{className}Handler";
+            string handlerName = $"{type.Name}Handler";
             return Delegate.CreateDelegate(
-                typeof(EventHandler<T>),
-                this,
-                handlerName
+                typeof(EventHandler<T>), this, handlerName
             ) as EventHandler<T>;
         }
     }

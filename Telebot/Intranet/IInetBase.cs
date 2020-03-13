@@ -8,11 +8,11 @@ namespace Telebot.Intranet
     public abstract class IInetBase : INotifyable
     {
         protected const string utilPath = ".\\WNetWatcher.exe";
-        protected const string scanPath = ".\\scan.xml";
+        protected const string wcfgPath = ".\\wnet.cfg";
 
-        protected List<Host> GetHosts()
+        protected List<Host> ReadHosts(string path)
         {
-            using (var fileStream = new FileStream(scanPath, FileMode.Open))
+            using (var fileStream = new FileStream(path, FileMode.Open))
             {
                 var serializer = new XmlSerializer(typeof(HostsArg));
 

@@ -105,6 +105,7 @@
     <Compile Include="Extensions\PrimitiveExtensions.cs" />
     <Compile Include="Common\DisplayState.cs" />
     <Compile Include="Common\ResultType.cs" />
+    <Compile Include="Intranet\HostComparison.cs" />
     <Compile Include="Intranet\IInetBase.cs" />
     <Compile Include="Intranet\IInetScanner.cs" />
     <Compile Include="Intranet\LanScanner.cs" />

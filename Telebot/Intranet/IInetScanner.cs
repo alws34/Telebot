@@ -5,6 +5,8 @@ namespace Telebot.Intranet
 {
     public abstract class IInetScanner : IInetBase
     {
+        protected const string scanPath = ".\\wnetscan.xml";
+
         public event EventHandler<HostsArg> Discovered;
 
         protected void RaiseDiscovered(List<Host> hosts)

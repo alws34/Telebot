@@ -5,6 +5,18 @@ namespace Telebot.Intranet
 {
     public class LanScanner : IInetScanner
     {
+        private readonly ProcessStartInfo si;
+
+        public LanScanner()
+        {
+            si = new ProcessStartInfo(
+               utilPath, $"/cfg {wcfgPath} /sxml {scanPath}"
+            );
+
+            si.WorkingDirectory = ".\\";
+            si.UseShellExecute = true;
+        }
+
         public override void Discover()
         {
             if (!File.Exists(utilPath))
@@ -13,12 +25,8 @@ namespace Telebot.Intranet
                 return;
             };
 
-            var si = new ProcessStartInfo(
-                utilPath, $"/sxml {scanPath}"
-            );
-
-            Process exc = Process.Start(si);
-            exc.WaitForExit();
+            Process wnet = Process.Start(si);
+            wnet.WaitForExit();
 
             if (!File.Exists(scanPath))
             {
@@ -26,7 +34,7 @@ namespace Telebot.Intranet
                 return;
             };
 
-            RaiseDiscovered(GetHosts());
+            RaiseDiscovered(ReadHosts(scanPath));
         }
     }
 }

@@ -23,9 +23,13 @@ The application that fetches full computer hardware information and saves it wit
 #### CPUID module (Core functionality):
 This module is an abstraction to the cpuid library which is the core of the entire application to perform hardware analyzations tasks.
 
+
 # Features
 #### Temperature Monitoring
-- The application can monitor and warn you whether your hardware's temperature is above the limit defined in `settings.ini`
+- The application can monitor and warn you whether your hardware's temperature is above the limit defined in `settings.ini` as:
+
+> CPU_TEMPERATURE_WARNING = 15 GPU_TEMPERATURE_WARNING = 16
+
 - You can schedule to monitor for a specific duration using the command `/temptime`
 #### Intranet Scanning and Monitoring 
 - Telebot has the capability to monitor the local area network for new connected/disconnected devices or just send you a static scan report of all connected device to the network.

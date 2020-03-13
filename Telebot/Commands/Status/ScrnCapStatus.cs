@@ -11,7 +11,7 @@ namespace Telebot.Commands.Status
         {
             var result = new StringBuilder();
 
-            var _jobs = Program.ScreenFactory.GetAllEntities();
+            var _jobs = Program.CaptureFactory.GetAllEntities();
 
             foreach (IJob<CaptureArgs> job in _jobs)
             {

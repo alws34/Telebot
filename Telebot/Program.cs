@@ -27,7 +27,7 @@ namespace Telebot
         public static IInetScanner LanScanner { get; private set; }
         public static IFactory<ICommand> CommandFactory { get; private set; }
         public static IFactory<IJob<TempArgs>> TempFactory { get; private set; }
-        public static IFactory<IJob<CaptureArgs>> ScreenFactory { get; private set; }
+        public static IFactory<IJob<CaptureArgs>> CaptureFactory { get; private set; }
 
         [STAThread]
         static void Main()
@@ -59,10 +59,10 @@ namespace Telebot
             LanScanner = new LanScanner();
 
             TempFactory = new TempFactory();
-            ScreenFactory = new CaptureFactory();
+            CaptureFactory = new CaptureFactory();
             CommandFactory = BuildCommandFactory();
 
-            var screens = ScreenFactory.GetAllEntities();
+            var captures = CaptureFactory.GetAllEntities();
             var temperatures = TempFactory.GetAllEntities();
 
             MainView mainView = new MainView();
@@ -72,7 +72,7 @@ namespace Telebot
                 client,
                 LanScanner,
                 LanMonitor,
-                screens,
+                captures,
                 temperatures
             );
 

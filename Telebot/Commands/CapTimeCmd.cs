@@ -16,7 +16,7 @@ namespace Telebot.Commands
             Pattern = "/captime (off|(\\d+) (\\d+))";
             Description = "Schedules screen capture session.";
 
-            _job = Program.ScreenFactory.FindEntity(
+            _job = Program.CaptureFactory.FindEntity(
                 x => x.JobType == JobType.Scheduled
             );
         }

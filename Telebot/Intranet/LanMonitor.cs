@@ -21,11 +21,8 @@ namespace Telebot.Intranet
         private void DoWork(object sender, DoWorkEventArgs e)
         {
             var si = new ProcessStartInfo(
-                wnetPath, $"/cfg {wcfgPath} /sxml {scanPath}"
+                wnetPath, $"/sxml {scanPath}"
             );
-
-            si.WorkingDirectory = ".\\";
-            si.UseShellExecute = true;
 
             RaiseNotify("Listening to new devices on network...");
 

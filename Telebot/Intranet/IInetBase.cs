@@ -8,7 +8,6 @@ namespace Telebot.Intranet
     public abstract class IInetBase : INotifyable
     {
         protected const string wnetPath = ".\\wnet.exe";
-        protected const string wcfgPath = ".\\wnet.cfg";
 
         protected List<Host> ReadHosts(string path)
         {

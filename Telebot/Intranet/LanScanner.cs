@@ -10,11 +10,8 @@ namespace Telebot.Intranet
         public LanScanner()
         {
             si = new ProcessStartInfo(
-               wnetPath, $"/cfg {wcfgPath} /sxml {scanPath}"
+               wnetPath, $"/sxml {scanPath}"
             );
-
-            si.WorkingDirectory = ".\\";
-            si.UseShellExecute = true;
         }
 
         public override void Discover()

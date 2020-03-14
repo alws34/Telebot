@@ -36,7 +36,7 @@ namespace Telebot.Capture
                     Capture = desktop
                 };
 
-                RaiseScreenCaptured(result);
+                RaiseUpdate(result);
             }
         }
 

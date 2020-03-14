@@ -15,7 +15,7 @@ namespace Telebot.Commands
         public CapAppCommand()
         {
             Pattern = "/capapp (\\d+)";
-            Description = "Get a screenshot of the specified application (by pid).";
+            Description = "Get a screenshot of the specified app (by pid).";
 
             screen = new ScreenImpl();
         }

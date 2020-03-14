@@ -15,14 +15,14 @@ namespace Telebot.Commands
             Pattern = "/tempmon (on|off)";
             Description = "Turn on or off the temperature monitor.";
 
-            var tempMonWarning = Program.TempFactory.FindEntity(
+            var _job = Program.TempFactory.FindEntity(
                 x => x.JobType == JobType.Fixed
             );
 
             actions = new Dictionary<string, Action>()
             {
-                { "on", tempMonWarning.Start },
-                { "off", tempMonWarning.Stop }
+                { "on", _job.Start },
+                { "off", _job.Stop }
             };
         }
 

@@ -22,9 +22,9 @@ namespace Telebot.Settings
 
         public void SaveCPULimit(float limit)
         {
-            string fStr = Convert.ToString(limit);
+            string limitStr = Convert.ToString(limit);
 
-            settings.WriteString("Temperature", "CPU_TEMPERATURE_WARNING", fStr);
+            settings.WriteString("Temperature", "CPU_TEMPERATURE_WARNING", limitStr);
         }
 
         public float GetGPULimit()
@@ -56,7 +56,7 @@ namespace Telebot.Settings
         {
             string stateStr = Convert.ToString(state);
 
-            settings.WriteString("Temperature.Monitor", "Enabled", stateStr);
+            settings.WriteString("Temperature", "Enabled", stateStr);
         }
     }
 }

@@ -30,7 +30,7 @@ namespace Telebot.Commands
                 var result1 = new Response
                 {
                     ResultType = ResultType.Text,
-                    Text = "Successfully disabled scheduled temperature monitor."
+                    Text = "Successfully disabled temperature monitor."
                 };
 
                 await resp(result1);
@@ -48,10 +48,12 @@ namespace Telebot.Commands
             TimeSpan tsDuration = TimeSpan.FromSeconds(duration);
             TimeSpan tsInterval = TimeSpan.FromSeconds(interval);
 
+            string text = $"Temperature monitor has been scheduled to run {duration} sec for every {interval} sec.";
+
             var result = new Response
             {
                 ResultType = ResultType.Text,
-                Text = "Successfully scheduled temperature monitor."
+                Text = text
             };
 
             await resp(result);

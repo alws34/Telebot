@@ -38,7 +38,7 @@ namespace Telebot.Temperature
 
             if (IsActive)
             {
-                Start();
+                StartJob();
             }
         }
 
@@ -71,11 +71,7 @@ namespace Telebot.Temperature
                 return;
             }
 
-            JobManager.AddJob(
-                Elapsed,
-                (s) => s.WithName(GetType().Name).ToRunNow().AndEvery(7).Seconds()
-            );
-
+            StartJob();
             IsActive = true;
         }
 
@@ -88,7 +84,6 @@ namespace Telebot.Temperature
             }
 
             JobManager.RemoveJob(GetType().Name);
-
             IsActive = false;
         }
 
@@ -97,6 +92,14 @@ namespace Telebot.Temperature
             settings.SaveMonitoringState(IsActive);
             settings.SaveCPULimit(CPULimit);
             settings.SaveGPULimit(GPULimit);
+        }
+
+        private void StartJob()
+        {
+            JobManager.AddJob(
+                Elapsed,
+                (s) => s.WithName(GetType().Name).ToRunNow().AndEvery(7).Seconds()
+            );
         }
     }
 }

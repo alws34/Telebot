@@ -37,7 +37,10 @@ namespace Telebot.Commands
 
                 AutoUpdater.DownloadUpdate();
 
-                Application.Exit();
+                JobManager.AddJob(() => {
+                       Application.Exit();
+                    }, (s) => s.ToRunOnceIn(2).Seconds()
+                );
             }
         }
     }

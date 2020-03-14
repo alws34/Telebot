@@ -46,14 +46,14 @@ namespace Telebot.Presenters
 
             foreach (BaseCapture cap in caps)
             {
-                var Update = GetJobUpdate<CaptureArgs>(cap.GetType());
+                var Update = GetHandler<CaptureArgs>(cap.GetType());
                 cap.Update += Update;
                 cap.Notify += Notify;
             }
 
             foreach (BaseTemp temp in temps)
             {
-                var Update = GetJobUpdate<TempArgs>(temp.GetType());
+                var Update = GetHandler<TempArgs>(temp.GetType());
                 temp.Update += Update;
                 temp.Notify += Notify;
             }
@@ -113,7 +113,7 @@ namespace Telebot.Presenters
 
         private async void LanDisconnected(object sender, HostsArg e)
         {
-            string text = "New device(s) disconnected on the local network:\n\n";
+            string text = "Hosts that disconnected from the network:\n\n";
 
             foreach (Host host in e.Hosts)
             {
@@ -126,7 +126,7 @@ namespace Telebot.Presenters
 
         private async void LanConnected(object sender, HostsArg e)
         {
-            string text = "New device(s) connected on the local network:\n\n";
+            string text = "Hosts that just connected to the network:\n\n";
 
             foreach (Host host in e.Hosts)
             {
@@ -139,7 +139,7 @@ namespace Telebot.Presenters
 
         private async void LanDiscovered(object sender, HostsArg e)
         {
-            string text = "Connected devices on the local network:\n\n";
+            string text = "Connected hosts on the network:\n\n";
 
             foreach (Host host in e.Hosts)
             {
@@ -205,7 +205,7 @@ namespace Telebot.Presenters
             }
         }
 
-        private EventHandler<T> GetJobUpdate<T>(Type type)
+        private EventHandler<T> GetHandler<T>(Type type)
         {
             string handlerName = $"{type.Name}Handler";
             return Delegate.CreateDelegate(

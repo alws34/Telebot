@@ -37,11 +37,11 @@ namespace Telebot.Temperature
                     Temperature = sensor.Value
                 };
 
-                RaiseTemperatureChanged(args);
+                RaiseUpdate(args);
             }
 
             // Notify the observer(s) that we're done.
-            RaiseTemperatureChanged(null);
+            RaiseUpdate(null);
         }
 
         public void Start(TimeSpan duration, TimeSpan interval)

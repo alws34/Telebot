@@ -41,7 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Builder\DeviceBuilder.cs" />
     <Compile Include="cpuidcore.cs" />
     <Compile Include="cpuidsdk.cs" />
     <Compile Include="Devices\BATDevice.cs" />

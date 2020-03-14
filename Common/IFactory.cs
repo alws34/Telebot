@@ -17,9 +17,14 @@ namespace Common
             return _items.Find(x => predicate(x));
         }
 
-        public T[] GetAllEntities()
+        public IEnumerable<T> FindAll(Predicate<T> predicate)
         {
-            return _items.ToArray();
+            return _items.FindAll(predicate);
+        }
+
+        public IEnumerable<T> GetAllEntities()
+        {
+            return _items;
         }
 
         public bool TryGetEntity(Predicate<T> predicate, out T entity)

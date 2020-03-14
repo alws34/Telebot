@@ -1,7 +1,7 @@
 ﻿using Common;
-using CPUID.Builder;
 using Telebot.Contracts;
 using static CPUID.CPUIDCore;
+using static CPUID.CPUIDSDK;
 
 namespace Telebot.Temperature
 {
@@ -9,10 +9,10 @@ namespace Telebot.Temperature
     {
         public TempFactory()
         {
-            var devices = new DeviceBuilder()
-                .AddRange(DeviceFactory.CPUDevices)
-                .AddRange(DeviceFactory.GPUDevices)
-                .Build();
+            var devices = DeviceFactory.FindAll(x =>
+                (x.DeviceClass == CLASS_DEVICE_PROCESSOR) ||
+                (x.DeviceClass == CLASS_DEVICE_DISPLAY_ADAPTER)
+            );
 
             var tempSettings = Program.Settings.Temperature;
 

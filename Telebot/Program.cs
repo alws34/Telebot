@@ -1,5 +1,4 @@
 ﻿using Common;
-using CPUID.Builder;
 using FluentScheduler;
 using System;
 using System.Linq;
@@ -65,7 +64,7 @@ namespace Telebot
 
             MainView view = new MainView();
             IBotClient client = new Clients.Telebot(token, id);
-         
+
             var captures = CaptureFactory.GetAllEntities();
             var temperatures = TempFactory.GetAllEntities();
 
@@ -78,9 +77,10 @@ namespace Telebot
                 temperatures
             );
 
-            JobManager.AddJob(() => {
-                   Sdk.RefreshInformation();
-                }, (s) => s.WithName("RefreshInformation").ToRunNow().AndEvery(1).Seconds()
+            JobManager.AddJob(() =>
+            {
+                Sdk.RefreshInformation();
+            }, (s) => s.WithName("RefreshInformation").ToRunNow().AndEvery(1).Seconds()
             );
 
             Application.ApplicationExit += ApplicationExit;
@@ -111,12 +111,7 @@ namespace Telebot
 
         private static CommandFactory BuildCommandFactory()
         {
-            var devices = new DeviceBuilder()
-                .AddRange(DeviceFactory.RAMDevices)
-                .AddRange(DeviceFactory.CPUDevices)
-                .AddRange(DeviceFactory.HDDDevices)
-                .AddRange(DeviceFactory.GPUDevices)
-                .Build();
+            var devices = DeviceFactory.GetAllEntities();
 
             var statuses = new StatusBuilder()
                 .Add(new SystemStatus(devices))

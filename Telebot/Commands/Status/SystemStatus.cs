@@ -6,13 +6,11 @@ namespace Telebot.Commands.Status
 {
     public class SystemStatus : IStatus
     {
-        private readonly List<IDevice> devices;
+        private readonly IEnumerable<IDevice> devices;
 
-        public SystemStatus(IDevice[] devices)
+        public SystemStatus(IEnumerable<IDevice> devices)
         {
-            this.devices = new List<IDevice>();
-
-            this.devices.AddRange(devices);
+            this.devices = devices;
         }
 
         public string GetStatus()

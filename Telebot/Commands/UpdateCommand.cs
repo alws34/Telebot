@@ -1,8 +1,6 @@
 ﻿using AutoUpdaterDotNET;
 using FluentScheduler;
 using System;
-using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Telebot.Models;
@@ -37,9 +35,10 @@ namespace Telebot.Commands
 
                 AutoUpdater.DownloadUpdate();
 
-                JobManager.AddJob(() => {
-                       Application.Exit();
-                    }, (s) => s.ToRunOnceIn(2).Seconds()
+                JobManager.AddJob(() =>
+                {
+                    Application.Exit();
+                }, (s) => s.ToRunOnceIn(2).Seconds()
                 );
             }
         }

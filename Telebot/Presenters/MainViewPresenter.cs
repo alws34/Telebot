@@ -2,6 +2,7 @@
 using Common;
 using FluentScheduler;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,8 +27,8 @@ namespace Telebot.Presenters
             IBotClient client,
             IInetScanner inetScan,
             IINetMonitor inetMon,
-            IJob<CaptureArgs>[] caps,
-            IJob<TempArgs>[] temps
+            IEnumerable<IJob<CaptureArgs>> caps,
+            IEnumerable<IJob<TempArgs>> temps
         )
         {
             this.view = view;
@@ -83,14 +84,16 @@ namespace Telebot.Presenters
 
             // Delay job to reduce startup time
             JobManager.AddJob(
-                async () => {
+                async () =>
+                {
                     client.Connect();
                     await AddBotNameTitle();
                     await SendClientHello();
                 }, (s) => s.ToRunOnceIn(3).Seconds()
             );
 
-            JobManager.AddJob(() => {
+            JobManager.AddJob(() =>
+            {
                 AutoUpdater.Start();
             }, (s) => s.WithName("CheckForUpdate").ToRunEvery(1).Hours()
             );
@@ -197,10 +200,10 @@ namespace Telebot.Presenters
 
                         await client.SendText(text1);
                         break;
-                    //case false:
-                    //    string text = "You are running the latest version of Telebot.";
-                    //    await client.SendText(text);
-                    //    break;
+                        //case false:
+                        //    string text = "You are running the latest version of Telebot.";
+                        //    await client.SendText(text);
+                        //    break;
                 }
             }
         }

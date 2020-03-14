@@ -25,9 +25,10 @@ namespace Telebot.Commands
 
             await resp(result);
 
-            JobManager.AddJob(() => { 
-                   Application.Exit(); 
-                }, (s) => s.ToRunOnceIn(2).Seconds()
+            JobManager.AddJob(() =>
+            {
+                Application.Exit();
+            }, (s) => s.ToRunOnceIn(2).Seconds()
             );
         }
     }

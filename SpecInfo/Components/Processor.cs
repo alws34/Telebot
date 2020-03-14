@@ -1,5 +1,6 @@
-﻿using CPUID.Devices;
-
+﻿using CPUID.Base;
+using CPUID.Devices;
+using System.Collections.Generic;
 using static CPUID.CPUIDCore;
 using static CPUID.CPUIDSDK;
 
@@ -7,9 +8,16 @@ namespace SpecInfo.Components
 {
     public class Processor : IComponent
     {
+        private readonly IEnumerable<IDevice> items;
+
+        public Processor()
+        {
+            items = DeviceFactory.FindAll(x => x.DeviceClass == CLASS_DEVICE_PROCESSOR);
+        }
+
         public override string ToString()
         {
-            foreach (CPUDevice device in DeviceFactory.CPUDevices)
+            foreach (CPUDevice device in items)
             {
                 stringResult.AppendLine($"+ {device.DeviceName}");
 

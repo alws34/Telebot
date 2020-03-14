@@ -15,7 +15,7 @@ namespace Telebot.Temperature
         private readonly TempSettings settings;
         private readonly Dictionary<uint, float> limits;
 
-        public TempWarning(IDevice[] devices, TempSettings settings)
+        public TempWarning(IEnumerable<IDevice> devices, TempSettings settings)
         {
             JobType = Common.JobType.Fixed;
 

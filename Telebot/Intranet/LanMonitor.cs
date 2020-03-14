@@ -47,8 +47,8 @@ namespace Telebot.Intranet
                 {
                     lastScan.AddRange(ReadHosts(scanPath));
 
-                    var connectedHosts = CheckConnected(prevScan, lastScan);
-                    var disconnectedHosts = CheckDisconnected(prevScan, lastScan);
+                    var connectedHosts = GetConnected(prevScan, lastScan);
+                    var disconnectedHosts = GetDisconnected(prevScan, lastScan);
 
                     if (connectedHosts.Count > 0)
                         RaiseConnected(connectedHosts);
@@ -68,12 +68,12 @@ namespace Telebot.Intranet
             RaiseNotify("Lan monitoring disconnected.");
         }
 
-        private List<Host> CheckConnected(List<Host> prevScan, List<Host> lastScan)
+        private List<Host> GetConnected(List<Host> prevScan, List<Host> lastScan)
         {
             return lastScan.Except(prevScan, new HostComparison()).ToList();
         }
 
-        private List<Host> CheckDisconnected(List<Host> prevScan, List<Host> lastScan)
+        private List<Host> GetDisconnected(List<Host> prevScan, List<Host> lastScan)
         {
             return prevScan.Except(lastScan, new HostComparison()).ToList();
         }

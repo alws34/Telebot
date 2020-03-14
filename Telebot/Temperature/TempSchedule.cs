@@ -2,6 +2,7 @@
 using CPUID.Models;
 using FluentScheduler;
 using System;
+using System.Collections.Generic;
 using Telebot.Contracts;
 using static CPUID.CPUIDSDK;
 
@@ -11,7 +12,7 @@ namespace Telebot.Temperature
     {
         private DateTime timeStop;
 
-        public TempSchedule(IDevice[] devices)
+        public TempSchedule(IEnumerable<IDevice> devices)
         {
             JobType = Common.JobType.Scheduled;
 

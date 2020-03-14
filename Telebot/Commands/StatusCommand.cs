@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Telebot.Commands.Status;
@@ -9,9 +10,9 @@ namespace Telebot.Commands
 {
     public class StatusCommand : ICommand
     {
-        private readonly IStatus[] statuses;
+        private readonly IEnumerable<IStatus> statuses;
 
-        public StatusCommand(IStatus[] statuses)
+        public StatusCommand(IEnumerable<IStatus> statuses)
         {
             Pattern = "/status";
             Description = "Receive workstation information.";

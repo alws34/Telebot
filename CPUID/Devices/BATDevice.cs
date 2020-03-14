@@ -1,5 +1,4 @@
 ﻿using CPUID.Base;
-using System;
 
 namespace CPUID.Devices
 {
@@ -19,7 +18,7 @@ namespace CPUID.Devices
 
         public override string ToString()
         {
-            throw new NotImplementedException();
+            return "";
         }
     }
 }

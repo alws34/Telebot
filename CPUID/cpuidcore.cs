@@ -1,4 +1,6 @@
-﻿using CPUID.Factories;
+﻿using Common;
+using CPUID.Base;
+using CPUID.Factories;
 
 namespace CPUID
 {
@@ -6,7 +8,7 @@ namespace CPUID
     {
         public static CPUIDSDK Sdk { get; }
 
-        public static DeviceFactory DeviceFactory { get; }
+        public static IFactory<IDevice> DeviceFactory { get; }
 
         static CPUIDCore()
         {

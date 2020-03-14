@@ -21,9 +21,9 @@ namespace Common
             _items.AddRange(items);
             return this;
         }
-        public T[] Build()
+        public IEnumerable<T> Build()
         {
-            return _items.ToArray();
+            return _items;
         }
     }
 }

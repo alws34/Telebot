@@ -58,7 +58,7 @@ namespace Telebot.Temperature
                         Temperature = sensor.Value
                     };
 
-                    RaiseTemperatureChanged(args);
+                    RaiseUpdate(args);
                 }
             };
         }

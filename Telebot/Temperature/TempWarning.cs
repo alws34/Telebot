@@ -9,29 +9,32 @@ namespace Telebot.Temperature
 {
     public class TempWarning : BaseTemp, IProfile
     {
-        private float CPUWarningLevel;
-        private float GPUWarningLevel;
+        private float CPULimit;
+        private float GPULimit;
 
-        private readonly Dictionary<uint, float> tempWarningLevels;
+        private readonly TempSettings settings;
+        private readonly Dictionary<uint, float> limits;
 
-        public TempWarning(IDevice[] devices)
+        public TempWarning(IDevice[] devices, TempSettings settings)
         {
             JobType = Common.JobType.Fixed;
 
-            CPUWarningLevel = Program.Settings.WarnMon.GetCPUWarningLevel();
-            GPUWarningLevel = Program.Settings.WarnMon.GetGPUWarningLevel();
+            this.settings = settings;
 
-            tempWarningLevels = new Dictionary<uint, float>
+            CPULimit = settings.GetCPULimit();
+            GPULimit = settings.GetGPULimit();
+
+            limits = new Dictionary<uint, float>
             {
-                { CLASS_DEVICE_PROCESSOR, CPUWarningLevel },
-                { CLASS_DEVICE_DISPLAY_ADAPTER, GPUWarningLevel }
+                { CLASS_DEVICE_PROCESSOR, CPULimit },
+                { CLASS_DEVICE_DISPLAY_ADAPTER, GPULimit }
             };
 
             Program.Settings.Handler.AddProfile(this);
 
             this.devices.AddRange(devices);
 
-            IsActive = Program.Settings.WarnMon.GetTempMonitorStatus();
+            IsActive = Program.Settings.Temperature.GetMonitoringState();
 
             if (IsActive)
             {
@@ -45,9 +48,9 @@ namespace Telebot.Temperature
             {
                 Sensor sensor = device.GetSensor(SENSOR_CLASS_TEMPERATURE);
 
-                bool success = tempWarningLevels.TryGetValue(device.DeviceClass, out float warningTemp);
+                bool success = limits.TryGetValue(device.DeviceClass, out float limit);
 
-                if (success && sensor.Value >= warningTemp)
+                if (success && sensor.Value >= limit)
                 {
                     var args = new TempArgs
                     {
@@ -64,7 +67,7 @@ namespace Telebot.Temperature
         {
             if (IsActive)
             {
-                RaiseNotify("Temperature monitor is already monitoring.");
+                RaiseNotify("Temperature is already being monitored.");
                 return;
             }
 
@@ -80,7 +83,7 @@ namespace Telebot.Temperature
         {
             if (!IsActive)
             {
-                RaiseNotify("Temperature monitor is not monitoring.");
+                RaiseNotify("Temperature is not being monitored.");
                 return;
             }
 
@@ -91,9 +94,9 @@ namespace Telebot.Temperature
 
         public void SaveChanges()
         {
-            Program.Settings.WarnMon.SaveTempMonitorStatus(IsActive);
-            Program.Settings.WarnMon.SaveCPUWarningLevel(CPUWarningLevel);
-            Program.Settings.WarnMon.SaveGPUWarningLevel(GPUWarningLevel);
+            settings.SaveMonitoringState(IsActive);
+            settings.SaveCPULimit(CPULimit);
+            settings.SaveGPULimit(GPULimit);
         }
     }
 }

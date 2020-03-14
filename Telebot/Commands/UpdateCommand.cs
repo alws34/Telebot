@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Telebot.Models;
 
 namespace Telebot.Commands
@@ -33,6 +34,8 @@ namespace Telebot.Commands
                 };
 
                 await resp(result);
+
+                Application.Exit();
             }
         }
     }

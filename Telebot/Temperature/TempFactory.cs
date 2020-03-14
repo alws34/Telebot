@@ -14,7 +14,9 @@ namespace Telebot.Temperature
                 .AddRange(DeviceFactory.GPUDevices)
                 .Build();
 
-            _items.Add(new TempWarning(devices));
+            var tempSettings = Program.Settings.Temperature;
+
+            _items.Add(new TempWarning(devices, tempSettings));
             _items.Add(new TempSchedule(devices));
         }
     }

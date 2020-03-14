@@ -159,7 +159,7 @@
     <Compile Include="Settings.cs" />
     <Compile Include="Settings\Contracts\IProfile.cs" />
     <Compile Include="Settings\Contracts\ISettings.cs" />
-    <Compile Include="Settings\MonitorSettings.cs" />
+    <Compile Include="Settings\TempSettings.cs" />
     <Compile Include="Settings\Factories\SettingsFactory.cs" />
     <Compile Include="Settings\TelegramSettings.cs" />
     <Compile Include="Temperature\TempArgs.cs" />

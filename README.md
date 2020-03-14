@@ -44,3 +44,13 @@ UseIPAddressesRange=1 // 1 = enabled (true)
 IPAddressFrom=192.168.1.1
 IPAddressTo=192.168.1.55 // change this
 ```
+
+# Donations
+Do You Like Telebot?
+Then please consider a donation to support the development of Telebot.
+
+The Telebot project started at late 2018 as a mimic of MagicMirror project for Windows, which then evovled professionaly on my free time to keep this amazing project running. Donations are not required, but are appreciated. (Donators are welcome to request features developed into Telebot)
+
+However there are more ways to help. If you are familiar with .NET, C# or Refactoring, feel free to fork and make useful modifications to pull into master branch.
+
+[![paypal](https://www.paypalobjects.com/en_US/IL/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=LKNNJLAD48V7G&item_name=Telebot+development+support&currency_code=ILS&source=url)

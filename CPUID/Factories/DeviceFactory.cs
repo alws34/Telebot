@@ -29,9 +29,9 @@ namespace CPUID.Factories
             _items.AddRange(BATItems);
         }
 
-        private IDevice[] GetDevices<T>(uint deviceClass) where T : IDevice, new()
+        private IEnumerable<T> GetDevices<T>(uint deviceClass) where T : IDevice, new()
         {
-            var devArr = new List<IDevice>();
+            var items = new List<T>();
 
             for (int deviceIndex = 0; deviceIndex < deviceCount; deviceIndex++)
             {
@@ -46,11 +46,11 @@ namespace CPUID.Factories
                         deviceClass
                     });
 
-                    devArr.Add(device);
+                    items.Add(device);
                 }
             }
 
-            return devArr.ToArray();
+            return items;
         }
     }
 }

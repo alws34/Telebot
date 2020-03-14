@@ -1,6 +1,8 @@
 ﻿using AutoUpdaterDotNET;
+using FluentScheduler;
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Telebot.Models;
@@ -25,8 +27,6 @@ namespace Telebot.Commands
             }
             else if (state.Equals("dl"))
             {
-                AutoUpdater.DownloadUpdate();
-
                 var result = new Response
                 {
                     ResultType = Common.ResultType.Text,
@@ -34,6 +34,8 @@ namespace Telebot.Commands
                 };
 
                 await resp(result);
+
+                AutoUpdater.DownloadUpdate();
 
                 Application.Exit();
             }

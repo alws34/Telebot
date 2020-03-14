@@ -10,7 +10,7 @@ namespace Telebot.Commands
     {
         public ExitCommand()
         {
-            Pattern = "/exit";
+            Pattern = "/exit1";
             Description = "Shutdown Telebot.";
         }
 
@@ -19,7 +19,7 @@ namespace Telebot.Commands
             var result = new Response
             {
                 ResultType = ResultType.Text,
-                Text = "Closed Telebot."
+                Text = "Closing Telebot..."
             };
 
             await resp(result);

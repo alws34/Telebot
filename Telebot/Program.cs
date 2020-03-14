@@ -2,6 +2,7 @@
 using CPUID.Builder;
 using FluentScheduler;
 using System;
+using System.Linq;
 using System.Windows.Forms;
 using Telebot.Capture;
 using Telebot.Clients;
@@ -48,6 +49,7 @@ namespace Telebot
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning
                 );
+
                 return;
             }
 
@@ -76,14 +78,25 @@ namespace Telebot
                 temperatures
             );
 
-            JobManager.AddJob(() =>
-            {
-                Sdk.RefreshInformation();
-            },
-                (s) => s.ToRunNow().AndEvery(1).Seconds()
+            JobManager.AddJob(() => {
+                   Sdk.RefreshInformation();
+                }, (s) => s.WithName("RefreshInformation").ToRunNow().AndEvery(1).Seconds()
             );
 
+            Application.ApplicationExit += ApplicationExit;
+
             Application.Run(view);
+        }
+
+        private static void ApplicationExit(object sender, EventArgs e)
+        {
+            int jobsCount = JobManager.AllSchedules.Count();
+
+            if (jobsCount > 0)
+            {
+                JobManager.StopAndBlock();
+                JobManager.RemoveAllJobs();
+            }
 
             if (FirstRun)
             {
@@ -94,8 +107,6 @@ namespace Telebot
             Settings.Handler.CommitChanges();
 
             Settings.Handler.WriteChanges();
-
-            JobManager.StopAndBlock();
         }
 
         private static CommandFactory BuildCommandFactory()

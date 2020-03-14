@@ -92,7 +92,7 @@ namespace Telebot.Presenters
 
             JobManager.AddJob(() => {
                 AutoUpdater.Start();
-            }, (s) => s.ToRunEvery(1).Hours()
+            }, (s) => s.WithName("CheckForUpdate").ToRunEvery(1).Hours()
             );
         }
 

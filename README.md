@@ -49,7 +49,7 @@ IPAddressTo=192.168.1.55 // change this
 Do You Like Telebot?
 Then please consider a donation to support the development of Telebot.
 
-The Telebot project started at late 2018 as a mimic of [MagicMirror](https://magicmirror.builders/) project for Windows, which then evovled professionaly on my free time to keep this amazing project running. Donations are not required, but are appreciated. (Donators are welcome to request features developed into Telebot)
+The Telebot project started at late 2018 as a mimic of [MagicMirror](https://magicmirror.builders/) project for Windows, which then evolved professionally on my free time to keep this amazing project running. Donations are not required, but are appreciated. (Donors are welcome to request features developed into Telebot)
 
 However there are more ways to help. If you are familiar with .NET, C# or Refactoring, feel free to fork and make useful modifications to pull into master branch.
 

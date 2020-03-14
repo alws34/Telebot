@@ -20,17 +20,18 @@ namespace CPUID.Base
             float maxVal = 0.0f;
 
             Sdk.GetSensorInfos(
-                this.DeviceIndex, 0, sensorClass, ref sensorId,
+                DeviceIndex, 0, sensorClass, ref sensorId,
                 ref sensorName, ref rvalue, ref value, ref minVal, ref maxVal
              );
 
             return new Sensor(sensorName, value, minVal, maxVal);
         }
+
         public List<Sensor> GetSensors(int sensorClass)
         {
-            int sensorCount = Sdk.GetNumberOfSensors(this.DeviceIndex, sensorClass);
+            int sensorCount = Sdk.GetNumberOfSensors(DeviceIndex, sensorClass);
 
-            var result = new List<Sensor>(sensorCount);
+            var sensors = new List<Sensor>(sensorCount);
 
             for (int sensorIndex = 0; sensorIndex < sensorCount; sensorIndex++)
             {
@@ -42,16 +43,16 @@ namespace CPUID.Base
                 float maxVal = 0.0f;
 
                 Sdk.GetSensorInfos(
-                    this.DeviceIndex, sensorIndex, sensorClass, ref sensorId,
+                    DeviceIndex, sensorIndex, sensorClass, ref sensorId,
                     ref sensorName, ref rvalue, ref value, ref minVal, ref maxVal
                  );
 
-                var sensor = new Sensor(sensorName, value, minVal, maxVal);
+                Sensor sensor = new Sensor(sensorName, value, minVal, maxVal);
 
-                result.Add(sensor);
+                sensors.Add(sensor);
             }
 
-            return result;
+            return sensors;
         }
 
         public abstract override string ToString();

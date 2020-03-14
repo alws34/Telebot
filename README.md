@@ -29,7 +29,7 @@ This module is an abstraction to the cpuid library which is the core of the enti
 - The application can monitor and warn you whether your cpu/gpu's temperature is above the limit defined in `settings.ini` as:
 
 ```
-[Temperature.Monitor]
+[Temperature]
 CPU_TEMPERATURE_WARNING = 65 
 GPU_TEMPERATURE_WARNING = 65
 ```

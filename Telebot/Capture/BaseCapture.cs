@@ -17,7 +17,7 @@ namespace Telebot.Capture
 
         public abstract void Stop();
 
-        protected void RaiseScreenCaptured(CaptureArgs args)
+        protected void RaiseUpdate(CaptureArgs args)
         {
             Update?.Invoke(this, args);
         }

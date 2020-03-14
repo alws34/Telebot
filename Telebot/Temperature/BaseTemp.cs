@@ -17,14 +17,14 @@ namespace Telebot.Temperature
 
         public event EventHandler<TempArgs> Update;
 
-        protected void RaiseTemperatureChanged(TempArgs e)
-        {
-            Update?.Invoke(this, e);
-        }
-
         protected BaseTemp()
         {
             devices = new List<IDevice>();
+        }
+
+        protected void RaiseUpdate(TempArgs e)
+        {
+            Update?.Invoke(this, e);
         }
 
         public abstract void Start();

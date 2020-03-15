@@ -10,7 +10,7 @@ Token = <Bot_Token>
 AdminId = <User_ID> // The telegram user who will command the bot.
 ```
 
-- Copy cpuidsdk64.dll and SetVol.exe to binaries folder.
+- Necessary files will be copied to bin directory when project has been built.
 
 # Application architecture
 

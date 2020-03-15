@@ -49,6 +49,8 @@ IPAddressTo=192.168.1.55 // change this
 
 - Of course that Telebot supports OTA updates by utilizing the `/update` command.
 
+Note that Telebot checks for an update every hour and notifies *only* if there's an update available.
+
 # Donations
 Do You Like Telebot?
 Then please consider a donation to support the development of Telebot.

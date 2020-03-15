@@ -30,7 +30,7 @@ namespace Telebot.Commands
                 var result1 = new Response
                 {
                     ResultType = ResultType.Text,
-                    Text = "Successfully disabled temperature monitor."
+                    Text = "Successfully sent command \"off\" temperature monitor."
                 };
 
                 await resp(result1);

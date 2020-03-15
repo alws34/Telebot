@@ -151,7 +151,7 @@
     <Compile Include="Intranet\IInetMonitor.cs" />
     <Compile Include="Intranet\LanMonitor.cs" />
     <Compile Include="Capture\CaptureFactory.cs" />
-    <Compile Include="Capture\BaseCapture.cs" />
+    <Compile Include="Capture\ICapture.cs" />
     <Compile Include="Capture\CaptureSchedule.cs" />
     <Compile Include="Presenters\MainViewPresenter.cs" />
     <Compile Include="Capture\CaptureArgs.cs" />
@@ -163,7 +163,7 @@
     <Compile Include="Settings\Factories\SettingsFactory.cs" />
     <Compile Include="Settings\TelegramSettings.cs" />
     <Compile Include="Temperature\TempArgs.cs" />
-    <Compile Include="Temperature\BaseTemp.cs" />
+    <Compile Include="Temperature\ITemp.cs" />
     <Compile Include="Temperature\TempFactory.cs" />
     <Compile Include="Temperature\TempSchedule.cs" />
     <Compile Include="Temperature\TempWarning.cs" />

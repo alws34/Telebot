@@ -1,5 +1,5 @@
 ﻿using AutoUpdaterDotNET;
-using Common;
+using Common.Models;
 using FluentScheduler;
 using System;
 using System.Collections.Generic;
@@ -45,14 +45,14 @@ namespace Telebot.Presenters
             inetMon.Disconnected += LanDisconnected;
             inetMon.Notify += Notify;
 
-            foreach (BaseCapture cap in caps)
+            foreach (ICapture cap in caps)
             {
                 var Update = GetHandler<CaptureArgs>(cap.GetType());
                 cap.Update += Update;
                 cap.Notify += Notify;
             }
 
-            foreach (BaseTemp temp in temps)
+            foreach (ITemp temp in temps)
             {
                 var Update = GetHandler<TempArgs>(temp.GetType());
                 temp.Update += Update;

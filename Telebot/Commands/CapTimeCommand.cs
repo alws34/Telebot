@@ -30,7 +30,7 @@ namespace Telebot.Commands
                 var result1 = new Response
                 {
                     ResultType = ResultType.Text,
-                    Text = "Successfully disabled screen capture."
+                    Text = "Successfully sent command \"off\" to screen capture."
                 };
 
                 await resp(result1);

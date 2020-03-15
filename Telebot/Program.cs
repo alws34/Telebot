@@ -94,6 +94,8 @@ namespace Telebot
 
             if (jobsCount > 0)
             {
+                // todo - save ongoing jobs to disk and reload them?
+
                 JobManager.StopAndBlock();
                 JobManager.RemoveAllJobs();
             }
@@ -104,9 +106,9 @@ namespace Telebot
                 Properties.Settings.Default.Save();
             }
 
-            Settings.Handler.CommitChanges();
+            Settings.Main.CommitChanges();
 
-            Settings.Handler.WriteChanges();
+            Settings.Main.WriteChanges();
         }
 
         private static CommandFactory BuildCommandFactory()

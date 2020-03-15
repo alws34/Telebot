@@ -7,7 +7,7 @@ using static CPUID.CPUIDSDK;
 
 namespace Telebot.Temperature
 {
-    public class TempWarning : BaseTemp, IProfile
+    public class TempWarning : ITemp, IProfile
     {
         private float CPULimit;
         private float GPULimit;
@@ -19,7 +19,10 @@ namespace Telebot.Temperature
         {
             JobType = Common.JobType.Fixed;
 
+            this.devices.AddRange(devices);
+
             this.settings = settings;
+            Program.Settings.Main.AddProfile(this);
 
             CPULimit = settings.GetCPULimit();
             GPULimit = settings.GetGPULimit();
@@ -29,10 +32,6 @@ namespace Telebot.Temperature
                 { CLASS_DEVICE_PROCESSOR, CPULimit },
                 { CLASS_DEVICE_DISPLAY_ADAPTER, GPULimit }
             };
-
-            Program.Settings.Handler.AddProfile(this);
-
-            this.devices.AddRange(devices);
 
             IsActive = Program.Settings.Temperature.GetMonitoringState();
 

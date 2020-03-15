@@ -18,9 +18,7 @@
         {
             string idStr = settings.ReadString("Telegram", "AdminId");
 
-            int result = 0;
-
-            int.TryParse(idStr, out result);
+            int.TryParse(idStr, out int result);
 
             return result;
         }

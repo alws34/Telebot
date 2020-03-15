@@ -8,7 +8,7 @@ using static CPUID.CPUIDSDK;
 
 namespace Telebot.Temperature
 {
-    public class TempSchedule : BaseTemp, IScheduled
+    public class TempSchedule : ITemp, IScheduled
     {
         private DateTime timeStop;
 

@@ -7,7 +7,7 @@ using Telebot.Contracts;
 
 namespace Telebot.Temperature
 {
-    public abstract class BaseTemp : INotifyable, IJob<TempArgs>
+    public abstract class ITemp : INotifyable, IJob<TempArgs>
     {
         public JobType JobType { get; protected set; }
 
@@ -17,7 +17,7 @@ namespace Telebot.Temperature
 
         public event EventHandler<TempArgs> Update;
 
-        protected BaseTemp()
+        protected ITemp()
         {
             devices = new List<IDevice>();
         }

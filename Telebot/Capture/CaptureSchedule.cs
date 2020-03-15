@@ -6,17 +6,17 @@ using Telebot.Infrastructure;
 
 namespace Telebot.Capture
 {
-    public class CaptureSchedule : BaseCapture, IScheduled
+    public class CaptureSchedule : ICapture, IScheduled
     {
         private DateTime timeStop;
 
-        private readonly ScreenImpl desktopApi;
+        private readonly ScreenImpl screen;
 
         public CaptureSchedule()
         {
             JobType = Common.JobType.Scheduled;
 
-            desktopApi = new ScreenImpl();
+            screen = new ScreenImpl();
         }
 
         private void Elapsed()
@@ -27,13 +27,13 @@ namespace Telebot.Capture
                 return;
             }
 
-            var desktops = desktopApi.CaptureDesktop();
+            var screens = screen.CaptureDesktop();
 
-            foreach (Bitmap desktop in desktops)
+            foreach (Bitmap screen in screens)
             {
                 var result = new CaptureArgs
                 {
-                    Capture = desktop
+                    Capture = screen
                 };
 
                 RaiseUpdate(result);
@@ -62,6 +62,12 @@ namespace Telebot.Capture
 
         public override void Stop()
         {
+            if (!IsActive)
+            {
+                RaiseNotify("Screen capture has not been scheduled.");
+                return;
+            }
+
             JobManager.RemoveJob(GetType().Name);
 
             IsActive = false;

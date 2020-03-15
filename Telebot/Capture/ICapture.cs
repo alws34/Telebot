@@ -5,7 +5,7 @@ using Telebot.Contracts;
 
 namespace Telebot.Capture
 {
-    public abstract class BaseCapture : INotifyable, IJob<CaptureArgs>
+    public abstract class ICapture : INotifyable, IJob<CaptureArgs>
     {
         public JobType JobType { get; protected set; }
 

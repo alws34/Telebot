@@ -33,7 +33,7 @@ namespace Telebot.Commands
             var result = new Response
             {
                 ResultType = ResultType.Text,
-                Text = $"Successfully turned {state} the temperature monitor."
+                Text = $"Successfully sent \"{state}\" to the temperature monitor."
             };
 
             await resp(result);

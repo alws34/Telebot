@@ -57,7 +57,7 @@ namespace Telebot.Settings
 
         public void AddProfile(IProfile profile)
         {
-            this.profiles.Add(profile);
+            profiles.Add(profile);
         }
 
         public void CommitChanges()

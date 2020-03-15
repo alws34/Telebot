@@ -49,7 +49,7 @@ namespace Telebot.Settings
 
             bool success = bool.TryParse(state, out bool bStatus);
 
-            return success ? bStatus : false;
+            return success ? bStatus : success;
         }
 
         public void SaveMonitoringState(bool state)

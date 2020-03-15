@@ -44,6 +44,10 @@ UseIPAddressesRange=1 // 1 = enabled (true)
 IPAddressFrom=192.168.1.1
 IPAddressTo=192.168.1.55 // change this
 ```
+# Binaries
+- The latest build of Telebot can be downloaded from [this](https://raw.githubusercontent.com/jdahan91/Telebot/master/Telebot/Update/Release.zip) direct link (which is always updated to latest build).
+
+- Of course that Telebot supports OTA updates by utilizing the `/update` command.
 
 # Donations
 Do You Like Telebot?

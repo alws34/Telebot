@@ -18,7 +18,7 @@ AdminId = <User_ID> // The telegram user who will command the bot.
 The application is a [Tray-based](https://docs.microsoft.com/en-us/windows/win32/shell/notification-area) application based on [Model–view–presenter (MVP) architectural pattern](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93presenter) (**Notification-view**). Each command is encapsulated by the [Command design pattern](https://en.wikipedia.org/wiki/Command_pattern).
 
 #### SpecInfo module:
-The application that fetches full computer hardware information and saves it within same directory to file *spec.txt*. This program is used with the **/spec** command.
+The application that fetches full computer hardware information and saves it within same directory to file *spec.txt*. This program is used with the `/spec` command.
 
 #### CPUID module (Core functionality):
 This module is an abstraction to the cpuid library which is the core of the entire application to perform hardware analyzations tasks.

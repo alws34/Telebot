@@ -1,6 +1,6 @@
 ﻿using CPUID.Models;
 using System.Collections.Generic;
-using static CPUID.CPUIDCore;
+using static CPUID.CpuIdWrapper64;
 
 namespace CPUID.Base
 {
@@ -19,7 +19,7 @@ namespace CPUID.Base
             float minVal = 0.0f;
             float maxVal = 0.0f;
 
-            Sdk.GetSensorInfos(
+            Sdk64.GetSensorInfos(
                 DeviceIndex, 0, sensorClass, ref sensorId,
                 ref sensorName, ref rvalue, ref value, ref minVal, ref maxVal
              );
@@ -29,7 +29,7 @@ namespace CPUID.Base
 
         public List<Sensor> GetSensors(int sensorClass)
         {
-            int sensorCount = Sdk.GetNumberOfSensors(DeviceIndex, sensorClass);
+            int sensorCount = Sdk64.GetNumberOfSensors(DeviceIndex, sensorClass);
 
             var sensors = new List<Sensor>(sensorCount);
 
@@ -42,7 +42,7 @@ namespace CPUID.Base
                 float minVal = 0.0f;
                 float maxVal = 0.0f;
 
-                Sdk.GetSensorInfos(
+                Sdk64.GetSensorInfos(
                     DeviceIndex, sensorIndex, sensorClass, ref sensorId,
                     ref sensorName, ref rvalue, ref value, ref minVal, ref maxVal
                  );

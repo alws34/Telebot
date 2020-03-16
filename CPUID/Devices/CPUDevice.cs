@@ -1,5 +1,6 @@
 ﻿using CPUID.Base;
 using System;
+using static CPUID.Sdk.CpuIdSdk64;
 
 namespace CPUID.Devices
 {
@@ -19,8 +20,8 @@ namespace CPUID.Devices
 
         public override string ToString()
         {
-            var utilSensor = GetSensor(CPUIDSDK.SENSOR_CLASS_UTILIZATION);
-            var tempSensor = GetSensor(CPUIDSDK.SENSOR_CLASS_TEMPERATURE);
+            var utilSensor = GetSensor(SENSOR_CLASS_UTILIZATION);
+            var tempSensor = GetSensor(SENSOR_CLASS_TEMPERATURE);
 
             string result = "";
             result += $"*CPU Usage*: {Math.Round(utilSensor.Value, 0)}%\n";

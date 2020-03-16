@@ -4,7 +4,7 @@ using FluentScheduler;
 using System;
 using System.Collections.Generic;
 using Telebot.Contracts;
-using static CPUID.CPUIDSDK;
+using static CPUID.Sdk.CpuIdSdk64;
 
 namespace Telebot.Temperature
 {

@@ -1,5 +1,6 @@
 ﻿using CPUID.Base;
 using CPUID.Models;
+using static CPUID.Sdk.CpuIdSdk64;
 
 namespace CPUID.Devices
 {
@@ -19,7 +20,7 @@ namespace CPUID.Devices
 
         public override string ToString()
         {
-            Sensor sensor = GetSensor(CPUIDSDK.SENSOR_CLASS_UTILIZATION);
+            Sensor sensor = GetSensor(SENSOR_CLASS_UTILIZATION);
 
             return $"*RAM Used.*: {sensor.Value}%";
         }

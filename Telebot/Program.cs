@@ -15,7 +15,7 @@ using Telebot.Intranet;
 using Telebot.Presenters;
 using Telebot.Settings;
 using Telebot.Temperature;
-using static CPUID.CPUIDCore;
+using static CPUID.CpuIdWrapper64;
 
 namespace Telebot
 {
@@ -79,7 +79,7 @@ namespace Telebot
 
             JobManager.AddJob(() =>
             {
-                Sdk.RefreshInformation();
+                Sdk64.RefreshInformation();
             }, (s) => s.WithName("RefreshInformation").ToRunNow().AndEvery(1).Seconds()
             );
 

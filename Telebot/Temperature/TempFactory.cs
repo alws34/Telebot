@@ -1,7 +1,7 @@
 ﻿using Common;
 using Telebot.Contracts;
-using static CPUID.CPUIDCore;
-using static CPUID.CPUIDSDK;
+using static CPUID.CpuIdWrapper64;
+using static CPUID.Sdk.CpuIdSdk64;
 
 namespace Telebot.Temperature
 {

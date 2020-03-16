@@ -1,8 +1,8 @@
 ﻿using CPUID.Base;
 using CPUID.Devices;
 using System.Collections.Generic;
-using static CPUID.CPUIDCore;
-using static CPUID.CPUIDSDK;
+using static CPUID.CpuIdWrapper64;
+using static CPUID.Sdk.CpuIdSdk64;
 
 namespace SpecInfo.Components
 {

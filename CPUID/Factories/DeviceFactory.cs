@@ -3,8 +3,8 @@ using CPUID.Base;
 using CPUID.Devices;
 using System;
 using System.Collections.Generic;
-using static CPUID.CPUIDCore;
-using static CPUID.CPUIDSDK;
+using static CPUID.CpuIdWrapper64;
+using static CPUID.Sdk.CpuIdSdk64;
 
 namespace CPUID.Factories
 {
@@ -14,7 +14,7 @@ namespace CPUID.Factories
 
         public DeviceFactory()
         {
-            deviceCount = Sdk.GetNumberOfDevices();
+            deviceCount = Sdk64.GetNumberOfDevices();
 
             var CPUItems = GetDevices<CPUDevice>(CLASS_DEVICE_PROCESSOR);
             var GPUItems = GetDevices<GPUDevice>(CLASS_DEVICE_DISPLAY_ADAPTER);
@@ -35,9 +35,9 @@ namespace CPUID.Factories
 
             for (int deviceIndex = 0; deviceIndex < deviceCount; deviceIndex++)
             {
-                if (Sdk.GetDeviceClass(deviceIndex) == deviceClass)
+                if (Sdk64.GetDeviceClass(deviceIndex) == deviceClass)
                 {
-                    string deviceName = Sdk.GetDeviceName(deviceIndex);
+                    string deviceName = Sdk64.GetDeviceName(deviceIndex);
 
                     T device = (T)Activator.CreateInstance(typeof(T), new object[]
                     {

@@ -41,8 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="cpuidcore.cs" />
-    <Compile Include="cpuidsdk.cs" />
+    <Compile Include="CpuIdWrapper64.cs" />
     <Compile Include="Devices\BATDevice.cs" />
     <Compile Include="Devices\CPUDevice.cs" />
     <Compile Include="Base\IDevice.cs" />
@@ -52,18 +51,18 @@
     <Compile Include="Devices\RAMDevice.cs" />
     <Compile Include="Models\Sensor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="cpuidsdk.dll" />
-    <Content Include="cpuidsdk64.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Compile Include="Sdk\CpuIdSdk64.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{711F8DAA-2B41-4686-A11D-4F7995A1CC53}</Project>
       <Name>Common</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="cpuidsdk64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

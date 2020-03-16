@@ -1,15 +1,20 @@
 ﻿using SpecInfo.Components;
+using System;
 using System.Text;
-
-using static CPUID.CPUIDCore;
+using static CPUID.CpuIdWrapper64;
 
 namespace SpecInfo
 {
-    public class Spec
+    public class Spec : IDisposable
     {
         public Spec()
         {
-            Sdk.RefreshInformation();
+            Sdk64.RefreshInformation();
+        }
+
+        public void Dispose()
+        {
+            Sdk64.UninitSDK();
         }
 
         public string GetInfo()

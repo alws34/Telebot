@@ -2,6 +2,7 @@
 using CPUID.Models;
 using System;
 using System.Text;
+using static CPUID.Sdk.CpuIdSdk64;
 
 namespace CPUID.Devices
 {
@@ -23,7 +24,7 @@ namespace CPUID.Devices
         {
             var strBuilder = new StringBuilder();
 
-            var sensors = GetSensors(CPUIDSDK.SENSOR_CLASS_UTILIZATION);
+            var sensors = GetSensors(SENSOR_CLASS_UTILIZATION);
 
             foreach (Sensor sensor in sensors)
             {

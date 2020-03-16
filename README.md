@@ -18,7 +18,7 @@ AdminId = <User_ID> // The telegram user who will command the bot.
 The application is a [Tray-based](https://docs.microsoft.com/en-us/windows/win32/shell/notification-area) application based on [Model–view–presenter (MVP) architectural pattern](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93presenter) (**Notification-view**). Each command is encapsulated by the [Command design pattern](https://en.wikipedia.org/wiki/Command_pattern).
 
 #### SpecInfo module:
-The application that fetches full computer hardware information and saves it within same directory to file *spec.txt*. This program is used with the **/spec** command.
+The application that fetches full computer hardware information and saves it within same directory to file *spec.txt*. This program is used with the `/spec` command.
 
 #### CPUID module (Core functionality):
 This module is an abstraction to the cpuid library which is the core of the entire application to perform hardware analyzations tasks.
@@ -36,7 +36,7 @@ GPU_TEMPERATURE_WARNING = 65
 
 - You can schedule to monitor for a specific duration using the command `/temptime`
 #### Intranet Scanning and Monitoring 
-- Telebot has the capability to monitor the local area network for new connected/disconnected devices or just send you a static scan report of all connected device to the network.
+- Telebot has the capability to monitor the local network for connected and disconnected devices or just send you a static scan report of all devices on the network.
 - This feature is using an external scanning utility from [nirsoft](http://www.nirsoft.net/utils/wireless_network_watcher.html) and reads the scan report in memory.
 - The utility by default will scan the entire network range (1..255) which will take time. In order to customize this you can configure this in the settings (wnet.cfg) by modifiying the entry:
 ```

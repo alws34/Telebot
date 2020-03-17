@@ -7,7 +7,7 @@ namespace SpecInfo.Sensors
     {
         public Power()
         {
-            Name = "Powers";
+            Name = "Powers:";
             Class = SENSOR_CLASS_POWER;
         }
     }

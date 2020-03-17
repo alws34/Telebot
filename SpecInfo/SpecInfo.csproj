@@ -62,8 +62,10 @@
     <Compile Include="Components\Storage.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sensors\Capacity.cs" />
     <Compile Include="Sensors\ClockSpeed.cs" />
     <Compile Include="Sensors\Contracts\ISensor.cs" />
+    <Compile Include="Sensors\Level.cs" />
     <Compile Include="Sensors\Power.cs" />
     <Compile Include="Sensors\Temperature.cs" />
     <Compile Include="Sensors\Utilization.cs" />

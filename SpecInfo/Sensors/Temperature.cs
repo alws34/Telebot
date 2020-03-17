@@ -7,7 +7,7 @@ namespace SpecInfo.Sensors
     {
         public Temperature()
         {
-            Name = "Temperatures";
+            Name = "Temperatures:";
             Class = SENSOR_CLASS_TEMPERATURE;
         }
     }

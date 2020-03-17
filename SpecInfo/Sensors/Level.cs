@@ -3,12 +3,12 @@ using static CPUID.Sdk.CpuIdSdk64;
 
 namespace SpecInfo.Sensors
 {
-    public class Voltage : ISensor
+    public class Level : ISensor
     {
-        public Voltage()
+        public Level()
         {
-            Name = "Voltages:";
-            Class = SENSOR_CLASS_VOLTAGE;
+            Name = "Levels:";
+            Class = SENSOR_CLASS_LEVEL;
         }
     }
 }

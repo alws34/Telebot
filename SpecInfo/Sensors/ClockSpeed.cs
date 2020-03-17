@@ -7,7 +7,7 @@ namespace SpecInfo.Sensors
     {
         public ClockSpeed()
         {
-            Name = "Clocks";
+            Name = "Clocks:";
             Class = SENSOR_CLASS_CLOCK_SPEED;
         }
     }

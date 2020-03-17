@@ -35,10 +35,33 @@ namespace SpecInfo
                         new ClockSpeed()
                     }
                 ),
-                new Storage(),
-                new Display(),
-                new Battery(),
-                new Mainboard()
+                new Storage(
+                    new ISensor[]
+                    {
+                        new Temperature(),
+                        new Utilization()
+                    }
+                ),
+                new Display(
+                    new ISensor[]
+                    {
+                        new Temperature()
+                    }
+                ),
+                new Battery(
+                    new ISensor[]
+                    {
+                        new Voltage(),
+                        new Capacity(),
+                        new Level()
+                    }
+                ),
+                new Mainboard(
+                    new ISensor[]
+                    {
+                        new Utilization()
+                    }
+                )
             };
 
             foreach (IComponent component in components)

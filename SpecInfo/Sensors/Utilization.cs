@@ -7,7 +7,7 @@ namespace SpecInfo.Sensors
     {
         public Utilization()
         {
-            Name = "Utilization";
+            Name = "Utilization:";
             Class = SENSOR_CLASS_UTILIZATION;
         }
     }

@@ -1,5 +1,6 @@
 ﻿using CPUID.Base;
 using CPUID.Devices;
+using SpecInfo.Sensors.Contracts;
 using System.Collections.Generic;
 using static CPUID.CpuIdWrapper64;
 using static CPUID.Sdk.CpuIdSdk64;
@@ -9,10 +10,12 @@ namespace SpecInfo.Components
     public class Processor : IComponent
     {
         private readonly IEnumerable<IDevice> items;
+        private readonly IEnumerable<ISensor> sensors;
 
-        public Processor()
+        public Processor(IEnumerable<ISensor> sensors)
         {
             items = DeviceFactory.FindAll(x => x.DeviceClass == CLASS_DEVICE_PROCESSOR);
+            this.sensors = sensors;
         }
 
         public override string ToString()
@@ -21,20 +24,11 @@ namespace SpecInfo.Components
             {
                 stringResult.AppendLine($"+ {device.DeviceName}");
 
-                var sensors = device.GetSensors(SENSOR_CLASS_VOLTAGE);
-                AppendSensors("Voltages:", sensors);
-
-                sensors = device.GetSensors(SENSOR_CLASS_TEMPERATURE);
-                AppendSensors("Temperatures:", sensors);
-
-                sensors = device.GetSensors(SENSOR_CLASS_POWER);
-                AppendSensors("Powers:", sensors);
-
-                sensors = device.GetSensors(SENSOR_CLASS_UTILIZATION);
-                AppendSensors("Utilization:", sensors);
-
-                sensors = device.GetSensors(SENSOR_CLASS_CLOCK_SPEED);
-                AppendSensors("Clocks:", sensors);
+                foreach (ISensor sensor in sensors)
+                {
+                    var result = device.GetSensors(sensor.Class);
+                    AppendSensors(sensor.Name, result);
+                }
             }
 
             return stringResult.ToString();

@@ -1,4 +1,6 @@
 ﻿using SpecInfo.Components;
+using SpecInfo.Sensors;
+using SpecInfo.Sensors.Contracts;
 using System;
 using System.Text;
 using static CPUID.CpuIdWrapper64;
@@ -23,7 +25,16 @@ namespace SpecInfo
 
             IComponent[] components = new IComponent[]
             {
-                new Processor(),
+                new Processor(
+                    new ISensor[]
+                    {
+                        new Voltage(),
+                        new Temperature(),
+                        new Power(),
+                        new Utilization(),
+                        new ClockSpeed()
+                    }
+                ),
                 new Storage(),
                 new Display(),
                 new Battery(),

@@ -45,7 +45,7 @@ IPAddressFrom=192.168.1.1
 IPAddressTo=192.168.1.55 // change this
 ```
 # Binaries
-The latest build of Telebot can be downloaded from [this](https://raw.githubusercontent.com/jdahan91/Telebot/master/Telebot/Update/Release.zip) direct link (which is always updated to latest build). Of course that Telebot supports OTA updates by utilizing the `/update` command.
+The latest build of Telebot can be downloaded from [this](https://raw.githubusercontent.com/jdahan91/Telebot/master/Telebot/Update/Release.zip) direct link (which is always updated to latest build) or from the [Release](https://github.com/jdahan91/Telebot/releases) section. Of course that Telebot supports OTA updates by utilizing the `/update` command.
 Note that Telebot checks for an update every hour and notifies *only* if there's an update available.
 
 # Donations

@@ -39,6 +39,12 @@ namespace Telebot.Native
     {
         public delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
 
+        public enum DisplayState
+        {
+            DisplayStateOn = -1,
+            DisplayStateOff = 2
+        }
+
         public enum GWL
         {
             GWL_WNDPROC = (-4),

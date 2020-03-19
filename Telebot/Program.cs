@@ -19,7 +19,6 @@ namespace Telebot
 {
     static class Program
     {
-        public static bool FirstRun { get; private set; }
         public static SettingsFactory Settings { get; private set; }
         public static IINetMonitor LanMonitor { get; private set; }
         public static IInetScanner LanScanner { get; private set; }
@@ -50,8 +49,6 @@ namespace Telebot
                 return;
             }
 
-            FirstRun = Properties.Settings.Default.FirstRun;
-
             TempFactory = new TempFactory();
             CaptureFactory = new CaptureFactory();
 
@@ -75,10 +72,11 @@ namespace Telebot
                 temperatures
             );
 
-            JobManager.AddJob(() =>
-            {
-                Sdk64.RefreshInformation();
-            }, (s) => s.WithName("RefreshInformation").ToRunNow().AndEvery(1).Seconds()
+            JobManager.AddJob(
+                () =>
+                {
+                    Sdk64.RefreshInformation();
+                }, (s) => s.WithName("RefreshInformation").ToRunNow().AndEvery(1).Seconds()
             );
 
             Application.ApplicationExit += ApplicationExit;
@@ -96,12 +94,6 @@ namespace Telebot
 
                 JobManager.StopAndBlock();
                 JobManager.RemoveAllJobs();
-            }
-
-            if (FirstRun)
-            {
-                Properties.Settings.Default["FirstRun"] = false;
-                Properties.Settings.Default.Save();
             }
 
             Settings.Main.CommitChanges();

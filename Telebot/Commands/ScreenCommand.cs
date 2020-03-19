@@ -40,7 +40,7 @@ namespace Telebot.Commands
 
             IApi api = new DisplayApi(state);
 
-            ApiInvoker.Instance.Invoke(api);
+            api.Invoke();
         }
     }
 }

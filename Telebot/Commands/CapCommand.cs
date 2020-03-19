@@ -22,23 +22,19 @@ namespace Telebot.Commands
         {
             var api = new DeskBmpApi();
 
-            ApiInvoker.Instance.Invoke(api,
-                async (screens) =>
+            api.Invoke(async (screens) =>
+            {
+                foreach (Bitmap screen in screens)
                 {
-                    foreach (Bitmap screen in screens)
+                    var result = new Response
                     {
-                        var result = new Response
-                        {
-                            ResultType = ResultType.Photo,
-                            Raw = screen.ToStream()
-                        };
+                        ResultType = ResultType.Photo,
+                        Raw = screen.ToStream()
+                    };
 
-                        await resp(result);
-                    }
+                    await resp(result);
                 }
-            );
-
-         
+            });
         }
     }
 }

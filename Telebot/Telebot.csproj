@@ -113,7 +113,6 @@
     <Compile Include="Contracts\IScheduled.cs" />
     <Compile Include="Extensions\PrimitiveExtensions.cs" />
     <Compile Include="Common\ResultType.cs" />
-    <Compile Include="Infrastructure\Apis\ApiInvoker.cs" />
     <Compile Include="Common\AppsType.cs" />
     <Compile Include="Infrastructure\Apis\DeskBmpApi.cs" />
     <Compile Include="Infrastructure\Apis\DisplayApi.cs" />

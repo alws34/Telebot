@@ -28,7 +28,7 @@ namespace Telebot.Commands
 
             IApi api = new PowerApi(PowerType.Shutdown, timeout);
 
-            ApiInvoker.Instance.Invoke(api);
+            api.Invoke();
         }
     }
 }

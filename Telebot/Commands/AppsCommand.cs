@@ -32,7 +32,7 @@ namespace Telebot.Commands
 
             var api = new AppsApi(type);
 
-            ApiInvoker.Instance.Invoke(api, async (s) =>
+            api.Invoke(async (s) =>
             {
                 var result = new Response
                 {

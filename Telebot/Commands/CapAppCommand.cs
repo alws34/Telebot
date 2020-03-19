@@ -25,7 +25,7 @@ namespace Telebot.Commands
 
             var api = new WndBmpApi(hWnd);
 
-            ApiInvoker.Instance.Invoke(api, async (wnd) =>
+            api.Invoke(async (wnd) =>
             {
                 var result = new Response
                 {

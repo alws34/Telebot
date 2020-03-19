@@ -26,7 +26,7 @@ namespace Telebot.Capture
 
             var api = new DeskBmpApi();
 
-            ApiInvoker.Instance.Invoke(api, (screens) =>
+            api.Invoke((screens) =>
             {
                 foreach (Bitmap screen in screens)
                 {

@@ -28,7 +28,7 @@ namespace Telebot.Commands
 
             IApi api = new DimApi(level);
 
-            ApiInvoker.Instance.Invoke(api);
+            api.Invoke();
         }
     }
 }

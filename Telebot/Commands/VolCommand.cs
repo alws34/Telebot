@@ -28,7 +28,7 @@ namespace Telebot.Commands
 
             IApi api = new VolApi(vol);
 
-            ApiInvoker.Instance.Invoke(api);
+            api.Invoke();
         }
     }
 }

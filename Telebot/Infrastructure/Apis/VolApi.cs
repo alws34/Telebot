@@ -4,11 +4,11 @@ namespace Telebot.Infrastructure.Apis
 {
     public class VolApi : IApi
     {
-        private readonly int volume;
+        private readonly int level;
 
-        public VolApi(int volume)
+        public VolApi(int level)
         {
-            this.volume = volume;
+            this.level = level;
 
             Action = SetVolume;
         }
@@ -21,7 +21,7 @@ namespace Telebot.Infrastructure.Apis
                 UseShellExecute = true,
                 WindowStyle = ProcessWindowStyle.Hidden,
                 FileName = @".\SetVol.exe",
-                Arguments = $"{volume}"
+                Arguments = $"{level}"
             };
 
             Process.Start(si);

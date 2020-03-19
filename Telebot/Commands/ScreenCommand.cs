@@ -2,42 +2,45 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Telebot.Common;
-using Telebot.Infrastructure;
+using Telebot.Infrastructure.Apis;
 using Telebot.Models;
+using static Telebot.Native.user32;
 
 namespace Telebot.Commands
 {
     public class ScreenCommand : ICommand
     {
-        private readonly Dictionary<string, Action> actions;
+        private readonly Dictionary<string, DisplayState> states;
 
         public ScreenCommand()
         {
             Pattern = "/screen (on|off)";
             Description = "Turn off or on the monitor.";
 
-            var display = new DisplayImpl();
-
-            actions = new Dictionary<string, Action>()
+            states = new Dictionary<string, DisplayState>()
             {
-                { "on", display.SetDisplayOn },
-                { "off", display.SetDisplayOff }
+                { "on", DisplayState.DisplayStateOn },
+                { "off", DisplayState.DisplayStateOff }
             };
         }
 
         public async override void Execute(Request req, Func<Response, Task> resp)
         {
-            string state = req.Groups[1].Value;
+            string key = req.Groups[1].Value;
 
             var result = new Response
             {
                 ResultType = ResultType.Text,
-                Text = $"Successfully turned {state} the monitor."
+                Text = $"Successfully turned {key} the monitor."
             };
 
             await resp(result);
 
-            actions[state].Invoke();
+            DisplayState state = states[key];
+
+            IApi api = new DisplayApi(state);
+
+            ApiInvoker.Instance.Invoke(api);
         }
     }
 }

@@ -1,21 +1,17 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Telebot.Common;
-using Telebot.Infrastructure;
+using Telebot.Infrastructure.Apis;
 using Telebot.Models;
 
 namespace Telebot.Commands
 {
     public class VolCommand : ICommand
     {
-        private readonly MediaImpl media;
-
         public VolCommand()
         {
             Pattern = "/vol (\\d{1,3})";
             Description = "Adjust workstation's volume.";
-
-            media = new MediaImpl();
         }
 
         public async override void Execute(Request req, Func<Response, Task> resp)
@@ -30,7 +26,9 @@ namespace Telebot.Commands
 
             await resp(result);
 
-            media.SetVolume(vol);
+            IApi api = new VolApi(vol);
+
+            ApiInvoker.Instance.Invoke(api);
         }
     }
 }

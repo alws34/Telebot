@@ -1,19 +1,28 @@
-﻿using Telebot.Infrastructure;
+﻿using System.Net;
+using System.Net.Sockets;
 
 namespace Telebot.Commands.Status
 {
     public class LanAddrStatus : IStatus
     {
-        private readonly NetworkImpl networkApi;
-
-        public LanAddrStatus()
-        {
-            networkApi = new NetworkImpl();
-        }
-
         public string GetStatus()
         {
-            return $"*LAN IPv4*: {networkApi.LANIPv4}";
+            return $"*LAN IPv4*: {GetLocalIPv4()}";
+        }
+
+        private string GetLocalIPv4()
+        {
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+
+            foreach (var address in host.AddressList)
+            {
+                if (address.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    return address.ToString();
+                }
+            }
+
+            return "Issue @ GetLocalIPv4()";
         }
     }
 }

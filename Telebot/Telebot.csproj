@@ -71,9 +71,13 @@
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="ORMi, Version=1.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ORMi.2.5.5\lib\net45\ORMi.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows" />
@@ -104,17 +108,22 @@
     <Compile Include="Commands\Status\WanAddrStatus.cs" />
     <Compile Include="Commands\UpdateCommand.cs" />
     <Compile Include="Common\JobType.cs" />
+    <Compile Include="Common\PowerType.cs" />
     <Compile Include="Contracts\IJob.cs" />
     <Compile Include="Contracts\IScheduled.cs" />
     <Compile Include="Extensions\PrimitiveExtensions.cs" />
-    <Compile Include="Common\DisplayState.cs" />
     <Compile Include="Common\ResultType.cs" />
+    <Compile Include="Infrastructure\Apis\ApiInvoker.cs" />
+    <Compile Include="Common\AppsType.cs" />
+    <Compile Include="Infrastructure\Apis\DeskBmpApi.cs" />
+    <Compile Include="Infrastructure\Apis\DisplayApi.cs" />
+    <Compile Include="Infrastructure\Apis\IApi.cs" />
+    <Compile Include="Infrastructure\Apis\VolApi.cs" />
     <Compile Include="Intranet\HostComparison.cs" />
     <Compile Include="Intranet\IInetBase.cs" />
     <Compile Include="Intranet\IInetScanner.cs" />
     <Compile Include="Intranet\LanScanner.cs" />
     <Compile Include="Native\kernel32.cs" />
-    <Compile Include="Infrastructure\MediaImpl.cs" />
     <Compile Include="Clients\IBotClient.cs" />
     <Compile Include="Commands\AppsCommand.cs" />
     <Compile Include="Commands\CapAppCommand.cs" />
@@ -138,12 +147,10 @@
     <Compile Include="Commands\TempTimeCommand.cs" />
     <Compile Include="Commands\VolCommand.cs" />
     <Compile Include="Commands\Status\IStatus.cs" />
-    <Compile Include="Infrastructure\ScreenImpl.cs" />
-    <Compile Include="Infrastructure\NetworkImpl.cs" />
-    <Compile Include="Infrastructure\PowerImpl.cs" />
-    <Compile Include="Infrastructure\DisplayImpl.cs" />
-    <Compile Include="Infrastructure\SystemImpl.cs" />
-    <Compile Include="Infrastructure\WindowsImpl.cs" />
+    <Compile Include="Infrastructure\Apis\WndBmpApi.cs" />
+    <Compile Include="Infrastructure\Apis\PowerApi.cs" />
+    <Compile Include="Infrastructure\Apis\DimApi.cs" />
+    <Compile Include="Infrastructure\Apis\AppsApi.cs" />
     <Compile Include="Extensions\BitmapExtensions.cs" />
     <Compile Include="Extensions\TimeSpanExtensions.cs" />
     <Compile Include="Intranet\HostsArg.cs" />

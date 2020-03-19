@@ -1,19 +1,20 @@
-﻿using Telebot.Infrastructure;
+﻿using System.Net;
 
 namespace Telebot.Commands.Status
 {
     public class WanAddrStatus : IStatus
     {
-        private readonly NetworkImpl networkApi;
-
-        public WanAddrStatus()
-        {
-            networkApi = new NetworkImpl();
-        }
-
         public string GetStatus()
         {
-            return $"*WAN IPv4*: {networkApi.WANIPv4}";
+            return $"*WAN IPv4*: {GetPublicIPv4()}";
+        }
+
+        private string GetPublicIPv4()
+        {
+            using (WebClient wc = new WebClient())
+            {
+                return wc.DownloadString("https://icanhazip.com");
+            }
         }
     }
 }

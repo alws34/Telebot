@@ -3,6 +3,7 @@ using System;
 using System.Drawing;
 using Telebot.Contracts;
 using Telebot.Infrastructure;
+using Telebot.Infrastructure.Apis;
 
 namespace Telebot.Capture
 {
@@ -10,13 +11,9 @@ namespace Telebot.Capture
     {
         private DateTime timeStop;
 
-        private readonly ScreenImpl screen;
-
         public CaptureSchedule()
         {
             JobType = Common.JobType.Scheduled;
-
-            screen = new ScreenImpl();
         }
 
         private void Elapsed()
@@ -27,17 +24,20 @@ namespace Telebot.Capture
                 return;
             }
 
-            var screens = screen.CaptureDesktop();
+            var api = new DeskBmpApi();
 
-            foreach (Bitmap screen in screens)
+            ApiInvoker.Instance.Invoke(api, (screens) =>
             {
-                var result = new CaptureArgs
+                foreach (Bitmap screen in screens)
                 {
-                    Capture = screen
-                };
+                    var result = new CaptureArgs
+                    {
+                        Capture = screen
+                    };
 
-                RaiseUpdate(result);
-            }
+                    RaiseUpdate(result);
+                }
+            });
         }
 
         public void Start(TimeSpan duration, TimeSpan interval)

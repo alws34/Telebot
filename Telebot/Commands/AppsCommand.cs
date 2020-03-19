@@ -3,41 +3,45 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Telebot.Common;
 using Telebot.Infrastructure;
+using Telebot.Infrastructure.Apis;
 using Telebot.Models;
 
 namespace Telebot.Commands
 {
     public class AppsCommand : ICommand
     {
-        public readonly Dictionary<string, Func<string>> actions;
+        public readonly Dictionary<string, AppsType> types;
 
         public AppsCommand()
         {
             Pattern = "/apps (fg|all)";
             Description = "List of active applications.";
 
-            var windowsApi = new WindowsImpl();
-
-            actions = new Dictionary<string, Func<string>>
+            types = new Dictionary<string, AppsType>
             {
-                { "fg", windowsApi.GetForegroundApps },
-                { "all", windowsApi.GetBackgroundApps }
+                { "fg", AppsType.Foreground },
+                { "all", AppsType.Background }
             };
         }
 
-        public async override void Execute(Request req, Func<Response, Task> resp)
+        public override void Execute(Request req, Func<Response, Task> resp)
         {
-            string methName = req.Groups[1].Value;
+            string key = req.Groups[1].Value;
 
-            string methResult = actions[methName].Invoke();
+            AppsType type = types[key];
 
-            var result = new Response
+            var api = new AppsApi(type);
+
+            ApiInvoker.Instance.Invoke(api, async (s) =>
             {
-                Text = methResult,
-                ResultType = ResultType.Text
-            };
+                var result = new Response
+                {
+                    ResultType = ResultType.Text,
+                    Text = s
+                };
 
-            await resp(result);
+                await resp(result);
+            });
         }
     }
 }

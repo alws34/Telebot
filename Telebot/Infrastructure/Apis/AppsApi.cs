@@ -2,12 +2,26 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using Telebot.Common;
 using static Telebot.Native.user32;
 
-namespace Telebot.Infrastructure
+namespace Telebot.Infrastructure.Apis
 {
-    public class WindowsImpl
+    public class AppsApi : IApi<string>
     {
+        public AppsApi(AppsType type)
+        {
+            switch (type)
+            {
+                case AppsType.Foreground:
+                    Func = GetBackgroundApps;
+                    break;
+                case AppsType.Background:
+                    Func = GetForegroundApps;
+                    break;
+            }
+        }
+
         public string GetForegroundApps()
         {
             var builder = new StringBuilder();

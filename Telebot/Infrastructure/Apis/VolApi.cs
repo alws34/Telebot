@@ -1,10 +1,19 @@
 ﻿using System.Diagnostics;
 
-namespace Telebot.Infrastructure
+namespace Telebot.Infrastructure.Apis
 {
-    public class MediaImpl
+    public class VolApi : IApi
     {
-        public void SetVolume(int percentage)
+        private readonly int volume;
+
+        public VolApi(int volume)
+        {
+            this.volume = volume;
+
+            Action = SetVolume;
+        }
+
+        public void SetVolume()
         {
             var si = new ProcessStartInfo
             {
@@ -12,7 +21,7 @@ namespace Telebot.Infrastructure
                 UseShellExecute = true,
                 WindowStyle = ProcessWindowStyle.Hidden,
                 FileName = @".\SetVol.exe",
-                Arguments = $"{percentage}"
+                Arguments = $"{volume}"
             };
 
             Process.Start(si);

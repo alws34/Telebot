@@ -28,22 +28,22 @@ namespace Telebot.Clients
             OnMessage += BotMessageHandler;
         }
 
-        public async Task SendText(string text, int replyId = 0)
+        public async Task SendText(string text, long chatId = 0, int replyId = 0)
         {
             await SendTextMessageAsync(
-               id,
+               chatId == 0 ? id : chatId,
                text.TrimEnd(),
                parseMode: ParseMode.Markdown,
                replyToMessageId: replyId
            );
         }
 
-        public async Task SendPic(Stream content, int replyId = 0)
+        public async Task SendPic(Stream content, long chatId = 0, int replyId = 0)
         {
             var raw = new InputOnlineFile(content, "preview.jpg");
 
             await SendDocumentAsync(
-                id,
+                chatId == 0 ? id : chatId,
                 raw,
                 parseMode: ParseMode.Markdown,
                 replyToMessageId: replyId,
@@ -54,12 +54,12 @@ namespace Telebot.Clients
             content.Close();
         }
 
-        public async Task SendDoc(Stream content, int replyId = 0)
+        public async Task SendDoc(Stream content, long chatId = 0, int replyId = 0)
         {
             var raw = new InputOnlineFile(content, (content as FileStream).Name);
 
             await SendDocumentAsync(
-                id,
+                chatId == 0 ? id : chatId,
                 raw,
                 parseMode: ParseMode.Markdown,
                 replyToMessageId: replyId,
@@ -77,13 +77,13 @@ namespace Telebot.Clients
                 switch (result.ResultType)
                 {
                     case ResultType.Text:
-                        await SendText(result.Text, e.Message.MessageId);
+                        await SendText(result.Text, replyId: e.Message.MessageId);
                         break;
                     case ResultType.Photo:
-                        await SendPic(result.Raw, e.Message.MessageId);
+                        await SendPic(result.Raw, replyId: e.Message.MessageId);
                         break;
                     case ResultType.Document:
-                        await SendDoc(result.Raw, e.Message.MessageId);
+                        await SendDoc(result.Raw, replyId: e.Message.MessageId);
                         break;
                     default:
                         break;
@@ -92,7 +92,7 @@ namespace Telebot.Clients
 
             if (e.Message.From.Id != id)
             {
-                await SendText("Unauthorized.", e.Message.MessageId);
+                await SendText("Unauthorized.", e.Message.From.Id, e.Message.MessageId);
                 return;
             }
 
@@ -100,7 +100,7 @@ namespace Telebot.Clients
 
             if (string.IsNullOrEmpty(pattern))
             {
-                await SendText("Unrecognized pattern.", e.Message.MessageId);
+                await SendText("Unrecognized pattern.", replyId: e.Message.MessageId);
                 return;
             }
 
@@ -132,7 +132,7 @@ namespace Telebot.Clients
                 return;
             }
 
-            await SendText("Undefined command. For commands list, type */help*.", e.Message.MessageId);
+            await SendText("Undefined command. For commands list, type */help*.", replyId: e.Message.MessageId);
         }
 
         private void RaiseReceived(ReceivedArgs e)

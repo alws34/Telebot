@@ -6,7 +6,7 @@ namespace Telebot.Commands.Status
     {
         public string GetStatus()
         {
-            return $"*WAN IPv4*: {GetPublicIPv4()}";
+            return $"*WAN IPv4*: {GetPublicIPv4().TrimEnd()}";
         }
 
         private string GetPublicIPv4()

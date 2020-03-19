@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Telebot.Common;
 using Telebot.Extensions;
-using Telebot.Infrastructure;
 using Telebot.Infrastructure.Apis;
 using Telebot.Models;
 
@@ -34,7 +33,7 @@ namespace Telebot.Commands
                 };
 
                 await resp(result);
-            });          
+            });
         }
     }
 }

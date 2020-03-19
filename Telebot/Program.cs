@@ -6,10 +6,8 @@ using System.Windows.Forms;
 using Telebot.Capture;
 using Telebot.Clients;
 using Telebot.Commands;
-using Telebot.Commands.Builder;
 using Telebot.Commands.Factories;
 using Telebot.Commands.Status;
-using Telebot.Commands.Status.Builder;
 using Telebot.Contracts;
 using Telebot.Intranet;
 using Telebot.Presenters;
@@ -115,38 +113,40 @@ namespace Telebot
         {
             var devices = DeviceFactory.GetAllEntities();
 
-            var statuses = new StatusBuilder()
-                .Add(new SystemStatus(devices))
-                .Add(new LanAddrStatus())
-                .Add(new WanAddrStatus())
-                .Add(new UptimeStatus())
-                .Add(new LanMonStatus())
-                .Add(new TempStatus())
-                .Add(new CapsStatus())
-                .Build();
+            var statuses = new IStatus[]
+            {
+                new SystemStatus(devices),
+                new LanAddrStatus(),
+                new WanAddrStatus(),
+                new UptimeStatus(),
+                new LanMonStatus(),
+                new TempStatus(),
+                new CapsStatus()
+            };
 
-            var commands = new CommandBuilder()
-                .Add(new StatusCommand(statuses))
-                .Add(new AppsCommand())
-                .Add(new BrightCommand())
-                .Add(new CapAppCommand())
-                .Add(new CapTimeCommand())
-                .Add(new CapCommand())
-                .Add(new ScreenCommand())
-                .Add(new TempWarnCommand())
-                .Add(new TempTimeCommand())
-                .Add(new PowerCommand())
-                .Add(new ShutdownCommand())
-                .Add(new AlertCommand())
-                .Add(new LanCommand())
-                .Add(new KillTaskCommand())
-                .Add(new SpecCommand())
-                .Add(new VolCommand())
-                .Add(new RestartCommand())
-                .Add(new ExitCommand())
-                .Add(new UpdateCommand())
-                .Add(new HelpCommand())
-                .Build();
+            var commands = new ICommand[]
+            {
+                new StatusCommand(statuses),
+                new AppsCommand(),
+                new BrightCommand(),
+                new CapAppCommand(),
+                new CapTimeCommand(),
+                new CapCommand(),
+                new ScreenCommand(),
+                new TempWarnCommand(),
+                new TempTimeCommand(),
+                new PowerCommand(),
+                new ShutdownCommand(),
+                new AlertCommand(),
+                new LanCommand(),
+                new KillTaskCommand(),
+                new SpecCommand(),
+                new VolCommand(),
+                new RestartCommand(),
+                new ExitCommand(),
+                new UpdateCommand(),
+                new HelpCommand()
+            };
 
             return new CommandFactory(commands);
         }

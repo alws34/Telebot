@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Threading.Tasks;
 using Telebot.Common;
 using Telebot.Extensions;
-using Telebot.Infrastructure;
 using Telebot.Infrastructure.Apis;
 using Telebot.Models;
 

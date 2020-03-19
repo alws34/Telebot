@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Telebot.Common;
-using Telebot.Infrastructure;
 using Telebot.Infrastructure.Apis;
 using Telebot.Models;
 

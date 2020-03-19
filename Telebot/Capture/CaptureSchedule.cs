@@ -2,7 +2,6 @@
 using System;
 using System.Drawing;
 using Telebot.Contracts;
-using Telebot.Infrastructure;
 using Telebot.Infrastructure.Apis;
 
 namespace Telebot.Capture

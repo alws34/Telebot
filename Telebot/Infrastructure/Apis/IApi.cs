@@ -4,7 +4,7 @@ namespace Telebot.Infrastructure.Apis
 {
     public abstract class IApi
     {
-        public Action Action { get; protected set; }
+        protected Action Action;
 
         public void Invoke()
         {
@@ -14,7 +14,7 @@ namespace Telebot.Infrastructure.Apis
 
     public abstract class IApi<T>
     {
-        public Func<T> Func { get; protected set; }
+        protected Func<T> Func;
 
         public void Invoke(Action<T> callback)
         {

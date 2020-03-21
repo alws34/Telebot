@@ -117,7 +117,7 @@ namespace Telebot.Presenters
 
         private async void LanDisconnected(object sender, HostsArg e)
         {
-            string text = "Hosts that disconnected from the network:\n\n";
+            string text = "Disconnected:\n\n";
 
             foreach (Host host in e.Hosts)
             {
@@ -130,7 +130,7 @@ namespace Telebot.Presenters
 
         private async void LanConnected(object sender, HostsArg e)
         {
-            string text = "Hosts that just connected to the network:\n\n";
+            string text = "Connected:\n\n";
 
             foreach (Host host in e.Hosts)
             {

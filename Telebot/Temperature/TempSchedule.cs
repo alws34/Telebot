@@ -8,15 +8,16 @@ using static CPUID.Sdk.CpuIdSdk64;
 
 namespace Telebot.Temperature
 {
-    public class TempSchedule : ITemp, IScheduled
+    public class TempSchedule : IJob<TempArgs>, IScheduled
     {
         private DateTime timeStop;
+        private readonly IEnumerable<IDevice> devices;
 
         public TempSchedule(IEnumerable<IDevice> devices)
         {
             JobType = Common.JobType.Scheduled;
 
-            this.devices.AddRange(devices);
+            this.devices = devices;
         }
 
         private void Elapsed()
@@ -46,9 +47,9 @@ namespace Telebot.Temperature
 
         public void Start(TimeSpan duration, TimeSpan interval)
         {
-            if (IsActive)
+            if (Active)
             {
-                RaiseNotify("Temperature monitor has already been scheduled.");
+                RaiseFeedback("Temperature monitor has already been scheduled.");
                 return;
             }
 
@@ -61,7 +62,7 @@ namespace Telebot.Temperature
                 (s) => s.WithName(GetType().Name).ToRunNow().AndEvery(seconds).Seconds()
             );
 
-            IsActive = true;
+            Active = true;
         }
 
         public override void Start()
@@ -71,15 +72,15 @@ namespace Telebot.Temperature
 
         public override void Stop()
         {
-            if (!IsActive)
+            if (!Active)
             {
-                RaiseNotify("temperature monitor is not scheduled.");
+                RaiseFeedback("temperature monitor is not scheduled.");
                 return;
             }
 
             JobManager.RemoveJob(GetType().Name);
 
-            IsActive = false;
+            Active = false;
         }
     }
 }

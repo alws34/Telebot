@@ -6,7 +6,7 @@ using Telebot.Infrastructure.Apis;
 
 namespace Telebot.Capture
 {
-    public class CaptureSchedule : ICapture, IScheduled
+    public class CaptureSchedule : IJob<CaptureArgs>, IScheduled
     {
         private DateTime timeStop;
 
@@ -41,9 +41,9 @@ namespace Telebot.Capture
 
         public void Start(TimeSpan duration, TimeSpan interval)
         {
-            if (IsActive)
+            if (Active)
             {
-                RaiseNotify("Screen capture has already been scheduled.");
+                RaiseFeedback("Screen capture has already been scheduled.");
                 return;
             }
 
@@ -56,20 +56,20 @@ namespace Telebot.Capture
                 (s) => s.WithName(GetType().Name).ToRunNow().AndEvery(seconds).Seconds()
             );
 
-            IsActive = true;
+            Active = true;
         }
 
         public override void Stop()
         {
-            if (!IsActive)
+            if (!Active)
             {
-                RaiseNotify("Screen capture has not been scheduled.");
+                RaiseFeedback("Screen capture has not been scheduled.");
                 return;
             }
 
             JobManager.RemoveJob(GetType().Name);
 
-            IsActive = false;
+            Active = false;
         }
 
         public override void Start()

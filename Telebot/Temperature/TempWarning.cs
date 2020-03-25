@@ -2,12 +2,13 @@
 using CPUID.Models;
 using FluentScheduler;
 using System.Collections.Generic;
+using Telebot.Contracts;
 using Telebot.Settings;
 using static CPUID.Sdk.CpuIdSdk64;
 
 namespace Telebot.Temperature
 {
-    public class TempWarning : ITemp, IProfile
+    public class TempWarning : IJob<TempArgs>, IProfile
     {
         private float CPULimit;
         private float GPULimit;
@@ -15,11 +16,13 @@ namespace Telebot.Temperature
         private readonly TempSettings settings;
         private readonly Dictionary<uint, float> limits;
 
+        private readonly IEnumerable<IDevice> devices;
+
         public TempWarning(IEnumerable<IDevice> devices, TempSettings settings)
         {
             JobType = Common.JobType.Fixed;
 
-            this.devices.AddRange(devices);
+            this.devices = devices;
 
             this.settings = settings;
             Program.Settings.Main.AddProfile(this);
@@ -33,9 +36,9 @@ namespace Telebot.Temperature
                 { CLASS_DEVICE_DISPLAY_ADAPTER, GPULimit }
             };
 
-            IsActive = Program.Settings.Temperature.GetMonitoringState();
+            Active = Program.Settings.Temperature.GetMonitoringState();
 
-            if (IsActive)
+            if (Active)
             {
                 StartJob();
             }
@@ -64,31 +67,31 @@ namespace Telebot.Temperature
 
         public override void Start()
         {
-            if (IsActive)
+            if (Active)
             {
-                RaiseNotify("Temperature is already being monitored.");
+                RaiseFeedback("Temperature is already being monitored.");
                 return;
             }
 
             StartJob();
-            IsActive = true;
+            Active = true;
         }
 
         public override void Stop()
         {
-            if (!IsActive)
+            if (!Active)
             {
-                RaiseNotify("Temperature is not being monitored.");
+                RaiseFeedback("Temperature is not being monitored.");
                 return;
             }
 
             JobManager.RemoveJob(GetType().Name);
-            IsActive = false;
+            Active = false;
         }
 
         public void SaveChanges()
         {
-            settings.SaveMonitoringState(IsActive);
+            settings.SaveMonitoringState(Active);
             settings.SaveCPULimit(CPULimit);
             settings.SaveGPULimit(GPULimit);
         }

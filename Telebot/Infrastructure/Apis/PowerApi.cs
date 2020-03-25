@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Windows.Forms;
 using Telebot.Common;
-using Telebot.Native;
+using static Telebot.Native.user32;
 
 namespace Telebot.Infrastructure.Apis
 {
@@ -35,24 +35,24 @@ namespace Telebot.Infrastructure.Apis
 
         public void ShutdownWorkstation()
         {
-            var args = new ProcessStartInfo("shutdown", $"/s /t {timeout}")
+            var si = new ProcessStartInfo("shutdown", $"/s /t {timeout}")
             {
                 CreateNoWindow = true,
                 UseShellExecute = false
             };
 
-            Process.Start(args);
+            Process.Start(si);
         }
 
         public void RestartWorkstation()
         {
-            var args = new ProcessStartInfo("shutdown", "/r /t 0")
+            var si = new ProcessStartInfo("shutdown", "/r /t 0")
             {
                 CreateNoWindow = true,
                 UseShellExecute = false
             };
 
-            Process.Start(args);
+            Process.Start(si);
         }
 
         public void SleepWorkstation()
@@ -62,12 +62,12 @@ namespace Telebot.Infrastructure.Apis
 
         public void LockWorkstation()
         {
-            user32.LockWorkStation();
+            LockWorkStation();
         }
 
         public void LogoffWorkstation()
         {
-            user32.ExitWindowsEx(user32.EWX_LOGOFF, 0);
+            ExitWindowsEx(EWX_LOGOFF, 0);
         }
     }
 }

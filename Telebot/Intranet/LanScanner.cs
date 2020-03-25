@@ -18,7 +18,7 @@ namespace Telebot.Intranet
         {
             if (!File.Exists(wnetPath))
             {
-                RaiseNotify($"{wnetPath} does not exist.");
+                RaiseFeedback($"{wnetPath} does not exist.");
                 return;
             };
 
@@ -27,7 +27,7 @@ namespace Telebot.Intranet
 
             if (!File.Exists(scanPath))
             {
-                RaiseNotify($"{scanPath} does not exist.");
+                RaiseFeedback($"{scanPath} does not exist.");
                 return;
             };
 

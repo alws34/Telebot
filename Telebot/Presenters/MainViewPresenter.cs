@@ -39,24 +39,24 @@ namespace Telebot.Presenters
             this.client.Received += ClientReceived;
 
             inetScan.Discovered += LanDiscovered;
-            inetScan.Notify += Notify;
+            inetScan.Feedback += Notify;
 
             inetMon.Connected += LanConnected;
             inetMon.Disconnected += LanDisconnected;
-            inetMon.Notify += Notify;
+            inetMon.Feedback += Notify;
 
-            foreach (ICapture cap in caps)
+            foreach (IJob<CaptureArgs> cap in caps)
             {
                 var Update = GetHandler<CaptureArgs>(cap.GetType());
                 cap.Update += Update;
-                cap.Notify += Notify;
+                cap.Feedback += Notify;
             }
 
-            foreach (ITemp temp in temps)
+            foreach (IJob<TempArgs> temp in temps)
             {
                 var Update = GetHandler<TempArgs>(temp.GetType());
                 temp.Update += Update;
-                temp.Notify += Notify;
+                temp.Feedback += Notify;
             }
 
             AutoUpdater.AppCastURL = File.ReadAllText(".\\xmlurl.txt");

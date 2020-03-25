@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 
 namespace Telebot.Intranet
 {
-    public abstract class IInetBase : INotifyable
+    public abstract class IInetBase : IFeedback
     {
         protected const string wnetPath = ".\\wnet.exe";
 

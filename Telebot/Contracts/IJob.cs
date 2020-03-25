@@ -1,14 +1,22 @@
-﻿using System;
+﻿using Common;
+using System;
 using Telebot.Common;
 
 namespace Telebot.Contracts
 {
-    public interface IJob<T>
+    public abstract class IJob<T> : IFeedback
     {
-        event EventHandler<T> Update;
-        JobType JobType { get; }
-        bool IsActive { get; }
-        void Start();
-        void Stop();
+        public event EventHandler<T> Update;
+
+        protected void RaiseUpdate(T e)
+        {
+            Update?.Invoke(this, e);
+        }
+
+        public JobType JobType { get; protected set; }
+        public bool Active { get; protected set; }
+
+        public abstract void Start();
+        public abstract void Stop();
     }
 }

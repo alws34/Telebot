@@ -45,7 +45,7 @@ namespace Telebot.Temperature
             RaiseUpdate(null);
         }
 
-        public void Start(TimeSpan duration, TimeSpan interval)
+        public void Start(int duration_in_sec, int interval_in_sec)
         {
             if (Active)
             {
@@ -53,13 +53,11 @@ namespace Telebot.Temperature
                 return;
             }
 
-            timeStop = DateTime.Now.AddSeconds(duration.TotalSeconds);
-
-            int seconds = Convert.ToInt32(interval.TotalSeconds);
+            timeStop = DateTime.Now.AddSeconds(duration_in_sec);
 
             JobManager.AddJob(
                 Elapsed,
-                (s) => s.WithName(GetType().Name).ToRunNow().AndEvery(seconds).Seconds()
+                (s) => s.WithName(GetType().Name).ToRunNow().AndEvery(interval_in_sec).Seconds()
             );
 
             Active = true;

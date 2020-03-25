@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FluentScheduler;
+using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Telebot.Common;
@@ -24,7 +25,12 @@ namespace Telebot.Commands
 
             await resp(result);
 
-            Application.Restart();
+            JobManager.AddJob(
+                () =>
+                { 
+                    Application.Restart(); 
+                }, (s) => s.ToRunOnceIn(3).Seconds()
+            );
         }
     }
 }

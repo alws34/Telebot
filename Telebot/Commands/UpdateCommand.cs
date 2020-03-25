@@ -1,6 +1,7 @@
 ﻿using AutoUpdaterDotNET;
 using FluentScheduler;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Telebot.Models;
@@ -19,27 +20,29 @@ namespace Telebot.Commands
         {
             string state = req.Groups[1].Value;
 
-            if (state.Equals("chk"))
+            switch(state)
             {
-                AutoUpdater.Start();
-            }
-            else if (state.Equals("dl"))
-            {
-                var result = new Response
-                {
-                    ResultType = Common.ResultType.Text,
-                    Text = "Updating Telebot..."
-                };
+                case "chk":
+                    AutoUpdater.Start();
+                    break;
+                case "dl":
+                    var result = new Response
+                    {
+                        ResultType = Common.ResultType.Text,
+                        Text = "Updating Telebot..."
+                    };
 
-                await resp(result);
+                    await resp(result);
 
-                AutoUpdater.DownloadUpdate();
+                    AutoUpdater.DownloadUpdate();
 
-                JobManager.AddJob(() =>
-                {
-                    Application.Exit();
-                }, (s) => s.ToRunOnceIn(2).Seconds()
-                );
+                    JobManager.AddJob(
+                        () =>
+                        {
+                            Application.Exit();
+                        }, (s) => s.ToRunOnceIn(2).Seconds()
+                    );
+                    break;
             }
         }
     }

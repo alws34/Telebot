@@ -4,6 +4,6 @@ namespace Telebot.Contracts
 {
     public interface IScheduled
     {
-        void Start(TimeSpan duration, TimeSpan interval);
+        void Start(int duration_in_sec, int interval_in_sec);
     }
 }

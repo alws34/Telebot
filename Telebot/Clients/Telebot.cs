@@ -13,55 +13,9 @@ namespace Telebot.Clients
 {
     public class Telebot : IBotClient
     {
-        private readonly int id;
-
-        public Telebot(string token, int id) : base(token)
+        public Telebot(string token, int id) : base(token, id)
         {
-            this.id = id;
-
             OnMessage += BotMessageHandler;
-        }
-
-        public override async Task SendText(string text, long chatId = 0, int replyId = 0)
-        {
-            await SendTextMessageAsync(
-               chatId == 0 ? id : chatId,
-               text.TrimEnd(),
-               parseMode: ParseMode.Markdown,
-               replyToMessageId: replyId
-           );
-        }
-
-        public override async Task SendPic(Stream content, long chatId = 0, int replyId = 0)
-        {
-            var raw = new InputOnlineFile(content, "preview.jpg");
-
-            await SendDocumentAsync(
-                chatId == 0 ? id : chatId,
-                raw,
-                parseMode: ParseMode.Markdown,
-                replyToMessageId: replyId,
-                caption: "From *Telebot*",
-                thumb: raw as InputMedia
-            );
-
-            content.Close();
-        }
-
-        public override async Task SendDoc(Stream content, long chatId = 0, int replyId = 0)
-        {
-            var raw = new InputOnlineFile(content, (content as FileStream).Name);
-
-            await SendDocumentAsync(
-                chatId == 0 ? id : chatId,
-                raw,
-                parseMode: ParseMode.Markdown,
-                replyToMessageId: replyId,
-                caption: "From *Telebot*",
-                thumb: raw as InputMedia
-            );
-
-            content.Close();
         }
 
         private async void BotMessageHandler(object sender, MessageEventArgs e)

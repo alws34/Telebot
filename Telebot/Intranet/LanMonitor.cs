@@ -24,7 +24,7 @@ namespace Telebot.Intranet
                 wnetPath, $"/sxml {scanPath}"
             );
 
-            RaiseFeedback("Listening to new devices on network...");
+            RaiseFeedback("Network monitor is now listening...");
 
             List<Host> prevScan = new List<Host>();
             List<Host> lastScan = new List<Host>();
@@ -65,7 +65,7 @@ namespace Telebot.Intranet
                 Thread.Sleep(3000);
             }
 
-            RaiseFeedback("Lan monitoring disconnected.");
+            RaiseFeedback("Network monitoring disconnected.");
         }
 
         private List<Host> GetConnected(List<Host> prevScan, List<Host> lastScan)
@@ -82,7 +82,7 @@ namespace Telebot.Intranet
         {
             if (!IsActive)
             {
-                RaiseFeedback("Lan monitor is already disconnected.");
+                RaiseFeedback("The network is not being monitored.");
                 return;
             }
 
@@ -99,14 +99,15 @@ namespace Telebot.Intranet
         {
             if (IsActive)
             {
-                RaiseFeedback("Lan monitoring is already listening...");
+                RaiseFeedback("The network is already being monitored.");
                 return;
             }
 
             if (!worker.IsBusy)
+            {
                 worker.RunWorkerAsync();
-
-            IsActive = true;
+                IsActive = true;
+            }
         }
     }
 }

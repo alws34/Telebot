@@ -2,6 +2,9 @@
 using System.IO;
 using System.Threading.Tasks;
 using Telegram.Bot;
+using Telegram.Bot.Types;
+using Telegram.Bot.Types.Enums;
+using Telegram.Bot.Types.InputFiles;
 
 namespace Telebot.Clients
 {
@@ -14,9 +17,11 @@ namespace Telebot.Clients
             Notification?.Invoke(this, e);
         }
 
-        public IBotClient(string token) : base(token)
-        {
+        protected readonly int id;
 
+        public IBotClient(string token, int id) : base(token)
+        {
+            this.id = id;
         }
 
         public bool IsConnected => IsReceiving;
@@ -31,8 +36,46 @@ namespace Telebot.Clients
             StopReceiving();
         }
 
-        public abstract Task SendText(string text, long chatId = 0, int replyId = 0);
-        public abstract Task SendPic(Stream raw, long chatId = 0, int replyId = 0);
-        public abstract Task SendDoc(Stream raw, long chatId = 0, int replyId = 0);
+        public async Task SendText(string text, long chatId = 0, int replyId = 0)
+        {
+            await SendTextMessageAsync(
+               chatId == 0 ? id : chatId,
+               text.TrimEnd(),
+               parseMode: ParseMode.Markdown,
+               replyToMessageId: replyId
+           );
+        }
+
+        public async Task SendPic(Stream content, long chatId = 0, int replyId = 0)
+        {
+            var raw = new InputOnlineFile(content, "preview.jpg");
+
+            await SendDocumentAsync(
+                chatId == 0 ? id : chatId,
+                raw,
+                parseMode: ParseMode.Markdown,
+                replyToMessageId: replyId,
+                caption: "From *Telebot*",
+                thumb: raw as InputMedia
+            );
+
+            content.Close();
+        }
+
+        public async Task SendDoc(Stream content, long chatId = 0, int replyId = 0)
+        {
+            var raw = new InputOnlineFile(content, (content as FileStream).Name);
+
+            await SendDocumentAsync(
+                chatId == 0 ? id : chatId,
+                raw,
+                parseMode: ParseMode.Markdown,
+                replyToMessageId: replyId,
+                caption: "From *Telebot*",
+                thumb: raw as InputMedia
+            );
+
+            content.Close();
+        }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Telebot.Contracts
+﻿namespace Telebot.Contracts
 {
     public interface IScheduled
     {

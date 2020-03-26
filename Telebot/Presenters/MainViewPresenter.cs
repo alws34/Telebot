@@ -36,13 +36,13 @@ namespace Telebot.Presenters
             this.view.FormClosed += viewClosed;
 
             this.client = client;
-            this.client.Received += ClientReceived;
+            this.client.Notification += ClientNotification;
 
-            inetScan.Discovered += LanDiscovered;
+            inetScan.Discovered += Discovered;
             inetScan.Feedback += Notify;
 
-            inetMon.Connected += LanConnected;
-            inetMon.Disconnected += LanDisconnected;
+            inetMon.Connected += Connected;
+            inetMon.Disconnected += Disconnected;
             inetMon.Feedback += Notify;
 
             foreach (IJob<CaptureArgs> cap in caps)
@@ -63,10 +63,10 @@ namespace Telebot.Presenters
             AutoUpdater.CheckForUpdateEvent += OnCheckUpdate;
         }
 
-        private void ClientReceived(object sender, ReceivedArgs e)
+        private void ClientNotification(object sender, NotificationArgs e)
         {
             view.TrayIcon.ShowBalloonTip(
-               1000, view.Text, e.MessageText, ToolTipIcon.Info
+               1000, view.Text, e.NotificationText, ToolTipIcon.Info
            );
         }
 
@@ -115,7 +115,7 @@ namespace Telebot.Presenters
             });
         }
 
-        private async void LanDisconnected(object sender, HostsArg e)
+        private async void Disconnected(object sender, HostsArg e)
         {
             string text = "Disconnected:\n\n";
 
@@ -128,7 +128,7 @@ namespace Telebot.Presenters
             await client.SendText(text);
         }
 
-        private async void LanConnected(object sender, HostsArg e)
+        private async void Connected(object sender, HostsArg e)
         {
             string text = "Connected:\n\n";
 
@@ -141,9 +141,9 @@ namespace Telebot.Presenters
             await client.SendText(text);
         }
 
-        private async void LanDiscovered(object sender, HostsArg e)
+        private async void Discovered(object sender, HostsArg e)
         {
-            string text = "Connected hosts on the network:\n\n";
+            string text = "Discovered:\n\n";
 
             foreach (Host host in e.Hosts)
             {
@@ -154,7 +154,7 @@ namespace Telebot.Presenters
             await client.SendText(text);
         }
 
-        private async void Notify(object sender, NotifyArg e)
+        private async void Notify(object sender, FeedbackArgs e)
         {
             await client.SendText(e.Text);
         }
@@ -192,17 +192,17 @@ namespace Telebot.Presenters
         {
             if (args != null)
             {
+                string text = "";
+
                 switch (args.IsUpdateAvailable)
                 {
                     case true:
-                        string text1 = "";
-                        text1 += "A new version of Telebot is available!\n";
-                        text1 += "run /update dl to update.";
-
-                        await client.SendText(text1);
+                        text += "A new version of Telebot is available!\n";
+                        text += "run /update dl to update.";
+                        await client.SendText(text);
                         break;
                         //case false:
-                        //    string text = "You are running the latest version of Telebot.";
+                        //    text += "You are running the latest version of Telebot.";
                         //    await client.SendText(text);
                         //    break;
                 }

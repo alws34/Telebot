@@ -1,11 +1,9 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Telebot.Commands;
 using Telebot.Common;
 using Telebot.Models;
-using Telegram.Bot;
 using Telegram.Bot.Args;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
@@ -13,13 +11,9 @@ using Telegram.Bot.Types.InputFiles;
 
 namespace Telebot.Clients
 {
-    public class Telebot : TelegramBotClient, IBotClient
+    public class Telebot : IBotClient
     {
         private readonly int id;
-
-        public bool IsConnected => IsReceiving;
-
-        public event EventHandler<ReceivedArgs> Received;
 
         public Telebot(string token, int id) : base(token)
         {
@@ -28,7 +22,7 @@ namespace Telebot.Clients
             OnMessage += BotMessageHandler;
         }
 
-        public async Task SendText(string text, long chatId = 0, int replyId = 0)
+        public override async Task SendText(string text, long chatId = 0, int replyId = 0)
         {
             await SendTextMessageAsync(
                chatId == 0 ? id : chatId,
@@ -38,7 +32,7 @@ namespace Telebot.Clients
            );
         }
 
-        public async Task SendPic(Stream content, long chatId = 0, int replyId = 0)
+        public override async Task SendPic(Stream content, long chatId = 0, int replyId = 0)
         {
             var raw = new InputOnlineFile(content, "preview.jpg");
 
@@ -54,7 +48,7 @@ namespace Telebot.Clients
             content.Close();
         }
 
-        public async Task SendDoc(Stream content, long chatId = 0, int replyId = 0)
+        public override async Task SendDoc(Stream content, long chatId = 0, int replyId = 0)
         {
             var raw = new InputOnlineFile(content, (content as FileStream).Name);
 
@@ -106,12 +100,12 @@ namespace Telebot.Clients
 
             string text = $"Received {pattern} from {e.Message.From.Username}.";
 
-            var data = new ReceivedArgs
+            var data = new NotificationArgs
             {
-                MessageText = text
+                NotificationText = text
             };
 
-            RaiseReceived(data);
+            RaiseNotification(data);
 
             bool success = Program.CommandFactory.TryGetEntity(
                 x => Regex.IsMatch(pattern, $"^{x.Pattern}$"),
@@ -133,21 +127,6 @@ namespace Telebot.Clients
             }
 
             await SendText("Undefined command. For commands list, type */help*.", replyId: e.Message.MessageId);
-        }
-
-        private void RaiseReceived(ReceivedArgs e)
-        {
-            Received?.Invoke(this, e);
-        }
-
-        public void Connect()
-        {
-            StartReceiving();
-        }
-
-        public void Disconnect()
-        {
-            StopReceiving();
         }
     }
 }

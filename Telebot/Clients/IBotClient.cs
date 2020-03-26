@@ -5,17 +5,34 @@ using Telegram.Bot;
 
 namespace Telebot.Clients
 {
-    public interface IBotClient : ITelegramBotClient
+    public abstract class IBotClient : TelegramBotClient
     {
-        event EventHandler<ReceivedArgs> Received;
+        public event EventHandler<NotificationArgs> Notification;
 
-        bool IsConnected { get; }
+        protected void RaiseNotification(NotificationArgs e)
+        {
+            Notification?.Invoke(this, e);
+        }
 
-        void Connect();
-        void Disconnect();
+        public IBotClient(string token) : base(token)
+        {
 
-        Task SendText(string text, long chatId = 0, int replyId = 0);
-        Task SendPic(Stream raw, long chatId = 0, int replyId = 0);
-        Task SendDoc(Stream raw, long chatId = 0, int replyId = 0);
+        }
+
+        public bool IsConnected => IsReceiving;
+
+        public void Connect()
+        {
+            StartReceiving();
+        }
+
+        public void Disconnect()
+        {
+            StopReceiving();
+        }
+
+        public abstract Task SendText(string text, long chatId = 0, int replyId = 0);
+        public abstract Task SendPic(Stream raw, long chatId = 0, int replyId = 0);
+        public abstract Task SendDoc(Stream raw, long chatId = 0, int replyId = 0);
     }
 }

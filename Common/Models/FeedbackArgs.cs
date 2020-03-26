@@ -2,7 +2,7 @@
 
 namespace Common.Models
 {
-    public class NotifyArg : EventArgs
+    public class FeedbackArgs : EventArgs
     {
         public string Text { get; set; }
     }

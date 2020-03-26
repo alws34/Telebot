@@ -53,7 +53,6 @@ namespace Telebot.Capture
                 Elapsed,
                 (s) => s.WithName(GetType().Name).ToRunNow().AndEvery(interval_in_sec).Seconds()
             );
-
             Active = true;
         }
 
@@ -66,7 +65,6 @@ namespace Telebot.Capture
             }
 
             JobManager.RemoveJob(GetType().Name);
-
             Active = false;
         }
 

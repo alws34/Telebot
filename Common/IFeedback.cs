@@ -5,13 +5,13 @@ namespace Common
 {
     public abstract class IFeedback
     {
-        public event EventHandler<NotifyArg> Feedback;
+        public event EventHandler<FeedbackArgs> Feedback;
 
-        protected void RaiseFeedback(string fb)
+        protected void RaiseFeedback(string text)
         {
-            var arg = new NotifyArg
+            var arg = new FeedbackArgs
             {
-                Text = fb
+                Text = text
             };
 
             Feedback?.Invoke(this, arg);

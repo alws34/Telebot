@@ -20,7 +20,7 @@ namespace Telebot.Commands
             var result = new Response
             {
                 ResultType = ResultType.Text,
-                Text = "Closing Telebot..."
+                Text = "Telebot is closing..."
             };
 
             await resp(result);

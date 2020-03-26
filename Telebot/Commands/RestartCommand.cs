@@ -25,11 +25,10 @@ namespace Telebot.Commands
 
             await resp(result);
 
-            JobManager.AddJob(
-                () =>
-                { 
-                    Application.Restart(); 
-                }, (s) => s.ToRunOnceIn(3).Seconds()
+            JobManager.AddJob(() =>
+            {
+                Application.Restart();
+            }, (s) => s.ToRunOnceIn(2).Seconds()
             );
         }
     }

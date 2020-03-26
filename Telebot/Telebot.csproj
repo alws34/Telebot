@@ -96,7 +96,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Clients\ReceivedArgs.cs" />
+    <Compile Include="Clients\NotificationArgs.cs" />
     <Compile Include="Commands\BrightCommand.cs" />
     <Compile Include="Commands\ExitCommand.cs" />
     <Compile Include="Commands\LanCommand.cs" />

@@ -13,7 +13,7 @@ namespace Telebot.Infrastructure.Apis
             Action = SetDisplayInState;
         }
 
-        public void SetDisplayInState()
+        private void SetDisplayInState()
         {
             PostMessage(HWND_BROADCAST, WM_SYSCOMMAND, SC_MONITORPOWER, (int)state);
         }

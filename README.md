@@ -10,7 +10,7 @@ Token = <Bot_Token>
 AdminId = <User_ID> // The telegram user who will command the bot.
 ```
 
-- Necessary files will be copied to bin directory when project has been built.
+- Necessary files will be copied to bin directory upon project build.
 
 # Application architecture
 

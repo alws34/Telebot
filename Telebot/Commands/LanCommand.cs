@@ -13,7 +13,8 @@ namespace Telebot.Commands
         public LanCommand()
         {
             Pattern = "/lan (mon|moff|scan)";
-            Description = "Scan or listen for connected/disconnected devices on the LAN.";
+            Description = "Scan or listen for devices on the LAN.";
+            OSVersion = new Version(5, 0);
 
             methods = new Dictionary<string, Action>
             {

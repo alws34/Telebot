@@ -12,6 +12,7 @@ namespace Telebot.Commands
         {
             Pattern = "/help";
             Description = "List of available commands.";
+            OSVersion = new Version(5, 0);
         }
 
         public async override void Execute(Request req, Func<Response, Task> resp)

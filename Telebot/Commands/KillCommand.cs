@@ -6,12 +6,13 @@ using Telebot.Models;
 
 namespace Telebot.Commands
 {
-    public class KillTaskCommand : ICommand
+    public class KillCommand : ICommand
     {
-        public KillTaskCommand()
+        public KillCommand()
         {
-            Pattern = "/killtask (\\d+)";
+            Pattern = "/kill (\\d+)";
             Description = "Kill a task with the specified pid.";
+            OSVersion = new Version(5, 0);
         }
 
         public async override void Execute(Request req, Func<Response, Task> resp)

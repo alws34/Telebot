@@ -13,6 +13,7 @@ namespace Telebot.Commands
         {
             Pattern = "/restart";
             Description = "Restart Telebot.";
+            OSVersion = new Version(5, 0);
         }
 
         public async override void Execute(Request req, Func<Response, Task> resp)

@@ -32,6 +32,8 @@ namespace Telebot
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            DotNetEnv.Env.Load();
+
             Settings = new SettingsFactory();
 
             string token = Settings.Telegram.GetBotToken();
@@ -99,6 +101,8 @@ namespace Telebot
             Settings.Main.CommitChanges();
 
             Settings.Main.WriteChanges();
+
+            Sdk64.UninitSDK();
         }
 
         private static CommandFactory BuildCommandFactory()
@@ -131,7 +135,7 @@ namespace Telebot
                 new ShutdownCommand(),
                 new AlertCommand(),
                 new LanCommand(),
-                new KillTaskCommand(),
+                new KillCommand(),
                 new SpecCommand(),
                 new VolCommand(),
                 new RestartCommand(),
@@ -140,7 +144,12 @@ namespace Telebot
                 new HelpCommand()
             };
 
-            return new CommandFactory(commands);
+            var osver = Environment.OSVersion.Version;
+
+            // we select only compatible commands with current windows version.
+            var compatibleCommands = commands.Where(c => c.OSVersion < osver);
+
+            return new CommandFactory(compatibleCommands);
         }
     }
 }

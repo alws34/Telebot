@@ -15,6 +15,7 @@ namespace Telebot.Commands
         {
             Pattern = "/apps (fg|all)";
             Description = "List of active applications.";
+            OSVersion = new Version(5, 0);
 
             types = new Dictionary<string, AppsType>
             {

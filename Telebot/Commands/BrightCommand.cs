@@ -12,6 +12,7 @@ namespace Telebot.Commands
         {
             Pattern = "/bright (\\d{1,3})";
             Description = "Adjust workstation's brightness.";
+            OSVersion = new Version(6, 0);
         }
 
         public async override void Execute(Request req, Func<Response, Task> resp)

@@ -13,6 +13,7 @@ namespace Telebot.Commands
         {
             Pattern = "/update (chk|dl)";
             Description = "Check or download an update.";
+            OSVersion = new Version(5, 0);
         }
 
         public async override void Execute(Request req, Func<Response, Task> resp)

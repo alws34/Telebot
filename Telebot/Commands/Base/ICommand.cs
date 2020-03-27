@@ -12,6 +12,8 @@ namespace Telebot.Commands
 
         public abstract void Execute(Request req, Func<Response, Task> resp);
 
+        public Version OSVersion { get; protected set; }
+
         public override string ToString()
         {
             return $"*{Pattern}* - {Description}";

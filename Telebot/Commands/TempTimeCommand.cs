@@ -15,6 +15,7 @@ namespace Telebot.Commands
         {
             Pattern = "/temptime (off|(\\d+) (\\d+))";
             Description = "Schedules temperature monitor.";
+            OSVersion = new Version(5, 1);
 
             _job = Program.TempFactory.FindEntity(
                 x => x.JobType == JobType.Scheduled

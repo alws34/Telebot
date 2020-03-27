@@ -14,6 +14,7 @@ namespace Telebot.Commands
         {
             Pattern = "/capture";
             Description = "Get a screenshot of the workstation.";
+            OSVersion = new Version(5, 0);
         }
 
         public override void Execute(Request req, Func<Response, Task> resp)

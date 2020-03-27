@@ -16,6 +16,7 @@ namespace Telebot.Commands
         {
             Pattern = "/screen (on|off)";
             Description = "Turn off or on the monitor.";
+            OSVersion = new Version(5, 0);
 
             states = new Dictionary<string, DisplayState>()
             {

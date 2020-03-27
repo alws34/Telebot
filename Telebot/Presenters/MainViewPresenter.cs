@@ -3,7 +3,6 @@ using Common.Models;
 using FluentScheduler;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -59,7 +58,7 @@ namespace Telebot.Presenters
                 temp.Feedback += Notify;
             }
 
-            AutoUpdater.AppCastURL = File.ReadAllText(".\\xmlurl.txt");
+            AutoUpdater.AppCastURL = DotNetEnv.Env.GetString("updateUrl");
             AutoUpdater.CheckForUpdateEvent += OnCheckUpdate;
         }
 

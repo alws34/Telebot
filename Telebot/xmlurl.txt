@@ -1,1 +1,0 @@
-https://raw.githubusercontent.com/jdahan91/Telebot/master/Telebot/Update/updateinfo.xml

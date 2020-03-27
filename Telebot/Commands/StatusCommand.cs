@@ -16,6 +16,7 @@ namespace Telebot.Commands
         {
             Pattern = "/status";
             Description = "Receive workstation information.";
+            OSVersion = new Version(5, 0);
 
             this.statuses = statuses;
         }

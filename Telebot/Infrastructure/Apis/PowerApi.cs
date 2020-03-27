@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
-using System.Windows.Forms;
 using Telebot.Common;
+using static Telebot.Native.powrprof;
 using static Telebot.Native.user32;
 
 namespace Telebot.Infrastructure.Apis
@@ -57,7 +57,7 @@ namespace Telebot.Infrastructure.Apis
 
         public void SleepWorkstation()
         {
-            Application.SetSuspendState(PowerState.Suspend, false, false);
+            SetSuspendState(false, false, false);
         }
 
         public void LockWorkstation()

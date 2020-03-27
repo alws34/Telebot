@@ -14,6 +14,7 @@ namespace Telebot.Commands
         {
             Pattern = "/capapp (\\d+)";
             Description = "Get a screenshot of the specified app (by pid).";
+            OSVersion = new Version(5, 0);
         }
 
         public override void Execute(Request req, Func<Response, Task> resp)

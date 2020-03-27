@@ -12,6 +12,7 @@ namespace Telebot.Commands
         {
             Pattern = "/shutdown (\\d+)";
             Description = "Schedule the workstation to shutdown.";
+            OSVersion = new Version(5, 1);
         }
 
         public async override void Execute(Request req, Func<Response, Task> resp)

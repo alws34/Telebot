@@ -13,6 +13,7 @@ namespace Telebot.Commands
         {
             Pattern = "/spec";
             Description = "Get full hardware information.";
+            OSVersion = new Version(5, 1);
         }
 
         public async override void Execute(Request req, Func<Response, Task> resp)

@@ -5,11 +5,11 @@ using static Telebot.Native.user32;
 
 namespace Telebot.Infrastructure.Apis
 {
-    public class WndBmpApi : IApi<Bitmap>
+    public class WindowApi : IApi<Bitmap>
     {
         private readonly IntPtr hWnd;
 
-        public WndBmpApi(IntPtr hWnd)
+        public WindowApi(IntPtr hWnd)
         {
             this.hWnd = hWnd;
 

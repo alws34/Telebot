@@ -20,8 +20,8 @@ namespace Telebot.Infrastructure.Apis
                 CreateNoWindow = true,
                 UseShellExecute = true,
                 WindowStyle = ProcessWindowStyle.Hidden,
-                FileName = @".\SetVol.exe",
-                Arguments = $"{level}"
+                FileName = @".\sndvol64.exe",
+                Arguments = $"/SetVolume Speakers {level}"
             };
 
             Process.Start(si);

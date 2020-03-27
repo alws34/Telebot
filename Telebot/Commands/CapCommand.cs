@@ -19,7 +19,7 @@ namespace Telebot.Commands
 
         public override void Execute(Request req, Func<Response, Task> resp)
         {
-            var api = new DeskBmpApi();
+            var api = new DesktopApi();
 
             api.Invoke(async (screens) =>
             {

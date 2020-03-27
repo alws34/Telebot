@@ -23,7 +23,7 @@ namespace Telebot.Capture
                 return;
             }
 
-            var api = new DeskBmpApi();
+            var api = new DesktopApi();
 
             api.Invoke((screens) =>
             {

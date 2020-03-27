@@ -246,7 +246,7 @@
     <Compile Include="Extensions\PrimitiveExtensions.cs" />
     <Compile Include="Common\ResultType.cs" />
     <Compile Include="Common\AppsType.cs" />
-    <Compile Include="Infrastructure\Apis\DeskBmpApi.cs" />
+    <Compile Include="Infrastructure\Apis\DesktopApi.cs" />
     <Compile Include="Infrastructure\Apis\DisplayApi.cs" />
     <Compile Include="Infrastructure\Apis\IApi.cs" />
     <Compile Include="Infrastructure\Apis\VolApi.cs" />
@@ -278,7 +278,7 @@
     <Compile Include="Commands\TempTimeCommand.cs" />
     <Compile Include="Commands\VolCommand.cs" />
     <Compile Include="Commands\Status\IStatus.cs" />
-    <Compile Include="Infrastructure\Apis\WndBmpApi.cs" />
+    <Compile Include="Infrastructure\Apis\WindowApi.cs" />
     <Compile Include="Infrastructure\Apis\PowerApi.cs" />
     <Compile Include="Infrastructure\Apis\DimApi.cs" />
     <Compile Include="Infrastructure\Apis\AppsApi.cs" />
@@ -350,7 +350,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
-    <Content Include="SetVol.exe">
+    <Content Include="sndvol64.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="wnet.exe">

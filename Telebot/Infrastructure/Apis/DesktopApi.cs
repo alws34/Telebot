@@ -4,9 +4,9 @@ using System.Windows.Forms;
 
 namespace Telebot.Infrastructure.Apis
 {
-    public class DeskBmpApi : IApi<IEnumerable<Bitmap>>
+    public class DesktopApi : IApi<IEnumerable<Bitmap>>
     {
-        public DeskBmpApi()
+        public DesktopApi()
         {
             Func = GetDesktopBitmap;
         }

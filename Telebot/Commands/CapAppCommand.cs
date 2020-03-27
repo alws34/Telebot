@@ -23,7 +23,7 @@ namespace Telebot.Commands
 
             var hWnd = Process.GetProcessById(pid).MainWindowHandle;
 
-            var api = new WndBmpApi(hWnd);
+            var api = new WindowApi(hWnd);
 
             api.Invoke(async (wnd) =>
             {

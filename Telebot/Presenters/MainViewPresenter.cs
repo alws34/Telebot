@@ -3,6 +3,7 @@ using Common.Models;
 using FluentScheduler;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -58,7 +59,7 @@ namespace Telebot.Presenters
                 temp.Feedback += Notify;
             }
 
-            AutoUpdater.AppCastURL = DotNetEnv.Env.GetString("updateUrl");
+            AutoUpdater.AppCastURL = ConfigurationManager.AppSettings["updateUrl"];
             AutoUpdater.CheckForUpdateEvent += OnCheckUpdate;
         }
 

@@ -32,8 +32,6 @@ namespace Telebot
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            DotNetEnv.Env.Load();
-
             Settings = new SettingsFactory();
 
             string token = Settings.Telegram.GetBotToken();

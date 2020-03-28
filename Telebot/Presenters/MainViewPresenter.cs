@@ -36,34 +36,34 @@ namespace Telebot.Presenters
             this.view.FormClosed += viewClosed;
 
             this.client = client;
-            this.client.Notification += ClientNotification;
+            this.client.Notification += OnNotification;
 
             inetScan.Discovered += Discovered;
-            inetScan.Feedback += Notify;
+            inetScan.Feedback += OnFeedback;
 
             inetMon.Connected += Connected;
             inetMon.Disconnected += Disconnected;
-            inetMon.Feedback += Notify;
+            inetMon.Feedback += OnFeedback;
 
             foreach (IJob<CaptureArgs> cap in caps)
             {
                 var Update = GetHandler<CaptureArgs>(cap.GetType());
                 cap.Update += Update;
-                cap.Feedback += Notify;
+                cap.Feedback += OnFeedback;
             }
 
             foreach (IJob<TempArgs> temp in temps)
             {
                 var Update = GetHandler<TempArgs>(temp.GetType());
                 temp.Update += Update;
-                temp.Feedback += Notify;
+                temp.Feedback += OnFeedback;
             }
 
             AutoUpdater.AppCastURL = ConfigurationManager.AppSettings["updateUrl"];
             AutoUpdater.CheckForUpdateEvent += OnCheckUpdate;
         }
 
-        private void ClientNotification(object sender, NotificationArgs e)
+        private void OnNotification(object sender, NotificationArgs e)
         {
             view.TrayIcon.ShowBalloonTip(
                1000, view.Text, e.NotificationText, ToolTipIcon.Info
@@ -154,7 +154,7 @@ namespace Telebot.Presenters
             await client.SendText(text);
         }
 
-        private async void Notify(object sender, FeedbackArgs e)
+        private async void OnFeedback(object sender, FeedbackArgs e)
         {
             await client.SendText(e.Text);
         }

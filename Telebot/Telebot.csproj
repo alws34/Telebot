@@ -104,7 +104,6 @@
     <Compile Include="Commands\Status\WanAddrStatus.cs" />
     <Compile Include="Commands\UpdateCommand.cs" />
     <Compile Include="Common\JobType.cs" />
-    <Compile Include="Common\OSVersion.cs" />
     <Compile Include="Common\PowerType.cs" />
     <Compile Include="Contracts\IJob.cs" />
     <Compile Include="Contracts\IScheduled.cs" />

@@ -9,6 +9,8 @@ namespace Telebot.Intranet
 
         public LanScanner()
         {
+            Jobtype = Common.JobType.Scanner;
+
             si = new ProcessStartInfo(
                wnetPath, $"/sxml {scanPath}"
             );

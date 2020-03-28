@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
+using Telebot.Common;
 using Telebot.Jobs;
 
 namespace Telebot.Intranet
@@ -8,6 +9,8 @@ namespace Telebot.Intranet
     public abstract class IInetBase : IFeedback
     {
         protected const string wnetPath = ".\\wnet.exe";
+
+        public JobType Jobtype { get; protected set; }
 
         protected List<Host> ReadHosts(string path)
         {

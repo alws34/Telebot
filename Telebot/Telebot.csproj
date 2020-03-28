@@ -110,6 +110,7 @@
     <Compile Include="Common\PowerType.cs" />
     <Compile Include="Jobs\IFeedback.cs" />
     <Compile Include="Jobs\IJob.cs" />
+    <Compile Include="Jobs\Intranet\InetFactory.cs" />
     <Compile Include="Jobs\IScheduled.cs" />
     <Compile Include="Extensions\PrimitiveExtensions.cs" />
     <Compile Include="Common\ResultType.cs" />

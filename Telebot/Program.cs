@@ -10,6 +10,7 @@ using Telebot.Commands.Factories;
 using Telebot.Commands.Status;
 using Telebot.Intranet;
 using Telebot.Jobs;
+using Telebot.Jobs.Intranet;
 using Telebot.Presenters;
 using Telebot.Settings;
 using Telebot.Temperature;
@@ -20,8 +21,7 @@ namespace Telebot
     static class Program
     {
         public static SettingsFactory Settings { get; private set; }
-        public static IINetMonitor LanMonitor { get; private set; }
-        public static IInetScanner LanScanner { get; private set; }
+        public static IFactory<IInetBase> InetFactory { get; private set; }
         public static IFactory<ICommand> CommandFactory { get; private set; }
         public static IFactory<IJob<TempArgs>> TempFactory { get; private set; }
         public static IFactory<IJob<CaptureArgs>> CaptureFactory { get; private set; }
@@ -49,27 +49,25 @@ namespace Telebot
                 return;
             }
 
+            InetFactory = new InetFactory();
             TempFactory = new TempFactory();
             CaptureFactory = new CaptureFactory();
 
-            LanScanner = new LanScanner();
-            LanMonitor = new LanMonitor();
-
             CommandFactory = BuildCommandFactory();
 
-            MainView view = new MainView();
-            IBotClient client = new Clients.Telebot(token, id);
+            MainView mainView = new MainView();
+            IBotClient botClient = new Clients.Telebot(token, id);
 
-            var captures = CaptureFactory.GetAllEntities();
-            var temperatures = TempFactory.GetAllEntities();
+            var inetJobs = InetFactory.GetAllEntities();
+            var captureJobs = CaptureFactory.GetAllEntities();
+            var temperatureJobs = TempFactory.GetAllEntities();
 
             var presenter = new MainViewPresenter(
-                view,
-                client,
-                LanScanner,
-                LanMonitor,
-                captures,
-                temperatures
+                mainView,
+                botClient,
+                inetJobs,
+                captureJobs,
+                temperatureJobs
             );
 
             JobManager.AddJob(
@@ -81,7 +79,7 @@ namespace Telebot
 
             Application.ApplicationExit += ApplicationExit;
 
-            Application.Run(view);
+            Application.Run(mainView);
         }
 
         private static void ApplicationExit(object sender, EventArgs e)

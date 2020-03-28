@@ -3,6 +3,8 @@
     public enum JobType
     {
         Fixed,
-        Scheduled
+        Scheduled,
+        Monitor,
+        Scanner
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Telebot.Common;
+using Telebot.Intranet;
 using Telebot.Models;
 
 namespace Telebot.Commands
@@ -16,11 +17,19 @@ namespace Telebot.Commands
             Description = "Scan or listen for devices on the LAN.";
             OSVersion = new Version(5, 0);
 
+            var scanner = Program.InetFactory.FindEntity(
+                x => x.Jobtype == JobType.Scanner
+            ) as IInetScanner;
+
+            var monitor = Program.InetFactory.FindEntity(
+                x => x.Jobtype == JobType.Monitor
+            ) as IINetMonitor;
+
             methods = new Dictionary<string, Action>
             {
-                { "mon", Program.LanMonitor.Listen },
-                { "moff", Program.LanMonitor.Disconnect },
-                { "scan", Program.LanScanner.Discover }
+                { "mon", monitor.Listen },
+                { "moff", monitor.Disconnect },
+                { "scan", scanner.Discover }
             };
         }
 

@@ -25,10 +25,9 @@ namespace Telebot.Presenters
         public MainViewPresenter(
             IMainView view,
             IBotClient client,
-            IInetScanner inetScan,
-            IINetMonitor inetMon,
-            IEnumerable<IJob<CaptureArgs>> caps,
-            IEnumerable<IJob<TempArgs>> temps
+            IEnumerable<IInetBase> inetJobs,
+            IEnumerable<IJob<CaptureArgs>> captureJobs,
+            IEnumerable<IJob<TempArgs>> temperatureJobs
         )
         {
             this.view = view;
@@ -38,21 +37,32 @@ namespace Telebot.Presenters
             this.client = client;
             this.client.Notification += OnNotification;
 
-            inetScan.Discovered += Discovered;
-
-            inetMon.Connected += Connected;
-            inetMon.Disconnected += Disconnected;
-
-            foreach (IJob<CaptureArgs> cap in caps)
+            foreach (IInetBase inetJob in inetJobs)
             {
-                var Update = GetHandler<CaptureArgs>(cap.GetType());
-                cap.Update += Update;
+                switch (inetJob.Jobtype)
+                {
+                    case Common.JobType.Monitor:
+                        var monitorJob = ((IINetMonitor)inetJob);
+                        monitorJob.Disconnected += Disconnected;
+                        monitorJob.Connected += Connected;
+                        break;
+                    case Common.JobType.Scanner:
+                        var scannerJob = ((IInetScanner)inetJob);
+                        scannerJob.Discovered += Discovered;
+                        break;
+                }
             }
 
-            foreach (IJob<TempArgs> temp in temps)
+            foreach (IJob<CaptureArgs> captureJob in captureJobs)
             {
-                var Update = GetHandler<TempArgs>(temp.GetType());
-                temp.Update += Update;
+                var Update = GetHandler<CaptureArgs>(captureJob.GetType());
+                captureJob.Update += Update;
+            }
+
+            foreach (IJob<TempArgs> temperatureJob in temperatureJobs)
+            {
+                var Update = GetHandler<TempArgs>(temperatureJob.GetType());
+                temperatureJob.Update += Update;
             }
 
             MessageHub.MessageHub.Instance.Subscribe<Feedback>(OnFeedback);

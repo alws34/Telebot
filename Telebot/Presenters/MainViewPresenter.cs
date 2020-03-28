@@ -1,5 +1,4 @@
 ﻿using AutoUpdaterDotNET;
-using Common.Models;
 using FluentScheduler;
 using System;
 using System.Collections.Generic;
@@ -9,9 +8,10 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Telebot.Capture;
 using Telebot.Clients;
-using Telebot.Contracts;
 using Telebot.Extensions;
 using Telebot.Intranet;
+using Telebot.Jobs;
+using Telebot.Models;
 using Telebot.Temperature;
 using Telebot.Views;
 
@@ -39,25 +39,23 @@ namespace Telebot.Presenters
             this.client.Notification += OnNotification;
 
             inetScan.Discovered += Discovered;
-            inetScan.Feedback += OnFeedback;
 
             inetMon.Connected += Connected;
             inetMon.Disconnected += Disconnected;
-            inetMon.Feedback += OnFeedback;
 
             foreach (IJob<CaptureArgs> cap in caps)
             {
                 var Update = GetHandler<CaptureArgs>(cap.GetType());
                 cap.Update += Update;
-                cap.Feedback += OnFeedback;
             }
 
             foreach (IJob<TempArgs> temp in temps)
             {
                 var Update = GetHandler<TempArgs>(temp.GetType());
                 temp.Update += Update;
-                temp.Feedback += OnFeedback;
             }
+
+            MessageHub.MessageHub.Instance.Subscribe<Feedback>(OnFeedback);
 
             AutoUpdater.AppCastURL = ConfigurationManager.AppSettings["updateUrl"];
             AutoUpdater.CheckForUpdateEvent += OnCheckUpdate;
@@ -154,7 +152,7 @@ namespace Telebot.Presenters
             await client.SendText(text);
         }
 
-        private async void OnFeedback(object sender, FeedbackArgs e)
+        private async void OnFeedback(Feedback e)
         {
             await client.SendText(e.Text);
         }

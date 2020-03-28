@@ -68,6 +68,9 @@
     <Reference Include="INIFileParser, Version=2.5.2.0, Culture=neutral, PublicKeyToken=79af7b307b65cf3c, processorArchitecture=MSIL">
       <HintPath>..\packages\ini-parser.2.5.2\lib\net20\INIFileParser.dll</HintPath>
     </Reference>
+    <Reference Include="MessageHub, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Bool.MessageHub.1.0.3\lib\net45\MessageHub.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -105,8 +108,9 @@
     <Compile Include="Commands\UpdateCommand.cs" />
     <Compile Include="Common\JobType.cs" />
     <Compile Include="Common\PowerType.cs" />
-    <Compile Include="Contracts\IJob.cs" />
-    <Compile Include="Contracts\IScheduled.cs" />
+    <Compile Include="Jobs\IFeedback.cs" />
+    <Compile Include="Jobs\IJob.cs" />
+    <Compile Include="Jobs\IScheduled.cs" />
     <Compile Include="Extensions\PrimitiveExtensions.cs" />
     <Compile Include="Common\ResultType.cs" />
     <Compile Include="Common\AppsType.cs" />
@@ -114,10 +118,11 @@
     <Compile Include="Infrastructure\Apis\DisplayApi.cs" />
     <Compile Include="Infrastructure\Apis\IApi.cs" />
     <Compile Include="Infrastructure\Apis\VolApi.cs" />
-    <Compile Include="Intranet\HostComparison.cs" />
-    <Compile Include="Intranet\IInetBase.cs" />
-    <Compile Include="Intranet\IInetScanner.cs" />
-    <Compile Include="Intranet\LanScanner.cs" />
+    <Compile Include="Jobs\Intranet\HostComparison.cs" />
+    <Compile Include="Jobs\Intranet\IInetBase.cs" />
+    <Compile Include="Jobs\Intranet\IInetScanner.cs" />
+    <Compile Include="Jobs\Intranet\LanScanner.cs" />
+    <Compile Include="Models\Feedback.cs" />
     <Compile Include="Native\kernel32.cs" />
     <Compile Include="Clients\IBotClient.cs" />
     <Compile Include="Commands\AppsCommand.cs" />
@@ -148,15 +153,15 @@
     <Compile Include="Infrastructure\Apis\AppsApi.cs" />
     <Compile Include="Extensions\BitmapExtensions.cs" />
     <Compile Include="Extensions\TimeSpanExtensions.cs" />
-    <Compile Include="Intranet\HostsArg.cs" />
-    <Compile Include="Intranet\Host.cs" />
-    <Compile Include="Intranet\IInetMonitor.cs" />
-    <Compile Include="Intranet\LanMonitor.cs" />
-    <Compile Include="Capture\CaptureFactory.cs" />
-    <Compile Include="Capture\CaptureSchedule.cs" />
+    <Compile Include="Jobs\Intranet\HostsArg.cs" />
+    <Compile Include="Jobs\Intranet\Host.cs" />
+    <Compile Include="Jobs\Intranet\IInetMonitor.cs" />
+    <Compile Include="Jobs\Intranet\LanMonitor.cs" />
+    <Compile Include="Jobs\Capture\CaptureFactory.cs" />
+    <Compile Include="Jobs\Capture\CaptureSchedule.cs" />
     <Compile Include="Native\powrprof.cs" />
     <Compile Include="Presenters\MainViewPresenter.cs" />
-    <Compile Include="Capture\CaptureArgs.cs" />
+    <Compile Include="Jobs\Capture\CaptureArgs.cs" />
     <Compile Include="Clients\Telebot.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Settings\Contracts\IProfile.cs" />
@@ -164,10 +169,10 @@
     <Compile Include="Settings\TempSettings.cs" />
     <Compile Include="Settings\Factories\SettingsFactory.cs" />
     <Compile Include="Settings\TelegramSettings.cs" />
-    <Compile Include="Temperature\TempArgs.cs" />
-    <Compile Include="Temperature\TempFactory.cs" />
-    <Compile Include="Temperature\TempSchedule.cs" />
-    <Compile Include="Temperature\TempWarning.cs" />
+    <Compile Include="Jobs\Temperature\TempArgs.cs" />
+    <Compile Include="Jobs\Temperature\TempFactory.cs" />
+    <Compile Include="Jobs\Temperature\TempSchedule.cs" />
+    <Compile Include="Jobs\Temperature\TempWarning.cs" />
     <Compile Include="Views\MainView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -211,6 +216,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
+    <Content Include="MessageHub.xml" />
     <Content Include="sndvol64.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

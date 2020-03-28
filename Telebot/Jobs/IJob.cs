@@ -1,8 +1,7 @@
-﻿using Common;
-using System;
+﻿using System;
 using Telebot.Common;
 
-namespace Telebot.Contracts
+namespace Telebot.Jobs
 {
     public abstract class IJob<T> : IFeedback
     {

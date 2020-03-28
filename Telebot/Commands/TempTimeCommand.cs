@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Telebot.Common;
-using Telebot.Contracts;
+using Telebot.Jobs;
 using Telebot.Models;
 using Telebot.Temperature;
 

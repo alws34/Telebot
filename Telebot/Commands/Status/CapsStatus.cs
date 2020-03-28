@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using Telebot.Capture;
-using Telebot.Contracts;
 using Telebot.Extensions;
+using Telebot.Jobs;
 
 namespace Telebot.Commands.Status
 {

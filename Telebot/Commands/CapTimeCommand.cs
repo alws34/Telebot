@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Telebot.Capture;
 using Telebot.Common;
-using Telebot.Contracts;
+using Telebot.Jobs;
 using Telebot.Models;
 
 namespace Telebot.Commands

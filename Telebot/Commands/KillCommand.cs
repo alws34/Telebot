@@ -40,7 +40,7 @@ namespace Telebot.Commands
             try
             {
                 target.Kill();
-                result.Text = $"Successfully killed {target.ProcessName}.";
+                result.Text = $"{target.ProcessName} killed.";
             }
             catch (Exception e)
             {

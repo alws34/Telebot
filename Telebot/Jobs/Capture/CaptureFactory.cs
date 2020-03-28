@@ -1,5 +1,5 @@
 ﻿using Common;
-using Telebot.Contracts;
+using Telebot.Jobs;
 
 namespace Telebot.Capture
 {

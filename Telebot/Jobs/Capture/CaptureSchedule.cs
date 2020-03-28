@@ -1,8 +1,8 @@
 ﻿using FluentScheduler;
 using System;
 using System.Drawing;
-using Telebot.Contracts;
 using Telebot.Infrastructure.Apis;
+using Telebot.Jobs;
 
 namespace Telebot.Capture
 {

@@ -1,4 +1,4 @@
-﻿namespace Telebot.Contracts
+﻿namespace Telebot.Jobs
 {
     public interface IScheduled
     {

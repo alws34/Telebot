@@ -1,5 +1,5 @@
 ﻿using Common;
-using Telebot.Contracts;
+using Telebot.Jobs;
 using static CPUID.CpuIdWrapper64;
 using static CPUID.Sdk.CpuIdSdk64;
 

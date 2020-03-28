@@ -2,7 +2,7 @@
 using CPUID.Models;
 using FluentScheduler;
 using System.Collections.Generic;
-using Telebot.Contracts;
+using Telebot.Jobs;
 using Telebot.Settings;
 using static CPUID.Sdk.CpuIdSdk64;
 

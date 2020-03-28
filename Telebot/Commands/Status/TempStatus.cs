@@ -1,6 +1,6 @@
 ﻿using System.Text;
-using Telebot.Contracts;
 using Telebot.Extensions;
+using Telebot.Jobs;
 using Telebot.Temperature;
 
 namespace Telebot.Commands.Status

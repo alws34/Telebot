@@ -4,7 +4,7 @@
     {
         public static string AsReadable(this bool value)
         {
-            return value ? "Active" : "Inactive";
+            return value ? "Active ✅" : "Inactive ❌";
         }
     }
 }

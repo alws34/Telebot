@@ -26,11 +26,7 @@ namespace Telebot.Commands
                 commandsStr.AppendLine(command.ToString());
             }
 
-            var result = new Response
-            {
-                ResultType = ResultType.Text,
-                Text = commandsStr.ToString()
-            };
+            var result = new Response(commandsStr.ToString());
 
             await resp(result);
         }

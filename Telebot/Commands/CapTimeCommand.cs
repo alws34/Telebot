@@ -28,11 +28,7 @@ namespace Telebot.Commands
 
             if (arg.Equals("off"))
             {
-                var result1 = new Response
-                {
-                    ResultType = ResultType.Text,
-                    Text = "Successfully sent command \"off\" to screen capture."
-                };
+                var result1 = new Response("Successfully sent command \"off\" to screen capture.");
 
                 await resp(result1);
 
@@ -48,11 +44,7 @@ namespace Telebot.Commands
 
             string text = $"Screen capture has been scheduled to run {duration} sec for every {interval} sec.";
 
-            var result = new Response
-            {
-                ResultType = ResultType.Text,
-                Text = text
-            };
+            var result = new Response(text);
 
             await resp(result);
 

@@ -19,11 +19,9 @@ namespace Telebot.Commands
         {
             int timeout = Convert.ToInt32(req.Groups[1].Value);
 
-            var result = new Response
-            {
-                ResultType = ResultType.Text,
-                Text = $"Successfully scheduled the workstation to shutdown in {timeout} seconds."
-            };
+            string text = $"Successfully scheduled the workstation to shutdown in {timeout} seconds.";
+
+            var result = new Response(text);
 
             await resp(result);
 

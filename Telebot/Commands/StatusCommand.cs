@@ -30,11 +30,7 @@ namespace Telebot.Commands
                 statusBuilder.AppendLine(status.GetStatus());
             }
 
-            var result = new Response
-            {
-                ResultType = ResultType.Text,
-                Text = statusBuilder.ToString()
-            };
+            var result = new Response(statusBuilder.ToString());
 
             await resp(result);
         }

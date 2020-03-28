@@ -27,11 +27,7 @@ namespace Telebot.Commands
 
             api.Invoke(async (wnd) =>
             {
-                var result = new Response
-                {
-                    ResultType = ResultType.Photo,
-                    Raw = wnd.ToStream()
-                };
+                var result = new Response(wnd.ToMemStream());
 
                 await resp(result);
             });

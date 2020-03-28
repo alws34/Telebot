@@ -21,10 +21,7 @@ namespace Telebot.Commands
 
             Process target;
 
-            var result = new Response
-            {
-                ResultType = ResultType.Text
-            };
+            string text = "";
 
             try
             {
@@ -32,7 +29,7 @@ namespace Telebot.Commands
             }
             catch (Exception e)
             {
-                result.Text = e.Message;
+                var result = new Response(e.Message);
                 await resp(result);
                 return;
             }
@@ -40,14 +37,15 @@ namespace Telebot.Commands
             try
             {
                 target.Kill();
-                result.Text = $"{target.ProcessName} killed.";
+                text = $"{target.ProcessName} killed.";
             }
             catch (Exception e)
             {
-                result.Text = e.Message;
+                text = e.Message;
             }
 
-            await resp(result);
+            var result1 = new Response(text);
+            await resp(result1);
         }
     }
 }

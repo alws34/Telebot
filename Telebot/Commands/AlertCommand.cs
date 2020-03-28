@@ -17,19 +17,14 @@ namespace Telebot.Commands
 
         public async override void Execute(Request req, Func<Response, Task> resp)
         {
-            string msg = req.Groups[1].Value;
+            string text = req.Groups[1].Value;
 
-            var result = new Response
-            {
-                ResultType = ResultType.Text,
-                Text = "Successfully initiated a message box."
-            };
+            var result = new Response("Successfully displayed a message box.");
 
             await resp(result);
 
-            MessageBox.Show
-            (
-                msg,
+            MessageBox.Show(
+                text,
                 "Telebot",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information,

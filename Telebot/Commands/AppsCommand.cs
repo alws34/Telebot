@@ -34,11 +34,7 @@ namespace Telebot.Commands
 
             api.Invoke(async (s) =>
             {
-                var result = new Response
-                {
-                    ResultType = ResultType.Text,
-                    Text = s
-                };
+                var result = new Response(s);
 
                 await resp(result);
             });

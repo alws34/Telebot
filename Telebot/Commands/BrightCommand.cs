@@ -19,11 +19,7 @@ namespace Telebot.Commands
         {
             int level = Convert.ToInt32(req.Groups[1].Value);
 
-            var result = new Response
-            {
-                ResultType = ResultType.Text,
-                Text = $"Successfully adjusted brightness to {level}%."
-            };
+            var result = new Response($"Successfully adjusted brightness to {level}%.");
 
             await resp(result);
 

@@ -26,11 +26,7 @@ namespace Telebot.Commands
                     AutoUpdater.Start();
                     break;
                 case "dl":
-                    var result = new Response
-                    {
-                        ResultType = Common.ResultType.Text,
-                        Text = "Updating Telebot..."
-                    };
+                    var result = new Response("Updating Telebot...");
 
                     await resp(result);
 

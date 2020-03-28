@@ -31,11 +31,7 @@ namespace Telebot.Commands
         {
             string key = req.Groups[1].Value;
 
-            var result = new Response
-            {
-                ResultType = ResultType.Text,
-                Text = $"Workstation is going to {key}.."
-            };
+            var result = new Response($"Workstation is going to {key}..");
 
             await resp(result);
 

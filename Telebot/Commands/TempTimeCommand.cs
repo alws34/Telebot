@@ -24,15 +24,11 @@ namespace Telebot.Commands
 
         public async override void Execute(Request req, Func<Response, Task> resp)
         {
-            var arg = req.Groups[1].Value;
+            string state = req.Groups[1].Value;
 
-            if (arg.Equals("off"))
+            if (state.Equals("off"))
             {
-                var result1 = new Response
-                {
-                    ResultType = ResultType.Text,
-                    Text = "Successfully sent command \"off\" temperature monitor."
-                };
+                var result1 = new Response("Successfully sent command \"off\" temperature monitor.");
 
                 await resp(result1);
 
@@ -41,18 +37,14 @@ namespace Telebot.Commands
                 return;
             }
 
-            var intParams = arg.Split(' ');
+            var args = state.Split(' ');
 
-            int duration = Convert.ToInt32(intParams[0]);
-            int interval = Convert.ToInt32(intParams[1]);
+            int duration = Convert.ToInt32(args[0]);
+            int interval = Convert.ToInt32(args[1]);
 
             string text = $"Temperature monitor has been scheduled to run {duration} sec for every {interval} sec.";
 
-            var result = new Response
-            {
-                ResultType = ResultType.Text,
-                Text = text
-            };
+            var result = new Response(text);
 
             await resp(result);
 

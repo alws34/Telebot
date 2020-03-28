@@ -6,7 +6,7 @@ namespace Telebot.Extensions
 {
     public static class BitmapExtensions
     {
-        public static Stream ToStream(this Bitmap bitmap)
+        public static MemoryStream ToMemStream(this Bitmap bitmap)
         {
             var result = new MemoryStream();
             bitmap.Save(result, ImageFormat.Jpeg);

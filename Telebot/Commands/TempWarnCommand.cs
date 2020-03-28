@@ -31,11 +31,7 @@ namespace Telebot.Commands
         {
             string state = req.Groups[1].Value;
 
-            var result = new Response
-            {
-                ResultType = ResultType.Text,
-                Text = $"Successfully sent \"{state}\" to the temperature monitor."
-            };
+            var result = new Response($"Successfully sent \"{state}\" to the temperature monitor.");
 
             await resp(result);
 

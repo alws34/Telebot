@@ -29,13 +29,9 @@ namespace Telebot.Commands
 
             string filePath = @".\spec.txt";
 
-            var fileStream = new FileStream(filePath, FileMode.Open);
+            var fileStrm = new FileStream(filePath, FileMode.Open);
 
-            var result = new Response
-            {
-                ResultType = ResultType.Document,
-                Raw = fileStream
-            };
+            var result = new Response(fileStrm);
 
             await resp(result);
         }

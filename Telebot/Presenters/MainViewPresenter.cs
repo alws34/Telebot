@@ -169,7 +169,7 @@ namespace Telebot.Presenters
 
         private async void CaptureScheduleHandler(object sender, CaptureArgs e)
         {
-            await client.SendPic(e.Capture.ToStream());
+            await client.SendPic(e.Capture.ToMemStream());
         }
 
         private async void TempWarningHandler(object sender, TempArgs e)

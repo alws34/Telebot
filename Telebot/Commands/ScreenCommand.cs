@@ -29,11 +29,7 @@ namespace Telebot.Commands
         {
             string key = req.Groups[1].Value;
 
-            var result = new Response
-            {
-                ResultType = ResultType.Text,
-                Text = $"Successfully turned {key} the monitor."
-            };
+            var result = new Response($"Successfully turned {key} the monitor.");
 
             await resp(result);
 

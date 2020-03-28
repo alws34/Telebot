@@ -19,11 +19,7 @@ namespace Telebot.Commands
         {
             int vol = Convert.ToInt32(req.Groups[1].Value);
 
-            var result = new Response
-            {
-                ResultType = ResultType.Text,
-                Text = $"Successfully adjusted volume to {vol}%."
-            };
+            var result = new Response($"Successfully adjusted volume to {vol}%.");
 
             await resp(result);
 

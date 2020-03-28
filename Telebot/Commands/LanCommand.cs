@@ -37,11 +37,7 @@ namespace Telebot.Commands
         {
             string state = req.Groups[1].Value;
 
-            var result = new Response
-            {
-                ResultType = ResultType.Text,
-                Text = $"Command {state} has been sent to network manager."
-            };
+            var result = new Response($"Command {state} has been sent to network manager.");
 
             await resp(result);
 

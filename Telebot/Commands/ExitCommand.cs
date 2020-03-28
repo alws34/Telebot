@@ -18,11 +18,7 @@ namespace Telebot.Commands
 
         public async override void Execute(Request req, Func<Response, Task> resp)
         {
-            var result = new Response
-            {
-                ResultType = ResultType.Text,
-                Text = "Telebot is closing..."
-            };
+            var result = new Response("Telebot is closing...");
 
             await resp(result);
 

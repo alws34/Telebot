@@ -25,11 +25,7 @@ namespace Telebot.Commands
             {
                 foreach (Bitmap screen in screens)
                 {
-                    var result = new Response
-                    {
-                        ResultType = ResultType.Photo,
-                        Raw = screen.ToStream()
-                    };
+                    var result = new Response(screen.ToMemStream());
 
                     await resp(result);
                 }

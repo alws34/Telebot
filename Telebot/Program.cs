@@ -1,6 +1,8 @@
-﻿using Common;
+﻿using AutoUpdaterDotNET;
+using Common;
 using FluentScheduler;
 using System;
+using System.Configuration;
 using System.Linq;
 using System.Windows.Forms;
 using Telebot.Capture;
@@ -20,7 +22,7 @@ namespace Telebot
 {
     static class Program
     {
-        public static SettingsFactory Settings { get; private set; }
+        public static AppSettings AppSettings { get; private set; }
         public static IFactory<IInetBase> InetFactory { get; private set; }
         public static IFactory<ICommand> CommandFactory { get; private set; }
         public static IFactory<IJob<TempArgs>> TempFactory { get; private set; }
@@ -32,10 +34,10 @@ namespace Telebot
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Settings = new SettingsFactory();
+            AppSettings = new AppSettings();
 
-            string token = Settings.Telegram.GetBotToken();
-            int id = Settings.Telegram.GetAdminId();
+            string token = AppSettings.Telegram.GetBotToken();
+            int id = AppSettings.Telegram.GetAdminId();
 
             if (string.IsNullOrEmpty(token) || id == 0)
             {
@@ -48,6 +50,8 @@ namespace Telebot
 
                 return;
             }
+
+            AutoUpdater.AppCastURL = ConfigurationManager.AppSettings["updateUrl"];
 
             InetFactory = new InetFactory();
             TempFactory = new TempFactory();
@@ -70,11 +74,14 @@ namespace Telebot
                 temperatureJobs
             );
 
-            JobManager.AddJob(
-                () =>
-                {
+            JobManager.AddJob(() => {
                     Sdk64.RefreshInformation();
                 }, (s) => s.WithName("RefreshInformation").ToRunNow().AndEvery(1).Seconds()
+            );
+
+            JobManager.AddJob(() => {
+                   AutoUpdater.Start();
+                }, (s) => s.WithName("CheckForUpdate").ToRunEvery(1).Hours()
             );
 
             Application.ApplicationExit += ApplicationExit;
@@ -94,9 +101,9 @@ namespace Telebot
                 JobManager.RemoveAllJobs();
             }
 
-            Settings.Main.CommitChanges();
+            AppSettings.Main.CommitChanges();
 
-            Settings.Main.WriteChanges();
+            AppSettings.Main.WriteChanges();
 
             Sdk64.UninitSDK();
         }

@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
-using Telebot.Common;
 using Telebot.Models;
 
 namespace Telebot.Commands

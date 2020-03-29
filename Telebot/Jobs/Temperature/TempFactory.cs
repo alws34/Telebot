@@ -14,7 +14,7 @@ namespace Telebot.Temperature
                 (x.DeviceClass == CLASS_DEVICE_DISPLAY_ADAPTER)
             );
 
-            var tempSettings = Program.Settings.Temperature;
+            var tempSettings = Program.AppSettings.Temperature;
 
             _items.Add(new TempWarning(devices, tempSettings));
             _items.Add(new TempSchedule(devices));

@@ -2,7 +2,6 @@
 using FluentScheduler;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -55,19 +54,18 @@ namespace Telebot.Presenters
 
             foreach (IJob<CaptureArgs> captureJob in captureJobs)
             {
-                var Update = GetHandler<CaptureArgs>(captureJob.GetType());
+                var Update = captureJob.GetType().GetHandler<CaptureArgs>(this);
                 captureJob.Update += Update;
             }
 
             foreach (IJob<TempArgs> temperatureJob in temperatureJobs)
             {
-                var Update = GetHandler<TempArgs>(temperatureJob.GetType());
+                var Update = temperatureJob.GetType().GetHandler<TempArgs>(this);
                 temperatureJob.Update += Update;
             }
 
             MessageHub.MessageHub.Instance.Subscribe<Feedback>(OnFeedback);
 
-            AutoUpdater.AppCastURL = ConfigurationManager.AppSettings["updateUrl"];
             AutoUpdater.CheckForUpdateEvent += OnCheckUpdate;
         }
 
@@ -91,20 +89,11 @@ namespace Telebot.Presenters
             view.TrayIcon.Visible = true;
 
             // Delay job to reduce startup time
-            JobManager.AddJob(
-                async () =>
-                {
+            JobManager.AddJob(async () => {
                     client.Connect();
                     await AddBotNameTitle();
                     await SendClientHello();
                 }, (s) => s.ToRunOnceIn(3).Seconds()
-            );
-
-            JobManager.AddJob(
-                () =>
-                {
-                    AutoUpdater.Start();
-                }, (s) => s.WithName("CheckForUpdate").ToRunEvery(1).Hours()
             );
         }
 
@@ -215,14 +204,6 @@ namespace Telebot.Presenters
                         //    break;
                 }
             }
-        }
-
-        private EventHandler<T> GetHandler<T>(Type type)
-        {
-            string handlerName = $"{type.Name}Handler";
-            return Delegate.CreateDelegate(
-                typeof(EventHandler<T>), this, handlerName
-            ) as EventHandler<T>;
         }
     }
 }

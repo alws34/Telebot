@@ -25,7 +25,7 @@ namespace Telebot.Temperature
             this.devices = devices;
 
             this.settings = settings;
-            Program.Settings.Main.AddProfile(this);
+            Program.AppSettings.Main.AddProfile(this);
 
             CPULimit = settings.GetCPULimit();
             GPULimit = settings.GetGPULimit();
@@ -36,7 +36,7 @@ namespace Telebot.Temperature
                 { CLASS_DEVICE_DISPLAY_ADAPTER, GPULimit }
             };
 
-            Active = Program.Settings.Temperature.GetMonitoringState();
+            Active = Program.AppSettings.Temperature.GetMonitoringState();
 
             if (Active)
             {

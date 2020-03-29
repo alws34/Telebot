@@ -108,6 +108,7 @@
     <Compile Include="Commands\UpdateCommand.cs" />
     <Compile Include="Common\JobType.cs" />
     <Compile Include="Common\PowerType.cs" />
+    <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Jobs\IFeedback.cs" />
     <Compile Include="Jobs\IJob.cs" />
     <Compile Include="Jobs\Intranet\InetFactory.cs" />
@@ -168,7 +169,7 @@
     <Compile Include="Settings\Contracts\IProfile.cs" />
     <Compile Include="Settings\Contracts\ISettings.cs" />
     <Compile Include="Settings\TempSettings.cs" />
-    <Compile Include="Settings\Factories\SettingsFactory.cs" />
+    <Compile Include="Settings\Factories\AppSettings.cs" />
     <Compile Include="Settings\TelegramSettings.cs" />
     <Compile Include="Jobs\Temperature\TempArgs.cs" />
     <Compile Include="Jobs\Temperature\TempFactory.cs" />
@@ -180,7 +181,7 @@
     <Compile Include="Views\MainView.Designer.cs">
       <DependentUpon>MainView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Settings\IniFileSettings.cs" />
+    <Compile Include="Settings\IniFileHandler.cs" />
     <Compile Include="Models\Request.cs" />
     <Compile Include="Models\Response.cs" />
     <Compile Include="Program.cs" />

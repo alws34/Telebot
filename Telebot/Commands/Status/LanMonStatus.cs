@@ -17,7 +17,7 @@ namespace Telebot.Commands.Status
         public string GetStatus()
         {
             string name = monitor.GetType().Name;
-            string status = monitor.IsActive.AsReadable();
+            string status = monitor.IsActive.ToReadable();
 
             return $"*{name}:* {status}";
         }

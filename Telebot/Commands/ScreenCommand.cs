@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Telebot.Common;
 using Telebot.Infrastructure.Apis;
 using Telebot.Models;
 using static Telebot.Native.user32;

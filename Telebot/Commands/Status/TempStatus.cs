@@ -16,7 +16,7 @@ namespace Telebot.Commands.Status
             foreach (IJob<TempArgs> job in _jobs)
             {
                 string name = job.GetType().Name.Replace("TempMon", "");
-                string active = job.Active.AsReadable();
+                string active = job.Active.ToReadable();
                 result.AppendLine($"*{name}* 🌡️: {active}");
             }
 

@@ -1,14 +1,14 @@
 ﻿namespace Telebot.Settings
 {
-    public class SettingsFactory
+    public class AppSettings
     {
         public ISettings Main { get; }
         public TelegramSettings Telegram { get; }
         public TempSettings Temperature { get; }
 
-        public SettingsFactory()
+        public AppSettings()
         {
-            Main = new IniFileSettings();
+            Main = new IniFileHandler();
             Telegram = new TelegramSettings(Main);
             Temperature = new TempSettings(Main);
         }

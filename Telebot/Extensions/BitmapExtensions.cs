@@ -8,10 +8,10 @@ namespace Telebot.Extensions
     {
         public static MemoryStream ToMemStream(this Bitmap bitmap)
         {
-            var result = new MemoryStream();
-            bitmap.Save(result, ImageFormat.Jpeg);
-            result.Position = 0;
-            return result;
+            var memStream = new MemoryStream();
+            bitmap.Save(memStream, ImageFormat.Jpeg);
+            memStream.Position = 0;
+            return memStream;
         }
     }
 }

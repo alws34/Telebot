@@ -6,14 +6,14 @@ using System.IO;
 
 namespace Telebot.Settings
 {
-    public class IniFileSettings : FileIniDataParser, ISettings
+    public class IniFileHandler : FileIniDataParser, ISettings
     {
         private const string iniPath = @".\settings.ini";
 
         private readonly IniData iniData;
         private readonly List<IProfile> profiles;
 
-        public IniFileSettings()
+        public IniFileHandler()
         {
             profiles = new List<IProfile>();
 

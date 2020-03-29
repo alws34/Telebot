@@ -1,4 +1,4 @@
-﻿using Common;
+﻿using Contracts;
 using CPUID.Base;
 using CPUID.Factories;
 using CPUID.Sdk;

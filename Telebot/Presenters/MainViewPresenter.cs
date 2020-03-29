@@ -1,17 +1,10 @@
 ﻿using AutoUpdaterDotNET;
 using FluentScheduler;
+using Models;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Telebot.Capture;
 using Telebot.Clients;
-using Telebot.Extensions;
-using Telebot.Intranet;
-using Telebot.Jobs;
-using Telebot.Models;
-using Telebot.Temperature;
 using Telebot.Views;
 
 namespace Telebot.Presenters
@@ -21,13 +14,7 @@ namespace Telebot.Presenters
         private readonly IMainView view;
         private readonly IBotClient client;
 
-        public MainViewPresenter(
-            IMainView view,
-            IBotClient client,
-            IEnumerable<IInetBase> inetJobs,
-            IEnumerable<IJob<CaptureArgs>> captureJobs,
-            IEnumerable<IJob<TempArgs>> temperatureJobs
-        )
+        public MainViewPresenter(IMainView view, IBotClient client)
         {
             this.view = view;
             this.view.Load += viewLoad;
@@ -35,34 +22,6 @@ namespace Telebot.Presenters
 
             this.client = client;
             this.client.Notification += OnNotification;
-
-            foreach (IInetBase inetJob in inetJobs)
-            {
-                switch (inetJob.Jobtype)
-                {
-                    case Common.JobType.Monitor:
-                        var monitorJob = ((IINetMonitor)inetJob);
-                        monitorJob.Disconnected += Disconnected;
-                        monitorJob.Connected += Connected;
-                        break;
-                    case Common.JobType.Scanner:
-                        var scannerJob = ((IInetScanner)inetJob);
-                        scannerJob.Discovered += Discovered;
-                        break;
-                }
-            }
-
-            foreach (IJob<CaptureArgs> captureJob in captureJobs)
-            {
-                var Update = captureJob.GetType().GetHandler<CaptureArgs>(this);
-                captureJob.Update += Update;
-            }
-
-            foreach (IJob<TempArgs> temperatureJob in temperatureJobs)
-            {
-                var Update = temperatureJob.GetType().GetHandler<TempArgs>(this);
-                temperatureJob.Update += Update;
-            }
 
             MessageHub.MessageHub.Instance.Subscribe<Feedback>(OnFeedback);
 
@@ -89,11 +48,12 @@ namespace Telebot.Presenters
             view.TrayIcon.Visible = true;
 
             // Delay job to reduce startup time
-            JobManager.AddJob(async () => {
-                    client.Connect();
-                    await AddBotNameTitle();
-                    await SendClientHello();
-                }, (s) => s.ToRunOnceIn(3).Seconds()
+            JobManager.AddJob(async () =>
+            {
+                client.Connect();
+                await AddBotNameTitle();
+                await SendClientHello();
+            }, (s) => s.ToRunOnceIn(3).Seconds()
             );
         }
 
@@ -112,77 +72,9 @@ namespace Telebot.Presenters
             });
         }
 
-        private async void Disconnected(object sender, HostsArg e)
-        {
-            string text = "Disconnected:\n\n";
-
-            foreach (Host host in e.Hosts)
-            {
-                text += host.ToString();
-                text += "\n";
-            }
-
-            await client.SendText(text);
-        }
-
-        private async void Connected(object sender, HostsArg e)
-        {
-            string text = "Connected:\n\n";
-
-            foreach (Host host in e.Hosts)
-            {
-                text += host.ToString();
-                text += "\n";
-            }
-
-            await client.SendText(text);
-        }
-
-        private async void Discovered(object sender, HostsArg e)
-        {
-            string text = "Discovered:\n\n";
-
-            foreach (Host host in e.Hosts)
-            {
-                text += host.ToString();
-                text += "\n\n";
-            }
-
-            await client.SendText(text);
-        }
-
         private async void OnFeedback(Feedback e)
         {
             await client.SendText(e.Text);
-        }
-
-        private async void CaptureScheduleHandler(object sender, CaptureArgs e)
-        {
-            await client.SendPic(e.Capture.ToMemStream());
-        }
-
-        private async void TempWarningHandler(object sender, TempArgs e)
-        {
-            string text = $"*[WARNING] {e.DeviceName}*: {e.Temperature}°C\nFrom *Telebot*";
-
-            await client.SendText(text);
-        }
-
-        private StringBuilder text = new StringBuilder();
-
-        private async void TempScheduleHandler(object sender, TempArgs e)
-        {
-            switch (e)
-            {
-                case null:
-                    text.AppendLine("\nFrom *Telebot*");
-                    await client.SendText(text.ToString());
-                    text.Clear();
-                    break;
-                default:
-                    text.AppendLine($"*{e.DeviceName}*: {e.Temperature}°C");
-                    break;
-            }
         }
 
         private async void OnCheckUpdate(UpdateInfoEventArgs args)

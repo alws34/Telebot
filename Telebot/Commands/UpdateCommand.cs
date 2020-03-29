@@ -1,19 +1,13 @@
-﻿using AutoUpdaterDotNET;
-using FluentScheduler;
-using System;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Telebot.Models;
-
-namespace Telebot.Commands
+﻿namespace Telebot.Commands
 {
-    public class UpdateCommand : ICommand
+    /*
+    public class UpdateCommand : IPlugin
     {
         public UpdateCommand()
         {
             Pattern = "/update (chk|dl)";
             Description = "Check or download an update.";
-            OSVersion = new Version(5, 0);
+            MinOSVersion = new Version(5, 0);
         }
 
         public async override void Execute(Request req, Func<Response, Task> resp)
@@ -42,4 +36,5 @@ namespace Telebot.Commands
             }
         }
     }
+    */
 }

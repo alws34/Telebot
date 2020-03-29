@@ -1,8 +1,9 @@
-﻿using System.Text.RegularExpressions;
+﻿using Contracts;
+using Enums;
+using Models;
+using PluginManager;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Telebot.Commands;
-using Telebot.Common;
-using Telebot.Models;
 using Telegram.Bot.Args;
 
 namespace Telebot.Clients
@@ -57,21 +58,21 @@ namespace Telebot.Clients
 
             RaiseNotification(data);
 
-            bool success = Program.CommandFactory.TryGetEntity(
+            bool success = PluginFactory.Instance.TryGetEntity(
                 x => Regex.IsMatch(pattern, $"^{x.Pattern}$"),
-                out ICommand command
+                out IPlugin plugin
             );
 
             if (success)
             {
-                Match match = Regex.Match(pattern, command.Pattern);
+                Match match = Regex.Match(pattern, plugin.Pattern);
 
                 var req = new Request
                 {
                     Groups = match.Groups
                 };
 
-                command.Execute(req, RespHandler);
+                plugin.Execute(req, RespHandler);
 
                 return;
             }

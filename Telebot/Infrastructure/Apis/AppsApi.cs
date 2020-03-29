@@ -76,9 +76,9 @@ namespace Telebot.Infrastructure.Apis
             {
                 try
                 {
-                    var fi = process.MainModule.FileVersionInfo;
+                    var fvi = process.MainModule.FileVersionInfo;
 
-                    string name = fi.FileDescription;
+                    string name = fvi.FileDescription;
 
                     int pid = process.Id;
 

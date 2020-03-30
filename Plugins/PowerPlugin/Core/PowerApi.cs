@@ -1,4 +1,4 @@
-﻿using Contracts;
+﻿using Contracts.Core;
 using Enums;
 using System.Diagnostics;
 using static PowerPlugin.Native.powrprof;

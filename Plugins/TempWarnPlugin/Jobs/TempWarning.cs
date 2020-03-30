@@ -1,4 +1,5 @@
-﻿using Contracts;
+﻿using Contracts.Jobs;
+using Contracts.Settings;
 using CPUID;
 using CPUID.Base;
 using CPUID.Models;

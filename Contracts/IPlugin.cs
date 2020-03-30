@@ -23,7 +23,7 @@ namespace Contracts
             return "";
         }
 
-        public virtual void Initialize(IPluginData data) { }
+        public virtual void Initialize(PluginData data) { }
 
         public override string ToString()
         {

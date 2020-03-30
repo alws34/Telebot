@@ -1,4 +1,4 @@
-﻿using Contracts;
+﻿using Contracts.Core;
 using Enums;
 using static DisplayPlugin.Native.user32;
 

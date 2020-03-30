@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Contracts
+namespace Contracts.Jobs
 {
     public abstract class IJob<T> : IJob
     {

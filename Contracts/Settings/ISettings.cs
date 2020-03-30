@@ -1,4 +1,4 @@
-﻿namespace Contracts
+﻿namespace Contracts.Settings
 {
     public interface ISettings
     {
@@ -7,9 +7,5 @@
 
         T ReadObject<T>(string section, string key);
         void WriteObject(string section, string key, object value);
-
-        void AddProfile(IProfile profile);
-        void CommitChanges();
-        void WriteChanges();
     }
 }

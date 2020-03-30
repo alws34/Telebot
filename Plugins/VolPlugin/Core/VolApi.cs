@@ -1,4 +1,4 @@
-﻿using Contracts;
+﻿using Contracts.Core;
 using System.Diagnostics;
 
 namespace VolPlugin.Core

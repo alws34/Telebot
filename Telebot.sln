@@ -10,6 +10,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlertPlugin", "Plugins\AlertPlugin\AlertPlugin.csproj", "{C8779BCC-5A76-4968-A5AE-5AC85B70C759}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{CAD3EA13-E0DC-4CD9-8499-5BC6A45CFA46}"
+	ProjectSection(SolutionItems) = preProject
+		Models\PluginData.cs = Models\PluginData.cs
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppsPlugin", "Plugins\AppsPlugin\AppsPlugin.csproj", "{CE972A42-5322-4EBA-ABB7-1403CBB007BC}"
 EndProject

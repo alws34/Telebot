@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Contracts
+namespace Contracts.Factories
 {
     public abstract class IFactory<T>
     {

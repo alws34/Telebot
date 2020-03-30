@@ -1,4 +1,5 @@
 ﻿using Contracts;
+using Contracts.Factories;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
@@ -33,6 +34,10 @@ namespace Telebot.NSPlugins
             foreach (string assemblyName in assemblies)
             {
                 var assembly = Assembly.LoadFrom(assemblyName);
+
+                // build visitor
+
+
                 var assemblyCatalog = new AssemblyCatalog(assembly);
                 catalog.Catalogs.Add(assemblyCatalog);
             }
@@ -45,7 +50,7 @@ namespace Telebot.NSPlugins
 
             _items.AddRange(Items);
 
-            var entity = new IPluginData
+            var data = new PluginData
             {
                 Plugins = this,
                 Exit = Application.Exit,
@@ -54,7 +59,7 @@ namespace Telebot.NSPlugins
 
             foreach (IPlugin item in Items)
             {
-                item.Initialize(entity);
+                item.Initialize(data);
             }
         }
     }

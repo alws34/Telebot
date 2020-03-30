@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Contracts
+namespace Contracts.Core
 {
     public abstract class IApi
     {

@@ -1,11 +1,12 @@
 ﻿using Contracts;
+using Contracts.Factories;
 using Models;
 using System;
 using System.ComponentModel.Composition;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HelpPlugin
+namespace Plugins.Help
 {
     [Export(typeof(IPlugin))]
     public class HelpPlugin : IPlugin
@@ -33,7 +34,7 @@ namespace HelpPlugin
             await resp(result);
         }
 
-        public override void Initialize(IPluginData data)
+        public override void Initialize(PluginData data)
         {
             Plugins = data.Plugins;
         }

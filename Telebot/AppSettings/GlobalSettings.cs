@@ -1,4 +1,4 @@
-﻿using Contracts;
+﻿using Contracts.Settings;
 
 namespace Telebot.AppSettings
 {

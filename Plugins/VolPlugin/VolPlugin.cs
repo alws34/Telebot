@@ -25,7 +25,7 @@ namespace Telebot.Commands
 
             await resp(result);
 
-            IApi api = new VolApi(vol);
+            var api = new VolApi(vol);
 
             api.Invoke();
         }

@@ -1,4 +1,4 @@
-﻿namespace Contracts
+﻿namespace Contracts.Settings
 {
     public interface IProfile
     {

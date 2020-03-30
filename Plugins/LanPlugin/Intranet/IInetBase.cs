@@ -1,4 +1,4 @@
-﻿using Contracts;
+﻿using Contracts.Jobs;
 using Enums;
 using System.Collections.Generic;
 using System.IO;

@@ -37,7 +37,7 @@ namespace Telebot.Commands
 
             DisplayState state = states[key];
 
-            IApi api = new DisplayApi(state);
+            var api = new DisplayApi(state);
 
             api.Invoke();
         }

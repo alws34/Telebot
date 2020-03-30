@@ -40,7 +40,7 @@ namespace PowerPlugin
 
             PowerType type = types[key];
 
-            IApi api = new PowerApi(type);
+            var api = new PowerApi(type);
 
             api.Invoke();
         }

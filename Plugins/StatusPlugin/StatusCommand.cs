@@ -36,7 +36,7 @@ namespace Telebot.Commands
             await resp(result);
         }
 
-        public override void Initialize(IPluginData data)
+        public override void Initialize(PluginData data)
         {
             var devices = CpuIdWrapper64.DeviceFactory.GetAllEntities();
 

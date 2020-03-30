@@ -1,4 +1,4 @@
-﻿using Contracts;
+﻿using Contracts.Core;
 using ORMi;
 using System.Linq;
 

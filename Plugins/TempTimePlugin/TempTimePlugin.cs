@@ -1,4 +1,5 @@
 ﻿using Contracts;
+using Contracts.Jobs;
 using Models;
 using System;
 using System.ComponentModel.Composition;

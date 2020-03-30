@@ -1,4 +1,4 @@
-﻿using Contracts;
+﻿using Contracts.Settings;
 using IniParser;
 using IniParser.Model;
 using Newtonsoft.Json;
@@ -54,24 +54,6 @@ namespace Telebot.AppSettings
             string valueStr = JsonConvert.SerializeObject(value);
 
             WriteString(section, key, valueStr);
-        }
-
-        public void AddProfile(IProfile profile)
-        {
-            profiles.Add(profile);
-        }
-
-        public void CommitChanges()
-        {
-            foreach (IProfile profile in profiles)
-            {
-                profile.SaveChanges();
-            }
-        }
-
-        public void WriteChanges()
-        {
-            WriteFile(iniPath, iniData);
         }
     }
 }

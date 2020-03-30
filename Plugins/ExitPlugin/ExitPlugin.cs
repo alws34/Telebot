@@ -30,7 +30,7 @@ namespace Telebot.Commands
             });
         }
 
-        public override void Initialize(IPluginData data)
+        public override void Initialize(PluginData data)
         {
             Exit = data.Exit;
         }

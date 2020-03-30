@@ -25,7 +25,7 @@ namespace DimPlugin
 
             await resp(result);
 
-            IApi api = new DimApi(level);
+            var api = new DimApi(level);
 
             api.Invoke();
         }

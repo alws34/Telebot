@@ -1,4 +1,4 @@
-﻿namespace Contracts
+﻿namespace Contracts.Jobs
 {
     public interface IScheduled
     {

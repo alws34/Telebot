@@ -1,4 +1,4 @@
-﻿using Contracts;
+﻿using Contracts.Settings;
 using IniParser;
 using IniParser.Model;
 using Newtonsoft.Json;
@@ -7,7 +7,7 @@ using System.IO;
 
 namespace TempWarnPlugin.Settings
 {
-    public class IniFileHandler : FileIniDataParser, ISettings
+    public class IniFileHandler : FileIniDataParser, ISettings, IProfiler
     {
         private const string iniPath = ".\\Plugins\\TempWarn\\settings.ini";
 

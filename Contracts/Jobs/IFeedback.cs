@@ -1,7 +1,7 @@
 ﻿using Models;
 using System;
 
-namespace Contracts
+namespace Contracts.Jobs
 {
     public abstract class IFeedback
     {
@@ -15,8 +15,6 @@ namespace Contracts
             };
 
             Feedback?.Invoke(this, feedback);
-
-            //MessageHub.MessageHub.Instance.Publish(feedback);
         }
     }
 }

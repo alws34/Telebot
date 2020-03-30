@@ -1,4 +1,5 @@
 ﻿using Contracts;
+using Contracts.Jobs;
 using Extensions;
 using Models;
 using System;

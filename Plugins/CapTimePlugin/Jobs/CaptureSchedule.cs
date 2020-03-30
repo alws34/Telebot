@@ -1,5 +1,5 @@
 ﻿using CapTimePlugin.Core;
-using Contracts;
+using Contracts.Jobs;
 using FluentScheduler;
 using System;
 using System.Drawing;

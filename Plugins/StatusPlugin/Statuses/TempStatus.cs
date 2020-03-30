@@ -22,7 +22,7 @@ namespace StatusPlugin.Statuses
             {
                 string name = plugin.GetJobName();
                 string active = plugin.GetJobActive().ToReadable();
-                text.AppendLine($"*{name}* 🌡️: {active}");
+                text.AppendLine($"*{name}*: {active}");
             }
 
             return text.ToString().TrimEnd();

@@ -35,10 +35,6 @@ namespace Telebot.NSPlugins
             foreach (string assemblyName in assemblies)
             {
                 var assembly = Assembly.LoadFrom(assemblyName);
-
-                // build visitor
-
-
                 var assemblyCatalog = new AssemblyCatalog(assembly);
                 catalog.Catalogs.Add(assemblyCatalog);
             }

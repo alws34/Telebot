@@ -5,10 +5,10 @@ namespace LanPlugin.Intranet
 {
     public abstract class IINetMonitor : IInetBase
     {
-        protected const string scanPath = ".\\wnetmon.xml";
+        protected const string scanPath = ".\\Plugins\\Lan\\wnetmon.xml";
 
-        public event EventHandler<HostsArg> Connected;
-        public event EventHandler<HostsArg> Disconnected;
+        public EventHandler<HostsArg> Connected;
+        public EventHandler<HostsArg> Disconnected;
 
         public bool IsActive { get; set; }
 

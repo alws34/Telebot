@@ -35,7 +35,7 @@ namespace LanPlugin
 
         public async override void Execute(Request req, Func<Response, Task> resp)
         {
-            scanner.Discovered += async (s, e) =>
+            scanner.Discovered = async (s, e) =>
             {
                 string text = "Discovered:\n\n";
 
@@ -45,12 +45,12 @@ namespace LanPlugin
                     text += "\n\n";
                 }
 
-                var discovered = new Response(text);
+                var discovered = new Response(text, false);
 
                 await resp(discovered);
             };
 
-            monitor.Connected += async (s, e) =>
+            monitor.Connected = async (s, e) =>
             {
                 string text = "Connected:\n\n";
 
@@ -60,12 +60,12 @@ namespace LanPlugin
                     text += "\n";
                 }
 
-                var connected = new Response(text);
+                var connected = new Response(text, false);
 
                 await resp(connected);
             };
 
-            monitor.Disconnected += async (s, e) =>
+            monitor.Disconnected = async (s, e) =>
             {
                 string text = "Disconnected:\n\n";
 
@@ -75,14 +75,14 @@ namespace LanPlugin
                     text += "\n";
                 }
 
-                var disconnected = new Response(text);
+                var disconnected = new Response(text, false);
 
                 await resp(disconnected);
             };
 
             string state = req.Groups[1].Value;
 
-            var result = new Response($"Command {state} has been sent to network manager.");
+            var result = new Response($"Lan triggered to {state}.");
 
             await resp(result);
 

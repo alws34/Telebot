@@ -26,8 +26,8 @@ namespace Telebot.Commands
         public async override void Execute(Request req, Func<Response, Task> resp)
         {
             StringBuilder text = new StringBuilder();
-
-            _job.Update += async (s, e) =>
+            
+            _job.Update = async (s, e) =>
             {
                 switch (e)
                 {

@@ -26,6 +26,7 @@ namespace TempWarnPlugin.Jobs
                (x.DeviceClass == CLASS_DEVICE_DISPLAY_ADAPTER)
             );
 
+            settings = new TempSettings();
             settings.AddProfile(this);
 
             CPULimit = settings.GetCPULimit();

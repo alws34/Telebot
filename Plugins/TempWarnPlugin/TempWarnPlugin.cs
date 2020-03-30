@@ -2,12 +2,14 @@
 using Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Threading.Tasks;
 using TempWarnPlugin.Jobs;
 using TempWarnPlugin.Models;
 
 namespace Telebot.Commands
 {
+    [Export(typeof(IPlugin))]
     public class TempWarnPlugin : IPlugin
     {
         private readonly Dictionary<string, Action> actions;
@@ -30,11 +32,11 @@ namespace Telebot.Commands
 
         public async override void Execute(Request req, Func<Response, Task> resp)
         {
-            _job.Update += async (s, e) =>
+            _job.Update = async (s, e) =>
             {
                 string text = $"*[WARNING] {e.DeviceName}*: {e.Temperature}°C\nFrom *Telebot*";
 
-                var update = new Response(text);
+                var update = new Response(text, false);
 
                 await resp(update);
             };

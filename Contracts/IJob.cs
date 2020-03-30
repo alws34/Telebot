@@ -4,7 +4,7 @@ namespace Contracts
 {
     public abstract class IJob<T> : IJob
     {
-        public event EventHandler<T> Update;
+        public EventHandler<T> Update;
 
         protected void RaiseUpdate(T e)
         {

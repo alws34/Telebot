@@ -24,7 +24,7 @@ namespace CapTimePlugin
 
         public async override void Execute(Request req, Func<Response, Task> resp)
         {
-            _job.Update += async (s, e) =>
+            _job.Update = async (s, e) =>
             {
                 var update = new Response(e.Capture.ToMemStream());
 

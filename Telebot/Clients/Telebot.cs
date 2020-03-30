@@ -22,13 +22,13 @@ namespace Telebot.Clients
                 switch (result.ResultType)
                 {
                     case ResultType.Text:
-                        await SendText(result.Text, replyId: e.Message.MessageId);
+                        await SendText(result.Text, replyId: result.Reply ? e.Message.MessageId : 0);
                         break;
                     case ResultType.Photo:
-                        await SendPic(result.Raw, replyId: e.Message.MessageId);
+                        await SendPic(result.Raw, replyId: result.Reply ? e.Message.MessageId : 0);
                         break;
                     case ResultType.Document:
-                        await SendDoc(result.Raw, replyId: e.Message.MessageId);
+                        await SendDoc(result.Raw, replyId: result.Reply ? e.Message.MessageId : 0);
                         break;
                     default:
                         break;

@@ -8,7 +8,7 @@ namespace LanPlugin.Intranet
 {
     public abstract class IInetBase : IFeedback
     {
-        protected const string wnetPath = ".\\wnet.exe";
+        protected const string wnetPath = ".\\Plugins\\Lan\\wnet.exe";
 
         public JobType Jobtype { get; protected set; }
 

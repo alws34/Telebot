@@ -5,9 +5,9 @@ namespace LanPlugin.Intranet
 {
     public abstract class IInetScanner : IInetBase
     {
-        protected const string scanPath = ".\\wnetscan.xml";
+        protected const string scanPath = ".\\Plugins\\Lan\\wnetscan.xml";
 
-        public event EventHandler<HostsArg> Discovered;
+        public EventHandler<HostsArg> Discovered;
 
         protected void RaiseDiscovered(List<Host> hosts)
         {

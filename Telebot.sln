@@ -7,49 +7,49 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telebot", "Telebot\Telebot.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CPUID", "CPUID\CPUID.csproj", "{BE642C45-8519-49FD-A45D-B5BF07C9FF96}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlertPlugin", "AlertPlugin\AlertPlugin.csproj", "{C8779BCC-5A76-4968-A5AE-5AC85B70C759}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlertPlugin", "Plugins\AlertPlugin\AlertPlugin.csproj", "{C8779BCC-5A76-4968-A5AE-5AC85B70C759}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{CAD3EA13-E0DC-4CD9-8499-5BC6A45CFA46}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppsPlugin", "AppsPlugin\AppsPlugin.csproj", "{CE972A42-5322-4EBA-ABB7-1403CBB007BC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppsPlugin", "Plugins\AppsPlugin\AppsPlugin.csproj", "{CE972A42-5322-4EBA-ABB7-1403CBB007BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DimPlugin", "DimPlugin\DimPlugin.csproj", "{F622BEEB-CB4B-4AF1-95CA-E928923AFAEC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DimPlugin", "Plugins\DimPlugin\DimPlugin.csproj", "{F622BEEB-CB4B-4AF1-95CA-E928923AFAEC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapAppPlugin", "CapAppPlugin\CapAppPlugin.csproj", "{5F021E0D-EDEE-47C2-A57E-5EEC855D7154}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapAppPlugin", "Plugins\CapAppPlugin\CapAppPlugin.csproj", "{5F021E0D-EDEE-47C2-A57E-5EEC855D7154}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contracts", "Common\Contracts.csproj", "{E2DB7CE9-5589-42B6-BAFA-6A6D91483BCA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contracts", "Contracts\Contracts.csproj", "{E2DB7CE9-5589-42B6-BAFA-6A6D91483BCA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapScrnPlugin", "CapPlugin\CapScrnPlugin.csproj", "{CE24A3EF-99E1-4FD1-B33C-D984D1243B2C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapScrnPlugin", "Plugins\CapPlugin\CapScrnPlugin.csproj", "{CE24A3EF-99E1-4FD1-B33C-D984D1243B2C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapTimePlugin", "CapTimePlugin\CapTimePlugin.csproj", "{FCA64D80-BA00-4D7D-AE07-AD5F96DF4391}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapTimePlugin", "Plugins\CapTimePlugin\CapTimePlugin.csproj", "{FCA64D80-BA00-4D7D-AE07-AD5F96DF4391}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExitPlugin", "ExitPlugin\ExitPlugin.csproj", "{DF891895-3635-49B0-8FC7-6E6663CECB81}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExitPlugin", "Plugins\ExitPlugin\ExitPlugin.csproj", "{DF891895-3635-49B0-8FC7-6E6663CECB81}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KillPlugin", "KillPlugin\KillPlugin.csproj", "{072710EF-3F79-4A27-A076-82C3DCA5732B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KillPlugin", "Plugins\KillPlugin\KillPlugin.csproj", "{072710EF-3F79-4A27-A076-82C3DCA5732B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanPlugin", "LanPlugin\LanPlugin.csproj", "{365DA20E-7497-45B0-8C09-D490DC680848}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanPlugin", "Plugins\LanPlugin\LanPlugin.csproj", "{365DA20E-7497-45B0-8C09-D490DC680848}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerPlugin", "PowerPlugin\PowerPlugin.csproj", "{D3DC58C9-E5EA-47DC-AA29-4EADE8CCFA8D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerPlugin", "Plugins\PowerPlugin\PowerPlugin.csproj", "{D3DC58C9-E5EA-47DC-AA29-4EADE8CCFA8D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestartPlugin", "RestartPlugin\RestartPlugin.csproj", "{AAEF5CDE-3B37-4FDC-A34B-04335B8BFFF0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestartPlugin", "Plugins\RestartPlugin\RestartPlugin.csproj", "{AAEF5CDE-3B37-4FDC-A34B-04335B8BFFF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DisplayPlugin", "DisplayPlugin\DisplayPlugin.csproj", "{728173EA-1F9A-4DF1-B98E-407F8C9D7C11}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DisplayPlugin", "Plugins\DisplayPlugin\DisplayPlugin.csproj", "{728173EA-1F9A-4DF1-B98E-407F8C9D7C11}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShutdownPlugin", "ShutdownPlugin\ShutdownPlugin.csproj", "{7B215AC7-ADA4-4D3F-B12B-B3932E6CB67F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShutdownPlugin", "Plugins\ShutdownPlugin\ShutdownPlugin.csproj", "{7B215AC7-ADA4-4D3F-B12B-B3932E6CB67F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecPlugin", "SpecPlugin\SpecPlugin.csproj", "{C8883CD8-3BD3-47AB-A0B7-68C680D36E20}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecPlugin", "Plugins\SpecPlugin\SpecPlugin.csproj", "{C8883CD8-3BD3-47AB-A0B7-68C680D36E20}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TempTimePlugin", "TempTimePlugin\TempTimePlugin.csproj", "{3F05D812-C9D0-45C3-92C6-84A79FA7A9EE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TempTimePlugin", "Plugins\TempTimePlugin\TempTimePlugin.csproj", "{3F05D812-C9D0-45C3-92C6-84A79FA7A9EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TempWarnPlugin", "TempWarnPlugin\TempWarnPlugin.csproj", "{CC092074-344F-4040-82F7-0DA201EFC7F9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TempWarnPlugin", "Plugins\TempWarnPlugin\TempWarnPlugin.csproj", "{CC092074-344F-4040-82F7-0DA201EFC7F9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppSettings", "AppSettings\AppSettings.csproj", "{01D62B66-4E0C-4CFD-9A46-8DA4127A0FA6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginManager", "PluginManager\PluginManager.csproj", "{E8CC3EFB-9DF4-4C24-A5D6-0F231EA966B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VolPlugin", "VolPlugin\VolPlugin.csproj", "{5AE16E0F-3B9B-47FB-AB16-D9BD6FEA7086}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VolPlugin", "Plugins\VolPlugin\VolPlugin.csproj", "{5AE16E0F-3B9B-47FB-AB16-D9BD6FEA7086}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StatusPlugin", "StatusPlugin\StatusPlugin.csproj", "{AAF70E22-E82A-4315-A1D9-2781A754E355}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StatusPlugin", "Plugins\StatusPlugin\StatusPlugin.csproj", "{AAF70E22-E82A-4315-A1D9-2781A754E355}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{C7BC082E-57DE-4875-B738-7B5F81E027D8}"
 EndProject
@@ -57,7 +57,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enums", "Enums\Enums.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Extensions", "Extensions\Extensions.csproj", "{18B1B88B-6EB7-4DA7-A542-E2E95A0C838D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpPlugin", "HelpPlugin\HelpPlugin.csproj", "{726622FD-C7BA-4922-82F2-2D623E9E0264}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpPlugin", "Plugins\HelpPlugin\HelpPlugin.csproj", "{726622FD-C7BA-4922-82F2-2D623E9E0264}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

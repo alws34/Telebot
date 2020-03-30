@@ -58,7 +58,7 @@ namespace Telebot.Clients
 
             RaiseNotification(data);
 
-            bool success = PluginFactory.Instance.TryGetEntity(
+            bool success = Plugins.GetInstance().TryGetEntity(
                 x => Regex.IsMatch(pattern, $"^{x.Pattern}$"),
                 out IPlugin plugin
             );

@@ -28,7 +28,7 @@ namespace Telebot.Commands
             });
         }
 
-        public override void SetAppEntity(IAppEntity entity)
+        public override void Initialize(IPluginData entity)
         {
             this.entity = entity;
         }

@@ -31,6 +31,13 @@ namespace CapTimePlugin
                 await resp(update);
             };
 
+            _job.Feedback = async (s, e) =>
+            {
+                var result = new Response(e.Text);
+
+                await resp(result);
+            };
+
             string arg = req.Groups[1].Value;
 
             if (arg.Equals("off"))
@@ -51,9 +58,9 @@ namespace CapTimePlugin
 
             string text = $"Screen capture has been scheduled to run {duration} sec for every {interval} sec.";
 
-            var result = new Response(text);
+            var response = new Response(text);
 
-            await resp(result);
+            await resp(response);
 
             ((IScheduled)_job).Start(duration, interval);
         }

@@ -9,7 +9,7 @@ namespace Contracts
         public string Pattern { get; protected set; }
         public string Description { get; protected set; }
 
-        protected IAppEntity entity;
+        protected IPluginData entity;
 
         public abstract void Execute(Request req, Func<Response, Task> resp);
 
@@ -25,7 +25,7 @@ namespace Contracts
             return "";
         }
 
-        public virtual void SetAppEntity(IAppEntity entity) { }
+        public virtual void Initialize(IPluginData entity) { }
 
         public override string ToString()
         {

@@ -45,9 +45,16 @@ namespace LanPlugin
                     text += "\n\n";
                 }
 
-                var discovered = new Response(text, false);
+                var result = new Response(text, false);
 
-                await resp(discovered);
+                await resp(result);
+            };
+
+            scanner.Feedback = async (s, e) =>
+            {
+                var result = new Response(e.Text);
+
+                await resp(result);
             };
 
             monitor.Connected = async (s, e) =>
@@ -60,9 +67,9 @@ namespace LanPlugin
                     text += "\n";
                 }
 
-                var connected = new Response(text, false);
+                var result = new Response(text, false);
 
-                await resp(connected);
+                await resp(result);
             };
 
             monitor.Disconnected = async (s, e) =>
@@ -75,16 +82,23 @@ namespace LanPlugin
                     text += "\n";
                 }
 
-                var disconnected = new Response(text, false);
+                var result = new Response(text, false);
 
-                await resp(disconnected);
+                await resp(result);
+            };
+
+            monitor.Feedback = async (s, e) =>
+            {
+                var result = new Response(e.Text);
+
+                await resp(result);
             };
 
             string state = req.Groups[1].Value;
 
-            var result = new Response($"Lan triggered to {state}.");
+            var response = new Response($"Lan triggered to {state}.");
 
-            await resp(result);
+            await resp(response);
 
             methods[state].Invoke();
         }

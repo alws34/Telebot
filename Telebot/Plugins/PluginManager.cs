@@ -26,17 +26,18 @@ namespace Telebot.NSPlugins
             var catalog = new AggregateCatalog();
 
             //Add all the parts found in the assembly located at this path
-            var plugins = Directory.EnumerateFiles(".\\Plugins", "*Plugin.dll", SearchOption.AllDirectories);
+            var assemblies = Directory.EnumerateFiles(
+                ".\\Plugins", "*Plugin.dll", SearchOption.AllDirectories
+            );
 
-            foreach (string plugin in plugins)
+            foreach (string assemblyName in assemblies)
             {
-                var assembly = Assembly.LoadFrom(plugin);
+                var assembly = Assembly.LoadFrom(assemblyName);
                 var assemblyCatalog = new AssemblyCatalog(assembly);
                 catalog.Catalogs.Add(assemblyCatalog);
             }
 
-            //Create the CompositionContainer with the parts
-            //in the catalog
+            //Create the CompositionContainer with the parts in the catalog
             var container = new CompositionContainer(catalog);
 
             //Fill the imports of this object
@@ -44,7 +45,7 @@ namespace Telebot.NSPlugins
 
             _items.AddRange(Items);
 
-            var entity = new IAppEntity
+            var entity = new IPluginData
             {
                 Plugins = this,
                 Exit = Application.Exit,
@@ -53,7 +54,7 @@ namespace Telebot.NSPlugins
 
             foreach (IPlugin item in Items)
             {
-                item.SetAppEntity(entity);
+                item.Initialize(entity);
             }
         }
     }

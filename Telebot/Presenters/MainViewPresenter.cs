@@ -22,7 +22,7 @@ namespace Telebot.Presenters
             this.client = client;
             this.client.Notification += OnNotification;
 
-            MessageHub.MessageHub.Instance.Subscribe<Feedback>(OnFeedback);
+            //MessageHub.MessageHub.Instance.Subscribe<Feedback>(OnFeedback);
 
             AutoUpdater.CheckForUpdateEvent += OnCheckUpdate;
         }

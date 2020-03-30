@@ -43,6 +43,13 @@ namespace Telebot.Commands
                 }
             };
 
+            _job.Feedback = async (s, e) =>
+            {
+                var result = new Response(e.Text);
+
+                await resp(result);
+            };
+
             string state = req.Groups[1].Value;
 
             if (state.Equals("off"))
@@ -63,9 +70,9 @@ namespace Telebot.Commands
 
             string text1 = $"Temperature monitor has been scheduled to run {duration} sec for every {interval} sec.";
 
-            var result = new Response(text1);
+            var response = new Response(text1);
 
-            await resp(result);
+            await resp(response);
 
             ((IScheduled)_job).Start(duration, interval);
         }

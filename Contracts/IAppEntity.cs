@@ -2,7 +2,7 @@
 
 namespace Contracts
 {
-    public class IAppEntity
+    public class IPluginData
     {
         public IFactory<IPlugin> Plugins { get; set; }
         public Action Exit { get; set; }

@@ -41,11 +41,18 @@ namespace Telebot.Commands
                 await resp(update);
             };
 
+            _job.Feedback = async (s, e) =>
+            {
+                var result = new Response(e.Text);
+
+                await resp(result);
+            };
+
             string state = req.Groups[1].Value;
 
-            var result = new Response($"Successfully sent \"{state}\" to the temperature monitor.");
+            var response = new Response($"Successfully sent \"{state}\" to the temperature monitor.");
 
-            await resp(result);
+            await resp(response);
 
             actions[state].Invoke();
         }

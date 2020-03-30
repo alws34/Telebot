@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using TempWarnPlugin.Jobs;
 using TempWarnPlugin.Models;
 
-namespace Telebot.Commands
+namespace Plugins.TempWarn
 {
     [Export(typeof(IPlugin))]
     public class TempWarnPlugin : IPlugin

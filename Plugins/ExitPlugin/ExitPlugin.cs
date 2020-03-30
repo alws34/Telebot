@@ -4,7 +4,7 @@ using System;
 using System.ComponentModel.Composition;
 using System.Threading.Tasks;
 
-namespace Telebot.Commands
+namespace Plugins.Exit
 {
     [Export(typeof(IPlugin))]
     public class ExitPlugin : IPlugin

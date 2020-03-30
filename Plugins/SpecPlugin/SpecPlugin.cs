@@ -5,7 +5,7 @@ using System.ComponentModel.Composition;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace SpecPlugin
+namespace Plugins.NSSpec
 {
     [Export(typeof(IPlugin))]
     public class SpecPlugin : IPlugin

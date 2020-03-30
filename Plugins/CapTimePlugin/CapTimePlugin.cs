@@ -7,7 +7,7 @@ using System.ComponentModel.Composition;
 using System.Threading.Tasks;
 using Telebot.Capture;
 
-namespace CapTimePlugin
+namespace Plugins.CapTime
 {
     [Export(typeof(IPlugin))]
     public class CapTimePlugin : IPlugin

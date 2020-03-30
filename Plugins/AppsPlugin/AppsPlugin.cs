@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Threading.Tasks;
 
-namespace AppsPlugin
+namespace Plugins.Apps
 {
     [Export(typeof(IPlugin))]
     public class AppsPlugin : IPlugin

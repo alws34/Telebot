@@ -1,11 +1,11 @@
 ﻿using CPUID.Base;
 using CPUID.Devices;
-using SpecPlugin.Sensors.Contracts;
+using Plugins.NSSpec.Sensors.Contracts;
 using System.Collections.Generic;
 using static CPUID.CpuIdWrapper64;
 using static CPUID.Sdk.CpuIdSdk64;
 
-namespace SpecPlugin.Components
+namespace Plugins.NSSpec.Components
 {
     public class Mainboard : IComponent
     {

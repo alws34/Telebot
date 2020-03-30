@@ -5,7 +5,7 @@ using System;
 using System.ComponentModel.Composition;
 using System.Threading.Tasks;
 
-namespace DimPlugin
+namespace Plugins.Dim
 {
     [Export(typeof(IPlugin))]
     public class DimPlugin : IPlugin

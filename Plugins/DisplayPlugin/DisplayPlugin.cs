@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Threading.Tasks;
 
-namespace Telebot.Commands
+namespace Plugins.Display
 {
     [Export(typeof(IPlugin))]
     public class DisplayPlugin : IPlugin

@@ -1,7 +1,7 @@
-﻿using SpecPlugin.Sensors.Contracts;
+﻿using Plugins.NSSpec.Sensors.Contracts;
 using static CPUID.Sdk.CpuIdSdk64;
 
-namespace SpecPlugin.Sensors
+namespace Plugins.NSSpec.Sensors
 {
     public class Capacity : ISensor
     {

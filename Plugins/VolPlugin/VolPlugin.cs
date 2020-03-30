@@ -5,7 +5,7 @@ using System.ComponentModel.Composition;
 using System.Threading.Tasks;
 using VolPlugin.Core;
 
-namespace Telebot.Commands
+namespace Plugins.Vol
 {
     [Export(typeof(IPlugin))]
     public class VolPlugin : IPlugin

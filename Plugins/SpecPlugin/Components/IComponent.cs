@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SpecPlugin.Components
+namespace Plugins.NSSpec.Components
 {
     public abstract class IComponent
     {

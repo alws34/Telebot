@@ -1,11 +1,11 @@
-﻿using SpecPlugin.Components;
-using SpecPlugin.Sensors;
-using SpecPlugin.Sensors.Contracts;
+﻿using Plugins.NSSpec.Components;
+using Plugins.NSSpec.Sensors;
+using Plugins.NSSpec.Sensors.Contracts;
 using System;
 using System.Text;
 using static CPUID.CpuIdWrapper64;
 
-namespace SpecPlugin
+namespace Plugins.NSSpec
 {
     public class Spec : IDisposable
     {

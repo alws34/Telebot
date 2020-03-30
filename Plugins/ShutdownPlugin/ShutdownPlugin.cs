@@ -5,7 +5,7 @@ using System.ComponentModel.Composition;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
-namespace Telebot.Commands
+namespace Plugins.Shutdown
 {
     [Export(typeof(IPlugin))]
     public class ShutdownPlugin : IPlugin

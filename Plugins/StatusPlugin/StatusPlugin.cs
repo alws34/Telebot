@@ -8,7 +8,7 @@ using System.ComponentModel.Composition;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Telebot.Commands
+namespace Plugins.Status
 {
     [Export(typeof(IPlugin))]
     public class StatusPlugin : IPlugin

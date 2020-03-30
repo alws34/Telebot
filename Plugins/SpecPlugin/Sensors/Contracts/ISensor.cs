@@ -1,4 +1,4 @@
-﻿namespace SpecPlugin.Sensors.Contracts
+﻿namespace Plugins.NSSpec.Sensors.Contracts
 {
     public abstract class ISensor
     {

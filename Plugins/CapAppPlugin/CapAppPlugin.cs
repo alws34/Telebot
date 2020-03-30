@@ -7,7 +7,7 @@ using System.ComponentModel.Composition;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
-namespace CapAppPlugin
+namespace Plugins.CapApp
 {
     [Export(typeof(IPlugin))]
     public class CapAppPlugin : IPlugin

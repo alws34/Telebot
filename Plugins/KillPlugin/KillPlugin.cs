@@ -5,7 +5,7 @@ using System.ComponentModel.Composition;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
-namespace Telebot.Commands
+namespace Plugins.Kill
 {
     [Export(typeof(IPlugin))]
     public class KillPlugin : IPlugin

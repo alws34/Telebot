@@ -7,7 +7,7 @@ using System.ComponentModel.Composition;
 using System.Drawing;
 using System.Threading.Tasks;
 
-namespace CapScrnPlugin
+namespace Plugins.CapScrn
 {
     [Export(typeof(IPlugin))]
     public class CapScrnPlugin : IPlugin

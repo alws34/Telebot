@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using TempTimePlugin.Jobs;
 using TempTimePlugin.Models;
 
-namespace Telebot.Commands
+namespace Plugins.TempTime
 {
     [Export(typeof(IPlugin))]
     public class TempTimeCommand : IPlugin

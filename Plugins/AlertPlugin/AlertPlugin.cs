@@ -5,7 +5,7 @@ using System.ComponentModel.Composition;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace AlertPlugin
+namespace Plugins.Alert
 {
     [Export(typeof(IPlugin))]
     public class AlertPlugin : IPlugin

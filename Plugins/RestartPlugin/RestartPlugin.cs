@@ -2,14 +2,16 @@
 using Common.Models;
 using System;
 using System.Threading.Tasks;
+using System.ComponentModel.Composition;
 
-namespace Telebot.Commands
+namespace Plugins.Restart
 {
-    public class RestartCommand : IPlugin
+    [Export(typeof(IPlugin))]
+    public class RestartPlugin : IPlugin
     {
         private Action Restart;
 
-        public RestartCommand()
+        public RestartPlugin()
         {
             Pattern = "/restart";
             Description = "Restart Telebot.";

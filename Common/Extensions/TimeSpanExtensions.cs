@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Extensions
+namespace Common.Extensions
 {
     public static class TimeSpanExtensions
     {

@@ -1,6 +1,6 @@
 ﻿using Contracts;
-using Enums;
-using Models;
+using Common.Enums;
+using Common.Models;
 using PowerPlugin.Core;
 using System;
 using System.Collections.Generic;

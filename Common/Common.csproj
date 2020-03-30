@@ -7,8 +7,8 @@
     <ProjectGuid>{E2DB7CE9-5589-42B6-BAFA-6A6D91483BCA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Contracts</RootNamespace>
-    <AssemblyName>Contracts</AssemblyName>
+    <RootNamespace>Common</RootNamespace>
+    <AssemblyName>Common</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -44,26 +44,25 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\IApi.cs" />
+    <Compile Include="Enums\DisplayState.cs" />
+    <Compile Include="Enums\PowerType.cs" />
+    <Compile Include="Enums\ResultType.cs" />
+    <Compile Include="Extensions\BitmapExtensions.cs" />
+    <Compile Include="Extensions\PrimitiveExtensions.cs" />
+    <Compile Include="Extensions\TimeSpanExtensions.cs" />
     <Compile Include="Factories\IFactory.cs" />
     <Compile Include="Jobs\IFeedback.cs" />
     <Compile Include="Jobs\IJob.cs" />
     <Compile Include="IPlugin.cs" />
-    <Compile Include="PluginData.cs" />
+    <Compile Include="Models\Feedback.cs" />
+    <Compile Include="Models\Request.cs" />
+    <Compile Include="Models\Response.cs" />
+    <Compile Include="Models\PluginData.cs" />
     <Compile Include="Settings\IProfile.cs" />
     <Compile Include="Settings\IProfiler.cs" />
     <Compile Include="Jobs\IScheduled.cs" />
     <Compile Include="Settings\ISettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Enums\Enums.csproj">
-      <Project>{34C351AF-423C-44E4-8C39-379D813D4E38}</Project>
-      <Name>Enums</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Models\Models.csproj">
-      <Project>{C7BC082E-57DE-4875-B738-7B5F81E027D8}</Project>
-      <Name>Models</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

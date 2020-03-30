@@ -1,6 +1,6 @@
 ﻿using Contracts;
-using Enums;
-using Models;
+using Common.Enums;
+using Common.Models;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Telebot.NSPlugins;

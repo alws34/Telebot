@@ -1,6 +1,6 @@
 ﻿using Contracts;
 using DimPlugin.Core;
-using Models;
+using Common.Models;
 using System;
 using System.ComponentModel.Composition;
 using System.Threading.Tasks;

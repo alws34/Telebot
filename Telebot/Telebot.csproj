@@ -170,21 +170,13 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Contracts\Contracts.csproj">
+    <ProjectReference Include="..\Common\Common.csproj">
       <Project>{e2db7ce9-5589-42b6-bafa-6a6d91483bca}</Project>
-      <Name>Contracts</Name>
+      <Name>Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\CPUID\CPUID.csproj">
       <Project>{BE642C45-8519-49FD-A45D-B5BF07C9FF96}</Project>
       <Name>CPUID</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Enums\Enums.csproj">
-      <Project>{34C351AF-423C-44E4-8C39-379D813D4E38}</Project>
-      <Name>Enums</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Models\Models.csproj">
-      <Project>{C7BC082E-57DE-4875-B738-7B5F81E027D8}</Project>
-      <Name>Models</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

@@ -54,21 +54,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Contracts\Contracts.csproj">
+    <ProjectReference Include="..\..\Common\Common.csproj">
       <Project>{E2DB7CE9-5589-42B6-BAFA-6A6D91483BCA}</Project>
-      <Name>Contracts</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Enums\Enums.csproj">
-      <Project>{34C351AF-423C-44E4-8C39-379D813D4E38}</Project>
-      <Name>Enums</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Extensions\Extensions.csproj">
-      <Project>{18b1b88b-6eb7-4da7-a542-e2e95a0c838d}</Project>
-      <Name>Extensions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Models\Models.csproj">
-      <Project>{C7BC082E-57DE-4875-B738-7B5F81E027D8}</Project>
-      <Name>Models</Name>
+      <Name>Common</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

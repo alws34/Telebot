@@ -17,7 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DimPlugin", "Plugins\DimPlu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapAppPlugin", "Plugins\CapAppPlugin\CapAppPlugin.csproj", "{5F021E0D-EDEE-47C2-A57E-5EEC855D7154}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contracts", "Contracts\Contracts.csproj", "{E2DB7CE9-5589-42B6-BAFA-6A6D91483BCA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{E2DB7CE9-5589-42B6-BAFA-6A6D91483BCA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapScrnPlugin", "Plugins\CapPlugin\CapScrnPlugin.csproj", "{CE24A3EF-99E1-4FD1-B33C-D984D1243B2C}"
 EndProject
@@ -46,12 +46,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VolPlugin", "Plugins\VolPlugin\VolPlugin.csproj", "{5AE16E0F-3B9B-47FB-AB16-D9BD6FEA7086}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StatusPlugin", "Plugins\StatusPlugin\StatusPlugin.csproj", "{AAF70E22-E82A-4315-A1D9-2781A754E355}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{C7BC082E-57DE-4875-B738-7B5F81E027D8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enums", "Enums\Enums.csproj", "{34C351AF-423C-44E4-8C39-379D813D4E38}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Extensions", "Extensions\Extensions.csproj", "{18B1B88B-6EB7-4DA7-A542-E2E95A0C838D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpPlugin", "Plugins\HelpPlugin\HelpPlugin.csproj", "{726622FD-C7BA-4922-82F2-2D623E9E0264}"
 EndProject
@@ -145,18 +139,6 @@ Global
 		{AAF70E22-E82A-4315-A1D9-2781A754E355}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AAF70E22-E82A-4315-A1D9-2781A754E355}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AAF70E22-E82A-4315-A1D9-2781A754E355}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C7BC082E-57DE-4875-B738-7B5F81E027D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C7BC082E-57DE-4875-B738-7B5F81E027D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C7BC082E-57DE-4875-B738-7B5F81E027D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C7BC082E-57DE-4875-B738-7B5F81E027D8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{34C351AF-423C-44E4-8C39-379D813D4E38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{34C351AF-423C-44E4-8C39-379D813D4E38}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{34C351AF-423C-44E4-8C39-379D813D4E38}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{34C351AF-423C-44E4-8C39-379D813D4E38}.Release|Any CPU.Build.0 = Release|Any CPU
-		{18B1B88B-6EB7-4DA7-A542-E2E95A0C838D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{18B1B88B-6EB7-4DA7-A542-E2E95A0C838D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{18B1B88B-6EB7-4DA7-A542-E2E95A0C838D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{18B1B88B-6EB7-4DA7-A542-E2E95A0C838D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{726622FD-C7BA-4922-82F2-2D623E9E0264}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{726622FD-C7BA-4922-82F2-2D623E9E0264}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{726622FD-C7BA-4922-82F2-2D623E9E0264}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -1,4 +1,4 @@
-﻿using Enums;
+﻿using Common.Enums;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -14,8 +14,6 @@ namespace LanPlugin.Intranet
 
         public LanMonitor()
         {
-            Jobtype = JobType.Monitor;
-
             worker = new BackgroundWorker();
             worker.WorkerSupportsCancellation = true;
             worker.DoWork += DoWork;

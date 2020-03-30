@@ -1,4 +1,4 @@
-﻿namespace Enums
+﻿namespace Common.Enums
 {
     public enum PowerType
     {

@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace Models
+namespace Common.Models
 {
     public class Request
     {

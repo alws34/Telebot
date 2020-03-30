@@ -1,7 +1,7 @@
 ﻿using Contracts;
 using DisplayPlugin.Core;
-using Enums;
-using Models;
+using Common.Enums;
+using Common.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;

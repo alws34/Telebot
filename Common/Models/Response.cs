@@ -1,7 +1,7 @@
-﻿using Enums;
+﻿using Common.Enums;
 using System.IO;
 
-namespace Models
+namespace Common.Models
 {
 
     public class Response

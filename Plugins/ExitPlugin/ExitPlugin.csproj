@@ -46,13 +46,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Contracts\Contracts.csproj">
+    <ProjectReference Include="..\..\Common\Common.csproj">
       <Project>{E2DB7CE9-5589-42B6-BAFA-6A6D91483BCA}</Project>
-      <Name>Contracts</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Models\Models.csproj">
-      <Project>{C7BC082E-57DE-4875-B738-7B5F81E027D8}</Project>
-      <Name>Models</Name>
+      <Name>Common</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

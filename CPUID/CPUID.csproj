@@ -59,9 +59,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Contracts\Contracts.csproj">
+    <ProjectReference Include="..\Common\Common.csproj">
       <Project>{e2db7ce9-5589-42b6-bafa-6a6d91483bca}</Project>
-      <Name>Contracts</Name>
+      <Name>Common</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

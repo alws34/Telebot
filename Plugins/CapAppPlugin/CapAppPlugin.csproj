@@ -49,17 +49,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Contracts\Contracts.csproj">
+    <ProjectReference Include="..\..\Common\Common.csproj">
       <Project>{e2db7ce9-5589-42b6-bafa-6a6d91483bca}</Project>
-      <Name>Contracts</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Extensions\Extensions.csproj">
-      <Project>{18b1b88b-6eb7-4da7-a542-e2e95a0c838d}</Project>
-      <Name>Extensions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Models\Models.csproj">
-      <Project>{C7BC082E-57DE-4875-B738-7B5F81E027D8}</Project>
-      <Name>Models</Name>
+      <Name>Common</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

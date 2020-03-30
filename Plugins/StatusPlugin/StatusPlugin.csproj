@@ -55,21 +55,13 @@
     <Compile Include="Statuses\WanAddrStatus.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Contracts\Contracts.csproj">
+    <ProjectReference Include="..\..\Common\Common.csproj">
       <Project>{e2db7ce9-5589-42b6-bafa-6a6d91483bca}</Project>
-      <Name>Contracts</Name>
+      <Name>Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\CPUID\CPUID.csproj">
       <Project>{BE642C45-8519-49FD-A45D-B5BF07C9FF96}</Project>
       <Name>CPUID</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Extensions\Extensions.csproj">
-      <Project>{18B1B88B-6EB7-4DA7-A542-E2E95A0C838D}</Project>
-      <Name>Extensions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Models\Models.csproj">
-      <Project>{C7BC082E-57DE-4875-B738-7B5F81E027D8}</Project>
-      <Name>Models</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

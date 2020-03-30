@@ -1,4 +1,4 @@
-﻿using Models;
+﻿using Common.Models;
 using System;
 
 namespace Contracts.Jobs

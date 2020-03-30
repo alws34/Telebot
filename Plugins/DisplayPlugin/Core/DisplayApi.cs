@@ -1,5 +1,5 @@
 ﻿using Contracts.Core;
-using Enums;
+using Common.Enums;
 using static DisplayPlugin.Native.user32;
 
 namespace DisplayPlugin.Core

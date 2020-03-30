@@ -1,5 +1,5 @@
 ﻿using Contracts.Jobs;
-using Enums;
+using Common.Enums;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
@@ -9,8 +9,6 @@ namespace LanPlugin.Intranet
     public abstract class IInetBase : IFeedback
     {
         protected const string wnetPath = ".\\Plugins\\Lan\\wnet.exe";
-
-        public JobType Jobtype { get; protected set; }
 
         protected List<Host> ReadHosts(string path)
         {

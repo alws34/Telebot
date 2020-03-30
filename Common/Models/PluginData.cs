@@ -1,7 +1,8 @@
-﻿using Contracts.Factories;
+﻿using Contracts;
+using Contracts.Factories;
 using System;
 
-namespace Contracts
+namespace Common.Models
 {
     public class PluginData
     {

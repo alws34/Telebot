@@ -2,7 +2,7 @@
 using System.Drawing.Imaging;
 using System.IO;
 
-namespace Extensions
+namespace Common.Extensions
 {
     public static class BitmapExtensions
     {

@@ -1,4 +1,4 @@
-﻿namespace Models
+﻿namespace Common.Models
 {
     public class Feedback
     {

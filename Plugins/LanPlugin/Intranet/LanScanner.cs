@@ -1,4 +1,4 @@
-﻿using Enums;
+﻿using Common.Enums;
 using System.Diagnostics;
 using System.IO;
 
@@ -10,8 +10,6 @@ namespace LanPlugin.Intranet
 
         public LanScanner()
         {
-            Jobtype = JobType.Scanner;
-
             si = new ProcessStartInfo(
                wnetPath, $"/sxml {scanPath}"
             );

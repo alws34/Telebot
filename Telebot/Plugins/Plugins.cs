@@ -1,4 +1,5 @@
-﻿using Contracts;
+﻿using Common.Models;
+using Contracts;
 using Contracts.Factories;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;

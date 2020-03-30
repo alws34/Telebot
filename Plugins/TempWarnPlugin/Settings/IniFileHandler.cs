@@ -9,7 +9,7 @@ namespace TempWarnPlugin.Settings
 {
     public class IniFileHandler : FileIniDataParser, ISettings
     {
-        private const string iniPath = ".\\settings.ini";
+        private const string iniPath = ".\\Plugins\\TempWarn\\settings.ini";
 
         private readonly IniData iniData;
         private readonly List<IProfile> profiles;
@@ -27,6 +27,12 @@ namespace TempWarnPlugin.Settings
             {
                 iniData = ReadFile(iniPath);
             }
+        }
+
+        ~IniFileHandler()
+        {
+            CommitChanges();
+            WriteChanges();
         }
 
         public string ReadString(string section, string key)

@@ -1,6 +1,5 @@
 ﻿using CapTimePlugin.Core;
 using Contracts;
-using Enums;
 using FluentScheduler;
 using System;
 using System.Drawing;
@@ -10,11 +9,6 @@ namespace Telebot.Capture
     public class CaptureSchedule : IJob<CaptureArgs>, IScheduled
     {
         private DateTime timeStop;
-
-        public CaptureSchedule()
-        {
-            JobType = JobType.Scheduled;
-        }
 
         private void Elapsed()
         {

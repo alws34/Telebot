@@ -43,10 +43,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TempTimePlugin", "Plugins\T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TempWarnPlugin", "Plugins\TempWarnPlugin\TempWarnPlugin.csproj", "{CC092074-344F-4040-82F7-0DA201EFC7F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppSettings", "AppSettings\AppSettings.csproj", "{01D62B66-4E0C-4CFD-9A46-8DA4127A0FA6}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginManager", "PluginManager\PluginManager.csproj", "{E8CC3EFB-9DF4-4C24-A5D6-0F231EA966B3}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VolPlugin", "Plugins\VolPlugin\VolPlugin.csproj", "{5AE16E0F-3B9B-47FB-AB16-D9BD6FEA7086}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StatusPlugin", "Plugins\StatusPlugin\StatusPlugin.csproj", "{AAF70E22-E82A-4315-A1D9-2781A754E355}"
@@ -141,14 +137,6 @@ Global
 		{CC092074-344F-4040-82F7-0DA201EFC7F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC092074-344F-4040-82F7-0DA201EFC7F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC092074-344F-4040-82F7-0DA201EFC7F9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{01D62B66-4E0C-4CFD-9A46-8DA4127A0FA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{01D62B66-4E0C-4CFD-9A46-8DA4127A0FA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{01D62B66-4E0C-4CFD-9A46-8DA4127A0FA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{01D62B66-4E0C-4CFD-9A46-8DA4127A0FA6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E8CC3EFB-9DF4-4C24-A5D6-0F231EA966B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E8CC3EFB-9DF4-4C24-A5D6-0F231EA966B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E8CC3EFB-9DF4-4C24-A5D6-0F231EA966B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E8CC3EFB-9DF4-4C24-A5D6-0F231EA966B3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5AE16E0F-3B9B-47FB-AB16-D9BD6FEA7086}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5AE16E0F-3B9B-47FB-AB16-D9BD6FEA7086}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5AE16E0F-3B9B-47FB-AB16-D9BD6FEA7086}.Release|Any CPU.ActiveCfg = Release|Any CPU

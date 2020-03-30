@@ -1,20 +1,12 @@
-﻿using Contracts;
-using System;
+﻿using System;
 
 namespace TempWarnPlugin.Settings
 {
-    public class TempSettings
+    public class TempSettings : IniFileHandler
     {
-        private readonly ISettings settings;
-
-        public TempSettings()
-        {
-            this.settings = settings;
-        }
-
         public float GetCPULimit()
         {
-            string limitStr = settings.ReadString("Temperature", "CPU_TEMPERATURE_WARNING");
+            string limitStr = ReadString("Temperature", "CPU_TEMPERATURE_WARNING");
 
             bool success = float.TryParse(limitStr, out float limit);
 
@@ -25,12 +17,12 @@ namespace TempWarnPlugin.Settings
         {
             string limitStr = Convert.ToString(limit);
 
-            settings.WriteString("Temperature", "CPU_TEMPERATURE_WARNING", limitStr);
+            WriteString("Temperature", "CPU_TEMPERATURE_WARNING", limitStr);
         }
 
         public float GetGPULimit()
         {
-            string limitStr = settings.ReadString("Temperature", "GPU_TEMPERATURE_WARNING");
+            string limitStr = ReadString("Temperature", "GPU_TEMPERATURE_WARNING");
 
             bool success = float.TryParse(limitStr, out float limit);
 
@@ -41,12 +33,12 @@ namespace TempWarnPlugin.Settings
         {
             string fStr = Convert.ToString(level);
 
-            settings.WriteString("Temperature", "GPU_TEMPERATURE_WARNING", fStr);
+            WriteString("Temperature", "GPU_TEMPERATURE_WARNING", fStr);
         }
 
         public bool GetMonitoringState()
         {
-            string state = settings.ReadString("Temperature", "Enabled");
+            string state = ReadString("Temperature", "Enabled");
 
             bool success = bool.TryParse(state, out bool bStatus);
 
@@ -57,7 +49,7 @@ namespace TempWarnPlugin.Settings
         {
             string stateStr = Convert.ToString(state);
 
-            settings.WriteString("Temperature", "Enabled", stateStr);
+            WriteString("Temperature", "Enabled", stateStr);
         }
     }
 }

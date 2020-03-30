@@ -1,6 +1,5 @@
 ﻿using Contracts;
 using Models;
-using PluginManager;
 using System;
 using System.ComponentModel.Composition;
 using System.Text;
@@ -11,27 +10,37 @@ namespace HelpPlugin
     [Export(typeof(IPlugin))]
     public class HelpPlugin : IPlugin
     {
+        private Func<Response, Task> responseHandler;
+
         public HelpPlugin()
         {
             Pattern = "/help";
-            Description = "List of available commands.";
+            Description = "List of available plugins.";
             MinOSVersion = new Version(5, 0);
+
+            MessageHub.MessageHub.Instance.Subscribe<IpcPlugin>(IpcPluginHandler);
         }
 
-        public async override void Execute(Request req, Func<Response, Task> resp)
+        private async void IpcPluginHandler(IpcPlugin e)
         {
             var s = new StringBuilder();
 
-            var plugins = Plugins.Instance.GetAllEntities();
-
-            foreach (IPlugin plugin in plugins)
+            foreach (IPlugin plugin in e.Plugins)
             {
                 s.AppendLine(plugin.ToString());
             }
 
             var result = new Response(s.ToString());
 
-            await resp(result);
+            await responseHandler(result);
+        }
+
+        public override void Execute(Request req, Func<Response, Task> resp)
+        {
+            if (responseHandler == null)
+                responseHandler = resp;
+
+            MessageHub.MessageHub.Instance.Publish(new IpcPluginsGet());
         }
     }
 }

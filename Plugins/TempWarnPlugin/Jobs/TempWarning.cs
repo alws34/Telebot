@@ -1,10 +1,11 @@
 ﻿using Contracts;
+using CPUID;
 using CPUID.Base;
 using CPUID.Models;
-using Enums;
 using FluentScheduler;
 using System.Collections.Generic;
 using TempWarnPlugin.Models;
+using TempWarnPlugin.Settings;
 using static CPUID.Sdk.CpuIdSdk64;
 
 namespace TempWarnPlugin.Jobs
@@ -15,19 +16,20 @@ namespace TempWarnPlugin.Jobs
         private float GPULimit;
 
         private readonly Dictionary<uint, float> limits;
-
         private readonly IEnumerable<IDevice> devices;
+        private readonly TempSettings settings;
 
-        public TempWarning(IEnumerable<IDevice> devices)
+        public TempWarning()
         {
-            JobType = JobType.Fixed;
+            devices = CpuIdWrapper64.DeviceFactory.FindAll(x =>
+               (x.DeviceClass == CLASS_DEVICE_PROCESSOR) ||
+               (x.DeviceClass == CLASS_DEVICE_DISPLAY_ADAPTER)
+            );
 
-            this.devices = devices;
+            settings.AddProfile(this);
 
-            GlobalSettings.Instance.Main.AddProfile(this);
-
-            CPULimit = GlobalSettings.Instance.Temperature.GetCPULimit();
-            GPULimit = GlobalSettings.Instance.Temperature.GetGPULimit();
+            CPULimit = settings.GetCPULimit();
+            GPULimit = settings.GetGPULimit();
 
             limits = new Dictionary<uint, float>
             {
@@ -35,7 +37,7 @@ namespace TempWarnPlugin.Jobs
                 { CLASS_DEVICE_DISPLAY_ADAPTER, GPULimit }
             };
 
-            Active = GlobalSettings.Instance.Temperature.GetMonitoringState();
+            Active = settings.GetMonitoringState();
 
             if (Active)
             {
@@ -90,9 +92,9 @@ namespace TempWarnPlugin.Jobs
 
         public void SaveChanges()
         {
-            GlobalSettings.Instance.Temperature.SaveMonitoringState(Active);
-            GlobalSettings.Instance.Temperature.SaveCPULimit(CPULimit);
-            GlobalSettings.Instance.Temperature.SaveGPULimit(GPULimit);
+            settings.SaveMonitoringState(Active);
+            settings.SaveCPULimit(CPULimit);
+            settings.SaveGPULimit(GPULimit);
         }
 
         private void StartJob()

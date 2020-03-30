@@ -1,5 +1,4 @@
-﻿using Enums;
-using System;
+﻿using System;
 
 namespace Contracts
 {
@@ -15,7 +14,6 @@ namespace Contracts
 
     public abstract class IJob : IFeedback
     {
-        public JobType JobType { get; protected set; }
         public bool Active { get; protected set; }
 
         public abstract void Start();

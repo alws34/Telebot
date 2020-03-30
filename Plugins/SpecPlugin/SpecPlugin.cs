@@ -22,11 +22,11 @@ namespace SpecPlugin
             using (Spec spec = new Spec())
             {
                 string info = spec.GetInfo();
-                string path = @".\spec.txt";
+                string path = ".\\spec.txt";
                 File.WriteAllText(path, info);
             }
 
-            var fileStrm = new FileStream(@".\spec.txt", FileMode.Open);
+            var fileStrm = new FileStream(".\\spec.txt", FileMode.Open);
 
             var result = new Response(fileStrm);
 

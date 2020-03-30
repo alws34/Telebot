@@ -1,9 +1,9 @@
 ﻿using Contracts;
 using Enums;
 using Models;
-using PluginManager;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Telebot.NSPlugins;
 using Telegram.Bot.Args;
 
 namespace Telebot.Clients

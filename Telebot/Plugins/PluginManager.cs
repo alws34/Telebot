@@ -5,7 +5,7 @@ using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using System.Reflection;
 
-namespace PluginManager
+namespace Telebot.NSPlugins
 {
     public class Plugins : IFactory<IPlugin>
     {

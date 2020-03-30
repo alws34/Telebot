@@ -1,5 +1,4 @@
 ﻿using AutoUpdaterDotNET;
-using FluentScheduler;
 using Models;
 using System;
 using System.Threading.Tasks;
@@ -48,18 +47,12 @@ namespace Telebot.Presenters
             view.TrayIcon.Visible = true;
 
             // Delay job to reduce startup time
-            JobManager.AddJob(async () =>
+            Task.Delay(2500).ContinueWith(async (t) =>
             {
                 client.Connect();
                 await AddBotNameTitle();
                 await SendClientHello();
-            }, (s) => s.ToRunOnceIn(3).Seconds()
-            );
-        }
-
-        private async Task SendClientHello()
-        {
-            await client.SendText("*Telebot*: I'm Up.");
+            });
         }
 
         private async Task AddBotNameTitle()
@@ -70,6 +63,11 @@ namespace Telebot.Presenters
             {
                 view.TrayIcon.Text += $" - {me.Username}";
             });
+        }
+
+        private async Task SendClientHello()
+        {
+            await client.SendText("*Telebot*: I'm Up.");
         }
 
         private async void OnFeedback(Feedback e)

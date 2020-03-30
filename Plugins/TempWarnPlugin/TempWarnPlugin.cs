@@ -1,5 +1,4 @@
 ﻿using Contracts;
-using CPUID;
 using Models;
 using System;
 using System.Collections.Generic;
@@ -20,12 +19,7 @@ namespace Telebot.Commands
             Description = "Turn on or off the temperature monitor.";
             MinOSVersion = new Version(5, 1);
 
-            var devicesToMonitor = CpuIdWrapper64.DeviceFactory.FindAll(x =>
-               (x.DeviceClass == CPUID.Sdk.CpuIdSdk64.CLASS_DEVICE_PROCESSOR) ||
-               (x.DeviceClass == CPUID.Sdk.CpuIdSdk64.CLASS_DEVICE_DISPLAY_ADAPTER)
-            );
-
-            _job = new TempWarning(devicesToMonitor);
+            _job = new TempWarning();
 
             actions = new Dictionary<string, Action>()
             {

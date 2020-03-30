@@ -1,5 +1,4 @@
 ﻿using Contracts;
-using CPUID;
 using Models;
 using System;
 using System.ComponentModel.Composition;
@@ -21,12 +20,7 @@ namespace Telebot.Commands
             Description = "Schedules temperature monitor.";
             MinOSVersion = new Version(5, 1);
 
-            var devicesToMonitor = CpuIdWrapper64.DeviceFactory.FindAll(x =>
-                (x.DeviceClass == CPUID.Sdk.CpuIdSdk64.CLASS_DEVICE_PROCESSOR) ||
-                (x.DeviceClass == CPUID.Sdk.CpuIdSdk64.CLASS_DEVICE_DISPLAY_ADAPTER)
-            );
-
-            _job = new TempSchedule(devicesToMonitor);
+            _job = new TempSchedule();
         }
 
         public async override void Execute(Request req, Func<Response, Task> resp)

@@ -58,10 +58,6 @@
     <Compile Include="TempWarnPlugin.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\AppSettings\AppSettings.csproj">
-      <Project>{01D62B66-4E0C-4CFD-9A46-8DA4127A0FA6}</Project>
-      <Name>AppSettings</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Contracts\Contracts.csproj">
       <Project>{E2DB7CE9-5589-42B6-BAFA-6A6D91483BCA}</Project>
       <Name>Contracts</Name>

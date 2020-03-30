@@ -49,6 +49,7 @@
     <Compile Include="IFactory.cs" />
     <Compile Include="IFeedback.cs" />
     <Compile Include="IJob.cs" />
+    <Compile Include="IpcPlugin.cs" />
     <Compile Include="IPlugin.cs" />
     <Compile Include="IProfile.cs" />
     <Compile Include="IScheduled.cs" />

@@ -1,7 +1,7 @@
 ﻿using Contracts;
+using CPUID;
 using CPUID.Base;
 using CPUID.Models;
-using Enums;
 using FluentScheduler;
 using System;
 using System.Collections.Generic;
@@ -15,11 +15,12 @@ namespace TempTimePlugin.Jobs
         private DateTime timeStop;
         private readonly IEnumerable<IDevice> devices;
 
-        public TempSchedule(IEnumerable<IDevice> devices)
+        public TempSchedule()
         {
-            JobType = JobType.Scheduled;
-
-            this.devices = devices;
+            devices = CpuIdWrapper64.DeviceFactory.FindAll(x =>
+                (x.DeviceClass == CLASS_DEVICE_PROCESSOR) ||
+                (x.DeviceClass == CLASS_DEVICE_DISPLAY_ADAPTER)
+            );
         }
 
         private void Elapsed()

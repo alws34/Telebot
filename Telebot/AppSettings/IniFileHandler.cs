@@ -9,7 +9,7 @@ namespace Telebot.AppSettings
 {
     public class IniFileHandler : FileIniDataParser, ISettings
     {
-        private const string iniPath = @".\settings.ini";
+        private const string iniPath = ".\\settings.ini";
 
         private readonly IniData iniData;
         private readonly List<IProfile> profiles;

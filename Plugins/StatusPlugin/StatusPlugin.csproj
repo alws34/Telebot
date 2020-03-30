@@ -71,10 +71,6 @@
       <Project>{C7BC082E-57DE-4875-B738-7B5F81E027D8}</Project>
       <Name>Models</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\PluginManager\PluginManager.csproj">
-      <Project>{E8CC3EFB-9DF4-4C24-A5D6-0F231EA966B3}</Project>
-      <Name>PluginManager</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

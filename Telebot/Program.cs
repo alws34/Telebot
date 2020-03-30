@@ -1,12 +1,14 @@
 ﻿using AutoUpdaterDotNET;
+using Contracts;
 using FluentScheduler;
-using PluginManager;
+using Models;
 using System;
 using System.Configuration;
 using System.Linq;
 using System.Windows.Forms;
 using Telebot.AppSettings;
 using Telebot.Clients;
+using Telebot.NSPlugins;
 using Telebot.Presenters;
 using static CPUID.CpuIdWrapper64;
 
@@ -36,6 +38,8 @@ namespace Telebot
 
                 return;
             }
+
+            MessageHub.MessageHub.Instance.Subscribe<IpcPluginsGet>(IpcPluginsGetHandler);
 
             Plugins.CreateInstance();
 
@@ -74,6 +78,18 @@ namespace Telebot
             }
 
             Sdk64.UninitSDK();
+        }
+
+        private static void IpcPluginsGetHandler(IpcPluginsGet ipcPluginsGet)
+        {
+            var plugins = Plugins.Instance.GetAllEntities();
+
+            IpcPlugin result = new IpcPlugin
+            {
+                Plugins = plugins
+            };
+
+            MessageHub.MessageHub.Instance.Publish(result);
         }
     }
 }

@@ -116,6 +116,7 @@
     <Compile Include="Clients\NotificationArgs.cs" />
     <Compile Include="Commands\UpdateCommand.cs" />
     <Compile Include="Clients\IBotClient.cs" />
+    <Compile Include="Plugins\PluginManager.cs" />
     <Compile Include="Presenters\MainViewPresenter.cs" />
     <Compile Include="Clients\Telebot.cs" />
     <Compile Include="Settings.cs" />
@@ -172,10 +173,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AppSettings\AppSettings.csproj">
-      <Project>{01D62B66-4E0C-4CFD-9A46-8DA4127A0FA6}</Project>
-      <Name>AppSettings</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Contracts\Contracts.csproj">
       <Project>{e2db7ce9-5589-42b6-bafa-6a6d91483bca}</Project>
       <Name>Contracts</Name>
@@ -191,10 +188,6 @@
     <ProjectReference Include="..\Models\Models.csproj">
       <Project>{C7BC082E-57DE-4875-B738-7B5F81E027D8}</Project>
       <Name>Models</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PluginManager\PluginManager.csproj">
-      <Project>{E8CC3EFB-9DF4-4C24-A5D6-0F231EA966B3}</Project>
-      <Name>PluginManager</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

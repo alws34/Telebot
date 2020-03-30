@@ -49,12 +49,6 @@ namespace Telebot
 
             JobManager.AddJob(() =>
             {
-                Sdk64.RefreshInformation();
-            }, (s) => s.WithName("RefreshInformation").ToRunNow().AndEvery(1).Seconds()
-            );
-
-            JobManager.AddJob(() =>
-            {
                 AutoUpdater.Start();
             }, (s) => s.WithName("CheckForUpdate").ToRunEvery(1).Hours()
             );

@@ -1,6 +1,6 @@
-﻿using Contracts;
+﻿using Common.Models;
+using Contracts;
 using CPUID;
-using Common.Models;
 using StatusPlugin.Statuses;
 using System;
 using System.Collections.Generic;

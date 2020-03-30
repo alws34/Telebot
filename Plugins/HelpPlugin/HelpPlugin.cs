@@ -1,6 +1,6 @@
-﻿using Contracts;
+﻿using Common.Models;
+using Contracts;
 using Contracts.Factories;
-using Common.Models;
 using System;
 using System.ComponentModel.Composition;
 using System.Text;

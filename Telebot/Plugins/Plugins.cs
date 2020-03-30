@@ -12,7 +12,7 @@ namespace Telebot.NSPlugins
 {
     public class Plugins : IFactory<IPlugin>
     {
-        [ImportMany]
+        [ImportMany(typeof(IPlugin))]
         public IEnumerable<IPlugin> Items { get; set; }
 
         public static Plugins Instance { get; private set; }
@@ -27,7 +27,6 @@ namespace Telebot.NSPlugins
         {
             var catalog = new AggregateCatalog();
 
-            //Add all the parts found in the assembly located at this path
             var assemblies = Directory.EnumerateFiles(
                 ".\\Plugins", "*Plugin.dll", SearchOption.AllDirectories
             );
@@ -39,10 +38,8 @@ namespace Telebot.NSPlugins
                 catalog.Catalogs.Add(assemblyCatalog);
             }
 
-            //Create the CompositionContainer with the parts in the catalog
             var container = new CompositionContainer(catalog);
 
-            //Fill the imports of this object
             container.ComposeParts(this);
 
             _items.AddRange(Items);

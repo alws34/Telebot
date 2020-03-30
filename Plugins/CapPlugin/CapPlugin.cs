@@ -1,7 +1,7 @@
 ﻿using CapPlugin.Core;
-using Contracts;
 using Common.Extensions;
 using Common.Models;
+using Contracts;
 using System;
 using System.ComponentModel.Composition;
 using System.Drawing;

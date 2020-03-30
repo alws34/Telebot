@@ -1,4 +1,5 @@
-﻿using CPUID.Base;
+﻿using CPUID;
+using CPUID.Base;
 using System.Collections.Generic;
 using System.Text;
 
@@ -16,6 +17,8 @@ namespace StatusPlugin.Statuses
         public string GetStatus()
         {
             var strBuilder = new StringBuilder();
+
+            CpuIdWrapper64.Sdk64.RefreshInformation();
 
             foreach (IDevice device in devices)
             {

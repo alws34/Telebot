@@ -1,5 +1,5 @@
-﻿using Contracts;
-using Common.Extensions;
+﻿using Common.Extensions;
+using Contracts;
 using System.Collections.Generic;
 using System.Text;
 

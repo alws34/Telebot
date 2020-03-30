@@ -1,6 +1,6 @@
-﻿using Contracts;
+﻿using Common.Models;
+using Contracts;
 using LanPlugin.Intranet;
-using Common.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;

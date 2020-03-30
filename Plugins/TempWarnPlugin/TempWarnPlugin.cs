@@ -1,6 +1,6 @@
-﻿using Contracts;
+﻿using Common.Models;
+using Contracts;
 using Contracts.Jobs;
-using Common.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;

@@ -1,8 +1,8 @@
-﻿using Contracts;
-using Common.Models;
+﻿using Common.Models;
+using Contracts;
 using System;
-using System.Threading.Tasks;
 using System.ComponentModel.Composition;
+using System.Threading.Tasks;
 
 namespace Plugins.Restart
 {

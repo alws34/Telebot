@@ -1,5 +1,5 @@
-﻿using Contracts;
-using Common.Extensions;
+﻿using Common.Extensions;
+using Contracts;
 
 namespace StatusPlugin.Statuses
 {

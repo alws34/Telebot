@@ -1,5 +1,4 @@
 ﻿using Contracts.Jobs;
-using Common.Enums;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;

@@ -24,8 +24,13 @@ namespace Telebot.Commands
 
             await Task.Delay(2000).ContinueWith((t) =>
             {
-                Environment.Exit(0);
+                entity.Exit();
             });
+        }
+
+        public override void SetAppEntity(IAppEntity entity)
+        {
+            this.entity = entity;
         }
     }
 }

@@ -13,26 +13,13 @@ namespace Telebot.Commands
     [Export(typeof(IPlugin))]
     public class StatusPlugin : IPlugin
     {
-        private readonly IEnumerable<IStatus> statuses;
+        private IEnumerable<IStatus> statuses;
 
         public StatusPlugin()
         {
             Pattern = "/status";
             Description = "Receive workstation information.";
             MinOSVersion = new Version(5, 0);
-
-            var devices = CpuIdWrapper64.DeviceFactory.GetAllEntities();
-
-            statuses = new IStatus[]
-            {
-                new SystemStatus(devices),
-                new LanAddrStatus(),
-                new WanAddrStatus(),
-                new UptimeStatus(),
-                new LanMonStatus(),
-                new TempStatus(),
-                new CapsStatus()
-            };
         }
 
         public async override void Execute(Request req, Func<Response, Task> resp)
@@ -47,6 +34,26 @@ namespace Telebot.Commands
             var result = new Response(statusBuilder.ToString());
 
             await resp(result);
+        }
+
+        public override void SetAppEntity(IAppEntity entity)
+        {
+            var devices = CpuIdWrapper64.DeviceFactory.GetAllEntities();
+
+            var lanPlugin = entity.Plugins.FindEntity(x => x.Pattern.StartsWith("/lan"));
+            var tempPlugins = entity.Plugins.FindAll(x => x.Pattern.StartsWith("/temp"));
+            var capPlugins = entity.Plugins.FindAll(x => x.Pattern.StartsWith("/captime"));
+
+            statuses = new IStatus[]
+            {
+                new SystemStatus(devices),
+                new LanAddrStatus(),
+                new WanAddrStatus(),
+                new UptimeStatus(),
+                new LanMonStatus(lanPlugin),
+                new TempStatus(tempPlugins),
+                new CapsStatus(capPlugins)
+            };
         }
     }
 }

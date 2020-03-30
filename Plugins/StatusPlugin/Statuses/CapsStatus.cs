@@ -1,5 +1,7 @@
 ﻿using Contracts;
+using Extensions;
 using System.Collections.Generic;
+using System.Text;
 
 namespace StatusPlugin.Statuses
 {
@@ -7,24 +9,23 @@ namespace StatusPlugin.Statuses
     {
         private readonly IEnumerable<IPlugin> plugins;
 
-        public CapsStatus()
+        public CapsStatus(IEnumerable<IPlugin> plugins)
         {
-            //plugins = Plugins.Instance.FindAll(x => x.Pattern.StartsWith("/captime"));
+            this.plugins = plugins;
         }
 
         public string GetStatus()
         {
-            return "";
-            //var result = new StringBuilder();
+            var text = new StringBuilder();
 
-            //foreach (IPlugin plugin in plugins)
-            //{
-            //    string name = plugin.GetType().Name.Replace("ScreenCapture", "");
-            //    string active = plugin.GetJobActive().ToReadable();
-            //    result.AppendLine($"*{name}* 🖼️: {active}");
-            //}
+            foreach (IPlugin plugin in plugins)
+            {
+                string name = plugin.GetJobName();
+                string active = plugin.GetJobActive().ToReadable();
+                text.AppendLine($"*{name}* 🖼️: {active}");
+            }
 
-            //return result.ToString().TrimEnd();
+            return text.ToString().TrimEnd();
         }
     }
 }

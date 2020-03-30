@@ -7,8 +7,9 @@ namespace Contracts
     public abstract class IPlugin
     {
         public string Pattern { get; protected set; }
-
         public string Description { get; protected set; }
+
+        protected IAppEntity entity;
 
         public abstract void Execute(Request req, Func<Response, Task> resp);
 
@@ -18,6 +19,13 @@ namespace Contracts
         {
             return false;
         }
+
+        public virtual string GetJobName()
+        {
+            return "";
+        }
+
+        public virtual void SetAppEntity(IAppEntity entity) { }
 
         public override string ToString()
         {

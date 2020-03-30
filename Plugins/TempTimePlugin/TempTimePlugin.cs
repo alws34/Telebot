@@ -26,7 +26,7 @@ namespace Telebot.Commands
         public async override void Execute(Request req, Func<Response, Task> resp)
         {
             StringBuilder text = new StringBuilder();
-            
+
             _job.Update = async (s, e) =>
             {
                 switch (e)
@@ -73,6 +73,11 @@ namespace Telebot.Commands
         public override bool GetJobActive()
         {
             return _job.Active;
+        }
+
+        public override string GetJobName()
+        {
+            return "Temp Time";
         }
     }
 }

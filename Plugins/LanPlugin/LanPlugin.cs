@@ -93,5 +93,10 @@ namespace LanPlugin
         {
             return monitor.IsActive;
         }
+
+        public override string GetJobName()
+        {
+            return "LAN Monitor";
+        }
     }
 }

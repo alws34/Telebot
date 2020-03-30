@@ -62,5 +62,10 @@ namespace CapTimePlugin
         {
             return _job.Active;
         }
+
+        public override string GetJobName()
+        {
+            return "Cap Time";
+        }
     }
 }

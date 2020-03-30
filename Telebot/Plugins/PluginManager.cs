@@ -4,6 +4,7 @@ using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using System.Reflection;
+using System.Windows.Forms;
 
 namespace Telebot.NSPlugins
 {
@@ -42,6 +43,18 @@ namespace Telebot.NSPlugins
             container.ComposeParts(this);
 
             _items.AddRange(Items);
+
+            var entity = new IAppEntity
+            {
+                Plugins = this,
+                Exit = Application.Exit,
+                Restart = Application.Restart
+            };
+
+            foreach (IPlugin item in Items)
+            {
+                item.SetAppEntity(entity);
+            }
         }
     }
 }

@@ -54,5 +54,10 @@ namespace Telebot.Commands
         {
             return _job.Active;
         }
+
+        public override string GetJobName()
+        {
+            return "Temp Monitor";
+        }
     }
 }

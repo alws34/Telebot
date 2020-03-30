@@ -22,8 +22,13 @@ namespace Telebot.Commands
 
             await Task.Delay(2000).ContinueWith((t) =>
             {
-                // Restart logic
+                entity.Restart();
             });
+        }
+
+        public override void SetAppEntity(IAppEntity entity)
+        {
+            this.entity = entity;
         }
     }
 }

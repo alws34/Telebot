@@ -1,23 +1,23 @@
 ﻿using Contracts;
+using Extensions;
 
 namespace StatusPlugin.Statuses
 {
     public class LanMonStatus : IStatus
     {
-        private readonly IPlugin Plugin;
+        private readonly IPlugin plugin;
 
-        public LanMonStatus()
+        public LanMonStatus(IPlugin plugin)
         {
-            //Plugin = Plugins.Instance.FindEntity(x => x.Pattern.StartsWith("/lan"));
+            this.plugin = plugin;
         }
 
         public string GetStatus()
         {
-            return "";
-            //string name = Plugin.GetType().Name;
-            //string status = Plugin.GetJobActive().ToReadable();
+            string name = plugin.GetJobName();
+            string status = plugin.GetJobActive().ToReadable();
 
-            //return $"*{name}:* {status}";
+            return $"*{name}:* {status}";
         }
     }
 }

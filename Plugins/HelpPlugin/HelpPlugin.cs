@@ -10,37 +10,32 @@ namespace HelpPlugin
     [Export(typeof(IPlugin))]
     public class HelpPlugin : IPlugin
     {
-        private Func<Response, Task> responseHandler;
-
         public HelpPlugin()
         {
             Pattern = "/help";
             Description = "List of available plugins.";
             MinOSVersion = new Version(5, 0);
-
-            MessageHub.MessageHub.Instance.Subscribe<IpcPlugin>(IpcPluginHandler);
         }
 
-        private async void IpcPluginHandler(IpcPlugin e)
+        public async override void Execute(Request req, Func<Response, Task> resp)
         {
-            var s = new StringBuilder();
+            var builder = new StringBuilder();
 
-            foreach (IPlugin plugin in e.Plugins)
+            var plugins = entity.Plugins.GetAllEntities();
+
+            foreach (IPlugin plugin in plugins)
             {
-                s.AppendLine(plugin.ToString());
+                builder.AppendLine(plugin.ToString());
             }
 
-            var result = new Response(s.ToString());
+            var result = new Response(builder.ToString());
 
-            await responseHandler(result);
+            await resp(result);
         }
 
-        public override void Execute(Request req, Func<Response, Task> resp)
+        public override void SetAppEntity(IAppEntity entity)
         {
-            if (responseHandler == null)
-                responseHandler = resp;
-
-            MessageHub.MessageHub.Instance.Publish(new IpcPluginsGet());
+            this.entity = entity;
         }
     }
 }

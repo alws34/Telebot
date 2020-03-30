@@ -1,7 +1,5 @@
 ﻿using AutoUpdaterDotNET;
-using Contracts;
 using FluentScheduler;
-using Models;
 using System;
 using System.Configuration;
 using System.Linq;
@@ -39,10 +37,6 @@ namespace Telebot
                 return;
             }
 
-            MessageHub.MessageHub.Instance.Subscribe<IpcPluginsGet>(IpcPluginsGetHandler);
-
-            Plugins.CreateInstance();
-
             AutoUpdater.AppCastURL = ConfigurationManager.AppSettings["updateUrl"];
 
             MainView mainView = new MainView();
@@ -65,6 +59,8 @@ namespace Telebot
             }, (s) => s.WithName("CheckForUpdate").ToRunEvery(1).Hours()
             );
 
+            Plugins.CreateInstance();
+
             Application.Run(mainView);
 
             int jobsCount = JobManager.AllSchedules.Count();
@@ -78,18 +74,6 @@ namespace Telebot
             }
 
             Sdk64.UninitSDK();
-        }
-
-        private static void IpcPluginsGetHandler(IpcPluginsGet ipcPluginsGet)
-        {
-            var plugins = Plugins.Instance.GetAllEntities();
-
-            IpcPlugin result = new IpcPlugin
-            {
-                Plugins = plugins
-            };
-
-            MessageHub.MessageHub.Instance.Publish(result);
         }
     }
 }

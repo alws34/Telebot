@@ -7,6 +7,8 @@ namespace Telebot.Commands
 {
     public class RestartCommand : IPlugin
     {
+        private Action Restart;
+
         public RestartCommand()
         {
             Pattern = "/restart";
@@ -22,13 +24,13 @@ namespace Telebot.Commands
 
             await Task.Delay(2000).ContinueWith((t) =>
             {
-                entity.Restart();
+                Restart();
             });
         }
 
-        public override void Initialize(IPluginData entity)
+        public override void Initialize(IPluginData data)
         {
-            this.entity = entity;
+            Restart = data.Restart;
         }
     }
 }

@@ -116,7 +116,7 @@
     <Compile Include="Clients\NotificationArgs.cs" />
     <Compile Include="Commands\UpdateCommand.cs" />
     <Compile Include="Clients\IBotClient.cs" />
-    <Compile Include="Plugins\PluginManager.cs" />
+    <Compile Include="Plugins\Plugins.cs" />
     <Compile Include="Presenters\MainViewPresenter.cs" />
     <Compile Include="Clients\Telebot.cs" />
     <Compile Include="Settings.cs" />

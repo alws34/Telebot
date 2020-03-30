@@ -9,8 +9,6 @@ namespace Contracts
         public string Pattern { get; protected set; }
         public string Description { get; protected set; }
 
-        protected IPluginData entity;
-
         public abstract void Execute(Request req, Func<Response, Task> resp);
 
         public Version MinOSVersion { get; protected set; }
@@ -25,7 +23,7 @@ namespace Contracts
             return "";
         }
 
-        public virtual void Initialize(IPluginData entity) { }
+        public virtual void Initialize(IPluginData data) { }
 
         public override string ToString()
         {

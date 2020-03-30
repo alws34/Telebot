@@ -1,6 +1,5 @@
 ﻿using AutoUpdaterDotNET;
 using FluentScheduler;
-using SimpleInjector;
 using System;
 using System.Configuration;
 using System.Linq;

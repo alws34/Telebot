@@ -10,6 +10,8 @@ namespace HelpPlugin
     [Export(typeof(IPlugin))]
     public class HelpPlugin : IPlugin
     {
+        private IFactory<IPlugin> Plugins;
+
         public HelpPlugin()
         {
             Pattern = "/help";
@@ -21,9 +23,7 @@ namespace HelpPlugin
         {
             var builder = new StringBuilder();
 
-            var plugins = entity.Plugins.GetAllEntities();
-
-            foreach (IPlugin plugin in plugins)
+            foreach (IPlugin plugin in Plugins.GetAllEntities())
             {
                 builder.AppendLine(plugin.ToString());
             }
@@ -33,9 +33,9 @@ namespace HelpPlugin
             await resp(result);
         }
 
-        public override void Initialize(IPluginData entity)
+        public override void Initialize(IPluginData data)
         {
-            this.entity = entity;
+            Plugins = data.Plugins;
         }
     }
 }

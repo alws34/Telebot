@@ -36,13 +36,13 @@ namespace Telebot.Commands
             await resp(result);
         }
 
-        public override void Initialize(IPluginData entity)
+        public override void Initialize(IPluginData data)
         {
             var devices = CpuIdWrapper64.DeviceFactory.GetAllEntities();
 
-            var lanPlugin = entity.Plugins.FindEntity(x => x.Pattern.StartsWith("/lan"));
-            var tempPlugins = entity.Plugins.FindAll(x => x.Pattern.StartsWith("/temp"));
-            var capPlugins = entity.Plugins.FindAll(x => x.Pattern.StartsWith("/captime"));
+            var lanPlugin = data.Plugins.FindEntity(x => x.Pattern.StartsWith("/lan"));
+            var tempPlugins = data.Plugins.FindAll(x => x.Pattern.StartsWith("/temp"));
+            var capPlugins = data.Plugins.FindAll(x => x.Pattern.StartsWith("/captime"));
 
             statuses = new IStatus[]
             {

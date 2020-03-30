@@ -9,6 +9,8 @@ namespace Telebot.Commands
     [Export(typeof(IPlugin))]
     public class ExitPlugin : IPlugin
     {
+        private Action Exit;
+
         public ExitPlugin()
         {
             Pattern = "/exit";
@@ -24,13 +26,13 @@ namespace Telebot.Commands
 
             await Task.Delay(2000).ContinueWith((t) =>
             {
-                entity.Exit();
+                Exit();
             });
         }
 
-        public override void Initialize(IPluginData entity)
+        public override void Initialize(IPluginData data)
         {
-            this.entity = entity;
+            Exit = data.Exit;
         }
     }
 }

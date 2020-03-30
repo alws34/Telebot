@@ -1,13 +1,13 @@
-﻿using AppSettings.Contracts;
+﻿using Contracts;
 using System;
 
-namespace AppSettings
+namespace TempWarnPlugin.Settings
 {
     public class TempSettings
     {
         private readonly ISettings settings;
 
-        public TempSettings(ISettings settings)
+        public TempSettings()
         {
             this.settings = settings;
         }

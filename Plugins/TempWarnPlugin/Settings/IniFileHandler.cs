@@ -1,15 +1,15 @@
-﻿using AppSettings.Contracts;
+﻿using Contracts;
 using IniParser;
 using IniParser.Model;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
 
-namespace AppSettings
+namespace TempWarnPlugin.Settings
 {
     public class IniFileHandler : FileIniDataParser, ISettings
     {
-        private const string iniPath = @".\settings.ini";
+        private const string iniPath = ".\\settings.ini";
 
         private readonly IniData iniData;
         private readonly List<IProfile> profiles;

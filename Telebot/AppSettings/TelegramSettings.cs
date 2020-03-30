@@ -1,6 +1,6 @@
-﻿using AppSettings.Contracts;
+﻿using Contracts;
 
-namespace AppSettings
+namespace Telebot.AppSettings
 {
     public class TelegramSettings
     {

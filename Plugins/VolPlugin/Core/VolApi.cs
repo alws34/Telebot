@@ -16,13 +16,14 @@ namespace VolPlugin.Core
 
         public void SetVolume()
         {
-            var si = new ProcessStartInfo
+            var si = new ProcessStartInfo(
+                ".\\Plugins\\Vol\\sndvol64.exe",
+                $"/SetVolume Speakers {level}"
+            )
             {
                 CreateNoWindow = true,
                 UseShellExecute = true,
                 WindowStyle = ProcessWindowStyle.Hidden,
-                FileName = @".\sndvol64.exe",
-                Arguments = $"/SetVolume Speakers {level}"
             };
 
             Process.Start(si);

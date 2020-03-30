@@ -1,4 +1,4 @@
-﻿namespace AppSettings.Contracts
+﻿namespace Contracts
 {
     public interface ISettings
     {

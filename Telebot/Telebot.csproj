@@ -110,6 +110,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppSettings\GlobalSettings.cs" />
+    <Compile Include="AppSettings\IniFileHandler.cs" />
+    <Compile Include="AppSettings\TelegramSettings.cs" />
     <Compile Include="Clients\NotificationArgs.cs" />
     <Compile Include="Commands\UpdateCommand.cs" />
     <Compile Include="Clients\IBotClient.cs" />

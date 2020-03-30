@@ -12,14 +12,15 @@ namespace PluginManager
         [ImportMany]
         public IEnumerable<IPlugin> Items { get; set; }
 
-        private readonly static Plugins instance = new Plugins();
+        public static Plugins Instance { get; private set; }
 
-        public static Plugins GetInstance()
+        // Early initialization "hack"
+        public static void CreateInstance()
         {
-            return instance;
+            Instance = new Plugins();
         }
 
-        public Plugins()
+        private Plugins()
         {
             var catalog = new AggregateCatalog();
 

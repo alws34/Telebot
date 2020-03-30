@@ -1,6 +1,4 @@
-﻿using AppSettings.Contracts;
-using AppSettings.Singletons;
-using Contracts;
+﻿using Contracts;
 using CPUID.Base;
 using CPUID.Models;
 using Enums;

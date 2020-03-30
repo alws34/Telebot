@@ -14,10 +14,10 @@ namespace AppsPlugin.Core
         {
             switch (type)
             {
-                case Session.Foreground:
+                case Session.Background:
                     Func = GetBackgroundApps;
                     break;
-                case Session.Background:
+                case Session.Foreground:
                     Func = GetForegroundApps;
                     break;
             }

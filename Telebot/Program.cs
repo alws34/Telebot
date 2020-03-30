@@ -1,11 +1,11 @@
-﻿using AppSettings.Singletons;
-using AutoUpdaterDotNET;
+﻿using AutoUpdaterDotNET;
 using FluentScheduler;
+using PluginManager;
 using System;
 using System.Configuration;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Telebot.AppSettings;
 using Telebot.Clients;
 using Telebot.Presenters;
 using static CPUID.CpuIdWrapper64;
@@ -20,6 +20,8 @@ namespace Telebot
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            GlobalSettings.CreateInstance();
+
             string token = GlobalSettings.Instance.Telegram.GetBotToken();
             int id = GlobalSettings.Instance.Telegram.GetAdminId();
 
@@ -27,13 +29,15 @@ namespace Telebot
             {
                 MessageBox.Show(
                     "Missing Token or AdminId in settings.ini.",
-                    "Missing info",
+                    "Telebot",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning
                 );
 
                 return;
             }
+
+            Plugins.CreateInstance();
 
             AutoUpdater.AppCastURL = ConfigurationManager.AppSettings["updateUrl"];
 
@@ -57,13 +61,8 @@ namespace Telebot
             }, (s) => s.WithName("CheckForUpdate").ToRunEvery(1).Hours()
             );
 
-            Application.ApplicationExit += ApplicationExit;
-
             Application.Run(mainView);
-        }
 
-        private static void ApplicationExit(object sender, EventArgs e)
-        {
             int jobsCount = JobManager.AllSchedules.Count();
 
             if (jobsCount > 0)
@@ -73,10 +72,6 @@ namespace Telebot
                 JobManager.StopAndBlock();
                 JobManager.RemoveAllJobs();
             }
-
-            GlobalSettings.Instance.Main.CommitChanges();
-
-            GlobalSettings.Instance.Main.WriteChanges();
 
             Sdk64.UninitSDK();
         }

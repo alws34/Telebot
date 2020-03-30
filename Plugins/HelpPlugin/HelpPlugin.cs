@@ -22,7 +22,7 @@ namespace HelpPlugin
         {
             var s = new StringBuilder();
 
-            var plugins = Plugins.GetInstance().GetAllEntities();
+            var plugins = Plugins.Instance.GetAllEntities();
 
             foreach (IPlugin plugin in plugins)
             {

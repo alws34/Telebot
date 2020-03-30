@@ -13,15 +13,9 @@ namespace Contracts
 
         public Version MinOSVersion { get; protected set; }
 
-        public virtual bool GetJobActive()
-        {
-            return false;
-        }
+        public virtual bool GetJobActive() => false;
 
-        public virtual string GetJobName()
-        {
-            return "";
-        }
+        public virtual string GetJobName() => "";
 
         public virtual void Initialize(PluginData data) { }
 

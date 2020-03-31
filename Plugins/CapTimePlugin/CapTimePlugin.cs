@@ -27,7 +27,7 @@ namespace Plugins.CapTime
             {
                 var result1 = new Response($"Screen capture has turned {state}.");
 
-                await respHandler(result1);
+                await resultHandler(result1);
 
                 worker.Stop();
 
@@ -43,7 +43,7 @@ namespace Plugins.CapTime
 
             var response = new Response(text);
 
-            await respHandler(response);
+            await resultHandler(response);
 
             ((IScheduled)worker).Start(duration, interval);
         }
@@ -52,14 +52,14 @@ namespace Plugins.CapTime
         {
             var update = new Response(e.Capture.ToMemStream());
 
-            await respHandler(update);
+            await resultHandler(update);
         }
 
         private async void FeedbackHandler(object sender, Feedback e)
         {
             var result = new Response(e.Text);
 
-            await respHandler(result);
+            await resultHandler(result);
         }
 
         public override bool GetJobActive()
@@ -72,9 +72,9 @@ namespace Plugins.CapTime
             return "Cap Time";
         }
 
-        public override void Initialize(ResponseHandler respHandler)
+        public override void Initialize(PluginData data)
         {
-            base.Initialize(respHandler);
+            base.Initialize(data);
 
             worker = new CaptureSchedule
             {

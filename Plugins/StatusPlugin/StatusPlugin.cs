@@ -32,18 +32,18 @@ namespace Plugins.Status
 
             var result = new Response(statusBuilder.ToString());
 
-            await respHandler(result);
+            await resultHandler(result);
         }
 
-        public override void Initialize(ResponseHandler respHandler, Container iocContainer)
+        public override void Initialize(PluginData data)
         {
-            base.Initialize(respHandler);
+            base.Initialize(data);
 
-            var deviceFactory = iocContainer.GetInstance<IFactory<IDevice>>();
+            var deviceFactory = data.iocContainer.GetInstance<IFactory<IDevice>>();
 
             var devices = deviceFactory.GetAllEntities();
 
-            var pluginFactory = iocContainer.GetInstance<IFactory<IPlugin>>();
+            var pluginFactory = data.iocContainer.GetInstance<IFactory<IPlugin>>();
 
             var lanPlugin = pluginFactory.FindEntity(x => x.Pattern.StartsWith("/lan"));
             var tempPlugins = pluginFactory.FindAll(x => x.Pattern.StartsWith("/temp"));

@@ -19,7 +19,7 @@ namespace Telebot.Clients
             plugins = Program.IocContainer.GetInstance<IFactory<IPlugin>>();
         }
 
-        public async Task RespHandler(Response e)
+        public override async Task ResultHandler(Response e)
         {
             switch (e.ResultType)
             {

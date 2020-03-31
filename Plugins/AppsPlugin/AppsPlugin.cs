@@ -36,7 +36,7 @@ namespace Plugins.Apps
             {
                 var result = new Response(s);
 
-                await respHandler(result);
+                await resultHandler(result);
             });
         }
     }

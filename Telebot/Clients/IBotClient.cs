@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Contracts;
+using System;
 using System.IO;
 using System.Threading.Tasks;
+using Common.Models;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
@@ -16,6 +18,8 @@ namespace Telebot.Clients
         {
             Id = id;
         }
+
+        public abstract Task ResultHandler(Response response);
 
         public bool IsConnected => IsReceiving;
 

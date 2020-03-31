@@ -23,7 +23,7 @@ namespace Plugins.Restart
         {
             var result = new Response("Telebot is restarting...");
 
-            await respHandler(result);
+            await resultHandler(result);
 
             await Task.Delay(2000).ContinueWith((t) =>
             {
@@ -31,11 +31,11 @@ namespace Plugins.Restart
             });
         }
 
-        public override void Initialize(ResponseHandler respHandler, Container iocContainer)
+        public override void Initialize(PluginData data)
         {
-            base.Initialize(respHandler);
+            base.Initialize(data);
 
-            var instance = iocContainer.GetInstance<IAppRestart>();
+            var instance = data.iocContainer.GetInstance<IAppRestart>();
 
             Restart = instance.Restart();
         }

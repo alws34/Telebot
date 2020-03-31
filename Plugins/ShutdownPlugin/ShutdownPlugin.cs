@@ -23,7 +23,7 @@ namespace Plugins.Shutdown
 
             var result = new Response(text);
 
-            await respHandler(result);
+            await resultHandler(result);
 
             ShutdownTimeout(timeout);
         }

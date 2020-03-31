@@ -30,14 +30,14 @@ namespace Plugins.Help
 
             var result = new Response(builder.ToString());
 
-            await respHandler(result);
+            await resultHandler(result);
         }
 
-        public override void Initialize(ResponseHandler respHandler, Container iocContainer)
+        public override void Initialize(PluginData data)
         {
-            base.Initialize(respHandler);
+            base.Initialize(data);
 
-            var factory = iocContainer.GetInstance<IFactory<IPlugin>>();
+            var factory = data.iocContainer.GetInstance<IFactory<IPlugin>>();
 
             plugins = factory.GetAllEntities();
         }

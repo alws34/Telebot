@@ -1,10 +1,12 @@
 ﻿using Contracts;
 using Contracts.Factories;
+using SimpleInjector;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using System.Reflection;
+using Common.Models;
 
 namespace Telebot.Plugins
 {
@@ -35,11 +37,11 @@ namespace Telebot.Plugins
             _items.AddRange(Items);
         }
 
-        public void InitializePlugins()
+        public void InitializePlugins(PluginData data)
         {
             foreach (IPlugin plugin in _items)
             {
-                plugin.Initialize(Program.IocContainer, );
+                plugin.Initialize(data);
             }
         }
     }

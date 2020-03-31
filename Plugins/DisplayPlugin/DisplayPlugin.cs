@@ -30,7 +30,7 @@ namespace Plugins.Display
 
             var result = new Response($"Successfully turned {key} the monitor.");
 
-            await respHandler(result);
+            await resultHandler(result);
 
             DisplayState state = states[key];
 

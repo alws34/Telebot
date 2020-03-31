@@ -27,7 +27,7 @@ namespace Plugins.TempWarn
 
             var response = new Response($"Temperature monitor has turned {state}.");
 
-            await respHandler(response);
+            await resultHandler(response);
 
             switch (state)
             {
@@ -46,14 +46,14 @@ namespace Plugins.TempWarn
 
             var update = new Response(text, false);
 
-            await respHandler(update);
+            await resultHandler(update);
         }
 
         private async void FeedbackHandler(object sender, Feedback e)
         {
             var result = new Response(e.Text);
 
-            await respHandler(result);
+            await resultHandler(result);
         }
 
         public override bool GetJobActive()
@@ -66,11 +66,11 @@ namespace Plugins.TempWarn
             return "Temp Monitor";
         }
 
-        public override void Initialize(ResponseHandler respHandler, Container iocContainer)
+        public override void Initialize(PluginData data)
         {
-            base.Initialize(respHandler);
+            base.Initialize(data);
 
-            var deviceFactory = iocContainer.GetInstance<IFactory<IDevice>>();
+            var deviceFactory = data.iocContainer.GetInstance<IFactory<IDevice>>();
 
             worker = new TempWarning(deviceFactory)
             {

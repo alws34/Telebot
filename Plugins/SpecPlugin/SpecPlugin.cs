@@ -33,14 +33,14 @@ namespace Plugins.NSSpec
 
             var result = new Response(fileStrm);
 
-            await respHandler(result);
+            await resultHandler(result);
         }
 
-        public override void Initialize(ResponseHandler respHandler, Container iocContainer)
+        public override void Initialize(PluginData data)
         {
-            base.Initialize(respHandler);
+            base.Initialize(data);
 
-            deviceFactory = iocContainer.GetInstance<IFactory<IDevice>>();
+            deviceFactory = data.iocContainer.GetInstance<IFactory<IDevice>>();
         }
     }
 }

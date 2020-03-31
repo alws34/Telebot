@@ -30,7 +30,7 @@ namespace Plugins.Kill
             catch (Exception e)
             {
                 var result = new Response(e.Message);
-                await respHandler(result);
+                await resultHandler(result);
                 return;
             }
 
@@ -45,7 +45,7 @@ namespace Plugins.Kill
             }
 
             var result1 = new Response(text);
-            await respHandler(result1);
+            await resultHandler(result1);
         }
     }
 }

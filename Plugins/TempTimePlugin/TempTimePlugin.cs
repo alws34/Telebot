@@ -31,7 +31,7 @@ namespace Plugins.TempTime
             {
                 var resp1 = new Response($"Temperature monitor has turned {state}.");
 
-                await respHandler(resp1);
+                await resultHandler(resp1);
 
                 worker.Stop();
 
@@ -47,7 +47,7 @@ namespace Plugins.TempTime
 
             var resp = new Response(text);
 
-            await respHandler(resp);
+            await resultHandler(resp);
 
             ((IScheduled)worker).Start(duration, interval);
         }
@@ -61,7 +61,7 @@ namespace Plugins.TempTime
                 case null:
                     text.AppendLine("\nFrom *Telebot*");
                     var update = new Response(text.ToString());
-                    await respHandler(update);
+                    await resultHandler(update);
                     text.Clear();
                     break;
                 default:
@@ -74,7 +74,7 @@ namespace Plugins.TempTime
         {
             var result = new Response(e.Text);
 
-            await respHandler(result);
+            await resultHandler(result);
         }
 
         public override bool GetJobActive()
@@ -87,11 +87,11 @@ namespace Plugins.TempTime
             return "Temp Time";
         }
 
-        public override void Initialize(ResponseHandler respHandler, Container iocContainer)
+        public override void Initialize(PluginData data)
         {
-            base.Initialize(respHandler);
+            base.Initialize(data);
 
-            var deviceFactory = iocContainer.GetInstance<IFactory<IDevice>>();
+            var deviceFactory = data.iocContainer.GetInstance<IFactory<IDevice>>();
 
             worker = new TempSchedule(deviceFactory)
             {

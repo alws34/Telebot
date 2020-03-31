@@ -9,18 +9,13 @@ namespace Contracts
         public string Pattern { get; protected set; }
         public string Description { get; protected set; }
 
-        protected ResponseHandler respHandler;
+        protected ResponseHandler resultHandler;
 
         public abstract void Execute(Request req);
 
-        public virtual void Initialize(ResponseHandler respHandler)
+        public virtual void Initialize(PluginData data)
         {
-            this.respHandler = respHandler;
-        }
-
-        public virtual void Initialize(ResponseHandler respHandler, Container iocContainer)
-        {
-            this.respHandler = respHandler;
+            this.resultHandler = data.ResultHandler;
         }
 
         public virtual bool GetJobActive() => false;

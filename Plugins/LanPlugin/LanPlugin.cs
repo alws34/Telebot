@@ -23,7 +23,7 @@ namespace Plugins.Lan
 
             var response = new Response($"Lan triggered to {state}.");
 
-            await respHandler(response);
+            await resultHandler(response);
 
             switch (state)
             {
@@ -51,14 +51,14 @@ namespace Plugins.Lan
 
             var result = new Response(text, false);
 
-            await respHandler(result);
+            await resultHandler(result);
         }
 
         private async void FeedbackHandler(object sender, Feedback e)
         {
             var result = new Response(e.Text);
 
-            await respHandler(result);
+            await resultHandler(result);
         }
 
         public override bool GetJobActive()
@@ -71,9 +71,9 @@ namespace Plugins.Lan
             return "LAN Monitor";
         }
 
-        public override void Initialize(ResponseHandler respHandler)
+        public override void Initialize(PluginData data)
         {
-            base.Initialize(respHandler);
+            base.Initialize(data);
 
             scanner = new LanScanner
             {

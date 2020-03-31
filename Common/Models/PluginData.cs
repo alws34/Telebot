@@ -1,13 +1,11 @@
 ﻿using Contracts;
-using Contracts.Factories;
-using System;
+using SimpleInjector;
 
 namespace Common.Models
 {
     public class PluginData
     {
-        public IFactory<IPlugin> Plugins { get; set; }
-        public Action Exit { get; set; }
-        public Action Restart { get; set; }
+        public Container iocContainer { get; set; }
+        public ResponseHandler ResultHandler { get; set; }
     }
 }

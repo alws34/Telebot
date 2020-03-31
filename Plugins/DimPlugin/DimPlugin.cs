@@ -21,7 +21,7 @@ namespace Plugins.Dim
 
             var result = new Response($"Successfully set brightness to {level}%.");
 
-            await respHandler(result);
+            await resultHandler(result);
 
             var api = new DimApi(level);
 

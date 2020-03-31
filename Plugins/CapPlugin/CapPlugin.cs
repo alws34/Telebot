@@ -26,7 +26,7 @@ namespace Plugins.CapScrn
                 {
                     var result = new Response(screen.ToMemStream());
 
-                    await respHandler(result);
+                    await resultHandler(result);
                 }
             });
         }

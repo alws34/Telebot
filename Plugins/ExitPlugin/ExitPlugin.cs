@@ -23,7 +23,7 @@ namespace Plugins.Exit
         {
             var result = new Response("Telebot is closing...");
 
-            await respHandler(result);
+            await resultHandler(result);
 
             await Task.Delay(2000).ContinueWith((t) =>
             {
@@ -31,11 +31,11 @@ namespace Plugins.Exit
             });
         }
 
-        public override void Initialize(ResponseHandler respHandler, Container iocContainer)
+        public override void Initialize(PluginData data)
         {
-            base.Initialize(respHandler);
+            base.Initialize(data);
 
-            var instance = iocContainer.GetInstance<IAppExit>();
+            var instance = data.iocContainer.GetInstance<IAppExit>();
 
             Exit = instance.Exit();
         }

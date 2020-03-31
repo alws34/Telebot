@@ -33,7 +33,7 @@ namespace Plugins.Power
 
             var result = new Response($"Workstation is going to {key}..");
 
-            await respHandler(result);
+            await resultHandler(result);
 
             PowerType type = types[key];
 

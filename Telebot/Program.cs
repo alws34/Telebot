@@ -11,6 +11,7 @@ using System;
 using System.Configuration;
 using System.Linq;
 using System.Windows.Forms;
+using Common.Models;
 using Telebot.AppSettings;
 using Telebot.Clients;
 using Telebot.Plugins;
@@ -51,6 +52,16 @@ namespace Telebot
 
             MainView mainView = new MainView();
             IBotClient botClient = new Clients.Telebot(token, id);
+
+            var mgr = IocContainer.GetInstance<IFactory<IPlugin>>();
+
+            var data = new PluginData
+            {
+                ResultHandler = botClient.ResultHandler,
+                iocContainer = IocContainer
+            };
+
+            (mgr as PluginMgr)?.InitializePlugins(data);
 
             var presenter = new MainViewPresenter(
                 mainView,

@@ -53,9 +53,9 @@
     <Compile Include="Jobs\IJob.cs" />
     <Compile Include="IPlugin.cs" />
     <Compile Include="Models\Feedback.cs" />
+    <Compile Include="Models\PluginData.cs" />
     <Compile Include="Models\Request.cs" />
     <Compile Include="Models\Response.cs" />
-    <Compile Include="Models\PluginData.cs" />
     <Compile Include="Settings\IProfile.cs" />
     <Compile Include="Settings\IProfiler.cs" />
     <Compile Include="Jobs\IScheduled.cs" />

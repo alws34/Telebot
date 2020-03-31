@@ -21,7 +21,7 @@ namespace Plugins.Vol
 
             var result = new Response($"Successfully adjusted volume to {vol}%.");
 
-            await respHandler(result);
+            await resultHandler(result);
 
             var api = new VolApi(vol);
 

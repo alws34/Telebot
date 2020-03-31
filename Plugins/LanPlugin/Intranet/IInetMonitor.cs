@@ -14,13 +14,13 @@ namespace LanPlugin.Intranet
 
         protected void RaiseConnected(List<Host> hosts)
         {
-            var arg = new HostsArg { Hosts = hosts };
+            var arg = new HostsArg { Hosts = hosts, State = "Connected" };
             Connected?.Invoke(this, arg);
         }
 
         protected void RaiseDisconnected(List<Host> hosts)
         {
-            var arg = new HostsArg { Hosts = hosts };
+            var arg = new HostsArg { Hosts = hosts, State = "Disconnected" };
             Disconnected?.Invoke(this, arg);
         }
 

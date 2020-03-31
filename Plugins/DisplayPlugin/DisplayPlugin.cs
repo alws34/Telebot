@@ -2,10 +2,8 @@
 using Common.Models;
 using Contracts;
 using DisplayPlugin.Core;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.Threading.Tasks;
 
 namespace Plugins.Display
 {
@@ -18,7 +16,6 @@ namespace Plugins.Display
         {
             Pattern = "/screen (on|off)";
             Description = "Turn off or on the monitor.";
-            MinOsVersion = new Version(5, 0);
 
             states = new Dictionary<string, DisplayState>()
             {
@@ -27,13 +24,13 @@ namespace Plugins.Display
             };
         }
 
-        public async override void Execute(Request req, Func<Response, Task> resp)
+        public override async void Execute(Request req)
         {
             string key = req.Groups[1].Value;
 
             var result = new Response($"Successfully turned {key} the monitor.");
 
-            await resp(result);
+            await respHandler(result);
 
             DisplayState state = states[key];
 

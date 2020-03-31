@@ -74,7 +74,7 @@ namespace Telebot.Clients
                     Groups = match.Groups
                 };
 
-                plugin.Execute(req, RespHandler);
+                plugin.Execute(req);
 
                 return;
             }

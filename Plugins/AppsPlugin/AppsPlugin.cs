@@ -2,23 +2,20 @@
 using AppsPlugin.Enums;
 using Common.Models;
 using Contracts;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.Threading.Tasks;
 
 namespace Plugins.Apps
 {
     [Export(typeof(IPlugin))]
     public class AppsPlugin : IPlugin
     {
-        public readonly Dictionary<string, Session> types;
+        private Dictionary<string, Session> types;
 
         public AppsPlugin()
         {
             Pattern = "/apps (fg|all)";
             Description = "List of active applications.";
-            MinOsVersion = new Version(5, 0);
 
             types = new Dictionary<string, Session>
             {
@@ -27,7 +24,7 @@ namespace Plugins.Apps
             };
         }
 
-        public override void Execute(Request req, Func<Response, Task> resp)
+        public override void Execute(Request req)
         {
             string key = req.Groups[1].Value;
 
@@ -35,11 +32,11 @@ namespace Plugins.Apps
 
             var api = new AppsApi(type);
 
-            api.Invoke(async (s) =>
+            api.Invoke(async s =>
             {
                 var result = new Response(s);
 
-                await resp(result);
+                await respHandler(result);
             });
         }
     }

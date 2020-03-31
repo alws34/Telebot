@@ -45,28 +45,14 @@ namespace Telebot
                 return;
             }
 
-            IocContainer = new Container();
-
-            IocContainer.Register<IAppExit, AppExit>();
-            IocContainer.Register<IAppRestart, AppRestart>();
-
-            IocContainer.Register<IFactory<IDevice>, DeviceFactory>(Lifestyle.Singleton);
-            IocContainer.Register<IFactory<IPlugin>, PluginFactory>(Lifestyle.Singleton);
-
-            // Create registration instances
-            IocContainer.Verify();
-
-            var plugins = IocContainer.GetInstance<IFactory<IPlugin>>().GetAllEntities();
-
-            foreach (IPlugin plugin in plugins)
-            {
-                plugin.Initialize(IocContainer);
-            }
+            IocContainer = BuildIocContainer();
 
             AutoUpdater.AppCastURL = ConfigurationManager.AppSettings["updateUrl"];
 
             MainView mainView = new MainView();
             IBotClient botClient = new Clients.Telebot(token, id);
+
+            InitializePlugins(botClient);
 
             var presenter = new MainViewPresenter(
                 mainView,
@@ -92,6 +78,32 @@ namespace Telebot
             }
 
             CpuIdWrapper64.Sdk64.UninitSDK();
+        }
+
+        private static void InitializePlugins(IBotClient botClient)
+        {
+            var fac = IocContainer.GetInstance<IFactory<IPlugin>>();
+
+            foreach (IPlugin plugin in fac.GetAllEntities())
+            {
+                plugin.Initialize(IocContainer, );
+            }
+        }
+
+        private static Container BuildIocContainer()
+        {
+            var container = new Container();
+
+            container.Register<IAppExit, AppExit>();
+            container.Register<IAppRestart, AppRestart>();
+
+            container.Register<IFactory<IDevice>, DeviceFactory>(Lifestyle.Singleton);
+            container.Register<IFactory<IPlugin>, PluginFactory>(Lifestyle.Singleton);
+
+            // Create registration instances
+            container.Verify();
+
+            return container;
         }
     }
 }

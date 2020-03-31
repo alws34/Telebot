@@ -2,11 +2,9 @@
 using Contracts;
 using Contracts.Factories;
 using SimpleInjector;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Plugins.Help
 {
@@ -19,10 +17,9 @@ namespace Plugins.Help
         {
             Pattern = "/help";
             Description = "List of available plugins.";
-            MinOsVersion = new Version(5, 0);
         }
 
-        public override async void Execute(Request req, Func<Response, Task> resp)
+        public override async void Execute(Request req)
         {
             var builder = new StringBuilder();
 
@@ -33,11 +30,13 @@ namespace Plugins.Help
 
             var result = new Response(builder.ToString());
 
-            await resp(result);
+            await respHandler(result);
         }
 
-        public override void Initialize(Container iocContainer)
+        public override void Initialize(Container iocContainer, ResponseHandler respHandler)
         {
+            base.Initialize(respHandler);
+
             var factory = iocContainer.GetInstance<IFactory<IPlugin>>();
 
             plugins = factory.GetAllEntities();

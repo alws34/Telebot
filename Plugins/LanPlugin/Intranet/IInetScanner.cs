@@ -11,7 +11,7 @@ namespace LanPlugin.Intranet
 
         protected void RaiseDiscovered(List<Host> hosts)
         {
-            var arg = new HostsArg { Hosts = hosts };
+            var arg = new HostsArg { Hosts = hosts, State = "Discovered" };
             Discovered?.Invoke(this, arg);
         }
 

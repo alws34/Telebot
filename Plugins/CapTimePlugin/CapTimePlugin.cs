@@ -4,7 +4,6 @@ using Contracts;
 using Contracts.Jobs;
 using System;
 using System.ComponentModel.Composition;
-using System.Threading.Tasks;
 using Telebot.Capture;
 
 namespace Plugins.CapTime
@@ -12,47 +11,30 @@ namespace Plugins.CapTime
     [Export(typeof(IPlugin))]
     public class CapTimePlugin : IPlugin
     {
-        private readonly IJob<CaptureArgs> _job;
+        private IJob<CaptureArgs> worker;
 
         public CapTimePlugin()
         {
             Pattern = "/captime (off|(\\d+) (\\d+))";
             Description = "Schedules screen capture session.";
-            MinOsVersion = new Version(5, 0);
-
-            _job = new CaptureSchedule();
         }
 
-        public async override void Execute(Request req, Func<Response, Task> resp)
+        public override async void Execute(Request req)
         {
-            _job.Update = async (s, e) =>
+            string state = req.Groups[1].Value;
+
+            if (state.Equals("off"))
             {
-                var update = new Response(e.Capture.ToMemStream());
+                var result1 = new Response($"Screen capture has turned {state}.");
 
-                await resp(update);
-            };
+                await respHandler(result1);
 
-            _job.Feedback = async (s, e) =>
-            {
-                var result = new Response(e.Text);
-
-                await resp(result);
-            };
-
-            string arg = req.Groups[1].Value;
-
-            if (arg.Equals("off"))
-            {
-                var result1 = new Response("Successfully sent command \"off\" to screen capture.");
-
-                await resp(result1);
-
-                _job.Stop();
+                worker.Stop();
 
                 return;
             }
 
-            var intParams = arg.Split(' ');
+            var intParams = state.Split(' ');
 
             int duration = Convert.ToInt32(intParams[0]);
             int interval = Convert.ToInt32(intParams[1]);
@@ -61,19 +43,44 @@ namespace Plugins.CapTime
 
             var response = new Response(text);
 
-            await resp(response);
+            await respHandler(response);
 
-            ((IScheduled)_job).Start(duration, interval);
+            ((IScheduled)worker).Start(duration, interval);
+        }
+
+        private async void UpdateHandler(object sender, CaptureArgs e)
+        {
+            var update = new Response(e.Capture.ToMemStream());
+
+            await respHandler(update);
+        }
+
+        private async void FeedbackHandler(object sender, Feedback e)
+        {
+            var result = new Response(e.Text);
+
+            await respHandler(result);
         }
 
         public override bool GetJobActive()
         {
-            return _job.Active;
+            return worker.Active;
         }
 
         public override string GetJobName()
         {
             return "Cap Time";
+        }
+
+        public override void Initialize(ResponseHandler respHandler)
+        {
+            base.Initialize(respHandler);
+
+            worker = new CaptureSchedule
+            {
+                Update = UpdateHandler,
+                Feedback = FeedbackHandler
+            };
         }
     }
 }

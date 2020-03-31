@@ -5,7 +5,6 @@ using Contracts;
 using System;
 using System.ComponentModel.Composition;
 using System.Diagnostics;
-using System.Threading.Tasks;
 
 namespace Plugins.CapApp
 {
@@ -15,11 +14,10 @@ namespace Plugins.CapApp
         public CapAppPlugin()
         {
             Pattern = "/capapp (\\d+)";
-            Description = "Get a screenshot of the specified app (by pid).";
-            MinOsVersion = new Version(5, 0);
+            Description = "Get a screenshot of an app (by pid).";
         }
 
-        public override void Execute(Request req, Func<Response, Task> resp)
+        public override void Execute(Request req)
         {
             int pid = Convert.ToInt32(req.Groups[1].Value);
 
@@ -31,7 +29,7 @@ namespace Plugins.CapApp
             {
                 var result = new Response(wnd.ToMemStream());
 
-                await resp(result);
+                await respHandler(result);
             });
         }
     }

@@ -4,10 +4,7 @@ using Contracts.Factories;
 using Contracts.Jobs;
 using CPUID.Base;
 using SimpleInjector;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.Threading.Tasks;
 using TempWarnPlugin.Jobs;
 using TempWarnPlugin.Models;
 
@@ -16,41 +13,47 @@ namespace Plugins.TempWarn
     [Export(typeof(IPlugin))]
     public class TempWarnPlugin : IPlugin
     {
-        private Dictionary<string, Action> actions;
         private IJob<TempArgs> worker;
 
         public TempWarnPlugin()
         {
             Pattern = "/tempmon (on|off)";
             Description = "Turn on or off the temperature monitor.";
-            MinOsVersion = new Version(5, 1);
         }
 
-        public override async void Execute(Request req, Func<Response, Task> resp)
+        public override async void Execute(Request req)
         {
-            worker.Update = async (s, e) =>
-            {
-                string text = $"*[WARNING] {e.DeviceName}*: {e.Temperature}°C\nFrom *Telebot*";
-
-                var update = new Response(text, false);
-
-                await resp(update);
-            };
-
-            worker.Feedback = async (s, e) =>
-            {
-                var result = new Response(e.Text);
-
-                await resp(result);
-            };
-
             string state = req.Groups[1].Value;
 
-            var response = new Response($"Successfully sent \"{state}\" to the temperature monitor.");
+            var response = new Response($"Temperature monitor has turned {state}.");
 
-            await resp(response);
+            await respHandler(response);
 
-            actions[state].Invoke();
+            switch (state)
+            {
+                case "on":
+                    worker.Start();
+                    break;
+                case "off":
+                    worker.Stop();
+                    break;
+            }
+        }
+
+        private async void UpdateHandler(object sender, TempArgs e)
+        {
+            string text = $"*[WARNING] {e.DeviceName}*: {e.Temperature}°C\nFrom *Telebot*";
+
+            var update = new Response(text, false);
+
+            await respHandler(update);
+        }
+
+        private async void FeedbackHandler(object sender, Feedback e)
+        {
+            var result = new Response(e.Text);
+
+            await respHandler(result);
         }
 
         public override bool GetJobActive()
@@ -63,16 +66,16 @@ namespace Plugins.TempWarn
             return "Temp Monitor";
         }
 
-        public override void Initialize(Container iocContainer)
+        public override void Initialize(Container iocContainer, ResponseHandler respHandler)
         {
+            base.Initialize(respHandler);
+
             var deviceFactory = iocContainer.GetInstance<IFactory<IDevice>>();
 
-            worker = new TempWarning(deviceFactory);
-
-            actions = new Dictionary<string, Action>()
+            worker = new TempWarning(deviceFactory)
             {
-                { "on", worker.Start },
-                { "off", worker.Stop }
+                Update = UpdateHandler,
+                Feedback = FeedbackHandler
             };
         }
     }

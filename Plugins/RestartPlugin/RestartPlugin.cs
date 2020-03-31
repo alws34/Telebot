@@ -17,14 +17,13 @@ namespace Plugins.Restart
         {
             Pattern = "/restart";
             Description = "Restart Telebot.";
-            MinOsVersion = new Version(5, 0);
         }
 
-        public override async void Execute(Request req, Func<Response, Task> resp)
+        public override async void Execute(Request req)
         {
             var result = new Response("Telebot is restarting...");
 
-            await resp(result);
+            await respHandler(result);
 
             await Task.Delay(2000).ContinueWith((t) =>
             {
@@ -32,8 +31,10 @@ namespace Plugins.Restart
             });
         }
 
-        public override void Initialize(Container iocContainer)
+        public override void Initialize(Container iocContainer, ResponseHandler respHandler)
         {
+            base.Initialize(respHandler);
+
             var instance = iocContainer.GetInstance<IAppRestart>();
 
             Restart = instance.Restart();

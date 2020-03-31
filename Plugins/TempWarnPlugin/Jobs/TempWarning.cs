@@ -31,8 +31,8 @@ namespace TempWarnPlugin.Jobs
             settings = new TempSettings();
             settings.AddProfile(this);
 
-            cpuLimit = settings.GetCPULimit();
-            gpuLimit = settings.GetGPULimit();
+            cpuLimit = settings.GetCpuLimit();
+            gpuLimit = settings.GetGpuLimit();
 
             limits = new Dictionary<uint, float>
             {
@@ -68,7 +68,7 @@ namespace TempWarnPlugin.Jobs
 
                     RaiseUpdate(args);
                 }
-            };
+            }
         }
 
         public override void Start()
@@ -98,15 +98,15 @@ namespace TempWarnPlugin.Jobs
         public void SaveChanges()
         {
             settings.SaveMonitoringState(Active);
-            settings.SaveCPULimit(cpuLimit);
-            settings.SaveGPULimit(gpuLimit);
+            settings.SaveCpuLimit(cpuLimit);
+            settings.SaveGpuLimit(gpuLimit);
         }
 
         private void StartJob()
         {
             JobManager.AddJob(
                 Elapsed,
-                (s) => s.WithName(GetType().Name).ToRunNow().AndEvery(7).Seconds()
+                s => s.WithName(GetType().Name).ToRunNow().AndEvery(7).Seconds()
             );
         }
     }

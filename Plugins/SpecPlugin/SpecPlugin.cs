@@ -3,10 +3,8 @@ using Contracts;
 using Contracts.Factories;
 using CPUID.Base;
 using SimpleInjector;
-using System;
 using System.ComponentModel.Composition;
 using System.IO;
-using System.Threading.Tasks;
 
 namespace Plugins.NSSpec
 {
@@ -21,10 +19,9 @@ namespace Plugins.NSSpec
         {
             Pattern = "/spec";
             Description = "Get full hardware information.";
-            MinOsVersion = new Version(5, 1);
         }
 
-        public override async void Execute(Request req, Func<Response, Task> resp)
+        public override async void Execute(Request req)
         {
             Spec spec = new Spec(deviceFactory);
 
@@ -36,11 +33,13 @@ namespace Plugins.NSSpec
 
             var result = new Response(fileStrm);
 
-            await resp(result);
+            await respHandler(result);
         }
 
-        public override void Initialize(Container iocContainer)
+        public override void Initialize(Container iocContainer, ResponseHandler respHandler)
         {
+            base.Initialize(respHandler);
+
             deviceFactory = iocContainer.GetInstance<IFactory<IDevice>>();
         }
     }

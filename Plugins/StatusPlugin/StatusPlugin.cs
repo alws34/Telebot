@@ -4,11 +4,9 @@ using Contracts.Factories;
 using CPUID.Base;
 using SimpleInjector;
 using StatusPlugin.Statuses;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Plugins.Status
 {
@@ -21,10 +19,9 @@ namespace Plugins.Status
         {
             Pattern = "/status";
             Description = "Receive workstation information.";
-            MinOsVersion = new Version(5, 0);
         }
 
-        public override async void Execute(Request req, Func<Response, Task> resp)
+        public override async void Execute(Request req)
         {
             var statusBuilder = new StringBuilder();
 
@@ -35,11 +32,13 @@ namespace Plugins.Status
 
             var result = new Response(statusBuilder.ToString());
 
-            await resp(result);
+            await respHandler(result);
         }
 
-        public override void Initialize(Container iocContainer)
+        public override void Initialize(Container iocContainer, ResponseHandler respHandler)
         {
+            base.Initialize(respHandler);
+
             var deviceFactory = iocContainer.GetInstance<IFactory<IDevice>>();
 
             var devices = deviceFactory.GetAllEntities();

@@ -2,10 +2,8 @@
 using Common.Models;
 using Contracts;
 using PowerPlugin.Core;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.Threading.Tasks;
 
 namespace Plugins.Power
 {
@@ -18,7 +16,6 @@ namespace Plugins.Power
         {
             Pattern = "/power (lock|logoff|sleep|reboot|shutdown)";
             Description = "Lock, logoff, sleep, reboot or shutdown the workstation.";
-            MinOsVersion = new Version(5, 1);
 
             types = new Dictionary<string, PowerType>()
             {
@@ -30,13 +27,13 @@ namespace Plugins.Power
             };
         }
 
-        public async override void Execute(Request req, Func<Response, Task> resp)
+        public override async void Execute(Request req)
         {
             string key = req.Groups[1].Value;
 
             var result = new Response($"Workstation is going to {key}..");
 
-            await resp(result);
+            await respHandler(result);
 
             PowerType type = types[key];
 

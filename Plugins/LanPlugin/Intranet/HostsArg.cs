@@ -8,5 +8,7 @@ namespace LanPlugin.Intranet
     {
         [XmlElement(ElementName = "item")]
         public List<Host> Hosts { get; set; }
+
+        public string State { get; set; }
     }
 }

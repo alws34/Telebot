@@ -2,10 +2,8 @@
 using Common.Extensions;
 using Common.Models;
 using Contracts;
-using System;
 using System.ComponentModel.Composition;
 using System.Drawing;
-using System.Threading.Tasks;
 
 namespace Plugins.CapScrn
 {
@@ -16,10 +14,9 @@ namespace Plugins.CapScrn
         {
             Pattern = "/capture";
             Description = "Get a screenshot of the workstation.";
-            MinOsVersion = new Version(5, 0);
         }
 
-        public override void Execute(Request req, Func<Response, Task> resp)
+        public override void Execute(Request req)
         {
             var api = new DesktopApi();
 
@@ -29,7 +26,7 @@ namespace Plugins.CapScrn
                 {
                     var result = new Response(screen.ToMemStream());
 
-                    await resp(result);
+                    await respHandler(result);
                 }
             });
         }

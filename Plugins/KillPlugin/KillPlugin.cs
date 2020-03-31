@@ -3,7 +3,6 @@ using Contracts;
 using System;
 using System.ComponentModel.Composition;
 using System.Diagnostics;
-using System.Threading.Tasks;
 
 namespace Plugins.Kill
 {
@@ -14,10 +13,9 @@ namespace Plugins.Kill
         {
             Pattern = "/kill (\\d+)";
             Description = "Kill a task with the specified pid.";
-            MinOsVersion = new Version(5, 0);
         }
 
-        public async override void Execute(Request req, Func<Response, Task> resp)
+        public override async void Execute(Request req)
         {
             int pid = Convert.ToInt32(req.Groups[1].Value);
 
@@ -32,7 +30,7 @@ namespace Plugins.Kill
             catch (Exception e)
             {
                 var result = new Response(e.Message);
-                await resp(result);
+                await respHandler(result);
                 return;
             }
 
@@ -47,7 +45,7 @@ namespace Plugins.Kill
             }
 
             var result1 = new Response(text);
-            await resp(result1);
+            await respHandler(result1);
         }
     }
 }

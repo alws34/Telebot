@@ -3,7 +3,6 @@ using Contracts;
 using System;
 using System.ComponentModel.Composition;
 using System.Diagnostics;
-using System.Threading.Tasks;
 
 namespace Plugins.Shutdown
 {
@@ -14,10 +13,9 @@ namespace Plugins.Shutdown
         {
             Pattern = "/shutdown (\\d+)";
             Description = "Schedule the workstation to shutdown.";
-            MinOsVersion = new Version(5, 1);
         }
 
-        public async override void Execute(Request req, Func<Response, Task> resp)
+        public override async void Execute(Request req)
         {
             int timeout = Convert.ToInt32(req.Groups[1].Value);
 
@@ -25,7 +23,7 @@ namespace Plugins.Shutdown
 
             var result = new Response(text);
 
-            await resp(result);
+            await respHandler(result);
 
             ShutdownTimeout(timeout);
         }

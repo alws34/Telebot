@@ -2,7 +2,6 @@
 using Contracts;
 using System;
 using System.ComponentModel.Composition;
-using System.Threading.Tasks;
 using VolPlugin.Core;
 
 namespace Plugins.Vol
@@ -14,16 +13,15 @@ namespace Plugins.Vol
         {
             Pattern = "/vol (\\d{1,3})";
             Description = "Adjust workstation's volume.";
-            MinOsVersion = new Version(5, 0);
         }
 
-        public async override void Execute(Request req, Func<Response, Task> resp)
+        public override async void Execute(Request req)
         {
             int vol = Convert.ToInt32(req.Groups[1].Value);
 
             var result = new Response($"Successfully adjusted volume to {vol}%.");
 
-            await resp(result);
+            await respHandler(result);
 
             var api = new VolApi(vol);
 

@@ -1,8 +1,6 @@
 ﻿using Common.Models;
 using Contracts;
-using System;
 using System.ComponentModel.Composition;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Plugins.Alert
@@ -14,16 +12,16 @@ namespace Plugins.Alert
         {
             Pattern = "/alert \"(.+?)\"";
             Description = "Display an alert with the specified text.";
-            MinOsVersion = new Version(5, 0);
+
         }
 
-        public async override void Execute(Request req, Func<Response, Task> resp)
+        public override async void Execute(Request req)
         {
             string text = req.Groups[1].Value;
 
-            var result = new Response("Successfully displayed alert.");
+            var result = new Response("Alert has been displayed.");
 
-            await resp(result);
+            await respHandler(result);
 
             MessageBox.Show(
                 text,

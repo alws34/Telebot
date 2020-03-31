@@ -4,7 +4,7 @@ namespace TempWarnPlugin.Settings
 {
     public class TempSettings : IniFileHandler
     {
-        public float GetCPULimit()
+        public float GetCpuLimit()
         {
             string limitStr = ReadString("Temperature", "CPU_TEMPERATURE_WARNING");
 
@@ -13,14 +13,14 @@ namespace TempWarnPlugin.Settings
             return success ? limit : 65.0f;
         }
 
-        public void SaveCPULimit(float limit)
+        public void SaveCpuLimit(float limit)
         {
             string limitStr = Convert.ToString(limit);
 
             WriteString("Temperature", "CPU_TEMPERATURE_WARNING", limitStr);
         }
 
-        public float GetGPULimit()
+        public float GetGpuLimit()
         {
             string limitStr = ReadString("Temperature", "GPU_TEMPERATURE_WARNING");
 
@@ -29,7 +29,7 @@ namespace TempWarnPlugin.Settings
             return success ? limit : 65.0f;
         }
 
-        public void SaveGPULimit(float level)
+        public void SaveGpuLimit(float level)
         {
             string fStr = Convert.ToString(level);
 

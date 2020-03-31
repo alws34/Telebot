@@ -96,7 +96,7 @@
     <Compile Include="Plugins\AppRestart.cs" />
     <Compile Include="Plugins\PluginMgr.cs" />
     <Compile Include="Presenters\MainViewPresenter.cs" />
-    <Compile Include="Clients\Telebot.cs" />
+    <Compile Include="Clients\TeleBot.cs" />
     <Compile Include="Views\MainView.cs">
       <SubType>Form</SubType>
     </Compile>

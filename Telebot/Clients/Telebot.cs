@@ -8,11 +8,11 @@ using Telegram.Bot.Args;
 
 namespace Telebot.Clients
 {
-    public class Telebot : IBotClient
+    public class TeleBot : IBotClient
     {
         private readonly IFactory<IPlugin> pluginFac;
 
-        public Telebot(string token, int id) : base(token, id)
+        public TeleBot(string token, int id) : base(token, id)
         {
             OnMessage += BotMessageHandler;
 

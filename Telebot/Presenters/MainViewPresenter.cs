@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Telebot.Clients;
 using Telebot.Views;
+using Updater;
 
 namespace Telebot.Presenters
 {
@@ -21,7 +22,8 @@ namespace Telebot.Presenters
             this.client = client;
             this.client.Notification += OnNotification;
 
-            Program.AppUpdate.HandleCheck += OnCheckUpdate;
+            IAppUpdate appUpdate = Program.IocContainer.GetInstance<IAppUpdate>();
+            appUpdate.HandleCheck += OnCheckUpdate;
         }
 
         private void OnNotification(object sender, NotificationArgs e)

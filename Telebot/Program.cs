@@ -21,7 +21,6 @@ namespace Telebot
     static class Program
     {
         public static Container IocContainer { get; private set; }
-        public static IAppUpdate AppUpdate { get; private set; }
 
         [STAThread]
         static void Main()
@@ -48,20 +47,10 @@ namespace Telebot
 
             BuildIocContainer();
 
-            AppUpdate = IocContainer.GetInstance<IAppUpdate>();
-
             MainView mainView = new MainView();
-            IBotClient botClient = new Clients.Telebot(token, id);
+            IBotClient botClient = new TeleBot(token, id);
 
-            var mgr = IocContainer.GetInstance<IFactory<IPlugin>>();
-
-            var data = new PluginData
-            {
-                ResultHandler = botClient.ResultHandler,
-                iocContainer = IocContainer
-            };
-
-            (mgr as PluginFactory)?.InitializePlugins(data);
+            InitializePlugins(botClient);
 
             var presenter = new MainViewPresenter(
                 mainView,
@@ -81,6 +70,19 @@ namespace Telebot
             }
 
             CpuIdWrapper64.Sdk64.UninitSDK();
+        }
+
+        private static void InitializePlugins(IBotClient botClient)
+        {
+            var mgr = IocContainer.GetInstance<IFactory<IPlugin>>();
+
+            var data = new PluginData
+            {
+                ResultHandler = botClient.ResultHandler,
+                iocContainer = IocContainer
+            };
+
+            (mgr as PluginFactory)?.InitializePlugins(data);
         }
 
         private static void BuildIocContainer()

@@ -4,6 +4,14 @@ using System.Configuration;
 
 namespace Updater
 {
+    public interface IAppUpdate
+    {
+        void CheckUpdate();
+        void DownloadUpdate();
+
+        event AutoUpdater.CheckForUpdateEventHandler HandleCheck;
+    }
+
     public class AppUpdate : IAppUpdate
     {
         public event AutoUpdater.CheckForUpdateEventHandler HandleCheck

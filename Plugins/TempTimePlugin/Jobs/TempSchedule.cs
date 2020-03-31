@@ -29,6 +29,7 @@ namespace TempTimePlugin.Jobs
             if (DateTime.Now >= timeStop)
             {
                 Stop();
+                RaiseFeedback("temperature monitor finished.");
                 return;
             }
 

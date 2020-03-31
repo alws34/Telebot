@@ -94,7 +94,7 @@
     <Compile Include="Clients\IBotClient.cs" />
     <Compile Include="Plugins\AppExit.cs" />
     <Compile Include="Plugins\AppRestart.cs" />
-    <Compile Include="Plugins\PluginMgr.cs" />
+    <Compile Include="Plugins\PluginFactory.cs" />
     <Compile Include="Presenters\MainViewPresenter.cs" />
     <Compile Include="Clients\TeleBot.cs" />
     <Compile Include="Views\MainView.cs">

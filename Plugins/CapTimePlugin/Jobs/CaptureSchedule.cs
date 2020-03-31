@@ -15,6 +15,7 @@ namespace Telebot.Capture
             if (DateTime.Now >= timeStop)
             {
                 Stop();
+                RaiseFeedback("scheduled capture has finished.");
                 return;
             }
 

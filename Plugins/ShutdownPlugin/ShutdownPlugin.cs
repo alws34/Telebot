@@ -14,7 +14,7 @@ namespace Plugins.Shutdown
         {
             Pattern = "/shutdown (\\d+)";
             Description = "Schedule the workstation to shutdown.";
-            MinOSVersion = new Version(5, 1);
+            MinOsVersion = new Version(5, 1);
         }
 
         public async override void Execute(Request req, Func<Response, Task> resp)

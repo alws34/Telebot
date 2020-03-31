@@ -1,5 +1,7 @@
-﻿using Common.Models;
+﻿using Common;
+using Common.Models;
 using Contracts;
+using SimpleInjector;
 using System;
 using System.ComponentModel.Composition;
 using System.Threading.Tasks;
@@ -15,10 +17,10 @@ namespace Plugins.Exit
         {
             Pattern = "/exit";
             Description = "Shutdown Telebot.";
-            MinOSVersion = new Version(5, 0);
+            MinOsVersion = new Version(5, 0);
         }
 
-        public async override void Execute(Request req, Func<Response, Task> resp)
+        public override async void Execute(Request req, Func<Response, Task> resp)
         {
             var result = new Response("Telebot is closing...");
 
@@ -30,9 +32,11 @@ namespace Plugins.Exit
             });
         }
 
-        public override void Initialize(PluginData data)
+        public override void Initialize(Container iocContainer)
         {
-            Exit = data.Exit;
+            var instance = iocContainer.GetInstance<IAppExit>();
+
+            Exit = instance.Exit();
         }
     }
 }

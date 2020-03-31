@@ -1,31 +1,36 @@
-﻿using Plugins.NSSpec.Components;
+﻿using Contracts.Factories;
+using CPUID.Base;
+using Plugins.NSSpec.Components;
 using Plugins.NSSpec.Sensors;
 using Plugins.NSSpec.Sensors.Contracts;
-using System;
 using System.Text;
 using static CPUID.CpuIdWrapper64;
+using static CPUID.Sdk.CpuIdSdk64;
 
 namespace Plugins.NSSpec
 {
-    public class Spec : IDisposable
+    public class Spec
     {
-        public Spec()
-        {
-            Sdk64.RefreshInformation();
-        }
+        private readonly IFactory<IDevice> deviceFactory;
 
-        public void Dispose()
+        public Spec(IFactory<IDevice> deviceFactory)
         {
-            Sdk64.UninitSDK();
+            this.deviceFactory = deviceFactory;
         }
 
         public string GetInfo()
         {
-            var builder = new StringBuilder();
+            var text = new StringBuilder();
 
-            IComponent[] components = new IComponent[]
-            {
+            var processors = deviceFactory.FindAll(x => x.DeviceClass == CLASS_DEVICE_PROCESSOR);
+            var storage = deviceFactory.FindAll(x => x.DeviceClass == CLASS_DEVICE_DRIVE);
+            var displays = deviceFactory.FindAll(x => x.DeviceClass == CLASS_DEVICE_DISPLAY_ADAPTER);
+            var batteries = deviceFactory.FindAll(x => x.DeviceClass == CLASS_DEVICE_BATTERY);
+            var mainboard = deviceFactory.FindAll(x => x.DeviceClass == CLASS_DEVICE_MAINBOARD);
+
+            IComponent[] components = {
                 new Processor(
+                    processors,
                     new ISensor[]
                     {
                         new Voltage(),
@@ -36,6 +41,7 @@ namespace Plugins.NSSpec
                     }
                 ),
                 new Storage(
+                    storage,
                     new ISensor[]
                     {
                         new Temperature(),
@@ -43,12 +49,14 @@ namespace Plugins.NSSpec
                     }
                 ),
                 new Display(
+                    displays,
                     new ISensor[]
                     {
                         new Temperature()
                     }
                 ),
                 new Battery(
+                    batteries,
                     new ISensor[]
                     {
                         new Voltage(),
@@ -57,6 +65,7 @@ namespace Plugins.NSSpec
                     }
                 ),
                 new Mainboard(
+                    mainboard,
                     new ISensor[]
                     {
                         new Utilization()
@@ -64,12 +73,14 @@ namespace Plugins.NSSpec
                 )
             };
 
+            Sdk64.RefreshInformation();
+
             foreach (IComponent component in components)
             {
-                builder.Append(component.ToString());
+                text.Append(component);
             }
 
-            return builder.ToString();
+            return text.ToString();
         }
     }
 }

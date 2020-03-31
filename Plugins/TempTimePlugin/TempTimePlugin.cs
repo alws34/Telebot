@@ -1,6 +1,9 @@
 ﻿using Common.Models;
 using Contracts;
+using Contracts.Factories;
 using Contracts.Jobs;
+using CPUID.Base;
+using SimpleInjector;
 using System;
 using System.ComponentModel.Composition;
 using System.Text;
@@ -13,22 +16,20 @@ namespace Plugins.TempTime
     [Export(typeof(IPlugin))]
     public class TempTimeCommand : IPlugin
     {
-        private readonly IJob<TempArgs> _job;
+        private IJob<TempArgs> worker;
 
         public TempTimeCommand()
         {
             Pattern = "/temptime (off|(\\d+) (\\d+))";
             Description = "Schedules temperature monitor.";
-            MinOSVersion = new Version(5, 1);
-
-            _job = new TempSchedule();
+            MinOsVersion = new Version(5, 1);
         }
 
-        public async override void Execute(Request req, Func<Response, Task> resp)
+        public override async void Execute(Request req, Func<Response, Task> resp)
         {
             StringBuilder text = new StringBuilder();
 
-            _job.Update = async (s, e) =>
+            worker.Update = async (s, e) =>
             {
                 switch (e)
                 {
@@ -44,7 +45,7 @@ namespace Plugins.TempTime
                 }
             };
 
-            _job.Feedback = async (s, e) =>
+            worker.Feedback = async (s, e) =>
             {
                 var result = new Response(e.Text);
 
@@ -59,7 +60,7 @@ namespace Plugins.TempTime
 
                 await resp(result1);
 
-                _job.Stop();
+                worker.Stop();
 
                 return;
             }
@@ -75,17 +76,24 @@ namespace Plugins.TempTime
 
             await resp(response);
 
-            ((IScheduled)_job).Start(duration, interval);
+            ((IScheduled)worker).Start(duration, interval);
         }
 
         public override bool GetJobActive()
         {
-            return _job.Active;
+            return worker.Active;
         }
 
         public override string GetJobName()
         {
             return "Temp Time";
+        }
+
+        public override void Initialize(Container iocContainer)
+        {
+            var deviceFactory = iocContainer.GetInstance<IFactory<IDevice>>();
+
+            worker = new TempSchedule(deviceFactory);
         }
     }
 }

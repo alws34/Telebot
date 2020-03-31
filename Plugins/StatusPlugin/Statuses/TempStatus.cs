@@ -1,7 +1,6 @@
 ﻿using Common.Extensions;
 using Contracts;
 using System.Collections.Generic;
-using System.Text;
 
 namespace StatusPlugin.Statuses
 {
@@ -16,16 +15,17 @@ namespace StatusPlugin.Statuses
 
         public string GetStatus()
         {
-            var text = new StringBuilder();
+            string text = "";
 
             foreach (IPlugin plugin in plugins)
             {
                 string name = plugin.GetJobName();
-                string active = plugin.GetJobActive().ToReadable();
-                text.AppendLine($"*{name}*: {active}");
+                bool active = plugin.GetJobActive();
+
+                text += $"*{name}*: {active.ToReadable()}\n";
             }
 
-            return text.ToString().TrimEnd();
+            return text.TrimEnd('\n');
         }
     }
 }

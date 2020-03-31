@@ -20,7 +20,7 @@ namespace Plugins.Lan
         {
             Pattern = "/lan (mon|moff|scan)";
             Description = "Scan or listen for devices on the LAN.";
-            MinOSVersion = new Version(5, 0);
+            MinOsVersion = new Version(5, 0);
 
             scanner = new LanScanner();
             monitor = new LanMonitor();

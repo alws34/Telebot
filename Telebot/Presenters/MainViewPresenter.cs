@@ -1,5 +1,4 @@
 ﻿using AutoUpdaterDotNET;
-using Common.Models;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -21,8 +20,6 @@ namespace Telebot.Presenters
 
             this.client = client;
             this.client.Notification += OnNotification;
-
-            //MessageHub.MessageHub.Instance.Subscribe<Feedback>(OnFeedback);
 
             AutoUpdater.CheckForUpdateEvent += OnCheckUpdate;
         }
@@ -46,7 +43,7 @@ namespace Telebot.Presenters
             view.TrayIcon.Icon = view.Icon;
             view.TrayIcon.Visible = true;
 
-            // Delay job to reduce startup time
+            // Delay task to reduce startup time
             Task.Delay(2500).ContinueWith(async (t) =>
             {
                 client.Connect();
@@ -68,11 +65,6 @@ namespace Telebot.Presenters
         private async Task SendClientHello()
         {
             await client.SendText("*Telebot*: I'm Up.");
-        }
-
-        private async void OnFeedback(Feedback e)
-        {
-            await client.SendText(e.Text);
         }
 
         private async void OnCheckUpdate(UpdateInfoEventArgs args)

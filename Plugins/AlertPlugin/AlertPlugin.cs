@@ -14,7 +14,7 @@ namespace Plugins.Alert
         {
             Pattern = "/alert \"(.+?)\"";
             Description = "Display an alert with the specified text.";
-            MinOSVersion = new Version(5, 0);
+            MinOsVersion = new Version(5, 0);
         }
 
         public async override void Execute(Request req, Func<Response, Task> resp)

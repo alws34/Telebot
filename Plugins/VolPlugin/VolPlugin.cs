@@ -14,7 +14,7 @@ namespace Plugins.Vol
         {
             Pattern = "/vol (\\d{1,3})";
             Description = "Adjust workstation's volume.";
-            MinOSVersion = new Version(5, 0);
+            MinOsVersion = new Version(5, 0);
         }
 
         public async override void Execute(Request req, Func<Response, Task> resp)

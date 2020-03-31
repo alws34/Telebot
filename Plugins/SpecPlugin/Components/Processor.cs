@@ -1,28 +1,25 @@
 ﻿using CPUID.Base;
-using CPUID.Devices;
 using Plugins.NSSpec.Sensors.Contracts;
 using System.Collections.Generic;
-using static CPUID.CpuIdWrapper64;
-using static CPUID.Sdk.CpuIdSdk64;
 
 namespace Plugins.NSSpec.Components
 {
     public class Processor : IComponent
     {
-        private readonly IEnumerable<IDevice> items;
+        private readonly IEnumerable<IDevice> devices;
         private readonly IEnumerable<ISensor> sensors;
 
-        public Processor(IEnumerable<ISensor> sensors)
+        public Processor(IEnumerable<IDevice> devices, IEnumerable<ISensor> sensors)
         {
-            items = DeviceFactory.FindAll(x => x.DeviceClass == CLASS_DEVICE_PROCESSOR);
+            this.devices = devices;
             this.sensors = sensors;
         }
 
         public override string ToString()
         {
-            foreach (CPUDevice device in items)
+            foreach (IDevice device in devices)
             {
-                stringResult.AppendLine($"+ {device.DeviceName}");
+                text.AppendLine($"+ {device.DeviceName}");
 
                 foreach (ISensor sensor in sensors)
                 {
@@ -31,7 +28,7 @@ namespace Plugins.NSSpec.Components
                 }
             }
 
-            return stringResult.ToString();
+            return text.ToString();
         }
     }
 }

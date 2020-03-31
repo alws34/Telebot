@@ -14,7 +14,7 @@ namespace Plugins.Dim
         {
             Pattern = "/dim (\\d{1,3})";
             Description = "Adjust workstation's brightness.";
-            MinOSVersion = new Version(6, 0);
+            MinOsVersion = new Version(6, 0);
         }
 
         public async override void Execute(Request req, Func<Response, Task> resp)

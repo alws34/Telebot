@@ -1,4 +1,5 @@
 ﻿using Common.Models;
+using SimpleInjector;
 using System;
 using System.Threading.Tasks;
 
@@ -11,13 +12,16 @@ namespace Contracts
 
         public abstract void Execute(Request req, Func<Response, Task> resp);
 
-        public Version MinOSVersion { get; protected set; }
+        public virtual void Initialize(Container iocContainer)
+        {
+
+        }
+
+        public Version MinOsVersion { get; protected set; }
 
         public virtual bool GetJobActive() => false;
 
         public virtual string GetJobName() => "";
-
-        public virtual void Initialize(PluginData data) { }
 
         public override string ToString()
         {

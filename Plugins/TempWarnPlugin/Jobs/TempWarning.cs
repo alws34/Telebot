@@ -1,4 +1,5 @@
-﻿using Contracts.Jobs;
+﻿using Contracts.Factories;
+using Contracts.Jobs;
 using Contracts.Settings;
 using CPUID;
 using CPUID.Base;
@@ -13,16 +14,16 @@ namespace TempWarnPlugin.Jobs
 {
     public class TempWarning : IJob<TempArgs>, IProfile
     {
-        private float CPULimit;
-        private float GPULimit;
+        private readonly float cpuLimit;
+        private readonly float gpuLimit;
 
         private readonly Dictionary<uint, float> limits;
         private readonly IEnumerable<IDevice> devices;
         private readonly TempSettings settings;
 
-        public TempWarning()
+        public TempWarning(IFactory<IDevice> deviceFactory)
         {
-            devices = CpuIdWrapper64.DeviceFactory.FindAll(x =>
+            devices = deviceFactory.FindAll(x =>
                (x.DeviceClass == CLASS_DEVICE_PROCESSOR) ||
                (x.DeviceClass == CLASS_DEVICE_DISPLAY_ADAPTER)
             );
@@ -30,13 +31,13 @@ namespace TempWarnPlugin.Jobs
             settings = new TempSettings();
             settings.AddProfile(this);
 
-            CPULimit = settings.GetCPULimit();
-            GPULimit = settings.GetGPULimit();
+            cpuLimit = settings.GetCPULimit();
+            gpuLimit = settings.GetGPULimit();
 
             limits = new Dictionary<uint, float>
             {
-                { CLASS_DEVICE_PROCESSOR, CPULimit },
-                { CLASS_DEVICE_DISPLAY_ADAPTER, GPULimit }
+                { CLASS_DEVICE_PROCESSOR, cpuLimit },
+                { CLASS_DEVICE_DISPLAY_ADAPTER, gpuLimit }
             };
 
             Active = settings.GetMonitoringState();
@@ -97,8 +98,8 @@ namespace TempWarnPlugin.Jobs
         public void SaveChanges()
         {
             settings.SaveMonitoringState(Active);
-            settings.SaveCPULimit(CPULimit);
-            settings.SaveGPULimit(GPULimit);
+            settings.SaveCPULimit(cpuLimit);
+            settings.SaveGPULimit(gpuLimit);
         }
 
         private void StartJob()

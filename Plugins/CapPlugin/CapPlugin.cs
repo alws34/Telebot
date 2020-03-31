@@ -16,7 +16,7 @@ namespace Plugins.CapScrn
         {
             Pattern = "/capture";
             Description = "Get a screenshot of the workstation.";
-            MinOSVersion = new Version(5, 0);
+            MinOsVersion = new Version(5, 0);
         }
 
         public override void Execute(Request req, Func<Response, Task> resp)

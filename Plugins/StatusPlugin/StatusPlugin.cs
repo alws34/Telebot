@@ -1,6 +1,8 @@
 ﻿using Common.Models;
 using Contracts;
-using CPUID;
+using Contracts.Factories;
+using CPUID.Base;
+using SimpleInjector;
 using StatusPlugin.Statuses;
 using System;
 using System.Collections.Generic;
@@ -19,10 +21,10 @@ namespace Plugins.Status
         {
             Pattern = "/status";
             Description = "Receive workstation information.";
-            MinOSVersion = new Version(5, 0);
+            MinOsVersion = new Version(5, 0);
         }
 
-        public async override void Execute(Request req, Func<Response, Task> resp)
+        public override async void Execute(Request req, Func<Response, Task> resp)
         {
             var statusBuilder = new StringBuilder();
 
@@ -36,13 +38,17 @@ namespace Plugins.Status
             await resp(result);
         }
 
-        public override void Initialize(PluginData data)
+        public override void Initialize(Container iocContainer)
         {
-            var devices = CpuIdWrapper64.DeviceFactory.GetAllEntities();
+            var deviceFactory = iocContainer.GetInstance<IFactory<IDevice>>();
 
-            var lanPlugin = data.Plugins.FindEntity(x => x.Pattern.StartsWith("/lan"));
-            var tempPlugins = data.Plugins.FindAll(x => x.Pattern.StartsWith("/temp"));
-            var capPlugins = data.Plugins.FindAll(x => x.Pattern.StartsWith("/captime"));
+            var devices = deviceFactory.GetAllEntities();
+
+            var pluginFactory = iocContainer.GetInstance<IFactory<IPlugin>>();
+
+            var lanPlugin = pluginFactory.FindEntity(x => x.Pattern.StartsWith("/lan"));
+            var tempPlugins = pluginFactory.FindAll(x => x.Pattern.StartsWith("/temp"));
+            var capPlugins = pluginFactory.FindAll(x => x.Pattern.StartsWith("/captime"));
 
             statuses = new IStatus[]
             {

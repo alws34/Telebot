@@ -1,18 +1,22 @@
 ﻿using Common.Enums;
 using Common.Models;
 using Contracts;
+using Contracts.Factories;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Telebot.NSPlugins;
 using Telegram.Bot.Args;
 
 namespace Telebot.Clients
 {
     public class Telebot : IBotClient
     {
+        private readonly IFactory<IPlugin> plugins;
+
         public Telebot(string token, int id) : base(token, id)
         {
             OnMessage += BotMessageHandler;
+
+            plugins = Program.IocContainer.GetInstance<IFactory<IPlugin>>();
         }
 
         private async void BotMessageHandler(object sender, MessageEventArgs e)
@@ -29,8 +33,6 @@ namespace Telebot.Clients
                         break;
                     case ResultType.Document:
                         await SendDoc(result.Raw, replyId: result.Reply ? e.Message.MessageId : 0);
-                        break;
-                    default:
                         break;
                 }
             }
@@ -58,7 +60,7 @@ namespace Telebot.Clients
 
             RaiseNotification(data);
 
-            bool success = Plugins.Instance.TryGetEntity(
+            bool success = plugins.TryGetEntity(
                 x => Regex.IsMatch(pattern, $"^{x.Pattern}$"),
                 out IPlugin plugin
             );

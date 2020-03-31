@@ -18,7 +18,7 @@ namespace Plugins.CapTime
         {
             Pattern = "/captime (off|(\\d+) (\\d+))";
             Description = "Schedules screen capture session.";
-            MinOSVersion = new Version(5, 0);
+            MinOsVersion = new Version(5, 0);
 
             _job = new CaptureSchedule();
         }

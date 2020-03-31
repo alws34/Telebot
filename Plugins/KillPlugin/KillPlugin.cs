@@ -14,7 +14,7 @@ namespace Plugins.Kill
         {
             Pattern = "/kill (\\d+)";
             Description = "Kill a task with the specified pid.";
-            MinOSVersion = new Version(5, 0);
+            MinOsVersion = new Version(5, 0);
         }
 
         public async override void Execute(Request req, Func<Response, Task> resp)

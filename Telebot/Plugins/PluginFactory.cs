@@ -1,29 +1,19 @@
-﻿using Common.Models;
-using Contracts;
+﻿using Contracts;
 using Contracts.Factories;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using System.Reflection;
-using System.Windows.Forms;
 
-namespace Telebot.NSPlugins
+namespace Telebot.Plugins
 {
-    public class Plugins : IFactory<IPlugin>
+    public class PluginFactory : IFactory<IPlugin>
     {
         [ImportMany(typeof(IPlugin))]
-        public IEnumerable<IPlugin> Items { get; set; }
+        private IEnumerable<IPlugin> Items { get; set; }
 
-        public static Plugins Instance { get; private set; }
-
-        // Early initialization "hack"
-        public static void CreateInstance()
-        {
-            Instance = new Plugins();
-        }
-
-        private Plugins()
+        public PluginFactory()
         {
             var catalog = new AggregateCatalog();
 
@@ -43,18 +33,6 @@ namespace Telebot.NSPlugins
             container.ComposeParts(this);
 
             _items.AddRange(Items);
-
-            var data = new PluginData
-            {
-                Plugins = this,
-                Exit = Application.Exit,
-                Restart = Application.Restart
-            };
-
-            foreach (IPlugin item in Items)
-            {
-                item.Initialize(data);
-            }
         }
     }
 }

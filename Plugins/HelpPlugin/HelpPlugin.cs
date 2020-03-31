@@ -1,7 +1,9 @@
 ﻿using Common.Models;
 using Contracts;
 using Contracts.Factories;
+using SimpleInjector;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,20 +13,20 @@ namespace Plugins.Help
     [Export(typeof(IPlugin))]
     public class HelpPlugin : IPlugin
     {
-        private IFactory<IPlugin> Plugins;
+        private IEnumerable<IPlugin> plugins;
 
         public HelpPlugin()
         {
             Pattern = "/help";
             Description = "List of available plugins.";
-            MinOSVersion = new Version(5, 0);
+            MinOsVersion = new Version(5, 0);
         }
 
-        public async override void Execute(Request req, Func<Response, Task> resp)
+        public override async void Execute(Request req, Func<Response, Task> resp)
         {
             var builder = new StringBuilder();
 
-            foreach (IPlugin plugin in Plugins.GetAllEntities())
+            foreach (IPlugin plugin in plugins)
             {
                 builder.AppendLine(plugin.ToString());
             }
@@ -34,9 +36,11 @@ namespace Plugins.Help
             await resp(result);
         }
 
-        public override void Initialize(PluginData data)
+        public override void Initialize(Container iocContainer)
         {
-            Plugins = data.Plugins;
+            var factory = iocContainer.GetInstance<IFactory<IPlugin>>();
+
+            plugins = factory.GetAllEntities();
         }
     }
 }

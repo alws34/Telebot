@@ -1,6 +1,9 @@
 ﻿using Common.Models;
 using Contracts;
+using Contracts.Factories;
 using Contracts.Jobs;
+using CPUID.Base;
+using SimpleInjector;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -13,27 +16,19 @@ namespace Plugins.TempWarn
     [Export(typeof(IPlugin))]
     public class TempWarnPlugin : IPlugin
     {
-        private readonly Dictionary<string, Action> actions;
-        private readonly IJob<TempArgs> _job;
+        private Dictionary<string, Action> actions;
+        private IJob<TempArgs> worker;
 
         public TempWarnPlugin()
         {
             Pattern = "/tempmon (on|off)";
             Description = "Turn on or off the temperature monitor.";
-            MinOSVersion = new Version(5, 1);
-
-            _job = new TempWarning();
-
-            actions = new Dictionary<string, Action>()
-            {
-                { "on", _job.Start },
-                { "off", _job.Stop }
-            };
+            MinOsVersion = new Version(5, 1);
         }
 
-        public async override void Execute(Request req, Func<Response, Task> resp)
+        public override async void Execute(Request req, Func<Response, Task> resp)
         {
-            _job.Update = async (s, e) =>
+            worker.Update = async (s, e) =>
             {
                 string text = $"*[WARNING] {e.DeviceName}*: {e.Temperature}°C\nFrom *Telebot*";
 
@@ -42,7 +37,7 @@ namespace Plugins.TempWarn
                 await resp(update);
             };
 
-            _job.Feedback = async (s, e) =>
+            worker.Feedback = async (s, e) =>
             {
                 var result = new Response(e.Text);
 
@@ -60,12 +55,25 @@ namespace Plugins.TempWarn
 
         public override bool GetJobActive()
         {
-            return _job.Active;
+            return worker.Active;
         }
 
         public override string GetJobName()
         {
             return "Temp Monitor";
+        }
+
+        public override void Initialize(Container iocContainer)
+        {
+            var deviceFactory = iocContainer.GetInstance<IFactory<IDevice>>();
+
+            worker = new TempWarning(deviceFactory);
+
+            actions = new Dictionary<string, Action>()
+            {
+                { "on", worker.Start },
+                { "off", worker.Stop }
+            };
         }
     }
 }

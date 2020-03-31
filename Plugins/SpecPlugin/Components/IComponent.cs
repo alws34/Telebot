@@ -6,24 +6,24 @@ namespace Plugins.NSSpec.Components
 {
     public abstract class IComponent
     {
-        protected readonly StringBuilder stringResult;
+        protected readonly StringBuilder text;
 
-        public IComponent()
+        protected IComponent()
         {
-            stringResult = new StringBuilder();
+            text = new StringBuilder();
         }
 
         protected void AppendSensors(string sensorName, IEnumerable<Sensor> sensors)
         {
-            stringResult.AppendLine(sensorName);
+            text.AppendLine(sensorName);
 
             foreach (Sensor sensor in sensors)
             {
                 string line = $"{sensor.Name} Value:{sensor.Value} Min:{sensor.Min} Max:{sensor.Max}";
-                stringResult.AppendLine(line);
+                text.AppendLine(line);
             }
 
-            stringResult.AppendLine();
+            text.AppendLine();
         }
 
         public abstract override string ToString();

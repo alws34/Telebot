@@ -18,7 +18,7 @@ namespace Plugins.Apps
         {
             Pattern = "/apps (fg|all)";
             Description = "List of active applications.";
-            MinOSVersion = new Version(5, 0);
+            MinOsVersion = new Version(5, 0);
 
             types = new Dictionary<string, Session>
             {

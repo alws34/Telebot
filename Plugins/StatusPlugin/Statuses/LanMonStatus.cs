@@ -14,10 +14,14 @@ namespace StatusPlugin.Statuses
 
         public string GetStatus()
         {
-            string name = plugin.GetJobName();
-            string status = plugin.GetJobActive().ToReadable();
+            string text = "";
 
-            return $"*{name}:* {status}";
+            string name = plugin.GetJobName();
+            bool active = plugin.GetJobActive();
+
+            text += $"*{name}*: {active.ToReadable()}\n";
+
+            return text.TrimEnd('\n');
         }
     }
 }

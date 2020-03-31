@@ -18,7 +18,7 @@ namespace Plugins.Display
         {
             Pattern = "/screen (on|off)";
             Description = "Turn off or on the monitor.";
-            MinOSVersion = new Version(5, 0);
+            MinOsVersion = new Version(5, 0);
 
             states = new Dictionary<string, DisplayState>()
             {

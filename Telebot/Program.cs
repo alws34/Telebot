@@ -1,19 +1,27 @@
 ﻿using AutoUpdaterDotNET;
+using Common;
+using Contracts;
+using Contracts.Factories;
+using CPUID;
+using CPUID.Base;
+using CPUID.Factories;
 using FluentScheduler;
+using SimpleInjector;
 using System;
 using System.Configuration;
 using System.Linq;
 using System.Windows.Forms;
 using Telebot.AppSettings;
 using Telebot.Clients;
-using Telebot.NSPlugins;
+using Telebot.Plugins;
 using Telebot.Presenters;
-using static CPUID.CpuIdWrapper64;
 
 namespace Telebot
 {
     static class Program
     {
+        public static Container IocContainer { get; private set; }
+
         [STAThread]
         static void Main()
         {
@@ -37,6 +45,24 @@ namespace Telebot
                 return;
             }
 
+            IocContainer = new Container();
+
+            IocContainer.Register<IAppExit, AppExit>();
+            IocContainer.Register<IAppRestart, AppRestart>();
+
+            IocContainer.Register<IFactory<IDevice>, DeviceFactory>(Lifestyle.Singleton);
+            IocContainer.Register<IFactory<IPlugin>, PluginFactory>(Lifestyle.Singleton);
+
+            // Create registration instances
+            IocContainer.Verify();
+
+            var plugins = IocContainer.GetInstance<IFactory<IPlugin>>().GetAllEntities();
+
+            foreach (IPlugin plugin in plugins)
+            {
+                plugin.Initialize(IocContainer);
+            }
+
             AutoUpdater.AppCastURL = ConfigurationManager.AppSettings["updateUrl"];
 
             MainView mainView = new MainView();
@@ -50,10 +76,8 @@ namespace Telebot
             JobManager.AddJob(() =>
             {
                 AutoUpdater.Start();
-            }, (s) => s.WithName("CheckForUpdate").ToRunEvery(1).Hours()
+            }, s => s.WithName("CheckForUpdate").ToRunEvery(1).Hours()
             );
-
-            Plugins.CreateInstance();
 
             Application.Run(mainView);
 
@@ -67,7 +91,7 @@ namespace Telebot
                 JobManager.RemoveAllJobs();
             }
 
-            Sdk64.UninitSDK();
+            CpuIdWrapper64.Sdk64.UninitSDK();
         }
     }
 }

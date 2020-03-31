@@ -18,7 +18,7 @@ namespace Plugins.Power
         {
             Pattern = "/power (lock|logoff|sleep|reboot|shutdown)";
             Description = "Lock, logoff, sleep, reboot or shutdown the workstation.";
-            MinOSVersion = new Version(5, 1);
+            MinOsVersion = new Version(5, 1);
 
             types = new Dictionary<string, PowerType>()
             {

@@ -1,4 +1,5 @@
-﻿using Contracts.Jobs;
+﻿using Contracts.Factories;
+using Contracts.Jobs;
 using CPUID;
 using CPUID.Base;
 using CPUID.Models;
@@ -15,9 +16,9 @@ namespace TempTimePlugin.Jobs
         private DateTime timeStop;
         private readonly IEnumerable<IDevice> devices;
 
-        public TempSchedule()
+        public TempSchedule(IFactory<IDevice> deviceFactory)
         {
-            devices = CpuIdWrapper64.DeviceFactory.FindAll(x =>
+            devices = deviceFactory.FindAll(x =>
                 (x.DeviceClass == CLASS_DEVICE_PROCESSOR) ||
                 (x.DeviceClass == CLASS_DEVICE_DISPLAY_ADAPTER)
             );
@@ -50,7 +51,7 @@ namespace TempTimePlugin.Jobs
             RaiseUpdate(null);
         }
 
-        public void Start(int duration_in_sec, int interval_in_sec)
+        public void Start(int durationSec, int intervalSec)
         {
             if (Active)
             {
@@ -58,11 +59,11 @@ namespace TempTimePlugin.Jobs
                 return;
             }
 
-            timeStop = DateTime.Now.AddSeconds(duration_in_sec);
+            timeStop = DateTime.Now.AddSeconds(durationSec);
 
             JobManager.AddJob(
                 Elapsed,
-                (s) => s.WithName(GetType().Name).ToRunNow().AndEvery(interval_in_sec).Seconds()
+                (s) => s.WithName(GetType().Name).ToRunNow().AndEvery(intervalSec).Seconds()
             );
 
             Active = true;

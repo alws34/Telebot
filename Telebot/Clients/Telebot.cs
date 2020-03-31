@@ -10,13 +10,13 @@ namespace Telebot.Clients
 {
     public class Telebot : IBotClient
     {
-        private readonly IFactory<IPlugin> plugins;
+        private readonly IFactory<IPlugin> pluginFac;
 
         public Telebot(string token, int id) : base(token, id)
         {
             OnMessage += BotMessageHandler;
 
-            plugins = Program.IocContainer.GetInstance<IFactory<IPlugin>>();
+            pluginFac = Program.IocContainer.GetInstance<IFactory<IPlugin>>();
         }
 
         public override async Task ResultHandler(Response e)
@@ -24,13 +24,13 @@ namespace Telebot.Clients
             switch (e.ResultType)
             {
                 case ResultType.Text:
-                    await SendText(e.Text, replyId: e.Reply ? e.MessageId : 0);
+                    await SendText(e.Text, replyId: e.MessageId);
                     break;
                 case ResultType.Photo:
-                    await SendPic(e.Raw, replyId: e.Reply ? e.MessageId : 0);
+                    await SendPic(e.Raw, replyId: e.MessageId);
                     break;
                 case ResultType.Document:
-                    await SendDoc(e.Raw, replyId: e.Reply ? e.MessageId : 0);
+                    await SendDoc(e.Raw, replyId: e.MessageId);
                     break;
             }
         }
@@ -60,7 +60,7 @@ namespace Telebot.Clients
 
             RaiseNotification(data);
 
-            bool success = plugins.TryGetEntity(
+            bool success = pluginFac.TryGetEntity(
                 x => Regex.IsMatch(pattern, $"^{x.Pattern}$"),
                 out IPlugin plugin
             );
@@ -71,7 +71,8 @@ namespace Telebot.Clients
 
                 var req = new Request
                 {
-                    Groups = match.Groups
+                    Groups = match.Groups,
+                    MessageId = e.Message.MessageId
                 };
 
                 plugin.Execute(req);

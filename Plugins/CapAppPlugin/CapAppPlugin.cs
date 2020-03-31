@@ -27,7 +27,7 @@ namespace Plugins.CapApp
 
             api.Invoke(async (wnd) =>
             {
-                var result = new Response(wnd.ToMemStream());
+                var result = new Response(wnd.ToMemStream(), req.MessageId);
 
                 await resultHandler(result);
             });

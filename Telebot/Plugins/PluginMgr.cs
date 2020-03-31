@@ -1,12 +1,11 @@
-﻿using Contracts;
+﻿using Common.Models;
+using Contracts;
 using Contracts.Factories;
-using SimpleInjector;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using System.Reflection;
-using Common.Models;
 
 namespace Telebot.Plugins
 {

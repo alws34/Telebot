@@ -19,7 +19,7 @@ namespace Plugins.Alert
         {
             string text = req.Groups[1].Value;
 
-            var result = new Response("Alert has been displayed.");
+            var result = new Response("Alert has been displayed.", req.MessageId);
 
             await resultHandler(result);
 

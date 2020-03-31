@@ -31,7 +31,10 @@ namespace Plugins.Power
         {
             string key = req.Groups[1].Value;
 
-            var result = new Response($"Workstation is going to {key}..");
+            var result = new Response(
+                $"Workstation is going to {key}..", 
+                req.MessageId
+            );
 
             await resultHandler(result);
 

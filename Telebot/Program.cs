@@ -1,5 +1,6 @@
 ﻿using AutoUpdaterDotNET;
 using Common;
+using Common.Models;
 using Contracts;
 using Contracts.Factories;
 using CPUID;
@@ -11,7 +12,6 @@ using System;
 using System.Configuration;
 using System.Linq;
 using System.Windows.Forms;
-using Common.Models;
 using Telebot.AppSettings;
 using Telebot.Clients;
 using Telebot.Plugins;

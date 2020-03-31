@@ -1,8 +1,7 @@
-﻿using Contracts;
+﻿using Common.Models;
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using Common.Models;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;

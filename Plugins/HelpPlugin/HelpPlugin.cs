@@ -1,7 +1,6 @@
 ﻿using Common.Models;
 using Contracts;
 using Contracts.Factories;
-using SimpleInjector;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Text;
@@ -28,7 +27,10 @@ namespace Plugins.Help
                 builder.AppendLine(plugin.ToString());
             }
 
-            var result = new Response(builder.ToString());
+            var result = new Response(
+                builder.ToString(), 
+                req.MessageId
+            );
 
             await resultHandler(result);
         }

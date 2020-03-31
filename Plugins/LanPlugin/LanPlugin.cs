@@ -21,7 +21,10 @@ namespace Plugins.Lan
         {
             string state = req.Groups[1].Value;
 
-            var response = new Response($"Lan triggered to {state}.");
+            var response = new Response(
+                $"Lan triggered to {state}.", 
+                req.MessageId
+            );
 
             await resultHandler(response);
 
@@ -49,7 +52,7 @@ namespace Plugins.Lan
                 text += "\n\n";
             }
 
-            var result = new Response(text, false);
+            var result = new Response(text);
 
             await resultHandler(result);
         }

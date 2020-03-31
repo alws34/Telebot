@@ -1,7 +1,6 @@
 ﻿using Common;
 using Common.Models;
 using Contracts;
-using SimpleInjector;
 using System;
 using System.ComponentModel.Composition;
 using System.Threading.Tasks;
@@ -21,7 +20,10 @@ namespace Plugins.Restart
 
         public override async void Execute(Request req)
         {
-            var result = new Response("Telebot is restarting...");
+            var result = new Response(
+                "Telebot is restarting...", 
+                req.MessageId
+            );
 
             await resultHandler(result);
 

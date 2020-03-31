@@ -3,7 +3,6 @@ using Contracts;
 using Contracts.Factories;
 using Contracts.Jobs;
 using CPUID.Base;
-using SimpleInjector;
 using System;
 using System.ComponentModel.Composition;
 using System.Text;
@@ -29,7 +28,10 @@ namespace Plugins.TempTime
 
             if (state.Equals("off"))
             {
-                var resp1 = new Response($"Temperature monitor has turned {state}.");
+                var resp1 = new Response(
+                    $"Temperature monitor has turned {state}.", 
+                    req.MessageId
+                );
 
                 await resultHandler(resp1);
 
@@ -45,7 +47,7 @@ namespace Plugins.TempTime
 
             string text = $"Temperature monitor has been scheduled to run {duration} sec for every {interval} sec.";
 
-            var resp = new Response(text);
+            var resp = new Response(text, req.MessageId);
 
             await resultHandler(resp);
 

@@ -2,7 +2,6 @@
 using Contracts;
 using Contracts.Factories;
 using CPUID.Base;
-using SimpleInjector;
 using StatusPlugin.Statuses;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -23,14 +22,17 @@ namespace Plugins.Status
 
         public override async void Execute(Request req)
         {
-            var statusBuilder = new StringBuilder();
+            var builder = new StringBuilder();
 
             foreach (IStatus status in statuses)
             {
-                statusBuilder.AppendLine(status.GetStatus());
+                builder.AppendLine(status.GetStatus());
             }
 
-            var result = new Response(statusBuilder.ToString());
+            var result = new Response(
+                builder.ToString(), 
+                req.MessageId
+            );
 
             await resultHandler(result);
         }

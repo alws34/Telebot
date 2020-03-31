@@ -19,7 +19,10 @@ namespace Plugins.Dim
         {
             int level = Convert.ToInt32(req.Groups[1].Value);
 
-            var result = new Response($"Successfully set brightness to {level}%.");
+            var result = new Response(
+                $"Successfully set brightness to {level}%.",
+                req.MessageId
+            );
 
             await resultHandler(result);
 

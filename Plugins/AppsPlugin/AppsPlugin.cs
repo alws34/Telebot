@@ -34,7 +34,7 @@ namespace Plugins.Apps
 
             api.Invoke(async s =>
             {
-                var result = new Response(s);
+                var result = new Response(s, req.MessageId);
 
                 await resultHandler(result);
             });

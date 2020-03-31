@@ -3,7 +3,6 @@ using Contracts;
 using Contracts.Factories;
 using Contracts.Jobs;
 using CPUID.Base;
-using SimpleInjector;
 using System.ComponentModel.Composition;
 using TempWarnPlugin.Jobs;
 using TempWarnPlugin.Models;
@@ -25,7 +24,10 @@ namespace Plugins.TempWarn
         {
             string state = req.Groups[1].Value;
 
-            var response = new Response($"Temperature monitor has turned {state}.");
+            var response = new Response(
+                $"Temperature monitor has turned {state}.",
+                req.MessageId
+            );
 
             await resultHandler(response);
 
@@ -44,7 +46,7 @@ namespace Plugins.TempWarn
         {
             string text = $"*[WARNING] {e.DeviceName}*: {e.Temperature}°C\nFrom *Telebot*";
 
-            var update = new Response(text, false);
+            var update = new Response(text);
 
             await resultHandler(update);
         }

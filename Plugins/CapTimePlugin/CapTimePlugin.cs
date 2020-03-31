@@ -25,7 +25,10 @@ namespace Plugins.CapTime
 
             if (state.Equals("off"))
             {
-                var result1 = new Response($"Screen capture has turned {state}.");
+                var result1 = new Response(
+                    $"Screen capture has turned {state}.",
+                    req.MessageId
+                );
 
                 await resultHandler(result1);
 
@@ -41,7 +44,7 @@ namespace Plugins.CapTime
 
             string text = $"Screen capture has been scheduled to run {duration} sec for every {interval} sec.";
 
-            var response = new Response(text);
+            var response = new Response(text, req.MessageId);
 
             await resultHandler(response);
 

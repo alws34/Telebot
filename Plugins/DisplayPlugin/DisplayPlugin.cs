@@ -28,7 +28,10 @@ namespace Plugins.Display
         {
             string key = req.Groups[1].Value;
 
-            var result = new Response($"Successfully turned {key} the monitor.");
+            var result = new Response(
+                $"Successfully turned {key} the monitor.",
+                req.MessageId
+            );
 
             await resultHandler(result);
 

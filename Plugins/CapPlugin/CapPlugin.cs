@@ -24,7 +24,7 @@ namespace Plugins.CapScrn
             {
                 foreach (Bitmap screen in screens)
                 {
-                    var result = new Response(screen.ToMemStream());
+                    var result = new Response(screen.ToMemStream(), req.MessageId);
 
                     await resultHandler(result);
                 }

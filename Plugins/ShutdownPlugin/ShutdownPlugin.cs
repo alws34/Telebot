@@ -21,7 +21,7 @@ namespace Plugins.Shutdown
 
             string text = $"Workstation will shutdown in {timeout} seconds.";
 
-            var result = new Response(text);
+            var result = new Response(text, req.MessageId);
 
             await resultHandler(result);
 

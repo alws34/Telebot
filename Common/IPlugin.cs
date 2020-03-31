@@ -1,5 +1,4 @@
 ﻿using Common.Models;
-using SimpleInjector;
 using System.Threading.Tasks;
 
 namespace Contracts

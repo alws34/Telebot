@@ -2,7 +2,6 @@
 using Contracts;
 using Contracts.Factories;
 using CPUID.Base;
-using SimpleInjector;
 using System.ComponentModel.Composition;
 using System.IO;
 
@@ -29,9 +28,9 @@ namespace Plugins.NSSpec
 
             File.WriteAllText(filePath, info);
 
-            var fileStrm = new FileStream(filePath, FileMode.Open);
+            var fileHandle = new FileStream(filePath, FileMode.Open);
 
-            var result = new Response(fileStrm);
+            var result = new Response(fileHandle, req.MessageId);
 
             await resultHandler(result);
         }

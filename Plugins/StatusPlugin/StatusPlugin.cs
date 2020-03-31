@@ -30,7 +30,7 @@ namespace Plugins.Status
             }
 
             var result = new Response(
-                builder.ToString(), 
+                builder.ToString(),
                 req.MessageId
             );
 

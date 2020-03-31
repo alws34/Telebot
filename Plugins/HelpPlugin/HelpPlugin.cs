@@ -28,7 +28,7 @@ namespace Plugins.Help
             }
 
             var result = new Response(
-                builder.ToString(), 
+                builder.ToString(),
                 req.MessageId
             );
 

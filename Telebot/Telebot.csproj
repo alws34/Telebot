@@ -76,7 +76,6 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows" />
@@ -88,18 +87,16 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppSettings\GlobalSettings.cs" />
+    <Compile Include="AppSettings\AppSettings.cs" />
     <Compile Include="AppSettings\IniFileHandler.cs" />
     <Compile Include="AppSettings\TelegramSettings.cs" />
     <Compile Include="Clients\NotificationArgs.cs" />
-    <Compile Include="Commands\UpdateCommand.cs" />
     <Compile Include="Clients\IBotClient.cs" />
     <Compile Include="Plugins\AppExit.cs" />
     <Compile Include="Plugins\AppRestart.cs" />
     <Compile Include="Plugins\PluginMgr.cs" />
     <Compile Include="Presenters\MainViewPresenter.cs" />
     <Compile Include="Clients\Telebot.cs" />
-    <Compile Include="Settings.cs" />
     <Compile Include="Views\MainView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -160,6 +157,10 @@
     <ProjectReference Include="..\CPUID\CPUID.csproj">
       <Project>{BE642C45-8519-49FD-A45D-B5BF07C9FF96}</Project>
       <Name>CPUID</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Updater\Updater.csproj">
+      <Project>{8AEB1F98-C5E9-42ED-94DE-20A2BDEC2DBA}</Project>
+      <Name>Updater</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

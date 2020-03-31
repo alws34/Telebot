@@ -21,7 +21,7 @@ namespace Telebot.Presenters
             this.client = client;
             this.client.Notification += OnNotification;
 
-            AutoUpdater.CheckForUpdateEvent += OnCheckUpdate;
+            Program.AppUpdate.HandleCheck += OnCheckUpdate;
         }
 
         private void OnNotification(object sender, NotificationArgs e)

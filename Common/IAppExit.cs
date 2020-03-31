@@ -1,9 +1,7 @@
-﻿using System;
-
-namespace Common
+﻿namespace Common
 {
     public interface IAppExit
     {
-        Action Exit();
+        void Exit();
     }
 }

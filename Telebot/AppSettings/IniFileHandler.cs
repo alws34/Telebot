@@ -2,7 +2,6 @@
 using IniParser;
 using IniParser.Model;
 using Newtonsoft.Json;
-using System.Collections.Generic;
 using System.IO;
 
 namespace Telebot.AppSettings
@@ -12,12 +11,9 @@ namespace Telebot.AppSettings
         private const string iniPath = ".\\settings.ini";
 
         private readonly IniData iniData;
-        private readonly List<IProfile> profiles;
 
         public IniFileHandler()
         {
-            profiles = new List<IProfile>();
-
             if (!File.Exists(iniPath))
             {
                 File.Create(iniPath);

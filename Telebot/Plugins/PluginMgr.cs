@@ -9,12 +9,12 @@ using System.Reflection;
 
 namespace Telebot.Plugins
 {
-    public class PluginMgr : IFactory<IPlugin>
+    public class PluginFactory : IFactory<IPlugin>
     {
         [ImportMany(typeof(IPlugin))]
         private IEnumerable<IPlugin> Items { get; set; }
 
-        public PluginMgr()
+        public PluginFactory()
         {
             var catalog = new AggregateCatalog();
 

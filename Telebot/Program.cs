@@ -1,5 +1,4 @@
-﻿using AutoUpdaterDotNET;
-using Common;
+﻿using Common;
 using Common.Models;
 using Contracts;
 using Contracts.Factories;
@@ -9,19 +8,20 @@ using CPUID.Factories;
 using FluentScheduler;
 using SimpleInjector;
 using System;
-using System.Configuration;
 using System.Linq;
 using System.Windows.Forms;
 using Telebot.AppSettings;
 using Telebot.Clients;
 using Telebot.Plugins;
 using Telebot.Presenters;
+using Updater;
 
 namespace Telebot
 {
     static class Program
     {
         public static Container IocContainer { get; private set; }
+        public static IAppUpdate AppUpdate { get; private set; }
 
         [STAThread]
         static void Main()
@@ -29,10 +29,10 @@ namespace Telebot
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            GlobalSettings.CreateInstance();
+            IAppSettings appSettings = new AppSettings.AppSettings();
 
-            string token = GlobalSettings.Instance.Telegram.GetBotToken();
-            int id = GlobalSettings.Instance.Telegram.GetAdminId();
+            string token = appSettings.Telegram.GetBotToken();
+            int id = appSettings.Telegram.GetAdminId();
 
             if (string.IsNullOrEmpty(token) || id == 0)
             {
@@ -46,9 +46,9 @@ namespace Telebot
                 return;
             }
 
-            IocContainer = BuildIocContainer();
+            BuildIocContainer();
 
-            AutoUpdater.AppCastURL = ConfigurationManager.AppSettings["updateUrl"];
+            AppUpdate = IocContainer.GetInstance<IAppUpdate>();
 
             MainView mainView = new MainView();
             IBotClient botClient = new Clients.Telebot(token, id);
@@ -61,17 +61,11 @@ namespace Telebot
                 iocContainer = IocContainer
             };
 
-            (mgr as PluginMgr)?.InitializePlugins(data);
+            (mgr as PluginFactory)?.InitializePlugins(data);
 
             var presenter = new MainViewPresenter(
                 mainView,
                 botClient
-            );
-
-            JobManager.AddJob(() =>
-            {
-                AutoUpdater.Start();
-            }, s => s.WithName("CheckForUpdate").ToRunEvery(1).Hours()
             );
 
             Application.Run(mainView);
@@ -89,20 +83,19 @@ namespace Telebot
             CpuIdWrapper64.Sdk64.UninitSDK();
         }
 
-        private static Container BuildIocContainer()
+        private static void BuildIocContainer()
         {
-            var container = new Container();
+            IocContainer = new Container();
 
-            container.Register<IAppExit, AppExit>();
-            container.Register<IAppRestart, AppRestart>();
+            IocContainer.Register<IAppExit, AppExit>();
+            IocContainer.Register<IAppRestart, AppRestart>();
 
-            container.Register<IFactory<IDevice>, DeviceFactory>(Lifestyle.Singleton);
-            container.Register<IFactory<IPlugin>, PluginMgr>(Lifestyle.Singleton);
+            IocContainer.Register<IAppUpdate, AppUpdate>(Lifestyle.Singleton);
+            IocContainer.Register<IFactory<IDevice>, DeviceFactory>(Lifestyle.Singleton);
+            IocContainer.Register<IFactory<IPlugin>, PluginFactory>(Lifestyle.Singleton);
 
             // Create registration instances
-            container.Verify();
-
-            return container;
+            IocContainer.Verify();
         }
     }
 }

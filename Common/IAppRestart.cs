@@ -1,9 +1,7 @@
-﻿using System;
-
-namespace Common
+﻿namespace Common
 {
     public interface IAppRestart
     {
-        Action Restart();
+        void Restart();
     }
 }

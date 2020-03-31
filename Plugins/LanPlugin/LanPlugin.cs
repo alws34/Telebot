@@ -22,7 +22,7 @@ namespace Plugins.Lan
             string state = req.Groups[1].Value;
 
             var response = new Response(
-                $"Lan triggered to {state}.", 
+                $"Lan triggered to {state}.",
                 req.MessageId
             );
 

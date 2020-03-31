@@ -20,7 +20,7 @@ namespace Plugins.Vol
             int vol = Convert.ToInt32(req.Groups[1].Value);
 
             var result = new Response(
-                $"Successfully adjusted volume to {vol}%.", 
+                $"Successfully adjusted volume to {vol}%.",
                 req.MessageId
             );
 

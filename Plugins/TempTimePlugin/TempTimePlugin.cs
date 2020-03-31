@@ -29,7 +29,7 @@ namespace Plugins.TempTime
             if (state.Equals("off"))
             {
                 var resp1 = new Response(
-                    $"Temperature monitor has turned {state}.", 
+                    $"Temperature monitor has turned {state}.",
                     req.MessageId
                 );
 

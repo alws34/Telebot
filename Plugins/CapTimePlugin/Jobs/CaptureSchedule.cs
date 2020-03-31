@@ -35,7 +35,7 @@ namespace Telebot.Capture
             });
         }
 
-        public void Start(int DurationSec, int IntervalSec)
+        public void Start(int durationSec, int intervalSec)
         {
             if (Active)
             {
@@ -43,11 +43,11 @@ namespace Telebot.Capture
                 return;
             }
 
-            timeStop = DateTime.Now.AddSeconds(DurationSec);
+            timeStop = DateTime.Now.AddSeconds(durationSec);
 
             JobManager.AddJob(
                 Elapsed,
-                (s) => s.WithName(GetType().Name).ToRunNow().AndEvery(IntervalSec).Seconds()
+                s => s.WithName(GetType().Name).ToRunNow().AndEvery(intervalSec).Seconds()
             );
             Active = true;
         }

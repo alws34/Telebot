@@ -1,10 +1,12 @@
-﻿using Common.Models;
+﻿using Common;
+using Common.Models;
 using Contracts;
 using Contracts.Factories;
 using CPUID.Base;
 using StatusPlugin.Statuses;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.Linq;
 using System.Text;
 
 namespace Plugins.Status
@@ -12,7 +14,7 @@ namespace Plugins.Status
     [Export(typeof(IPlugin))]
     public class StatusPlugin : IPlugin
     {
-        private IEnumerable<IStatus> statuses;
+        private IEnumerable<IStatus> items { get; set; }
 
         public StatusPlugin()
         {
@@ -24,7 +26,7 @@ namespace Plugins.Status
         {
             var builder = new StringBuilder();
 
-            foreach (IStatus status in statuses)
+            foreach (IStatus status in items)
             {
                 builder.AppendLine(status.GetStatus());
             }
@@ -34,33 +36,25 @@ namespace Plugins.Status
                 req.MessageId
             );
 
-            await resultHandler(result);
+            await ResultHandler(result);
         }
 
         public override void Initialize(PluginData data)
         {
             base.Initialize(data);
 
-            var deviceFactory = data.iocContainer.GetInstance<IFactory<IDevice>>();
+            var stFac = data.iocContainer.GetInstance<IFactory<IStatus>>();
+            var dvcFac = data.iocContainer.GetInstance<IFactory<IDevice>>();
 
-            var devices = deviceFactory.GetAllEntities();
-
-            var pluginFactory = data.iocContainer.GetInstance<IFactory<IPlugin>>();
-
-            var lanPlugin = pluginFactory.FindEntity(x => x.Pattern.StartsWith("/lan"));
-            var tempPlugins = pluginFactory.FindAll(x => x.Pattern.StartsWith("/temp"));
-            var capPlugins = pluginFactory.FindAll(x => x.Pattern.StartsWith("/captime"));
-
-            statuses = new IStatus[]
+            IStatus[] arr = 
             {
-                new SystemStatus(devices),
+                new SystemStatus(dvcFac.GetAll()),
                 new LanAddrStatus(),
                 new WanAddrStatus(),
-                new UptimeStatus(),
-                new LanMonStatus(lanPlugin),
-                new TempStatus(tempPlugins),
-                new CapsStatus(capPlugins)
+                new UptimeStatus()
             };
+
+            items = arr.Concat(stFac.GetAll());
         }
     }
 }

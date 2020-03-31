@@ -33,7 +33,7 @@ namespace Plugins.Update
                         "Telebot is updating...",
                         req.MessageId
                     );
-                    await resultHandler(result);
+                    await ResultHandler(result);
                     appUpdate.DownloadUpdate();
                     await Task.Delay(1500).ContinueWith(t => { appExit.Exit(); });
                     break;

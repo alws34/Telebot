@@ -33,7 +33,7 @@ namespace Plugins.Display
                 req.MessageId
             );
 
-            await resultHandler(result);
+            await ResultHandler(result);
 
             DisplayState state = states[key];
 

@@ -36,7 +36,7 @@ namespace Plugins.Apps
             {
                 var result = new Response(s, req.MessageId);
 
-                await resultHandler(result);
+                await ResultHandler(result);
             });
         }
     }

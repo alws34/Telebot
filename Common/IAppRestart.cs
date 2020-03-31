@@ -1,7 +1,19 @@
-﻿namespace Common
+﻿using System;
+
+namespace Common
 {
     public interface IAppRestart
     {
-        void Restart();
+        Action Restart { get; }
+    }
+
+    public class AppRestart : IAppRestart
+    {
+        public Action Restart { get; }
+
+        public AppRestart(Action Restart)
+        {
+            this.Restart = Restart;
+        }
     }
 }

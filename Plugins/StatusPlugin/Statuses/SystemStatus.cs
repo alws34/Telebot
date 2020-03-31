@@ -1,4 +1,5 @@
-﻿using CPUID;
+﻿using Common;
+using CPUID;
 using CPUID.Base;
 using System.Collections.Generic;
 using System.Text;

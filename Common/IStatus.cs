@@ -1,4 +1,4 @@
-﻿namespace StatusPlugin.Statuses
+﻿namespace Common
 {
     public interface IStatus
     {

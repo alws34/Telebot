@@ -1,4 +1,5 @@
-﻿using Common.Extensions;
+﻿using Common;
+using Common.Extensions;
 using Common.Models;
 using Contracts;
 using Contracts.Jobs;
@@ -9,7 +10,8 @@ using Telebot.Capture;
 namespace Plugins.CapTime
 {
     [Export(typeof(IPlugin))]
-    public class CapTimePlugin : IPlugin
+    [Export(typeof(IStatus))]
+    public class CapTimePlugin : IPlugin, IStatus
     {
         private IJob<CaptureArgs> worker;
 
@@ -30,7 +32,7 @@ namespace Plugins.CapTime
                     req.MessageId
                 );
 
-                await resultHandler(result1);
+                await ResultHandler(result1);
 
                 worker.Stop();
 
@@ -46,7 +48,7 @@ namespace Plugins.CapTime
 
             var response = new Response(text, req.MessageId);
 
-            await resultHandler(response);
+            await ResultHandler(response);
 
             ((IScheduled)worker).Start(duration, interval);
         }
@@ -55,24 +57,14 @@ namespace Plugins.CapTime
         {
             var update = new Response(e.Capture.ToMemStream());
 
-            await resultHandler(update);
+            await ResultHandler(update);
         }
 
         private async void FeedbackHandler(object sender, Feedback e)
         {
             var result = new Response(e.Text);
 
-            await resultHandler(result);
-        }
-
-        public override bool GetJobActive()
-        {
-            return worker.Active;
-        }
-
-        public override string GetJobName()
-        {
-            return "Cap Time";
+            await ResultHandler(result);
         }
 
         public override void Initialize(PluginData data)
@@ -84,6 +76,18 @@ namespace Plugins.CapTime
                 Update = UpdateHandler,
                 Feedback = FeedbackHandler
             };
+        }
+
+        public string GetStatus()
+        {
+            string text = "";
+
+            string name = "Cap Time";
+            bool active = worker.Active;
+
+            text += $"*{name}*: {active.ToReadable()}\n";
+
+            return text.TrimEnd('\n');
         }
     }
 }

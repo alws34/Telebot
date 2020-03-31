@@ -7,14 +7,14 @@ namespace Contracts.Factories
     {
         protected readonly List<T> _items;
 
-        public IFactory()
+        protected IFactory()
         {
             _items = new List<T>();
         }
 
-        public T FindEntity(Predicate<T> predicate)
+        public T Find(Predicate<T> predicate)
         {
-            return _items.Find(x => predicate(x));
+            return _items.Find(predicate);
         }
 
         public IEnumerable<T> FindAll(Predicate<T> predicate)
@@ -22,14 +22,14 @@ namespace Contracts.Factories
             return _items.FindAll(predicate);
         }
 
-        public IEnumerable<T> GetAllEntities()
+        public IEnumerable<T> GetAll()
         {
             return _items;
         }
 
         public bool TryGetEntity(Predicate<T> predicate, out T entity)
         {
-            entity = _items.Find(x => predicate(x));
+            entity = _items.Find(predicate);
             return entity != null;
         }
     }

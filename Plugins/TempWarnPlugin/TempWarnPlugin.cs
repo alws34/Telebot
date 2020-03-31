@@ -1,4 +1,6 @@
-﻿using Common.Models;
+﻿using Common;
+using Common.Extensions;
+using Common.Models;
 using Contracts;
 using Contracts.Factories;
 using Contracts.Jobs;
@@ -10,7 +12,8 @@ using TempWarnPlugin.Models;
 namespace Plugins.TempWarn
 {
     [Export(typeof(IPlugin))]
-    public class TempWarnPlugin : IPlugin
+    [Export(typeof(IStatus))]
+    public class TempWarnPlugin : IPlugin, IStatus
     {
         private IJob<TempArgs> worker;
 
@@ -29,7 +32,7 @@ namespace Plugins.TempWarn
                 req.MessageId
             );
 
-            await resultHandler(response);
+            await ResultHandler(response);
 
             switch (state)
             {
@@ -48,24 +51,14 @@ namespace Plugins.TempWarn
 
             var update = new Response(text);
 
-            await resultHandler(update);
+            await ResultHandler(update);
         }
 
         private async void FeedbackHandler(object sender, Feedback e)
         {
             var result = new Response(e.Text);
 
-            await resultHandler(result);
-        }
-
-        public override bool GetJobActive()
-        {
-            return worker.Active;
-        }
-
-        public override string GetJobName()
-        {
-            return "Temp Monitor";
+            await ResultHandler(result);
         }
 
         public override void Initialize(PluginData data)
@@ -79,6 +72,18 @@ namespace Plugins.TempWarn
                 Update = UpdateHandler,
                 Feedback = FeedbackHandler
             };
+        }
+
+        public string GetStatus()
+        {
+            string text = "";
+
+            string name = "Temp Monitor";
+            bool active = worker.Active;
+
+            text += $"*{name}*: {active.ToReadable()}\n";
+
+            return text.TrimEnd('\n');
         }
     }
 }

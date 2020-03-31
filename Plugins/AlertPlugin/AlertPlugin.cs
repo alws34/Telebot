@@ -21,7 +21,7 @@ namespace Plugins.Alert
 
             var result = new Response("Alert has been displayed.", req.MessageId);
 
-            await resultHandler(result);
+            await ResultHandler(result);
 
             MessageBox.Show(
                 text,

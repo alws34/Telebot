@@ -29,7 +29,7 @@ namespace Plugins.CapApp
             {
                 var result = new Response(wnd.ToMemStream(), req.MessageId);
 
-                await resultHandler(result);
+                await ResultHandler(result);
             });
         }
     }

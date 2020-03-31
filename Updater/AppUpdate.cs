@@ -27,7 +27,7 @@ namespace Updater
             JobManager.AddJob(() =>
                 {
                     CheckUpdate();
-                }, s => s.WithName("CheckForUpdate").ToRunEvery(1).Hours()
+                }, s => s.WithName("CheckForUpdate").ToRunNow().AndEvery(1).Hours()
             );
         }
 

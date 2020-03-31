@@ -24,7 +24,7 @@ namespace Plugins.Dim
                 req.MessageId
             );
 
-            await resultHandler(result);
+            await ResultHandler(result);
 
             var api = new DimApi(level);
 

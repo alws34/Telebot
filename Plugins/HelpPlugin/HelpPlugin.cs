@@ -32,7 +32,7 @@ namespace Plugins.Help
                 req.MessageId
             );
 
-            await resultHandler(result);
+            await ResultHandler(result);
         }
 
         public override void Initialize(PluginData data)
@@ -41,7 +41,7 @@ namespace Plugins.Help
 
             var factory = data.iocContainer.GetInstance<IFactory<IPlugin>>();
 
-            plugins = factory.GetAllEntities();
+            plugins = factory.GetAll();
         }
     }
 }

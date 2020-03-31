@@ -49,6 +49,7 @@
     <Compile Include="Factories\IFactory.cs" />
     <Compile Include="IAppExit.cs" />
     <Compile Include="IAppRestart.cs" />
+    <Compile Include="IStatus.cs" />
     <Compile Include="Jobs\IFeedback.cs" />
     <Compile Include="Jobs\IJob.cs" />
     <Compile Include="IPlugin.cs" />

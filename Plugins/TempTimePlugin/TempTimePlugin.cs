@@ -1,4 +1,6 @@
-﻿using Common.Models;
+﻿using Common;
+using Common.Extensions;
+using Common.Models;
 using Contracts;
 using Contracts.Factories;
 using Contracts.Jobs;
@@ -12,7 +14,8 @@ using TempTimePlugin.Models;
 namespace Plugins.TempTime
 {
     [Export(typeof(IPlugin))]
-    public class TempTimeCommand : IPlugin
+    [Export(typeof(IStatus))]
+    public class TempTimeCommand : IPlugin, IStatus
     {
         private IJob<TempArgs> worker;
 
@@ -33,7 +36,7 @@ namespace Plugins.TempTime
                     req.MessageId
                 );
 
-                await resultHandler(resp1);
+                await ResultHandler(resp1);
 
                 worker.Stop();
 
@@ -49,7 +52,7 @@ namespace Plugins.TempTime
 
             var resp = new Response(text, req.MessageId);
 
-            await resultHandler(resp);
+            await ResultHandler(resp);
 
             ((IScheduled)worker).Start(duration, interval);
         }
@@ -63,7 +66,7 @@ namespace Plugins.TempTime
                 case null:
                     text.AppendLine("\nFrom *Telebot*");
                     var update = new Response(text.ToString());
-                    await resultHandler(update);
+                    await ResultHandler(update);
                     text.Clear();
                     break;
                 default:
@@ -76,17 +79,7 @@ namespace Plugins.TempTime
         {
             var result = new Response(e.Text);
 
-            await resultHandler(result);
-        }
-
-        public override bool GetJobActive()
-        {
-            return worker.Active;
-        }
-
-        public override string GetJobName()
-        {
-            return "Temp Time";
+            await ResultHandler(result);
         }
 
         public override void Initialize(PluginData data)
@@ -100,6 +93,18 @@ namespace Plugins.TempTime
                 Update = UpdateHandler,
                 Feedback = FeedbackHandler
             };
+        }
+
+        public string GetStatus()
+        {
+            string text = "";
+
+            string name = "Temp Time";
+            bool active = worker.Active;
+
+            text += $"*{name}*: {active.ToReadable()}\n";
+
+            return text.TrimEnd('\n');
         }
     }
 }

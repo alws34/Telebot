@@ -8,18 +8,14 @@ namespace Contracts
         public string Pattern { get; protected set; }
         public string Description { get; protected set; }
 
-        protected ResponseHandler resultHandler;
+        protected ResponseHandler ResultHandler;
 
         public abstract void Execute(Request req);
 
         public virtual void Initialize(PluginData data)
         {
-            this.resultHandler = data.ResultHandler;
+            ResultHandler = data.ResultHandler;
         }
-
-        public virtual bool GetJobActive() => false;
-
-        public virtual string GetJobName() => "";
 
         public override string ToString()
         {

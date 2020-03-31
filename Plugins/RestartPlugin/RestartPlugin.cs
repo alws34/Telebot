@@ -24,7 +24,7 @@ namespace Plugins.Restart
                 req.MessageId
             );
 
-            await resultHandler(result);
+            await ResultHandler(result);
 
             await Task.Delay(2000).ContinueWith((t) =>
             {

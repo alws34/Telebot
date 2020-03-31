@@ -1,4 +1,5 @@
-﻿using Common.Extensions;
+﻿using Common;
+using Common.Extensions;
 using System;
 using static StatusPlugin.Native.kernel32;
 

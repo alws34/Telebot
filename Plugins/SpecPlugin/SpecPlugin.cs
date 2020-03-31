@@ -32,7 +32,7 @@ namespace Plugins.NSSpec
 
             var result = new Response(fileHandle, req.MessageId);
 
-            await resultHandler(result);
+            await ResultHandler(result);
         }
 
         public override void Initialize(PluginData data)

@@ -36,7 +36,7 @@ namespace Plugins.Power
                 req.MessageId
             );
 
-            await resultHandler(result);
+            await ResultHandler(result);
 
             PowerType type = types[key];
 

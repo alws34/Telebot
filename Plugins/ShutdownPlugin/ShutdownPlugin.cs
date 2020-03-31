@@ -23,7 +23,7 @@ namespace Plugins.Shutdown
 
             var result = new Response(text, req.MessageId);
 
-            await resultHandler(result);
+            await ResultHandler(result);
 
             ShutdownTimeout(timeout);
         }

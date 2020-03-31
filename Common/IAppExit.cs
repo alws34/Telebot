@@ -1,7 +1,19 @@
-﻿namespace Common
+﻿using System;
+
+namespace Common
 {
     public interface IAppExit
     {
-        void Exit();
+        Action Exit { get; }
+    }
+
+    public class AppExit : IAppExit
+    {
+        public Action Exit { get; }
+
+        public AppExit(Action Exit)
+        {
+            this.Exit = Exit;
+        }
     }
 }

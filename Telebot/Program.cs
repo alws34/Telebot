@@ -6,13 +6,13 @@ using CPUID;
 using CPUID.Base;
 using CPUID.Factories;
 using FluentScheduler;
+using Shared;
 using SimpleInjector;
 using System;
 using System.Linq;
 using System.Windows.Forms;
 using Telebot.AppSettings;
 using Telebot.Clients;
-using Telebot.Plugins;
 using Telebot.Presenters;
 using Updater;
 
@@ -74,7 +74,7 @@ namespace Telebot
 
         private static void InitializePlugins(IBotClient botClient)
         {
-            var mgr = IocContainer.GetInstance<IFactory<IPlugin>>();
+            var pluginFac = IocContainer.GetInstance<IFactory<IPlugin>>();
 
             var data = new PluginData
             {
@@ -82,21 +82,30 @@ namespace Telebot
                 iocContainer = IocContainer
             };
 
-            (mgr as PluginFactory)?.InitializePlugins(data);
+            (pluginFac as IInitializer)?.Initialize(data);
         }
 
         private static void BuildIocContainer()
         {
             IocContainer = new Container();
 
-            IocContainer.Register<IAppExit, AppExit>();
-            IocContainer.Register<IAppRestart, AppRestart>();
+            IAppExit appExit = new AppExit(Application.Exit);
+            IAppRestart appRestart = new AppRestart(Application.Restart);
+
+            IocContainer.RegisterInstance(typeof(IAppExit), appExit);
+            IocContainer.RegisterInstance(typeof(IAppRestart), appRestart);
 
             IocContainer.Register<IAppUpdate, AppUpdate>(Lifestyle.Singleton);
             IocContainer.Register<IFactory<IDevice>, DeviceFactory>(Lifestyle.Singleton);
-            IocContainer.Register<IFactory<IPlugin>, PluginFactory>(Lifestyle.Singleton);
 
-            // Create registration instances
+            ILoader loader = new ModuleLoader();
+
+            IFactory<IPlugin> pluginFac = new PluginFactory(loader);
+            IFactory<IStatus> statusFac = new StatusFactory(loader);
+
+            IocContainer.RegisterInstance(typeof(IFactory<IPlugin>), pluginFac);
+            IocContainer.RegisterInstance(typeof(IFactory<IStatus>), statusFac);
+
             IocContainer.Verify();
         }
     }

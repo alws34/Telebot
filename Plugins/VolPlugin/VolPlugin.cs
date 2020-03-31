@@ -24,7 +24,7 @@ namespace Plugins.Vol
                 req.MessageId
             );
 
-            await resultHandler(result);
+            await ResultHandler(result);
 
             var api = new VolApi(vol);
 

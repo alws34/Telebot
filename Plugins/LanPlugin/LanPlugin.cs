@@ -1,4 +1,6 @@
-﻿using Common.Models;
+﻿using Common;
+using Common.Extensions;
+using Common.Models;
 using Contracts;
 using LanPlugin.Intranet;
 using System.ComponentModel.Composition;
@@ -6,7 +8,8 @@ using System.ComponentModel.Composition;
 namespace Plugins.Lan
 {
     [Export(typeof(IPlugin))]
-    public class LanPlugin : IPlugin
+    [Export(typeof(IStatus))]
+    public class LanPlugin : IPlugin, IStatus
     {
         private IInetScanner scanner;
         private IINetMonitor monitor;
@@ -26,7 +29,7 @@ namespace Plugins.Lan
                 req.MessageId
             );
 
-            await resultHandler(response);
+            await ResultHandler(response);
 
             switch (state)
             {
@@ -54,24 +57,14 @@ namespace Plugins.Lan
 
             var result = new Response(text);
 
-            await resultHandler(result);
+            await ResultHandler(result);
         }
 
         private async void FeedbackHandler(object sender, Feedback e)
         {
             var result = new Response(e.Text);
 
-            await resultHandler(result);
-        }
-
-        public override bool GetJobActive()
-        {
-            return monitor.IsActive;
-        }
-
-        public override string GetJobName()
-        {
-            return "LAN Monitor";
+            await ResultHandler(result);
         }
 
         public override void Initialize(PluginData data)
@@ -90,6 +83,18 @@ namespace Plugins.Lan
                 Disconnected = HostHandler,
                 Feedback = FeedbackHandler
             };
+        }
+
+        public string GetStatus()
+        {
+            string text = "";
+
+            string name = "LAN Monitor";
+            bool active = monitor.IsActive;
+
+            text += $"*{name}*: {active.ToReadable()}\n";
+
+            return text.TrimEnd('\n');
         }
     }
 }

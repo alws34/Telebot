@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using Common;
+using System.Net;
 using System.Net.Sockets;
 
 namespace StatusPlugin.Statuses

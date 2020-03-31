@@ -66,7 +66,7 @@ namespace Plugins.TempWarn
             return "Temp Monitor";
         }
 
-        public override void Initialize(Container iocContainer, ResponseHandler respHandler)
+        public override void Initialize(ResponseHandler respHandler, Container iocContainer)
         {
             base.Initialize(respHandler);
 

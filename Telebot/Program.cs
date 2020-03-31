@@ -52,8 +52,6 @@ namespace Telebot
             MainView mainView = new MainView();
             IBotClient botClient = new Clients.Telebot(token, id);
 
-            InitializePlugins(botClient);
-
             var presenter = new MainViewPresenter(
                 mainView,
                 botClient
@@ -80,16 +78,6 @@ namespace Telebot
             CpuIdWrapper64.Sdk64.UninitSDK();
         }
 
-        private static void InitializePlugins(IBotClient botClient)
-        {
-            var fac = IocContainer.GetInstance<IFactory<IPlugin>>();
-
-            foreach (IPlugin plugin in fac.GetAllEntities())
-            {
-                plugin.Initialize(IocContainer, );
-            }
-        }
-
         private static Container BuildIocContainer()
         {
             var container = new Container();
@@ -98,7 +86,7 @@ namespace Telebot
             container.Register<IAppRestart, AppRestart>();
 
             container.Register<IFactory<IDevice>, DeviceFactory>(Lifestyle.Singleton);
-            container.Register<IFactory<IPlugin>, PluginFactory>(Lifestyle.Singleton);
+            container.Register<IFactory<IPlugin>, PluginMgr>(Lifestyle.Singleton);
 
             // Create registration instances
             container.Verify();

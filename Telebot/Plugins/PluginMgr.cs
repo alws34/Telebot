@@ -8,12 +8,12 @@ using System.Reflection;
 
 namespace Telebot.Plugins
 {
-    public class PluginFactory : IFactory<IPlugin>
+    public class PluginMgr : IFactory<IPlugin>
     {
         [ImportMany(typeof(IPlugin))]
         private IEnumerable<IPlugin> Items { get; set; }
 
-        public PluginFactory()
+        public PluginMgr()
         {
             var catalog = new AggregateCatalog();
 
@@ -33,6 +33,14 @@ namespace Telebot.Plugins
             container.ComposeParts(this);
 
             _items.AddRange(Items);
+        }
+
+        public void InitializePlugins()
+        {
+            foreach (IPlugin plugin in _items)
+            {
+                plugin.Initialize(Program.IocContainer, );
+            }
         }
     }
 }

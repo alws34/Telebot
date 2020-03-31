@@ -31,8 +31,10 @@ namespace Plugins.Exit
             });
         }
 
-        public override void Initialize(Container iocContainer, ResponseHandler respHandler)
+        public override void Initialize(ResponseHandler respHandler, Container iocContainer)
         {
+            base.Initialize(respHandler);
+
             var instance = iocContainer.GetInstance<IAppExit>();
 
             Exit = instance.Exit();

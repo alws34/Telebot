@@ -18,7 +18,7 @@ namespace Contracts
             this.respHandler = respHandler;
         }
 
-        public virtual void Initialize(Container iocContainer, ResponseHandler respHandler)
+        public virtual void Initialize(ResponseHandler respHandler, Container iocContainer)
         {
             this.respHandler = respHandler;
         }

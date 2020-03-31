@@ -10,18 +10,11 @@ namespace Telebot.Clients
 {
     public abstract class IBotClient : TelegramBotClient
     {
-        public event EventHandler<NotificationArgs> Notification;
+        protected readonly int Id;
 
-        protected void RaiseNotification(NotificationArgs e)
+        protected IBotClient(string token, int id) : base(token)
         {
-            Notification?.Invoke(this, e);
-        }
-
-        protected readonly int id;
-
-        public IBotClient(string token, int id) : base(token)
-        {
-            this.id = id;
+            Id = id;
         }
 
         public bool IsConnected => IsReceiving;
@@ -36,12 +29,18 @@ namespace Telebot.Clients
             StopReceiving();
         }
 
+        public event EventHandler<NotificationArgs> Notification;
+        protected void RaiseNotification(NotificationArgs e)
+        {
+            Notification?.Invoke(this, e);
+        }
+
         public async Task SendText(string text, long chatId = 0, int replyId = 0)
         {
             await SendTextMessageAsync(
-               chatId == 0 ? id : chatId,
+               chatId == 0 ? Id : chatId,
                text.TrimEnd(),
-               parseMode: ParseMode.Markdown,
+               ParseMode.Markdown,
                replyToMessageId: replyId
            );
         }
@@ -51,7 +50,7 @@ namespace Telebot.Clients
             var raw = new InputOnlineFile(content, "preview.jpg");
 
             await SendDocumentAsync(
-                chatId == 0 ? id : chatId,
+                chatId == 0 ? Id : chatId,
                 raw,
                 parseMode: ParseMode.Markdown,
                 replyToMessageId: replyId,
@@ -67,7 +66,7 @@ namespace Telebot.Clients
             var raw = new InputOnlineFile(content, (content as FileStream).Name);
 
             await SendDocumentAsync(
-                chatId == 0 ? id : chatId,
+                chatId == 0 ? Id : chatId,
                 raw,
                 parseMode: ParseMode.Markdown,
                 replyToMessageId: replyId,

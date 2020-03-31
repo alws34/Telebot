@@ -19,25 +19,25 @@ namespace Telebot.Clients
             plugins = Program.IocContainer.GetInstance<IFactory<IPlugin>>();
         }
 
+        public async Task RespHandler(Response e)
+        {
+            switch (e.ResultType)
+            {
+                case ResultType.Text:
+                    await SendText(e.Text, replyId: e.Reply ? e.MessageId : 0);
+                    break;
+                case ResultType.Photo:
+                    await SendPic(e.Raw, replyId: e.Reply ? e.MessageId : 0);
+                    break;
+                case ResultType.Document:
+                    await SendDoc(e.Raw, replyId: e.Reply ? e.MessageId : 0);
+                    break;
+            }
+        }
+
         private async void BotMessageHandler(object sender, MessageEventArgs e)
         {
-            async Task RespHandler(Response result)
-            {
-                switch (result.ResultType)
-                {
-                    case ResultType.Text:
-                        await SendText(result.Text, replyId: result.Reply ? e.Message.MessageId : 0);
-                        break;
-                    case ResultType.Photo:
-                        await SendPic(result.Raw, replyId: result.Reply ? e.Message.MessageId : 0);
-                        break;
-                    case ResultType.Document:
-                        await SendDoc(result.Raw, replyId: result.Reply ? e.Message.MessageId : 0);
-                        break;
-                }
-            }
-
-            if (e.Message.From.Id != id)
+            if (e.Message.From.Id != Id)
             {
                 await SendText("Unauthorized.", e.Message.From.Id, e.Message.MessageId);
                 return;

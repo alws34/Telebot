@@ -107,10 +107,10 @@ namespace Telebot
 
             // Derived classes from IDevice
             IocContainer.Collection.Register(devCreator.GetProcessors());
-            IocContainer.Collection.Register(devCreator.GetBatteries());
             IocContainer.Collection.Register(devCreator.GetDisplays());
             IocContainer.Collection.Register(devCreator.GetDrives());
             IocContainer.Collection.Register(devCreator.GetMainboards());
+            IocContainer.Collection.Register(devCreator.GetBatteries());
 
             IocContainer.Verify();
         }

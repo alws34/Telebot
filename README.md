@@ -27,10 +27,10 @@ Encapsulates the software update logic.
 Definitions shared between modules.
 
 #### .\Plugins
-Includes all usable modules that extends the application behviour. Extending functionality is possible by reading here.
+Includes all usable modules that extends the application behviour. Extending functionality is possible by reading [here](https://github.com/jdahan91/Telebot/blob/master/README.md#extending-functionality).
 
 # Extending functionality
-Each functionality is encapsulated by a module which is defined by the IModule abstract class. In order to extend functionality of Telebot you inherit from IModule and implement Execute method. Don't forget to give your module a name and a description initialized at ctor.
+Each functionality is encapsulated by a module which is defined by the `IModule` abstract class. In order to extend functionality of Telebot you inherit from `IModule` and implement Execute method. Don't forget to give your module a name and a description initialized at ctor.
 
 the Initialize method could be overriden to fetch data from the IoC container across other modules (If needed). By default this method will assign the response handler so you could respond back result to the telegram client from your module.
 

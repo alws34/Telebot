@@ -1,4 +1,4 @@
-﻿using Contracts;
+﻿using Common.Contracts;
 using SimpleInjector;
 
 namespace Common.Models

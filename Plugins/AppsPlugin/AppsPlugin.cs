@@ -1,7 +1,6 @@
 ﻿using AppsPlugin.Core;
 using AppsPlugin.Enums;
 using Common.Models;
-using Contracts;
 using System.Collections.Generic;
 
 namespace Plugins.Apps

@@ -1,7 +1,6 @@
 ﻿using CapPlugin.Core;
 using Common.Extensions;
 using Common.Models;
-using Contracts;
 using System.Drawing;
 
 namespace Plugins.CapScrn

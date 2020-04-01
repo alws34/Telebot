@@ -1,10 +1,7 @@
-﻿using Common;
+﻿using Common.Contracts;
 using Common.Models;
-using Contracts;
-using Contracts.Factories;
-using CPUID;
 using CPUID.Base;
-using CPUID.Factories;
+using CPUID.Devices;
 using FluentScheduler;
 using SimpleInjector;
 using System;
@@ -12,12 +9,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using Telebot.Clients;
 using Telebot.Presenters;
 using Telebot.Settings;
 using Updater;
+using static CPUID.CpuIdWrapper64;
+using static CPUID.Sdk.CpuIdSdk64;
 
 namespace Telebot
 {
@@ -73,7 +71,7 @@ namespace Telebot
                 JobManager.RemoveAllJobs();
             }
 
-            CpuIdWrapper64.Sdk64.UninitSDK();
+            Sdk64.UninitSDK();
         }
 
         private static void BuildContainer()
@@ -87,23 +85,27 @@ namespace Telebot
             IocContainer.RegisterInstance(typeof(IAppRestart), appRestart);
 
             IocContainer.Register<IAppUpdate, AppUpdate>(Lifestyle.Singleton);
-            IocContainer.Register<IFactory<IDevice>, DeviceFactory>(Lifestyle.Singleton);
 
-            var modules = LoadAssemblies();
+            var assemblies = LoadAssemblies();
 
-            var modTypes = IocContainer.GetTypesToRegister<IPlugin>(modules);
-            var sttTypes = IocContainer.GetTypesToRegister<IModuleStatus>(modules);
+            var modulesType = IocContainer.GetTypesToRegister<IPlugin>(assemblies);
+            var statusType = IocContainer.GetTypesToRegister<IModuleStatus>(assemblies);
 
-            var modReg =
-                from type in modTypes
+            var modulesRegistration =
+                from type in modulesType
                 select Lifestyle.Singleton.CreateRegistration(type, IocContainer);
 
-            var sttReg =
-                from type in sttTypes
+            var statusRegistration =
+                from type in statusType
                 select Lifestyle.Singleton.CreateRegistration(type, IocContainer);
 
-            IocContainer.Collection.Register<IPlugin>(modReg);
-            IocContainer.Collection.Register<IModuleStatus>(sttReg);
+            IocContainer.Collection.Register<IPlugin>(modulesRegistration);
+            IocContainer.Collection.Register<IModuleStatus>(statusRegistration);
+
+            DevicesRegistration devicesRegistration = new DevicesRegistration();
+            var devices = devicesRegistration.GetDevices();
+
+            IocContainer.Collection.Register<IDevice>(devices);
 
             IocContainer.Verify();
         }
@@ -139,6 +141,60 @@ namespace Telebot
             {
                 module.Initialize(data);
             }
+        }
+
+        private static int deviceCount = -1;
+    }
+
+    public class DevicesRegistration
+    {
+        private readonly int deviceCount;
+
+        public DevicesRegistration()
+        {
+            deviceCount = Sdk64.GetNumberOfDevices();
+        }
+
+        public IEnumerable<IDevice> GetDevices()
+        {
+            var cpuItems = LoadDevices<CPUDevice>(CLASS_DEVICE_PROCESSOR);
+            var gpuItems = LoadDevices<GPUDevice>(CLASS_DEVICE_DISPLAY_ADAPTER);
+            var ramItems = LoadDevices<RAMDevice>(CLASS_DEVICE_MAINBOARD);
+            var hddItems = LoadDevices<HDDDevice>(CLASS_DEVICE_DRIVE);
+            var batItems = LoadDevices<BATDevice>(CLASS_DEVICE_BATTERY);
+
+            var result = new List<IDevice>();
+            result.AddRange(cpuItems);
+            result.AddRange(gpuItems);
+            result.AddRange(ramItems);
+            result.AddRange(hddItems);
+            result.AddRange(batItems);
+
+            return result;
+        }
+
+        private IEnumerable<T> LoadDevices<T>(uint deviceClass) where T : IDevice, new()
+        {
+            var items = new List<T>();
+
+            for (int deviceIndex = 0; deviceIndex < deviceCount; deviceIndex++)
+            {
+                if (Sdk64.GetDeviceClass(deviceIndex) == deviceClass)
+                {
+                    string deviceName = Sdk64.GetDeviceName(deviceIndex);
+
+                    T device = (T)Activator.CreateInstance(typeof(T), new object[]
+                    {
+                        deviceName,
+                        deviceIndex,
+                        deviceClass
+                    });
+
+                    items.Add(device);
+                }
+            }
+
+            return items;
         }
     }
 }

@@ -1,5 +1,5 @@
-﻿using Common.Models;
-using Contracts;
+﻿using Common.Contracts;
+using Common.Models;
 using System.Collections.Generic;
 using System.Text;
 

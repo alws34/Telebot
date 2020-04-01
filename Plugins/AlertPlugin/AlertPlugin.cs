@@ -1,5 +1,4 @@
 ﻿using Common.Models;
-using Contracts;
 using System.Windows.Forms;
 
 namespace Plugins.Alert

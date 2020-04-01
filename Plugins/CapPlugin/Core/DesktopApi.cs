@@ -1,4 +1,4 @@
-﻿using Contracts.Core;
+﻿using Contracts.Contracts;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;

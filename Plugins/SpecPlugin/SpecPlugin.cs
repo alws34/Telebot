@@ -1,7 +1,7 @@
-﻿using Common.Models;
-using Contracts;
-using Contracts.Factories;
+﻿using Common.Contracts;
+using Common.Models;
 using CPUID.Base;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Plugins.NSSpec
@@ -11,7 +11,7 @@ namespace Plugins.NSSpec
     {
         private const string filePath = ".\\Plugins\\Spec\\spec.txt";
 
-        private IFactory<IDevice> deviceFactory;
+        private IEnumerable<IDevice> devices;
 
         public SpecPlugin()
         {
@@ -21,7 +21,7 @@ namespace Plugins.NSSpec
 
         public override async void Execute(Request req)
         {
-            Spec spec = new Spec(deviceFactory);
+            Spec spec = new Spec(devices);
 
             string info = spec.GetInfo();
 
@@ -38,7 +38,7 @@ namespace Plugins.NSSpec
         {
             base.Initialize(data);
 
-            deviceFactory = data.IocContainer.GetInstance<IFactory<IDevice>>();
+            devices = data.IocContainer.GetAllInstances<IDevice>();
         }
     }
 }

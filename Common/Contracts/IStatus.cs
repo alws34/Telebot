@@ -1,4 +1,4 @@
-﻿namespace Common
+﻿namespace Common.Contracts
 {
     public interface IStatus
     {

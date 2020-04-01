@@ -1,8 +1,6 @@
-﻿using Common;
+﻿using Common.Contracts;
 using Common.Extensions;
 using Common.Models;
-using Contracts;
-using Contracts.Factories;
 using Contracts.Jobs;
 using CPUID.Base;
 using System;
@@ -12,8 +10,6 @@ using TempTimePlugin.Models;
 
 namespace Plugins.TempTime
 {
-
-
     public class TempTimeCommand : IPlugin, IModuleStatus
     {
         private IJob<TempArgs> worker;
@@ -85,9 +81,9 @@ namespace Plugins.TempTime
         {
             base.Initialize(data);
 
-            var deviceFactory = data.IocContainer.GetInstance<IFactory<IDevice>>();
+            var devices = data.IocContainer.GetAllInstances<IDevice>();
 
-            worker = new TempSchedule(deviceFactory)
+            worker = new TempSchedule(devices)
             {
                 Update = UpdateHandler,
                 Feedback = FeedbackHandler

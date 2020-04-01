@@ -1,10 +1,10 @@
-﻿using Contracts.Factories;
-using Contracts.Jobs;
+﻿using Contracts.Jobs;
 using Contracts.Settings;
 using CPUID.Base;
 using CPUID.Models;
 using FluentScheduler;
 using System.Collections.Generic;
+using System.Linq;
 using TempWarnPlugin.Models;
 using TempWarnPlugin.Settings;
 using static CPUID.Sdk.CpuIdSdk64;
@@ -20,9 +20,9 @@ namespace TempWarnPlugin.Jobs
         private readonly IEnumerable<IDevice> devices;
         private readonly TempSettings settings;
 
-        public TempWarning(IFactory<IDevice> deviceFactory)
+        public TempWarning(IEnumerable<IDevice> devices)
         {
-            devices = deviceFactory.FindAll(x =>
+            this.devices = devices.Where(x =>
                (x.DeviceClass == CLASS_DEVICE_PROCESSOR) ||
                (x.DeviceClass == CLASS_DEVICE_DISPLAY_ADAPTER)
             );

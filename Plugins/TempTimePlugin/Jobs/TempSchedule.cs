@@ -1,10 +1,10 @@
-﻿using Contracts.Factories;
-using Contracts.Jobs;
+﻿using Contracts.Jobs;
 using CPUID.Base;
 using CPUID.Models;
 using FluentScheduler;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TempTimePlugin.Models;
 using static CPUID.Sdk.CpuIdSdk64;
 
@@ -15,9 +15,9 @@ namespace TempTimePlugin.Jobs
         private DateTime timeStop;
         private readonly IEnumerable<IDevice> devices;
 
-        public TempSchedule(IFactory<IDevice> deviceFactory)
+        public TempSchedule(IEnumerable<IDevice> devices)
         {
-            devices = deviceFactory.FindAll(x =>
+            this.devices = devices.Where(x =>
                 (x.DeviceClass == CLASS_DEVICE_PROCESSOR) ||
                 (x.DeviceClass == CLASS_DEVICE_DISPLAY_ADAPTER)
             );

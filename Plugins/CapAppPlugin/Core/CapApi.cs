@@ -1,4 +1,4 @@
-﻿using Contracts.Core;
+﻿using Contracts.Contracts;
 using System;
 using System.Drawing;
 using System.Threading;

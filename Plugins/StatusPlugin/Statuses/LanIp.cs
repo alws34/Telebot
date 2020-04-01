@@ -1,4 +1,4 @@
-﻿using Common;
+﻿using Common.Contracts;
 using System.Net;
 using System.Net.Sockets;
 

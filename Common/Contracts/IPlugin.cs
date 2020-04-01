@@ -1,7 +1,7 @@
 ﻿using Common.Models;
 using System.Threading.Tasks;
 
-namespace Contracts
+namespace Common.Contracts
 {
     public abstract class IPlugin
     {

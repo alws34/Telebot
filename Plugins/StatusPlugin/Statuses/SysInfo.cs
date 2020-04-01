@@ -1,4 +1,4 @@
-﻿using Common;
+﻿using Common.Contracts;
 using CPUID.Base;
 using System.Collections.Generic;
 using System.Text;

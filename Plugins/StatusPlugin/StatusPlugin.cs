@@ -1,7 +1,5 @@
-﻿using Common;
+﻿using Common.Contracts;
 using Common.Models;
-using Contracts;
-using Contracts.Factories;
 using CPUID.Base;
 using StatusPlugin.Statuses;
 using System.Collections.Generic;
@@ -42,11 +40,11 @@ namespace Plugins.Status
             base.Initialize(data);
 
             var statusInstance = data.IocContainer.GetAllInstances<IModuleStatus>();
-            var deviceInstance = data.IocContainer.GetInstance<IFactory<IDevice>>();
+            var deviceInstance = data.IocContainer.GetAllInstances<IDevice>();
 
             IStatus[] arr =
             {
-                new SysInfo(deviceInstance.GetAll()),
+                new SysInfo(deviceInstance),
                 new LanIp(),
                 new WanIp(),
                 new Uptime()

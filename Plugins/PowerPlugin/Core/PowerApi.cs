@@ -1,5 +1,5 @@
 ﻿using Common.Enums;
-using Contracts.Core;
+using Contracts.Contracts;
 using System.Diagnostics;
 using static PowerPlugin.Native.powrprof;
 using static PowerPlugin.Native.user32;

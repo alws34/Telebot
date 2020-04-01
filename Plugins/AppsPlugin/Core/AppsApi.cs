@@ -1,5 +1,5 @@
 ﻿using AppsPlugin.Enums;
-using Contracts.Core;
+using Contracts.Contracts;
 using System;
 using System.Diagnostics;
 using System.Linq;

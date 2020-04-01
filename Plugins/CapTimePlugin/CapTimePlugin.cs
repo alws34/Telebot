@@ -1,7 +1,5 @@
-﻿using Common;
-using Common.Extensions;
+﻿using Common.Extensions;
 using Common.Models;
-using Contracts;
 using Contracts.Jobs;
 using System;
 using Telebot.Capture;

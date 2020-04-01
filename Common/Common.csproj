@@ -53,7 +53,6 @@
     <Compile Include="Extensions\BitmapExtensions.cs" />
     <Compile Include="Extensions\PrimitiveExtensions.cs" />
     <Compile Include="Extensions\TimeSpanExtensions.cs" />
-    <Compile Include="Factories\IFactory.cs" />
     <Compile Include="Contracts\IAppExit.cs" />
     <Compile Include="Contracts\IAppRestart.cs" />
     <Compile Include="Contracts\IStatus.cs" />

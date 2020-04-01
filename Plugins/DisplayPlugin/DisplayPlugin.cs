@@ -1,6 +1,5 @@
 ﻿using Common.Enums;
 using Common.Models;
-using Contracts;
 using DisplayPlugin.Core;
 using System.Collections.Generic;
 

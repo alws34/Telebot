@@ -1,8 +1,6 @@
-﻿using Common;
+﻿using Common.Contracts;
 using Common.Extensions;
 using Common.Models;
-using Contracts;
-using Contracts.Factories;
 using Contracts.Jobs;
 using CPUID.Base;
 using TempWarnPlugin.Jobs;
@@ -62,9 +60,9 @@ namespace Plugins.TempWarn
         {
             base.Initialize(data);
 
-            var deviceFactory = data.IocContainer.GetInstance<IFactory<IDevice>>();
+            var devices = data.IocContainer.GetAllInstances<IDevice>();
 
-            worker = new TempWarning(deviceFactory)
+            worker = new TempWarning(devices)
             {
                 Update = UpdateHandler,
                 Feedback = FeedbackHandler

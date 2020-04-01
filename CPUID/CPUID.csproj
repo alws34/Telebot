@@ -42,7 +42,6 @@
     <Compile Include="Devices\BATDevice.cs" />
     <Compile Include="Devices\CPUDevice.cs" />
     <Compile Include="Base\IDevice.cs" />
-    <Compile Include="Factories\DeviceFactory.cs" />
     <Compile Include="Devices\HDDDevice.cs" />
     <Compile Include="Devices\GPUDevice.cs" />
     <Compile Include="Devices\RAMDevice.cs" />

@@ -2,12 +2,11 @@
 using Contracts;
 using Contracts.Factories;
 using CPUID.Base;
-using System.ComponentModel.Composition;
 using System.IO;
 
 namespace Plugins.NSSpec
 {
-    [Export(typeof(IPlugin))]
+
     public class SpecPlugin : IPlugin
     {
         private const string filePath = ".\\Plugins\\Spec\\spec.txt";
@@ -39,7 +38,7 @@ namespace Plugins.NSSpec
         {
             base.Initialize(data);
 
-            deviceFactory = data.iocContainer.GetInstance<IFactory<IDevice>>();
+            deviceFactory = data.IocContainer.GetInstance<IFactory<IDevice>>();
         }
     }
 }

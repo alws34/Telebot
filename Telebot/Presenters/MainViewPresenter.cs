@@ -1,9 +1,14 @@
 ﻿using AutoUpdaterDotNET;
+using Common.Models;
+using Contracts;
 using System;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Telebot.Clients;
 using Telebot.Views;
+using Telegram.Bot.Args;
 using Updater;
 
 namespace Telebot.Presenters
@@ -13,6 +18,8 @@ namespace Telebot.Presenters
         private readonly IMainView view;
         private readonly IBotClient client;
 
+        private readonly IEnumerable<IPlugin> modules;
+
         public MainViewPresenter(IMainView view, IBotClient client)
         {
             this.view = view;
@@ -20,17 +27,54 @@ namespace Telebot.Presenters
             this.view.FormClosed += viewClosed;
 
             this.client = client;
-            this.client.Notification += OnNotification;
+            this.client.OnMessage += ClientOnOnMessage;
+
+            modules = Program.IocContainer.GetAllInstances<IPlugin>();
 
             IAppUpdate appUpdate = Program.IocContainer.GetInstance<IAppUpdate>();
             appUpdate.HandleCheck += OnCheckUpdate;
         }
 
-        private void OnNotification(object sender, NotificationArgs e)
+        private async void ClientOnOnMessage(object sender, MessageEventArgs e)
         {
+            if (!client.IsAuthorized(e.Message.From.Id))
+            {
+                await client.SendText("Unauthorized.", e.Message.From.Id, e.Message.MessageId);
+                return;
+            }
+
+            string pattern = e.Message.Text;
+
+            if (string.IsNullOrEmpty(pattern))
+            {
+                await client.SendText("Unrecognized pattern.", replyId: e.Message.MessageId);
+                return;
+            }
+
+            string text = $"Received {pattern} from {e.Message.From.Username}.";
+
             view.TrayIcon.ShowBalloonTip(
-               1000, view.Text, e.NotificationText, ToolTipIcon.Info
-           );
+                1000, view.Text, text, ToolTipIcon.Info
+            );
+
+            foreach (IPlugin module in modules)
+            {
+                Match match = Regex.Match(pattern, $"^{module.Pattern}$");
+
+                if (match.Success)
+                {
+                    var req = new Request
+                    {
+                        Groups = match.Groups,
+                        MessageId = e.Message.MessageId
+                    };
+
+                    module.Execute(req);
+                    return;
+                }
+            }
+
+            await client.SendText("Undefined command. For commands list, type */help*.", replyId: e.Message.MessageId);
         }
 
         private void viewClosed(object sender, FormClosedEventArgs e)

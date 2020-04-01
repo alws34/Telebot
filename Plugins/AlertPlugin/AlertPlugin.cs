@@ -1,11 +1,10 @@
 ﻿using Common.Models;
 using Contracts;
-using System.ComponentModel.Composition;
 using System.Windows.Forms;
 
 namespace Plugins.Alert
 {
-    [Export(typeof(IPlugin))]
+
     public class AlertPlugin : IPlugin
     {
         public AlertPlugin()

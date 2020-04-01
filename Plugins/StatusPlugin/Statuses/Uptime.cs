@@ -5,17 +5,13 @@ using static StatusPlugin.Native.kernel32;
 
 namespace StatusPlugin.Statuses
 {
-    public class Uptime : IStatus
+    public class Uptime : IClassStatus
     {
         public string GetStatus()
         {
-            return $"*Uptime*: {GetUptime()}";
-        }
-
-        private string GetUptime()
-        {
             long tickCount = GetTickCount64();
-            return TimeSpan.FromMilliseconds(tickCount).ToReadable();
+            string formatted = TimeSpan.FromMilliseconds(tickCount).ToReadable();
+            return $"*Uptime*: {formatted}";
         }
     }
 }

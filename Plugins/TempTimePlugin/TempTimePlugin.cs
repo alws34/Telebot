@@ -6,16 +6,15 @@ using Contracts.Factories;
 using Contracts.Jobs;
 using CPUID.Base;
 using System;
-using System.ComponentModel.Composition;
 using System.Text;
 using TempTimePlugin.Jobs;
 using TempTimePlugin.Models;
 
 namespace Plugins.TempTime
 {
-    [Export(typeof(IPlugin))]
-    [Export(typeof(IStatus))]
-    public class TempTimeCommand : IPlugin, IStatus
+
+
+    public class TempTimeCommand : IPlugin, IModuleStatus
     {
         private IJob<TempArgs> worker;
 
@@ -86,7 +85,7 @@ namespace Plugins.TempTime
         {
             base.Initialize(data);
 
-            var deviceFactory = data.iocContainer.GetInstance<IFactory<IDevice>>();
+            var deviceFactory = data.IocContainer.GetInstance<IFactory<IDevice>>();
 
             worker = new TempSchedule(deviceFactory)
             {

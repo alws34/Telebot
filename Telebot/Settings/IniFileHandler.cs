@@ -4,7 +4,7 @@ using IniParser.Model;
 using Newtonsoft.Json;
 using System.IO;
 
-namespace Telebot.AppSettings
+namespace Telebot.Settings
 {
     public class IniFileHandler : FileIniDataParser, ISettings
     {

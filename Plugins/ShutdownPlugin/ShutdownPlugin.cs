@@ -1,12 +1,11 @@
 ﻿using Common.Models;
 using Contracts;
 using System;
-using System.ComponentModel.Composition;
 using System.Diagnostics;
 
 namespace Plugins.Shutdown
 {
-    [Export(typeof(IPlugin))]
+
     public class ShutdownPlugin : IPlugin
     {
         public ShutdownPlugin()

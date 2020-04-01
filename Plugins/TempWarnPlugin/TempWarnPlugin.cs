@@ -5,15 +5,12 @@ using Contracts;
 using Contracts.Factories;
 using Contracts.Jobs;
 using CPUID.Base;
-using System.ComponentModel.Composition;
 using TempWarnPlugin.Jobs;
 using TempWarnPlugin.Models;
 
 namespace Plugins.TempWarn
 {
-    [Export(typeof(IPlugin))]
-    [Export(typeof(IStatus))]
-    public class TempWarnPlugin : IPlugin, IStatus
+    public class TempWarnPlugin : IPlugin, IModuleStatus
     {
         private IJob<TempArgs> worker;
 
@@ -65,7 +62,7 @@ namespace Plugins.TempWarn
         {
             base.Initialize(data);
 
-            var deviceFactory = data.iocContainer.GetInstance<IFactory<IDevice>>();
+            var deviceFactory = data.IocContainer.GetInstance<IFactory<IDevice>>();
 
             worker = new TempWarning(deviceFactory)
             {

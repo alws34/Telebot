@@ -1,6 +1,6 @@
 ﻿using Contracts.Settings;
 
-namespace Telebot.AppSettings
+namespace Telebot.Settings
 {
     public class AppSettings : IAppSettings
     {

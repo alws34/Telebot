@@ -1,12 +1,11 @@
 ﻿using Common.Models;
 using Contracts;
 using System;
-using System.ComponentModel.Composition;
 using VolPlugin.Core;
 
 namespace Plugins.Vol
 {
-    [Export(typeof(IPlugin))]
+
     public class VolPlugin : IPlugin
     {
         public VolPlugin()

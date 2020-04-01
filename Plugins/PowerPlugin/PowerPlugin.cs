@@ -3,11 +3,10 @@ using Common.Models;
 using Contracts;
 using PowerPlugin.Core;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
 
 namespace Plugins.Power
 {
-    [Export(typeof(IPlugin))]
+
     public class PowerPlugin : IPlugin
     {
         private readonly Dictionary<string, PowerType> types;

@@ -53,8 +53,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdatePlugin", "Plugins\Upd
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Updater", "Updater\Updater.csproj", "{8AEB1F98-C5E9-42ED-94DE-20A2BDEC2DBA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{CF4FAA02-97C4-4FFE-8DE1-A609A69114C1}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -157,10 +155,6 @@ Global
 		{8AEB1F98-C5E9-42ED-94DE-20A2BDEC2DBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8AEB1F98-C5E9-42ED-94DE-20A2BDEC2DBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8AEB1F98-C5E9-42ED-94DE-20A2BDEC2DBA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CF4FAA02-97C4-4FFE-8DE1-A609A69114C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CF4FAA02-97C4-4FFE-8DE1-A609A69114C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CF4FAA02-97C4-4FFE-8DE1-A609A69114C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CF4FAA02-97C4-4FFE-8DE1-A609A69114C1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -2,11 +2,10 @@
 using Contracts;
 using DimPlugin.Core;
 using System;
-using System.ComponentModel.Composition;
 
 namespace Plugins.Dim
 {
-    [Export(typeof(IPlugin))]
+
     public class DimPlugin : IPlugin
     {
         public DimPlugin()

@@ -1,13 +1,10 @@
 ﻿using Common.Models;
 using Contracts;
-using Contracts.Factories;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
 using System.Text;
 
 namespace Plugins.Help
 {
-    [Export(typeof(IPlugin))]
     public class HelpPlugin : IPlugin
     {
         private IEnumerable<IPlugin> plugins;
@@ -39,9 +36,7 @@ namespace Plugins.Help
         {
             base.Initialize(data);
 
-            var factory = data.iocContainer.GetInstance<IFactory<IPlugin>>();
-
-            plugins = factory.GetAll();
+            plugins = data.IocContainer.GetAllInstances<IPlugin>();
         }
     }
 }

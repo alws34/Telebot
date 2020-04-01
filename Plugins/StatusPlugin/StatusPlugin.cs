@@ -5,13 +5,11 @@ using Contracts.Factories;
 using CPUID.Base;
 using StatusPlugin.Statuses;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 
 namespace Plugins.Status
 {
-    [Export(typeof(IPlugin))]
     public class StatusPlugin : IPlugin
     {
         private IEnumerable<IStatus> items { get; set; }
@@ -43,8 +41,8 @@ namespace Plugins.Status
         {
             base.Initialize(data);
 
-            var statusInstance = data.iocContainer.GetInstance<IFactory<IStatus>>();
-            var deviceInstance = data.iocContainer.GetInstance<IFactory<IDevice>>();
+            var statusInstance = data.IocContainer.GetAllInstances<IModuleStatus>();
+            var deviceInstance = data.IocContainer.GetInstance<IFactory<IDevice>>();
 
             IStatus[] arr =
             {
@@ -54,7 +52,7 @@ namespace Plugins.Status
                 new Uptime()
             };
 
-            items = arr.Concat(statusInstance.GetAll());
+            items = arr.Concat(statusInstance);
         }
     }
 }

@@ -4,14 +4,9 @@ using System.Net.Sockets;
 
 namespace StatusPlugin.Statuses
 {
-    public class LanIp : IStatus
+    public class LanIp : IClassStatus
     {
         public string GetStatus()
-        {
-            return $"*LAN IPv4*: {GetLocalIPv4()}";
-        }
-
-        private string GetLocalIPv4()
         {
             var host = Dns.GetHostEntry(Dns.GetHostName());
 
@@ -19,11 +14,11 @@ namespace StatusPlugin.Statuses
             {
                 if (address.AddressFamily == AddressFamily.InterNetwork)
                 {
-                    return address.ToString();
+                    return $"*LAN IPv4*: {address}";
                 }
             }
 
-            return "Issue @ GetLocalIPv4()";
+            return "LanIp Error";
         }
     }
 }

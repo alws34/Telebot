@@ -3,13 +3,10 @@ using Common.Extensions;
 using Common.Models;
 using Contracts;
 using LanPlugin.Intranet;
-using System.ComponentModel.Composition;
 
 namespace Plugins.Lan
 {
-    [Export(typeof(IPlugin))]
-    [Export(typeof(IStatus))]
-    public class LanPlugin : IPlugin, IStatus
+    public class LanPlugin : IPlugin, IModuleStatus
     {
         private IInetScanner scanner;
         private IINetMonitor monitor;

@@ -1,12 +1,11 @@
 ﻿using Common;
 using Common.Models;
 using Contracts;
-using System.ComponentModel.Composition;
 using System.Threading.Tasks;
 
 namespace Plugins.Exit
 {
-    [Export(typeof(IPlugin))]
+
     public class ExitPlugin : IPlugin
     {
         private IAppExit appExit;
@@ -32,7 +31,7 @@ namespace Plugins.Exit
         public override void Initialize(PluginData data)
         {
             base.Initialize(data);
-            appExit = data.iocContainer.GetInstance<IAppExit>();
+            appExit = data.IocContainer.GetInstance<IAppExit>();
         }
     }
 }

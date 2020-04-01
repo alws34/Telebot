@@ -3,12 +3,11 @@ using Common.Extensions;
 using Common.Models;
 using Contracts;
 using System;
-using System.ComponentModel.Composition;
 using System.Diagnostics;
 
 namespace Plugins.CapApp
 {
-    [Export(typeof(IPlugin))]
+
     public class CapAppPlugin : IPlugin
     {
         public CapAppPlugin()

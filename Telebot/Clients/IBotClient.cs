@@ -1,5 +1,4 @@
 ﻿using Common.Models;
-using System;
 using System.IO;
 using System.Threading.Tasks;
 using Telegram.Bot;
@@ -32,10 +31,9 @@ namespace Telebot.Clients
             StopReceiving();
         }
 
-        public event EventHandler<NotificationArgs> Notification;
-        protected void RaiseNotification(NotificationArgs e)
+        public bool IsAuthorized(int id)
         {
-            Notification?.Invoke(this, e);
+            return Id.Equals(id);
         }
 
         public async Task SendText(string text, long chatId = 0, int replyId = 0)

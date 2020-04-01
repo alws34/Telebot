@@ -1,12 +1,11 @@
 ﻿using Common;
 using Common.Models;
 using Contracts;
-using System.ComponentModel.Composition;
 using System.Threading.Tasks;
 
 namespace Plugins.Restart
 {
-    [Export(typeof(IPlugin))]
+
     public class RestartPlugin : IPlugin
     {
         private IAppRestart appRestart;
@@ -35,7 +34,7 @@ namespace Plugins.Restart
         public override void Initialize(PluginData data)
         {
             base.Initialize(data);
-            appRestart = data.iocContainer.GetInstance<IAppRestart>();
+            appRestart = data.IocContainer.GetInstance<IAppRestart>();
         }
     }
 }

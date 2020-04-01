@@ -3,11 +3,10 @@ using AppsPlugin.Enums;
 using Common.Models;
 using Contracts;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
 
 namespace Plugins.Apps
 {
-    [Export(typeof(IPlugin))]
+
     public class AppsPlugin : IPlugin
     {
         private Dictionary<string, Session> types;

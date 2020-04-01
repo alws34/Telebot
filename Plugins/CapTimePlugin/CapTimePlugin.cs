@@ -4,14 +4,13 @@ using Common.Models;
 using Contracts;
 using Contracts.Jobs;
 using System;
-using System.ComponentModel.Composition;
 using Telebot.Capture;
 
 namespace Plugins.CapTime
 {
-    [Export(typeof(IPlugin))]
-    [Export(typeof(IStatus))]
-    public class CapTimePlugin : IPlugin, IStatus
+
+
+    public class CapTimePlugin : IPlugin, IModuleStatus
     {
         private IJob<CaptureArgs> worker;
 

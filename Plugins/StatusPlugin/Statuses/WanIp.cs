@@ -3,18 +3,14 @@ using System.Net;
 
 namespace StatusPlugin.Statuses
 {
-    public class WanIp : IStatus
+    public class WanIp : IClassStatus
     {
         public string GetStatus()
         {
-            return $"*WAN IPv4*: {GetPublicIPv4().TrimEnd()}";
-        }
-
-        private string GetPublicIPv4()
-        {
             using (WebClient wc = new WebClient())
             {
-                return wc.DownloadString("https://icanhazip.com");
+                string ip = wc.DownloadString("https://icanhazip.com");
+                return $"*WAN IPv4*: {ip.TrimEnd()}";
             }
         }
     }

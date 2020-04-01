@@ -1,13 +1,12 @@
 ﻿using Common;
 using Common.Models;
 using Contracts;
-using System.ComponentModel.Composition;
 using System.Threading.Tasks;
 using Updater;
 
 namespace Plugins.Update
 {
-    [Export(typeof(IPlugin))]
+
     public class UpdatePlugin : IPlugin
     {
         private IAppExit appExit;
@@ -43,8 +42,8 @@ namespace Plugins.Update
         public override void Initialize(PluginData data)
         {
             base.Initialize(data);
-            appUpdate = data.iocContainer.GetInstance<IAppUpdate>();
-            appExit = data.iocContainer.GetInstance<IAppExit>();
+            appUpdate = data.IocContainer.GetInstance<IAppUpdate>();
+            appExit = data.IocContainer.GetInstance<IAppExit>();
         }
     }
 }

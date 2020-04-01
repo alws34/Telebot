@@ -5,10 +5,10 @@ namespace Contracts
 {
     public abstract class IPlugin
     {
+        protected ResponseHandler ResultHandler;
+
         public string Pattern { get; protected set; }
         public string Description { get; protected set; }
-
-        protected ResponseHandler ResultHandler;
 
         public abstract void Execute(Request req);
 

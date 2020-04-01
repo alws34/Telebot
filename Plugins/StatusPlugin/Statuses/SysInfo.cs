@@ -5,7 +5,7 @@ using System.Text;
 
 namespace StatusPlugin.Statuses
 {
-    public class SysInfo : IStatus
+    public class SysInfo : IClassStatus
     {
         private readonly IEnumerable<IDevice> devices;
 
@@ -16,14 +16,14 @@ namespace StatusPlugin.Statuses
 
         public string GetStatus()
         {
-            var strBuilder = new StringBuilder();
+            var builder = new StringBuilder();
 
             foreach (IDevice device in devices)
             {
-                strBuilder.AppendLine(device.ToString());
+                builder.AppendLine(device.ToString());
             }
 
-            return strBuilder.ToString().TrimEnd();
+            return builder.ToString().TrimEnd();
         }
     }
 }

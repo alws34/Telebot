@@ -4,7 +4,6 @@ using Plugins.NSSpec.Components;
 using Plugins.NSSpec.Sensors;
 using Plugins.NSSpec.Sensors.Contracts;
 using System.Text;
-using static CPUID.CpuIdWrapper64;
 using static CPUID.Sdk.CpuIdSdk64;
 
 namespace Plugins.NSSpec

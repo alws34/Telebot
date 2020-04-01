@@ -5,7 +5,7 @@ namespace Common.Models
 {
     public class PluginData
     {
-        public Container iocContainer { get; set; }
+        public Container IocContainer { get; set; }
         public ResponseHandler ResultHandler { get; set; }
     }
 }

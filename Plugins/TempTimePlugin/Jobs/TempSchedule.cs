@@ -1,6 +1,5 @@
 ﻿using Contracts.Factories;
 using Contracts.Jobs;
-using CPUID;
 using CPUID.Base;
 using CPUID.Models;
 using FluentScheduler;

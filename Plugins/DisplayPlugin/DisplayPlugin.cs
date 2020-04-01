@@ -3,11 +3,10 @@ using Common.Models;
 using Contracts;
 using DisplayPlugin.Core;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
 
 namespace Plugins.Display
 {
-    [Export(typeof(IPlugin))]
+
     public class DisplayPlugin : IPlugin
     {
         private readonly Dictionary<string, DisplayState> states;

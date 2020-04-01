@@ -15,14 +15,24 @@ AdminId = <User_ID> // The telegram user who will command the bot.
 # Application architecture
 
 #### Telebot module (Non-GUI):
-The application is a [Tray-based](https://docs.microsoft.com/en-us/windows/win32/shell/notification-area) application based on [Model–view–presenter (MVP) architectural pattern](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93presenter) (**Notification-view**). Each command is encapsulated by the [Command design pattern](https://en.wikipedia.org/wiki/Command_pattern).
-
-#### SpecInfo module:
-The application that fetches full computer hardware information and saves it within same directory to file *spec.txt*. This program is used with the `/spec` command.
+The application is a [Tray-based](https://docs.microsoft.com/en-us/windows/win32/shell/notification-area) modular application based on [Model–view–presenter (MVP) architectural pattern](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93presenter) (**Notification-view**). Each module is encapsulated by the [Command design pattern](https://en.wikipedia.org/wiki/Command_pattern).
 
 #### CPUID module (Core functionality):
 This module is an abstraction to the cpuid library which is the core of the entire application to perform hardware analyzations tasks.
 
+#### Updater module
+Encapsulates the software update logic.
+
+#### Common module
+Definitions shared between modules.
+
+#### .\Plugins
+Includes all usable modules that extends the application behviour. Extending functionality is possible by reading here.
+
+# Extending functionality
+Each functionality is encapsulated by a module which is defined by the IModule abstract class. In order to extend functionality of Telebot you inherit from IModule and implement Execute method. Don't forget to give your module a name and a description initialized at ctor.
+
+the Initialize method could be overriden to fetch data from the IoC container across other modules (If needed). By default this method will assign the response handler so you could respond back result to the telegram client from your module.
 
 # Features
 #### Temperature Monitoring

@@ -142,8 +142,6 @@ namespace Telebot
                 module.Initialize(data);
             }
         }
-
-        private static int deviceCount = -1;
     }
 
     public class DevicesRegistration

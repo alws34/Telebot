@@ -2,10 +2,10 @@
 using Common.Models;
 using PowerPlugin.Core;
 using System.Collections.Generic;
+using Common.Contracts;
 
 namespace Plugins.Power
 {
-
     public class PowerPlugin : IPlugin
     {
         private readonly Dictionary<string, PowerType> types;

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Common.Contracts;
 using Telebot.Clients;
 using Telebot.Views;
 using Telegram.Bot.Args;

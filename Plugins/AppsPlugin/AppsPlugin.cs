@@ -2,6 +2,7 @@
 using AppsPlugin.Enums;
 using Common.Models;
 using System.Collections.Generic;
+using Common.Contracts;
 
 namespace Plugins.Apps
 {

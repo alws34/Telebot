@@ -1,10 +1,10 @@
 ﻿using Common.Models;
 using System;
 using System.Diagnostics;
+using Common.Contracts;
 
 namespace Plugins.Kill
 {
-
     public class KillPlugin : IPlugin
     {
         public KillPlugin()

@@ -2,10 +2,10 @@
 using Common.Models;
 using DisplayPlugin.Core;
 using System.Collections.Generic;
+using Common.Contracts;
 
 namespace Plugins.Display
 {
-
     public class DisplayPlugin : IPlugin
     {
         private readonly Dictionary<string, DisplayState> states;

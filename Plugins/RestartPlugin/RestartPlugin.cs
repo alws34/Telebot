@@ -1,5 +1,6 @@
 ﻿using Common.Models;
 using System.Threading.Tasks;
+using Common.Contracts;
 
 namespace Plugins.Restart
 {

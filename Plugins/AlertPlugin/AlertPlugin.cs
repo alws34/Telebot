@@ -1,5 +1,6 @@
 ﻿using Common.Models;
 using System.Windows.Forms;
+using Common.Contracts;
 
 namespace Plugins.Alert
 {

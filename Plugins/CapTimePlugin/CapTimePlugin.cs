@@ -2,12 +2,11 @@
 using Common.Models;
 using Contracts.Jobs;
 using System;
+using Common.Contracts;
 using Telebot.Capture;
 
 namespace Plugins.CapTime
 {
-
-
     public class CapTimePlugin : IPlugin, IModuleStatus
     {
         private IJob<CaptureArgs> worker;

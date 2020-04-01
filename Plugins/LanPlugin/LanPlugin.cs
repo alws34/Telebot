@@ -1,4 +1,5 @@
-﻿using Common.Extensions;
+﻿using Common.Contracts;
+using Common.Extensions;
 using Common.Models;
 using LanPlugin.Intranet;
 

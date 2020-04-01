@@ -3,6 +3,7 @@ using Common.Extensions;
 using Common.Models;
 using System;
 using System.Diagnostics;
+using Common.Contracts;
 
 namespace Plugins.CapApp
 {

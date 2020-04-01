@@ -1,10 +1,10 @@
 ﻿using Common.Models;
 using DimPlugin.Core;
 using System;
+using Common.Contracts;
 
 namespace Plugins.Dim
 {
-
     public class DimPlugin : IPlugin
     {
         public DimPlugin()

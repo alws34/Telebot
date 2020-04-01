@@ -2,6 +2,7 @@
 using Common.Extensions;
 using Common.Models;
 using System.Drawing;
+using Common.Contracts;
 
 namespace Plugins.CapScrn
 {

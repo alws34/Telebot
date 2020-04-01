@@ -1,9 +1,9 @@
 ﻿using Common.Models;
 using System.Threading.Tasks;
+using Common.Contracts;
 
 namespace Plugins.Exit
 {
-
     public class ExitPlugin : IPlugin
     {
         private IAppExit appExit;

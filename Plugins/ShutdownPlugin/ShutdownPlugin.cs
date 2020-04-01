@@ -1,6 +1,7 @@
 ﻿using Common.Models;
 using System;
 using System.Diagnostics;
+using Common.Contracts;
 
 namespace Plugins.Shutdown
 {

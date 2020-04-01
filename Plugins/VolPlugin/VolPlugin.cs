@@ -1,5 +1,6 @@
 ﻿using Common.Models;
 using System;
+using Common.Contracts;
 using VolPlugin.Core;
 
 namespace Plugins.Vol

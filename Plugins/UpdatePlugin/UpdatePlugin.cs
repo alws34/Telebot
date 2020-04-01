@@ -6,7 +6,7 @@ using Updater;
 namespace Plugins.Update
 {
 
-    public class UpdatePlugin : IPlugin
+    public class UpdatePlugin : IModule
     {
         private IAppExit appExit;
         private IAppUpdate appUpdate;
@@ -38,7 +38,7 @@ namespace Plugins.Update
             }
         }
 
-        public override void Initialize(PluginData data)
+        public override void Initialize(ModuleData data)
         {
             base.Initialize(data);
             appUpdate = data.IocContainer.GetInstance<IAppUpdate>();

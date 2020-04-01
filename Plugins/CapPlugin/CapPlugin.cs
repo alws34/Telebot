@@ -7,7 +7,7 @@ using Common.Contracts;
 namespace Plugins.CapScrn
 {
 
-    public class CapScrnPlugin : IPlugin
+    public class CapScrnPlugin : IModule
     {
         public CapScrnPlugin()
         {

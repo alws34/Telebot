@@ -4,7 +4,7 @@ using Common.Contracts;
 
 namespace Plugins.Exit
 {
-    public class ExitPlugin : IPlugin
+    public class ExitPlugin : IModule
     {
         private IAppExit appExit;
 
@@ -26,7 +26,7 @@ namespace Plugins.Exit
             });
         }
 
-        public override void Initialize(PluginData data)
+        public override void Initialize(ModuleData data)
         {
             base.Initialize(data);
             appExit = data.IocContainer.GetInstance<IAppExit>();

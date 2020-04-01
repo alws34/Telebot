@@ -5,7 +5,7 @@ using Common.Contracts;
 namespace Plugins.Restart
 {
 
-    public class RestartPlugin : IPlugin
+    public class RestartPlugin : IModule
     {
         private IAppRestart appRestart;
 
@@ -30,7 +30,7 @@ namespace Plugins.Restart
             });
         }
 
-        public override void Initialize(PluginData data)
+        public override void Initialize(ModuleData data)
         {
             base.Initialize(data);
             appRestart = data.IocContainer.GetInstance<IAppRestart>();

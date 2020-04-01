@@ -44,7 +44,8 @@ namespace Telebot
 
         public IEnumerable<IDevice> GetAll()
         {
-            List<IDevice> all = new List<IDevice>();
+            var all = new List<IDevice>();
+
             all.AddRange(GetProcessors());
             all.AddRange(GetDisplays());
             all.AddRange(GetDrives());

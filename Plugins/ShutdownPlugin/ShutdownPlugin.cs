@@ -6,7 +6,7 @@ using Common.Contracts;
 namespace Plugins.Shutdown
 {
 
-    public class ShutdownPlugin : IPlugin
+    public class ShutdownPlugin : IModule
     {
         public ShutdownPlugin()
         {

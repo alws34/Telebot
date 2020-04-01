@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Plugins.Status
 {
-    public class StatusPlugin : IPlugin
+    public class StatusPlugin : IModule
     {
         private IEnumerable<IStatus> items { get; set; }
 
@@ -35,7 +35,7 @@ namespace Plugins.Status
             await ResultHandler(result);
         }
 
-        public override void Initialize(PluginData data)
+        public override void Initialize(ModuleData data)
         {
             base.Initialize(data);
 

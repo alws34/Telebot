@@ -5,7 +5,7 @@ using Common.Contracts;
 namespace Plugins.Alert
 {
 
-    public class AlertPlugin : IPlugin
+    public class AlertPlugin : IModule
     {
         public AlertPlugin()
         {

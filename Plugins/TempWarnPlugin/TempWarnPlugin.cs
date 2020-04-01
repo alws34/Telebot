@@ -11,7 +11,7 @@ using TempWarnPlugin.Models;
 
 namespace Plugins.TempWarn
 {
-    public class TempWarnPlugin : IPlugin, IModuleStatus
+    public class TempWarnPlugin : IModule, IModuleStatus
     {
         private IJob<TempArgs> worker;
 
@@ -59,7 +59,7 @@ namespace Plugins.TempWarn
             await ResultHandler(result);
         }
 
-        public override void Initialize(PluginData data)
+        public override void Initialize(ModuleData data)
         {
             base.Initialize(data);
 

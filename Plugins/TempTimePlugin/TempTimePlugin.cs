@@ -11,7 +11,7 @@ using TempTimePlugin.Models;
 
 namespace Plugins.TempTime
 {
-    public class TempTimeCommand : IPlugin, IModuleStatus
+    public class TempTimeCommand : IModule, IModuleStatus
     {
         private IJob<TempArgs> worker;
 
@@ -78,7 +78,7 @@ namespace Plugins.TempTime
             await ResultHandler(result);
         }
 
-        public override void Initialize(PluginData data)
+        public override void Initialize(ModuleData data)
         {
             base.Initialize(data);
 

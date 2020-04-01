@@ -8,7 +8,7 @@ using SimpleInjector;
 namespace Plugins.NSSpec
 {
 
-    public class SpecPlugin : IPlugin
+    public class SpecPlugin : IModule
     {
         private const string filePath = ".\\Plugins\\Spec\\spec.txt";
 
@@ -33,7 +33,7 @@ namespace Plugins.NSSpec
             await ResultHandler(result);
         }
 
-        public override void Initialize(PluginData data)
+        public override void Initialize(ModuleData data)
         {
             base.Initialize(data);
 

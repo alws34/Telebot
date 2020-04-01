@@ -86,7 +86,7 @@ namespace Telebot
 
             var assemblies = LoadAssemblies();
 
-            var modulesType = IocContainer.GetTypesToRegister<IPlugin>(assemblies);
+            var modulesType = IocContainer.GetTypesToRegister<IModule>(assemblies);
             var statusType = IocContainer.GetTypesToRegister<IModuleStatus>(assemblies);
 
             var modulesRegistration =
@@ -97,15 +97,15 @@ namespace Telebot
                 from type in statusType
                 select Lifestyle.Singleton.CreateRegistration(type, IocContainer);
 
-            IocContainer.Collection.Register<IPlugin>(modulesRegistration);
+            IocContainer.Collection.Register<IModule>(modulesRegistration);
             IocContainer.Collection.Register<IModuleStatus>(statusRegistration);
 
             DeviceCreator devCreator = new DeviceCreator();
 
-            // IDevice
+            // Register all components
             IocContainer.Collection.Register(devCreator.GetAll());
 
-            // Derived classes from IDevice
+            // Register each component individual
             IocContainer.Collection.Register(devCreator.GetProcessors());
             IocContainer.Collection.Register(devCreator.GetDisplays());
             IocContainer.Collection.Register(devCreator.GetDrives());
@@ -134,15 +134,15 @@ namespace Telebot
 
         private static void InitializeModules()
         {
-            var data = new PluginData
+            var data = new ModuleData
             {
                 IocContainer = IocContainer,
                 ResultHandler = botClient.ResultHandler
             };
 
-            var modules = IocContainer.GetAllInstances<IPlugin>();
+            var modules = IocContainer.GetAllInstances<IModule>();
 
-            foreach (IPlugin module in modules)
+            foreach (IModule module in modules)
             {
                 module.Initialize(data);
             }

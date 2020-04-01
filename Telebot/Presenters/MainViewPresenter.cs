@@ -18,7 +18,7 @@ namespace Telebot.Presenters
         private readonly IMainView view;
         private readonly IBotClient client;
 
-        private readonly IEnumerable<IPlugin> modules;
+        private readonly IEnumerable<IModule> modules;
 
         public MainViewPresenter(IMainView view, IBotClient client)
         {
@@ -29,7 +29,7 @@ namespace Telebot.Presenters
             this.client = client;
             this.client.OnMessage += ClientOnOnMessage;
 
-            modules = Program.IocContainer.GetAllInstances<IPlugin>();
+            modules = Program.IocContainer.GetAllInstances<IModule>();
 
             IAppUpdate appUpdate = Program.IocContainer.GetInstance<IAppUpdate>();
             appUpdate.HandleCheck += OnCheckUpdate;
@@ -57,7 +57,7 @@ namespace Telebot.Presenters
                 1000, view.Text, text, ToolTipIcon.Info
             );
 
-            foreach (IPlugin module in modules)
+            foreach (IModule module in modules)
             {
                 Match match = Regex.Match(pattern, $"^{module.Pattern}$");
 

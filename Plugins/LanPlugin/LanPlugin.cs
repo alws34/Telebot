@@ -5,7 +5,7 @@ using LanPlugin.Intranet;
 
 namespace Plugins.Lan
 {
-    public class LanPlugin : IPlugin, IModuleStatus
+    public class LanPlugin : IModule, IModuleStatus
     {
         private IInetScanner scanner;
         private IINetMonitor monitor;
@@ -63,7 +63,7 @@ namespace Plugins.Lan
             await ResultHandler(result);
         }
 
-        public override void Initialize(PluginData data)
+        public override void Initialize(ModuleData data)
         {
             base.Initialize(data);
 

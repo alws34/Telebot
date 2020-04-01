@@ -6,7 +6,7 @@ using Common.Contracts;
 
 namespace Plugins.Display
 {
-    public class DisplayPlugin : IPlugin
+    public class DisplayPlugin : IModule
     {
         private readonly Dictionary<string, DisplayState> states;
 

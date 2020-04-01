@@ -8,7 +8,7 @@ using Common.Contracts;
 namespace Plugins.CapApp
 {
 
-    public class CapAppPlugin : IPlugin
+    public class CapAppPlugin : IModule
     {
         public CapAppPlugin()
         {

@@ -6,7 +6,7 @@ using VolPlugin.Core;
 namespace Plugins.Vol
 {
 
-    public class VolPlugin : IPlugin
+    public class VolPlugin : IModule
     {
         public VolPlugin()
         {

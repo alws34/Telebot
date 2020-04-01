@@ -6,7 +6,7 @@ using Common.Contracts;
 
 namespace Plugins.Power
 {
-    public class PowerPlugin : IPlugin
+    public class PowerPlugin : IModule
     {
         private readonly Dictionary<string, PowerType> types;
 

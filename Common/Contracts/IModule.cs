@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Common.Contracts
 {
-    public abstract class IPlugin
+    public abstract class IModule
     {
         protected ResponseHandler ResultHandler;
 
@@ -12,7 +12,7 @@ namespace Common.Contracts
 
         public abstract void Execute(Request req);
 
-        public virtual void Initialize(PluginData data)
+        public virtual void Initialize(ModuleData data)
         {
             ResultHandler = data.ResultHandler;
         }

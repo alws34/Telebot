@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Plugins.Help
 {
-    public class HelpPlugin : IPlugin
+    public class HelpPlugin : IModule
     {
-        private IEnumerable<IPlugin> plugins;
+        private IEnumerable<IModule> plugins;
 
         public HelpPlugin()
         {
@@ -19,7 +19,7 @@ namespace Plugins.Help
         {
             var builder = new StringBuilder();
 
-            foreach (IPlugin plugin in plugins)
+            foreach (IModule plugin in plugins)
             {
                 builder.AppendLine(plugin.ToString());
             }
@@ -32,11 +32,11 @@ namespace Plugins.Help
             await ResultHandler(result);
         }
 
-        public override void Initialize(PluginData data)
+        public override void Initialize(ModuleData data)
         {
             base.Initialize(data);
 
-            plugins = data.IocContainer.GetAllInstances<IPlugin>();
+            plugins = data.IocContainer.GetAllInstances<IModule>();
         }
     }
 }

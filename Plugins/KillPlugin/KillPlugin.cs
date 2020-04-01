@@ -5,7 +5,7 @@ using Common.Contracts;
 
 namespace Plugins.Kill
 {
-    public class KillPlugin : IPlugin
+    public class KillPlugin : IModule
     {
         public KillPlugin()
         {
@@ -34,8 +34,8 @@ namespace Plugins.Kill
 
             try
             {
-                target.Kill();
                 text = $"{target.ProcessName} killed.";
+                target.Kill();
             }
             catch (Exception e)
             {

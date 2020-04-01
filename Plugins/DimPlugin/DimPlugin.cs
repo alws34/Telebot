@@ -5,7 +5,7 @@ using Common.Contracts;
 
 namespace Plugins.Dim
 {
-    public class DimPlugin : IPlugin
+    public class DimPlugin : IModule
     {
         public DimPlugin()
         {

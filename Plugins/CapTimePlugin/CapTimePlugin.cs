@@ -7,7 +7,7 @@ using Telebot.Capture;
 
 namespace Plugins.CapTime
 {
-    public class CapTimePlugin : IPlugin, IModuleStatus
+    public class CapTimePlugin : IModule, IModuleStatus
     {
         private IJob<CaptureArgs> worker;
 
@@ -63,7 +63,7 @@ namespace Plugins.CapTime
             await ResultHandler(result);
         }
 
-        public override void Initialize(PluginData data)
+        public override void Initialize(ModuleData data)
         {
             base.Initialize(data);
 

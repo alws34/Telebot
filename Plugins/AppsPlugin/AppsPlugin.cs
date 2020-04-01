@@ -7,7 +7,7 @@ using Common.Contracts;
 namespace Plugins.Apps
 {
 
-    public class AppsPlugin : IPlugin
+    public class AppsPlugin : IModule
     {
         private Dictionary<string, Session> types;
 

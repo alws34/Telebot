@@ -10,7 +10,7 @@ namespace Telebot.Clients
 {
     public abstract class IBotClient : TelegramBotClient
     {
-        protected readonly int Id;
+        private readonly int Id;
 
         protected IBotClient(string token, int id) : base(token)
         {

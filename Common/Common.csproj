@@ -58,9 +58,9 @@
     <Compile Include="Contracts\IStatus.cs" />
     <Compile Include="Jobs\IFeedback.cs" />
     <Compile Include="Jobs\IJob.cs" />
-    <Compile Include="Contracts\IPlugin.cs" />
+    <Compile Include="Contracts\IModule.cs" />
     <Compile Include="Models\Feedback.cs" />
-    <Compile Include="Models\PluginData.cs" />
+    <Compile Include="Models\ModuleData.cs" />
     <Compile Include="Models\Request.cs" />
     <Compile Include="Models\Response.cs" />
     <Compile Include="Settings\IProfile.cs" />

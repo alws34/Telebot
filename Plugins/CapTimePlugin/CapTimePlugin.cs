@@ -1,8 +1,8 @@
-﻿using Common.Extensions;
+﻿using Common.Contracts;
+using Common.Extensions;
 using Common.Models;
 using Contracts.Jobs;
 using System;
-using Common.Contracts;
 using Telebot.Capture;
 
 namespace Plugins.CapTime

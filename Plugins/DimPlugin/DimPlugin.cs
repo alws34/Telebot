@@ -1,7 +1,7 @@
-﻿using Common.Models;
+﻿using Common.Contracts;
+using Common.Models;
 using DimPlugin.Core;
 using System;
-using Common.Contracts;
 
 namespace Plugins.Dim
 {

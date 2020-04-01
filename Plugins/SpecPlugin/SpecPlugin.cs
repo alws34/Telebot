@@ -1,9 +1,6 @@
 ﻿using Common.Contracts;
 using Common.Models;
-using CPUID.Base;
-using System.Collections.Generic;
 using System.IO;
-using SimpleInjector;
 
 namespace Plugins.NSSpec
 {

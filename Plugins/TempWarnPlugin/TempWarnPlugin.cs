@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Common.Contracts;
+﻿using Common.Contracts;
 using Common.Extensions;
 using Common.Models;
 using Contracts.Jobs;
 using CPUID.Base;
-using CPUID.Devices;
+using System.Collections.Generic;
 using TempWarnPlugin.Jobs;
 using TempWarnPlugin.Models;
 

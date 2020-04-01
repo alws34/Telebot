@@ -1,6 +1,6 @@
-﻿using Common.Models;
+﻿using Common.Contracts;
+using Common.Models;
 using System.Threading.Tasks;
-using Common.Contracts;
 
 namespace Plugins.Exit
 {

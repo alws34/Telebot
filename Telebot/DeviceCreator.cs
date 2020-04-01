@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using CPUID;
+﻿using CPUID;
 using CPUID.Base;
 using CPUID.Devices;
 using CPUID.Sdk;
+using System;
+using System.Collections.Generic;
 
 namespace Telebot
 {

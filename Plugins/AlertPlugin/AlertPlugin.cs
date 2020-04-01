@@ -1,17 +1,15 @@
-﻿using Common.Models;
+﻿using Common.Contracts;
+using Common.Models;
 using System.Windows.Forms;
-using Common.Contracts;
 
 namespace Plugins.Alert
 {
-
     public class AlertPlugin : IModule
     {
         public AlertPlugin()
         {
             Pattern = "/alert \"(.+?)\"";
             Description = "Display an alert with the specified text.";
-
         }
 
         public override async void Execute(Request req)

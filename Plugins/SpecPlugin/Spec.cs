@@ -2,11 +2,9 @@
 using Plugins.NSSpec.Components;
 using Plugins.NSSpec.Sensors;
 using Plugins.NSSpec.Sensors.Contracts;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using SimpleInjector;
-using static CPUID.Sdk.CpuIdSdk64;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Plugins.NSSpec
 {

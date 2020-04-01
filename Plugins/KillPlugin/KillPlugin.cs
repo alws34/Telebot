@@ -1,7 +1,7 @@
-﻿using Common.Models;
+﻿using Common.Contracts;
+using Common.Models;
 using System;
 using System.Diagnostics;
-using Common.Contracts;
 
 namespace Plugins.Kill
 {

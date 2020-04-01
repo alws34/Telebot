@@ -4,7 +4,6 @@ using CPUID.Base;
 using CPUID.Models;
 using FluentScheduler;
 using System.Collections.Generic;
-using System.Linq;
 using TempWarnPlugin.Models;
 using TempWarnPlugin.Settings;
 using static CPUID.Sdk.CpuIdSdk64;

@@ -1,8 +1,8 @@
-﻿using Common.Enums;
+﻿using Common.Contracts;
+using Common.Enums;
 using Common.Models;
 using DisplayPlugin.Core;
 using System.Collections.Generic;
-using Common.Contracts;
 
 namespace Plugins.Display
 {

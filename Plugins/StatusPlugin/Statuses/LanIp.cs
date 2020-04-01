@@ -4,7 +4,7 @@ using System.Net.Sockets;
 
 namespace StatusPlugin.Statuses
 {
-    public class LanAddrStatus : IStatus
+    public class LanIp : IStatus
     {
         public string GetStatus()
         {

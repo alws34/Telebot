@@ -50,8 +50,6 @@ namespace TempWarnPlugin.Jobs
 
         private void Elapsed()
         {
-            CpuIdWrapper64.Sdk64.RefreshInformation();
-
             foreach (IDevice device in devices)
             {
                 Sensor sensor = device.GetSensor(SENSOR_CLASS_TEMPERATURE);

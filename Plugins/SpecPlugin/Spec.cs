@@ -73,8 +73,6 @@ namespace Plugins.NSSpec
                 )
             };
 
-            Sdk64.RefreshInformation();
-
             foreach (IComponent component in components)
             {
                 text.Append(component);

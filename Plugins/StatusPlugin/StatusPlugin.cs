@@ -43,18 +43,18 @@ namespace Plugins.Status
         {
             base.Initialize(data);
 
-            var stFac = data.iocContainer.GetInstance<IFactory<IStatus>>();
-            var dvcFac = data.iocContainer.GetInstance<IFactory<IDevice>>();
+            var statusInstance = data.iocContainer.GetInstance<IFactory<IStatus>>();
+            var deviceInstance = data.iocContainer.GetInstance<IFactory<IDevice>>();
 
-            IStatus[] arr = 
+            IStatus[] arr =
             {
-                new SystemStatus(dvcFac.GetAll()),
-                new LanAddrStatus(),
-                new WanAddrStatus(),
-                new UptimeStatus()
+                new SysInfo(deviceInstance.GetAll()),
+                new LanIp(),
+                new WanIp(),
+                new Uptime()
             };
 
-            items = arr.Concat(stFac.GetAll());
+            items = arr.Concat(statusInstance.GetAll());
         }
     }
 }

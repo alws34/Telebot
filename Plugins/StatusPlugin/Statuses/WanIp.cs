@@ -3,7 +3,7 @@ using System.Net;
 
 namespace StatusPlugin.Statuses
 {
-    public class WanAddrStatus : IStatus
+    public class WanIp : IStatus
     {
         public string GetStatus()
         {

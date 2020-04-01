@@ -1,4 +1,5 @@
 ﻿using CPUID.Sdk;
+using FluentScheduler;
 using System;
 
 namespace CPUID
@@ -13,6 +14,11 @@ namespace CPUID
 
             if (!success)
                 throw new Exception("CpuIdSdk64 could not be initialized.");
+
+            JobManager.AddJob(() =>
+            {
+                Sdk64.RefreshInformation();
+            }, s => s.WithName("CpuIdRefresh").ToRunNow().AndEvery(1).Seconds());
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using Common.Contracts;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Common.Contracts;
 using Common.Extensions;
 using Common.Models;
 using Contracts.Jobs;
@@ -61,7 +63,11 @@ namespace Plugins.TempWarn
         {
             base.Initialize(data);
 
-            var devices = data.IocContainer.GetAllInstances<IDevice>();
+            var cpus = data.IocContainer.GetAllInstances<IProcessor>();
+            var gpus = data.IocContainer.GetAllInstances<IDisplay>();
+
+            var devices = new List<IDevice>(cpus);
+            devices.AddRange(gpus);
 
             worker = new TempWarning(devices)
             {

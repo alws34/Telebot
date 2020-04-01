@@ -17,10 +17,7 @@ namespace TempTimePlugin.Jobs
 
         public TempSchedule(IEnumerable<IDevice> devices)
         {
-            this.devices = devices.Where(x =>
-                (x.DeviceClass == CLASS_DEVICE_PROCESSOR) ||
-                (x.DeviceClass == CLASS_DEVICE_DISPLAY_ADAPTER)
-            );
+            this.devices = devices;
         }
 
         private void Elapsed()

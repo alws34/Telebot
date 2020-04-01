@@ -5,25 +5,26 @@ using Plugins.NSSpec.Sensors.Contracts;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using SimpleInjector;
 using static CPUID.Sdk.CpuIdSdk64;
 
 namespace Plugins.NSSpec
 {
     public class Spec
     {
-        private readonly IEnumerable<IDevice> processors;
-        private readonly IEnumerable<IDevice> storage;
-        private readonly IEnumerable<IDevice> displays;
-        private readonly IEnumerable<IDevice> batteries;
-        private readonly IEnumerable<IDevice> mainboard;
+        private readonly IEnumerable<IDevice> cpus;
+        private readonly IEnumerable<IDevice> hdds;
+        private readonly IEnumerable<IDevice> gpus;
+        private readonly IEnumerable<IDevice> bats;
+        private readonly IEnumerable<IDevice> rams;
 
-        public Spec(IEnumerable<IDevice> devices)
+        public Spec(Container ioc)
         {
-            processors = devices.Where(x => x.DeviceClass == CLASS_DEVICE_PROCESSOR);
-            storage = devices.Where(x => x.DeviceClass == CLASS_DEVICE_DRIVE);
-            displays = devices.Where(x => x.DeviceClass == CLASS_DEVICE_DISPLAY_ADAPTER);
-            batteries = devices.Where(x => x.DeviceClass == CLASS_DEVICE_BATTERY);
-            mainboard = devices.Where(x => x.DeviceClass == CLASS_DEVICE_MAINBOARD);
+            cpus = ioc.GetAllInstances<IProcessor>();
+            hdds = ioc.GetAllInstances<IDrive>();
+            gpus = ioc.GetAllInstances<IDisplay>();
+            bats = ioc.GetAllInstances<IBattery>();
+            rams = ioc.GetAllInstances<IMainboard>();
         }
 
         public string GetInfo()
@@ -32,7 +33,7 @@ namespace Plugins.NSSpec
 
             IComponent[] components = {
                 new Processor(
-                    processors,
+                    cpus,
                     new ISensor[]
                     {
                         new Voltage(),
@@ -43,7 +44,7 @@ namespace Plugins.NSSpec
                     }
                 ),
                 new Storage(
-                    storage,
+                    hdds,
                     new ISensor[]
                     {
                         new Temperature(),
@@ -51,14 +52,14 @@ namespace Plugins.NSSpec
                     }
                 ),
                 new Display(
-                    displays,
+                    gpus,
                     new ISensor[]
                     {
                         new Temperature()
                     }
                 ),
                 new Battery(
-                    batteries,
+                    bats,
                     new ISensor[]
                     {
                         new Voltage(),
@@ -67,7 +68,7 @@ namespace Plugins.NSSpec
                     }
                 ),
                 new Mainboard(
-                    mainboard,
+                    rams,
                     new ISensor[]
                     {
                         new Utilization()

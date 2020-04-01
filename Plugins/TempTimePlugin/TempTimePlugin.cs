@@ -4,6 +4,7 @@ using Common.Models;
 using Contracts.Jobs;
 using CPUID.Base;
 using System;
+using System.Collections.Generic;
 using System.Text;
 using TempTimePlugin.Jobs;
 using TempTimePlugin.Models;
@@ -81,7 +82,11 @@ namespace Plugins.TempTime
         {
             base.Initialize(data);
 
-            var devices = data.IocContainer.GetAllInstances<IDevice>();
+            var cpus = data.IocContainer.GetAllInstances<IProcessor>();
+            var gpus = data.IocContainer.GetAllInstances<IDisplay>();
+
+            var devices = new List<IDevice>(cpus);
+            devices.AddRange(gpus);
 
             worker = new TempSchedule(devices)
             {

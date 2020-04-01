@@ -2,7 +2,7 @@
 
 namespace CPUID.Devices
 {
-    public class BATDevice : IDevice
+    public class BATDevice : IBattery
     {
         public BATDevice()
         {

@@ -39,18 +39,18 @@ namespace Plugins.Status
         {
             base.Initialize(data);
 
-            var statusInstance = data.IocContainer.GetAllInstances<IModuleStatus>();
-            var deviceInstance = data.IocContainer.GetAllInstances<IDevice>();
+            var statusInstances = data.IocContainer.GetAllInstances<IModuleStatus>();
+            var deviceInstances = data.IocContainer.GetAllInstances<IDevice>();
 
             IStatus[] arr =
             {
-                new SysInfo(deviceInstance),
+                new SysInfo(deviceInstances),
                 new LanIp(),
                 new WanIp(),
                 new Uptime()
             };
 
-            items = arr.Concat(statusInstance);
+            items = arr.Concat(statusInstances);
         }
     }
 }

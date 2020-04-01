@@ -6,7 +6,7 @@ using static CPUID.Sdk.CpuIdSdk64;
 
 namespace CPUID.Devices
 {
-    public class HDDDevice : IDevice
+    public class HDDDevice : IDrive
     {
         public HDDDevice()
         {

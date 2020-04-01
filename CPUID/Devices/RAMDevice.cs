@@ -4,7 +4,7 @@ using static CPUID.Sdk.CpuIdSdk64;
 
 namespace CPUID.Devices
 {
-    public class RAMDevice : IDevice
+    public class RAMDevice : IMainboard
     {
         public RAMDevice()
         {

@@ -57,4 +57,29 @@ namespace CPUID.Base
 
         public abstract override string ToString();
     }
+
+    public abstract class IBattery : IDevice
+    {
+
+    }
+
+    public abstract class IProcessor : IDevice
+    {
+
+    }
+
+    public abstract class IDisplay : IDevice
+    {
+
+    }
+
+    public abstract class IDrive : IDevice
+    {
+
+    }
+
+    public abstract class IMainboard : IDevice
+    {
+
+    }
 }

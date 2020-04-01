@@ -4,7 +4,7 @@ using static CPUID.Sdk.CpuIdSdk64;
 
 namespace CPUID.Devices
 {
-    public class CPUDevice : IDevice
+    public class CPUDevice : IProcessor
     {
         public CPUDevice()
         {

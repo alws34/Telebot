@@ -22,10 +22,7 @@ namespace TempWarnPlugin.Jobs
 
         public TempWarning(IEnumerable<IDevice> devices)
         {
-            this.devices = devices.Where(x =>
-               (x.DeviceClass == CLASS_DEVICE_PROCESSOR) ||
-               (x.DeviceClass == CLASS_DEVICE_DISPLAY_ADAPTER)
-            );
+            this.devices = devices;
 
             settings = new TempSettings();
             settings.AddProfile(this);

@@ -4,7 +4,7 @@ using static CPUID.Sdk.CpuIdSdk64;
 
 namespace CPUID.Devices
 {
-    public class GPUDevice : IDevice
+    public class GPUDevice : IDisplay
     {
         public GPUDevice()
         {

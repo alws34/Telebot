@@ -3,6 +3,7 @@ using Common.Models;
 using CPUID.Base;
 using System.Collections.Generic;
 using System.IO;
+using SimpleInjector;
 
 namespace Plugins.NSSpec
 {
@@ -11,7 +12,7 @@ namespace Plugins.NSSpec
     {
         private const string filePath = ".\\Plugins\\Spec\\spec.txt";
 
-        private IEnumerable<IDevice> devices;
+        private Spec spec;
 
         public SpecPlugin()
         {
@@ -21,8 +22,6 @@ namespace Plugins.NSSpec
 
         public override async void Execute(Request req)
         {
-            Spec spec = new Spec(devices);
-
             string info = spec.GetInfo();
 
             File.WriteAllText(filePath, info);
@@ -38,7 +37,7 @@ namespace Plugins.NSSpec
         {
             base.Initialize(data);
 
-            devices = data.IocContainer.GetAllInstances<IDevice>();
+            spec = new Spec(data.IocContainer);
         }
     }
 }

@@ -100,10 +100,17 @@ namespace Telebot
             IocContainer.Collection.Register<IPlugin>(modulesRegistration);
             IocContainer.Collection.Register<IModuleStatus>(statusRegistration);
 
-            DevicesRegistration devicesRegistration = new DevicesRegistration();
-            var devices = devicesRegistration.GetDevices();
+            DeviceCreator devCreator = new DeviceCreator();
 
-            IocContainer.Collection.Register<IDevice>(devices);
+            // IDevice
+            IocContainer.Collection.Register(devCreator.GetAll());
+
+            // Derived classes from IDevice
+            IocContainer.Collection.Register(devCreator.GetProcessors());
+            IocContainer.Collection.Register(devCreator.GetBatteries());
+            IocContainer.Collection.Register(devCreator.GetDisplays());
+            IocContainer.Collection.Register(devCreator.GetDrives());
+            IocContainer.Collection.Register(devCreator.GetMainboards());
 
             IocContainer.Verify();
         }

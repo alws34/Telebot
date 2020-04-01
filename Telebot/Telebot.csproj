@@ -87,7 +87,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Clients\IBotClient.cs" />
-    <Compile Include="DevicesRegistration.cs" />
+    <Compile Include="DeviceCreator.cs" />
     <Compile Include="Settings\AppSettings.cs" />
     <Compile Include="Settings\IniFileHandler.cs" />
     <Compile Include="Settings\TelegramSettings.cs" />

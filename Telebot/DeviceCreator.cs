@@ -46,10 +46,10 @@ namespace Telebot
         {
             List<IDevice> all = new List<IDevice>();
             all.AddRange(GetProcessors());
-            all.AddRange(GetBatteries());
             all.AddRange(GetDisplays());
             all.AddRange(GetDrives());
             all.AddRange(GetMainboards());
+            all.AddRange(GetBatteries());
 
             return all;
         }

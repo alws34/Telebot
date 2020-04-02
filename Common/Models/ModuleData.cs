@@ -1,11 +1,13 @@
-﻿using Common.Contracts;
+﻿using System;
+using System.Collections.Generic;
+using Common.Contracts;
 using SimpleInjector;
 
 namespace Common.Models
 {
     public class ModuleData
     {
-        public Container IocContainer { get; set; }
+        public IServiceProvider IoCProvider { get; set; }
         public ResponseHandler ResultHandler { get; set; }
     }
 }

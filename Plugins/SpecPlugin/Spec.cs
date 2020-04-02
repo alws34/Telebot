@@ -1,10 +1,12 @@
-﻿using CPUID.Base;
+﻿using System;
+using CPUID.Base;
 using Plugins.NSSpec.Components;
 using Plugins.NSSpec.Sensors;
 using Plugins.NSSpec.Sensors.Contracts;
 using SimpleInjector;
 using System.Collections.Generic;
 using System.Text;
+using Common.Models;
 
 namespace Plugins.NSSpec
 {
@@ -16,13 +18,15 @@ namespace Plugins.NSSpec
         private readonly IEnumerable<IDevice> bats;
         private readonly IEnumerable<IDevice> rams;
 
-        public Spec(Container ioc)
+        public Spec(IServiceProvider ioc)
         {
-            cpus = ioc.GetAllInstances<IProcessor>();
-            hdds = ioc.GetAllInstances<IDrive>();
-            gpus = ioc.GetAllInstances<IDisplay>();
-            bats = ioc.GetAllInstances<IBattery>();
-            rams = ioc.GetAllInstances<IMainboard>();
+            var container = (Container)ioc.GetService(typeof(Container));
+
+            cpus = container.GetAllInstances<IProcessor>();
+            hdds = container.GetAllInstances<IDrive>();
+            gpus = container.GetAllInstances<IDisplay>();
+            bats = container.GetAllInstances<IBattery>();
+            rams = container.GetAllInstances<IMainboard>();
         }
 
         public string GetInfo()

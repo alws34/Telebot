@@ -1,6 +1,7 @@
 ﻿using Common.Contracts;
 using Common.Models;
 using System.Threading.Tasks;
+using SimpleInjector;
 using Updater;
 
 namespace Plugins.Update
@@ -41,8 +42,11 @@ namespace Plugins.Update
         public override void Initialize(ModuleData data)
         {
             base.Initialize(data);
-            appUpdate = data.IocContainer.GetInstance<IAppUpdate>();
-            appExit = data.IocContainer.GetInstance<IAppExit>();
+
+            var container = (Container)data.IoCProvider.GetService(typeof(Container));
+
+            appUpdate = container.GetInstance<IAppUpdate>();
+            appExit = container.GetInstance<IAppExit>();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Common.Contracts;
 using Common.Models;
 using System.Text;
+using SimpleInjector;
 
 namespace Plugins.Help
 {
@@ -28,7 +29,9 @@ namespace Plugins.Help
         {
             base.Initialize(data);
 
-            var modules = data.IocContainer.GetAllInstances<IModule>();
+            var container = (Container)data.IoCProvider.GetService(typeof(Container));
+
+            var modules = container.GetAllInstances<IModule>();
 
             var builder = new StringBuilder();
 

@@ -6,6 +6,7 @@ using CPUID.Base;
 using System;
 using System.Linq;
 using System.Text;
+using SimpleInjector;
 using TempTimePlugin.Jobs;
 using TempTimePlugin.Models;
 
@@ -79,8 +80,10 @@ namespace Plugins.TempTime
         {
             base.Initialize(data);
 
-            var cpus = data.IocContainer.GetAllInstances<IProcessor>();
-            var gpus = data.IocContainer.GetAllInstances<IDisplay>();
+            var container = (Container)data.IoCProvider.GetService(typeof(Container));
+
+            var cpus = container.GetAllInstances<IProcessor>();
+            var gpus = container.GetAllInstances<IDisplay>();
 
             var devs = cpus.Concat<IDevice>(gpus);
 

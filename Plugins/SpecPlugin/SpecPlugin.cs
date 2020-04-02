@@ -33,7 +33,7 @@ namespace Plugins.NSSpec
         public override void Initialize(ModuleData data)
         {
             base.Initialize(data);
-            spec = new Spec(data.IocContainer);
+            spec = new Spec(data.IoCProvider);
         }
     }
 }

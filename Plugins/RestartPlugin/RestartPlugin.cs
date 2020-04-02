@@ -1,6 +1,7 @@
 ﻿using Common.Contracts;
 using Common.Models;
 using System.Threading.Tasks;
+using SimpleInjector;
 
 namespace Plugins.Restart
 {
@@ -32,7 +33,8 @@ namespace Plugins.Restart
         public override void Initialize(ModuleData data)
         {
             base.Initialize(data);
-            appRestart = data.IocContainer.GetInstance<IAppRestart>();
+            var container = (Container)data.IoCProvider.GetService(typeof(Container));
+            appRestart = container.GetInstance<IAppRestart>();
         }
     }
 }

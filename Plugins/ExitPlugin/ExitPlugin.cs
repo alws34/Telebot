@@ -1,6 +1,7 @@
 ﻿using Common.Contracts;
 using Common.Models;
 using System.Threading.Tasks;
+using SimpleInjector;
 
 namespace Plugins.Exit
 {
@@ -29,7 +30,8 @@ namespace Plugins.Exit
         public override void Initialize(ModuleData data)
         {
             base.Initialize(data);
-            appExit = data.IocContainer.GetInstance<IAppExit>();
+            var container = (Container)data.IoCProvider.GetService(typeof(Container));
+            appExit = container.GetInstance<IAppExit>();
         }
     }
 }

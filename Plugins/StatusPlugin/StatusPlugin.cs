@@ -5,6 +5,7 @@ using StatusPlugin.Statuses;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using SimpleInjector;
 
 namespace Plugins.Status
 {
@@ -39,7 +40,9 @@ namespace Plugins.Status
         {
             base.Initialize(data);
 
-            var devices = data.IocContainer.GetAllInstances<IDevice>();
+            var container = (Container)data.IoCProvider.GetService(typeof(Container));
+
+            var devices = container.GetAllInstances<IDevice>();
 
             IStatus[] classStatuses =
             {
@@ -49,7 +52,7 @@ namespace Plugins.Status
                 new Uptime()
             };
 
-            var jobStatuses = data.IocContainer.GetAllInstances<IJobStatus>();
+            var jobStatuses = container.GetAllInstances<IJobStatus>();
 
             items = classStatuses.Concat(jobStatuses);
         }

@@ -133,7 +133,7 @@ namespace Telebot
         {
             var data = new ModuleData
             {
-                IocContainer = IocContainer,
+                IoCProvider = IocContainer,
                 ResultHandler = handler
             };
 

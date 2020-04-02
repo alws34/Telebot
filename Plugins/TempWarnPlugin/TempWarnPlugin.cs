@@ -4,6 +4,7 @@ using Common.Models;
 using Contracts.Jobs;
 using CPUID.Base;
 using System.Linq;
+using SimpleInjector;
 using TempWarnPlugin.Jobs;
 using TempWarnPlugin.Models;
 
@@ -61,8 +62,10 @@ namespace Plugins.TempWarn
         {
             base.Initialize(data);
 
-            var cpus = data.IocContainer.GetAllInstances<IProcessor>();
-            var gpus = data.IocContainer.GetAllInstances<IDisplay>();
+            var container = (Container)data.IoCProvider.GetService(typeof(Container));
+
+            var cpus = container.GetAllInstances<IProcessor>();
+            var gpus = container.GetAllInstances<IDisplay>();
 
             var devs = cpus.Concat<IDevice>(gpus);
 

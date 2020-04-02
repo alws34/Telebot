@@ -10,7 +10,7 @@
 
     }
 
-    public interface IModuleStatus : IStatus
+    public interface IJobStatus : IStatus
     {
 
     }

@@ -39,10 +39,9 @@ namespace Plugins.Status
         {
             base.Initialize(data);
 
-            var statusInstances = data.IocContainer.GetAllInstances<IModuleStatus>();
             var deviceInstances = data.IocContainer.GetAllInstances<IDevice>();
 
-            IStatus[] arr =
+            IStatus[] classStatuses =
             {
                 new SysInfo(deviceInstances),
                 new LanIp(),
@@ -50,7 +49,9 @@ namespace Plugins.Status
                 new Uptime()
             };
 
-            items = arr.Concat(statusInstances);
+            var jobStatuses = data.IocContainer.GetAllInstances<IJobStatus>();
+
+            items = classStatuses.Concat(jobStatuses);
         }
     }
 }

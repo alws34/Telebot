@@ -5,7 +5,6 @@ using System.Diagnostics;
 
 namespace Plugins.Shutdown
 {
-
     public class ShutdownPlugin : IModule
     {
         public ShutdownPlugin()
@@ -27,7 +26,7 @@ namespace Plugins.Shutdown
             ShutdownTimeout(timeout);
         }
 
-        private void ShutdownTimeout(int timeout = 0)
+        private void ShutdownTimeout(int timeout)
         {
             var si = new ProcessStartInfo("shutdown", $"/s /t {timeout}")
             {

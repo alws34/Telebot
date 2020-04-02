@@ -4,12 +4,13 @@ using Common.Models;
 using Contracts.Jobs;
 using CPUID.Base;
 using System.Collections.Generic;
+using System.Linq;
 using TempWarnPlugin.Jobs;
 using TempWarnPlugin.Models;
 
 namespace Plugins.TempWarn
 {
-    public class TempWarnPlugin : IModule, IModuleStatus
+    public class TempWarnPlugin : IModule, IJobStatus
     {
         private IJob<TempArgs> worker;
 
@@ -64,10 +65,9 @@ namespace Plugins.TempWarn
             var cpus = data.IocContainer.GetAllInstances<IProcessor>();
             var gpus = data.IocContainer.GetAllInstances<IDisplay>();
 
-            var devices = new List<IDevice>(cpus);
-            devices.AddRange(gpus);
+            var devs = cpus.Concat<IDevice>(gpus);
 
-            worker = new TempWarning(devices)
+            worker = new TempWarning(devs)
             {
                 Update = UpdateHandler,
                 Feedback = FeedbackHandler

@@ -5,7 +5,7 @@ using LanPlugin.Intranet;
 
 namespace Plugins.Lan
 {
-    public class LanPlugin : IModule, IModuleStatus
+    public class LanPlugin : IModule, IJobStatus
     {
         private IInetScanner scanner;
         private IINetMonitor monitor;

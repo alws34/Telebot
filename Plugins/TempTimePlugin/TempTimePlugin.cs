@@ -5,15 +5,16 @@ using Contracts.Jobs;
 using CPUID.Base;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using TempTimePlugin.Jobs;
 using TempTimePlugin.Models;
 
 namespace Plugins.TempTime
 {
-    public class TempTimeCommand : IModule, IModuleStatus
+    public class TempTimeCommand : IModule, IJobStatus
     {
-        private IJob<TempArgs> worker;
+        private IJob<TempArgs> job;
 
         public TempTimeCommand()
         {
@@ -33,9 +34,7 @@ namespace Plugins.TempTime
                 );
 
                 await ResultHandler(resp1);
-
-                worker.Stop();
-
+                job.Stop();
                 return;
             }
 
@@ -50,7 +49,7 @@ namespace Plugins.TempTime
 
             await ResultHandler(resp);
 
-            ((IScheduled)worker).Start(duration, interval);
+            ((IScheduled)job).Start(duration, interval);
         }
 
         StringBuilder text = new StringBuilder();
@@ -74,7 +73,6 @@ namespace Plugins.TempTime
         private async void FeedbackHandler(object sender, Feedback e)
         {
             var result = new Response(e.Text);
-
             await ResultHandler(result);
         }
 
@@ -85,10 +83,9 @@ namespace Plugins.TempTime
             var cpus = data.IocContainer.GetAllInstances<IProcessor>();
             var gpus = data.IocContainer.GetAllInstances<IDisplay>();
 
-            var devices = new List<IDevice>(cpus);
-            devices.AddRange(gpus);
+            var devs = cpus.Concat<IDevice>(gpus);
 
-            worker = new TempSchedule(devices)
+            job = new TempSchedule(devs)
             {
                 Update = UpdateHandler,
                 Feedback = FeedbackHandler
@@ -100,7 +97,7 @@ namespace Plugins.TempTime
             string text = "";
 
             string name = "Temp Time";
-            bool active = worker.Active;
+            bool active = job.Active;
 
             text += $"*{name}*: {active.ToReadable()}\n";
 

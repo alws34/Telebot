@@ -20,8 +20,6 @@ namespace Telebot
     {
         public static Container IocContainer { get; private set; }
 
-        private static IBotClient botClient;
-
         [STAThread]
         static void Main()
         {
@@ -46,10 +44,10 @@ namespace Telebot
             }
 
             MainView mainView = new MainView();
-            botClient = new TelebotClient(token, id);
+            IBotClient botClient = new TelebotClient(token, id);
 
             BuildContainer();
-            InitializeModules();
+            InitializeModules(botClient.ResultHandler);
 
             var presenter = new MainViewPresenter(
                 mainView,
@@ -86,7 +84,7 @@ namespace Telebot
             var assemblies = LoadAssemblies();
 
             var modulesType = IocContainer.GetTypesToRegister<IModule>(assemblies);
-            var statusType = IocContainer.GetTypesToRegister<IModuleStatus>(assemblies);
+            var statusType = IocContainer.GetTypesToRegister<IJobStatus>(assemblies);
 
             var modulesRegistration =
                 from type in modulesType
@@ -97,7 +95,7 @@ namespace Telebot
                 select Lifestyle.Singleton.CreateRegistration(type, IocContainer);
 
             IocContainer.Collection.Register<IModule>(modulesRegistration);
-            IocContainer.Collection.Register<IModuleStatus>(statusRegistration);
+            IocContainer.Collection.Register<IJobStatus>(statusRegistration);
 
             DeviceCreator devCreator = new DeviceCreator();
 
@@ -131,12 +129,12 @@ namespace Telebot
             return modules;
         }
 
-        private static void InitializeModules()
+        private static void InitializeModules(ResponseHandler handler)
         {
             var data = new ModuleData
             {
                 IocContainer = IocContainer,
-                ResultHandler = botClient.ResultHandler
+                ResultHandler = handler
             };
 
             var modules = IocContainer.GetAllInstances<IModule>();

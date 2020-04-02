@@ -1,10 +1,12 @@
 # Telebot
+
 An open source modular smart monitoring system. With a modular design, Telebot allows you to extend it and turn it into your personal assistant.
 
 Communication with the system is via Telegram, you must create a bot by following the steps [here](https://core.telegram.org/bots) and use the token to setup the bot.
 
 # Setup
- - Create a settings.ini file and place it within the same folder as binaries. Make sure you have the bot token and the user id (who will control the bot) in the following format:
+
+Create a settings.ini file and place it within the same folder as binaries. Make sure you have the bot token and the user id (who will control the bot) in the following format:
  
  ```
 [Telegram]
@@ -12,7 +14,7 @@ Token = <Bot_Token>
 AdminId = <User_ID>
 ```
 
-- Necessary files will be copied to bin directory upon project build.
+Necessary files will be copied to bin directory upon project build.
 
 # Application architecture
 
@@ -32,7 +34,7 @@ Definitions shared between modules.
 Includes all preprogrammed modules that extends the application behaviour. Extending functionality is possible by reading [here](https://github.com/jdahan91/Telebot/blob/master/README.md#extending-functionality).
 
 # Extending functionality
-Each functionality is encapsulated by a module which is defined by the `IModule` abstract class. In order to extend functionality of Telebot you inherit from `IModule` and implement Execute method which encapsulates the module logic. Don't forget to give your module a pattern (Regex) and description initialized at ctor.
+Each functionality is encapsulated by a module which is defined by the `IModule` abstract class. In order to extend functionality of Telebot you must inherit from `IModule` and implement Execute method which encapsulates the module logic. Don't forget to give your module a pattern (Regex) and description initialized at ctor.
 
 the `Initialize` method could be overriden to fetch data from the IoC container across other modules (If needed). By default this method will assign the response handler so you could respond back result to the telegram client from your module.
 

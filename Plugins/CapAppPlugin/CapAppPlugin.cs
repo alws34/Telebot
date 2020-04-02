@@ -16,13 +16,24 @@ namespace Plugins.CapApp
             Description = "Get a screenshot of an app (by pid).";
         }
 
-        public override void Execute(Request req)
+        public override async void Execute(Request req)
         {
             int pid = Convert.ToInt32(req.Groups[1].Value);
 
-            var hWnd = Process.GetProcessById(pid).MainWindowHandle;
+            Process task;
 
-            var api = new CapApi(hWnd);
+            try
+            {
+                task = Process.GetProcessById(pid);
+            }
+            catch (Exception e)
+            {
+                var resp = new Response(e.Message, req.MessageId);
+                await ResultHandler(resp);
+                return;
+            }
+
+            var api = new CapApi(task.MainWindowHandle);
 
             api.Invoke(async (wnd) =>
             {

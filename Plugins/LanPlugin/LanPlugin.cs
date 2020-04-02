@@ -2,18 +2,29 @@
 using Common.Extensions;
 using Common.Models;
 using LanPlugin.Intranet;
+using System;
+using System.Collections.Generic;
 
 namespace Plugins.Lan
 {
     public class LanPlugin : IModule, IJobStatus
     {
-        private IInetScanner scanner;
-        private IINetMonitor monitor;
+        private IInetScanner lanScanner;
+        private IINetMonitor lanMonitor;
+
+        private readonly Dictionary<string, Action> actions;
 
         public LanPlugin()
         {
             Pattern = "/lan (mon|moff|scan)";
             Description = "Scan or listen for devices on the LAN.";
+
+            actions = new Dictionary<string, Action>
+            {
+                { "mon", lanMonitor.Listen },
+                { "moff", lanMonitor.Disconnect },
+                { "scan", lanScanner.Discover }
+            };
         }
 
         public override async void Execute(Request req)
@@ -27,18 +38,7 @@ namespace Plugins.Lan
 
             await ResultHandler(response);
 
-            switch (state)
-            {
-                case "mon":
-                    monitor.Listen();
-                    break;
-                case "moff":
-                    monitor.Disconnect();
-                    break;
-                case "scan":
-                    scanner.Discover();
-                    break;
-            }
+            actions[state].Invoke();
         }
 
         private async void HostHandler(object sender, HostsArg e)
@@ -67,13 +67,13 @@ namespace Plugins.Lan
         {
             base.Initialize(data);
 
-            scanner = new LanScanner
+            lanScanner = new LanScanner
             {
                 Discovered = HostHandler,
                 Feedback = FeedbackHandler
             };
 
-            monitor = new LanMonitor
+            lanMonitor = new LanMonitor
             {
                 Connected = HostHandler,
                 Disconnected = HostHandler,
@@ -83,14 +83,7 @@ namespace Plugins.Lan
 
         public string GetStatus()
         {
-            string text = "";
-
-            string name = "LAN Monitor";
-            bool active = monitor.IsActive;
-
-            text += $"*{name}*: {active.ToReadable()}\n";
-
-            return text.TrimEnd('\n');
+            return $"*LAN Monitor*: {lanMonitor.Active.ToReadable()}";
         }
     }
 }

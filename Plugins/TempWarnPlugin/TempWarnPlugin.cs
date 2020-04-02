@@ -3,7 +3,6 @@ using Common.Extensions;
 using Common.Models;
 using Contracts.Jobs;
 using CPUID.Base;
-using System.Collections.Generic;
 using System.Linq;
 using TempWarnPlugin.Jobs;
 using TempWarnPlugin.Models;

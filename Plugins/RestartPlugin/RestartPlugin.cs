@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 
 namespace Plugins.Restart
 {
-
     public class RestartPlugin : IModule
     {
         private IAppRestart appRestart;

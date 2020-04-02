@@ -5,7 +5,6 @@ using VolPlugin.Core;
 
 namespace Plugins.Vol
 {
-
     public class VolPlugin : IModule
     {
         public VolPlugin()
@@ -19,7 +18,7 @@ namespace Plugins.Vol
             int vol = Convert.ToInt32(req.Groups[1].Value);
 
             var result = new Response(
-                $"Successfully adjusted volume to {vol}%.",
+                $"Successfully set volume to {vol}%.",
                 req.MessageId
             );
 

@@ -19,7 +19,7 @@ namespace Plugins.Kill
 
             Process target;
 
-            string text = "";
+            string text;
 
             try
             {

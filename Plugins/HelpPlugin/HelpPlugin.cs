@@ -1,13 +1,12 @@
 ﻿using Common.Contracts;
 using Common.Models;
-using System.Collections.Generic;
 using System.Text;
 
 namespace Plugins.Help
 {
     public class HelpPlugin : IModule
     {
-        private IEnumerable<IModule> plugins;
+        private string text;
 
         public HelpPlugin()
         {
@@ -17,15 +16,8 @@ namespace Plugins.Help
 
         public override async void Execute(Request req)
         {
-            var builder = new StringBuilder();
-
-            foreach (IModule plugin in plugins)
-            {
-                builder.AppendLine(plugin.ToString());
-            }
-
             var result = new Response(
-                builder.ToString(),
+                text,
                 req.MessageId
             );
 
@@ -36,7 +28,16 @@ namespace Plugins.Help
         {
             base.Initialize(data);
 
-            plugins = data.IocContainer.GetAllInstances<IModule>();
+            var modules = data.IocContainer.GetAllInstances<IModule>();
+
+            var builder = new StringBuilder();
+
+            foreach (IModule module in modules)
+            {
+                builder.AppendLine(module.ToString());
+            }
+
+            text = builder.ToString();
         }
     }
 }

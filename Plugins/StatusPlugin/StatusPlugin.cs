@@ -39,11 +39,11 @@ namespace Plugins.Status
         {
             base.Initialize(data);
 
-            var deviceInstances = data.IocContainer.GetAllInstances<IDevice>();
+            var devices = data.IocContainer.GetAllInstances<IDevice>();
 
             IStatus[] classStatuses =
             {
-                new SysInfo(deviceInstances),
+                new SysInfo(devices),
                 new LanIp(),
                 new WanIp(),
                 new Uptime()

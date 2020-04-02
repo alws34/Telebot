@@ -10,7 +10,7 @@ namespace LanPlugin.Intranet
         public EventHandler<HostsArg> Connected;
         public EventHandler<HostsArg> Disconnected;
 
-        public bool IsActive { get; set; }
+        public bool Active { get; protected set; }
 
         protected void RaiseConnected(List<Host> hosts)
         {

@@ -80,7 +80,7 @@ namespace LanPlugin.Intranet
 
         public override void Disconnect()
         {
-            if (!IsActive)
+            if (!Active)
             {
                 RaiseFeedback("The network is not being monitored.");
                 return;
@@ -92,12 +92,12 @@ namespace LanPlugin.Intranet
             if (worker.IsBusy)
                 worker.CancelAsync();
 
-            IsActive = false;
+            Active = false;
         }
 
         public override void Listen()
         {
-            if (IsActive)
+            if (Active)
             {
                 RaiseFeedback("The network is already being monitored.");
                 return;
@@ -106,7 +106,7 @@ namespace LanPlugin.Intranet
             if (!worker.IsBusy)
             {
                 worker.RunWorkerAsync();
-                IsActive = true;
+                Active = true;
             }
         }
     }

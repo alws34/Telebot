@@ -7,8 +7,8 @@
     <ProjectGuid>{E2DB7CE9-5589-42B6-BAFA-6A6D91483BCA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Common</RootNamespace>
-    <AssemblyName>Common</AssemblyName>
+    <RootNamespace>BotSdk</RootNamespace>
+    <AssemblyName>BotSdk</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

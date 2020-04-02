@@ -9,11 +9,11 @@ using System.Text;
 
 namespace Plugins.Status
 {
-    public class StatusPlugin : IModule
+    public class DllMain : IModule
     {
         private IEnumerable<IStatus> items { get; set; }
 
-        public StatusPlugin()
+        public DllMain()
         {
             Pattern = "/status";
             Description = "Receive workstation information.";

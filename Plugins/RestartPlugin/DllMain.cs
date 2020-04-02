@@ -3,27 +3,30 @@ using BotSdk.Models;
 using SimpleInjector;
 using System.Threading.Tasks;
 
-namespace Plugins.Exit
+namespace Plugins.Restart
 {
-    public class ExitPlugin : IModule
+    public class DllMain : IModule
     {
-        private IAppExit appExit;
+        private IAppRestart appRestart;
 
-        public ExitPlugin()
+        public DllMain()
         {
-            Pattern = "/exit";
-            Description = "Shutdown Telebot.";
+            Pattern = "/restart";
+            Description = "Restart Telebot.";
         }
 
         public override async void Execute(Request req)
         {
-            var result = new Response("Telebot is closing...", req.MessageId);
+            var result = new Response(
+                "Telebot is restarting...",
+                req.MessageId
+            );
 
             await ResultHandler(result);
 
             await Task.Delay(2000).ContinueWith((t) =>
             {
-                appExit.Exit();
+                appRestart.Restart();
             });
         }
 
@@ -31,7 +34,7 @@ namespace Plugins.Exit
         {
             base.Initialize(data);
             var container = (Container)data.IoCProvider.GetService(typeof(Container));
-            appExit = container.GetInstance<IAppExit>();
+            appRestart = container.GetInstance<IAppRestart>();
         }
     }
 }

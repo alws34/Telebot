@@ -7,12 +7,12 @@ using Updater;
 namespace Plugins.Update
 {
 
-    public class UpdatePlugin : IModule
+    public class DllMain : IModule
     {
         private IAppExit appExit;
         private IAppUpdate appUpdate;
 
-        public UpdatePlugin()
+        public DllMain()
         {
             Pattern = "/update (chk|dl)";
             Description = "Check or download an update.";

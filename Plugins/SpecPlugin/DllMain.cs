@@ -4,13 +4,13 @@ using System.IO;
 
 namespace Plugins.NSSpec
 {
-    public class SpecPlugin : IModule
+    public class DllMain : IModule
     {
         private const string filePath = ".\\Plugins\\Spec\\spec.txt";
 
         private Spec spec;
 
-        public SpecPlugin()
+        public DllMain()
         {
             Pattern = "/spec";
             Description = "Get full hardware information.";

@@ -5,9 +5,9 @@ using System.Diagnostics;
 
 namespace Plugins.Shutdown
 {
-    public class ShutdownPlugin : IModule
+    public class DllMain : IModule
     {
-        public ShutdownPlugin()
+        public DllMain()
         {
             Pattern = "/shutdown (\\d+)";
             Description = "Schedule the workstation to shutdown.";

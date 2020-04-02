@@ -6,12 +6,11 @@ using System.Collections.Generic;
 
 namespace Plugins.Apps
 {
-
-    public class AppsPlugin : IModule
+    public class DllMain : IModule
     {
         private Dictionary<string, Session> types;
 
-        public AppsPlugin()
+        public DllMain()
         {
             Pattern = "/apps (fg|all)";
             Description = "List of active applications.";

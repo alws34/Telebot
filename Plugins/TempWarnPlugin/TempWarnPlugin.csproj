@@ -56,7 +56,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\IniFileHandler.cs" />
     <Compile Include="Settings\TempSettings.cs" />
-    <Compile Include="TempWarnPlugin.cs" />
+    <Compile Include="DllMain.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BotSdk\BotSdk.csproj">

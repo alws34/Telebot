@@ -41,7 +41,7 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CapTimePlugin.cs" />
+    <Compile Include="DllMain.cs" />
     <Compile Include="Core\DesktopApi.cs" />
     <Compile Include="Jobs\CaptureArgs.cs" />
     <Compile Include="Jobs\CaptureSchedule.cs" />

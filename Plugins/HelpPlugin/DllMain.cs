@@ -5,11 +5,11 @@ using System.Text;
 
 namespace Plugins.Help
 {
-    public class HelpPlugin : IModule
+    public class DllMain : IModule
     {
         private string text;
 
-        public HelpPlugin()
+        public DllMain()
         {
             Pattern = "/help";
             Description = "List of available plugins.";

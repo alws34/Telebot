@@ -39,7 +39,7 @@
     <Compile Include="Enums\PowerType.cs" />
     <Compile Include="Native\powrprof.cs" />
     <Compile Include="Native\User32.cs" />
-    <Compile Include="PowerPlugin.cs" />
+    <Compile Include="DllMain.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

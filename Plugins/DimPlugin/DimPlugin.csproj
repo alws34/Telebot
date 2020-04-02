@@ -39,7 +39,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\DimApi.cs" />
-    <Compile Include="DimPlugin.cs" />
+    <Compile Include="DllMain.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

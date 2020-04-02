@@ -5,9 +5,9 @@ using VolPlugin.Core;
 
 namespace Plugins.Vol
 {
-    public class VolPlugin : IModule
+    public class DllMain : IModule
     {
-        public VolPlugin()
+        public DllMain()
         {
             Pattern = "/vol (\\d{1,3})";
             Description = "Adjust workstation's volume.";

@@ -42,7 +42,7 @@
     <Compile Include="Extensions\TimeSpanExtensions.cs" />
     <Compile Include="Native\kernel32.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StatusPlugin.cs" />
+    <Compile Include="DllMain.cs" />
     <Compile Include="Statuses\LanIp.cs" />
     <Compile Include="Statuses\SysInfo.cs" />
     <Compile Include="Statuses\Uptime.cs" />

@@ -10,11 +10,11 @@ using TempWarnPlugin.Models;
 
 namespace Plugins.TempWarn
 {
-    public class TempWarnPlugin : IModule, IJobStatus
+    public class DllMain : IModule, IJobStatus
     {
         private IJob<TempArgs> worker;
 
-        public TempWarnPlugin()
+        public DllMain()
         {
             Pattern = "/tempmon (on|off)";
             Description = "Turn on or off the temperature monitor.";

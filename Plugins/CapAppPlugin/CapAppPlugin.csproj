@@ -36,7 +36,7 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CapAppPlugin.cs" />
+    <Compile Include="DllMain.cs" />
     <Compile Include="Core\CapApi.cs" />
     <Compile Include="Native\User32.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

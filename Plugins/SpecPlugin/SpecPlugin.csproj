@@ -55,7 +55,7 @@
     <Compile Include="Sensors\Utilization.cs" />
     <Compile Include="Sensors\Voltage.cs" />
     <Compile Include="Spec.cs" />
-    <Compile Include="SpecPlugin.cs" />
+    <Compile Include="DllMain.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BotSdk\BotSdk.csproj">

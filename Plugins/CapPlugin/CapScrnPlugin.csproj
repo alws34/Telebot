@@ -37,7 +37,7 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CapPlugin.cs" />
+    <Compile Include="DllMain.cs" />
     <Compile Include="Core\DesktopApi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

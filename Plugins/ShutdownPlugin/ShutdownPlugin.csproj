@@ -36,7 +36,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ShutdownPlugin.cs" />
+    <Compile Include="DllMain.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BotSdk\BotSdk.csproj">

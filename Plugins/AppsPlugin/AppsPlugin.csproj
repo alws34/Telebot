@@ -35,7 +35,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppsPlugin.cs" />
+    <Compile Include="DllMain.cs" />
     <Compile Include="Core\AppsApi.cs" />
     <Compile Include="Enums\Session.cs" />
     <Compile Include="Native\User32.cs" />

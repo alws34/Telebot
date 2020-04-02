@@ -5,9 +5,9 @@ using System;
 
 namespace Plugins.Dim
 {
-    public class DimPlugin : IModule
+    public class DllMain : IModule
     {
-        public DimPlugin()
+        public DllMain()
         {
             Pattern = "/dim (\\d{1,3})";
             Description = "Adjust workstation's brightness.";

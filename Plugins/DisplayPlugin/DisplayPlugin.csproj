@@ -39,7 +39,7 @@
     <Compile Include="Enums\DisplayState.cs" />
     <Compile Include="Native\User32.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="DisplayPlugin.cs" />
+    <Compile Include="DllMain.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BotSdk\BotSdk.csproj">

@@ -6,11 +6,11 @@ using System.Collections.Generic;
 
 namespace Plugins.Power
 {
-    public class PowerPlugin : IModule
+    public class DllMain : IModule
     {
         private readonly Dictionary<string, PowerType> types;
 
-        public PowerPlugin()
+        public DllMain()
         {
             Pattern = "/power (lock|logoff|sleep|reboot|shutdown)";
             Description = "Lock, logoff, sleep, reboot or shutdown the workstation.";

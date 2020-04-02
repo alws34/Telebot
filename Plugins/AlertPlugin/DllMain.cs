@@ -2,7 +2,7 @@
 using BotSdk.Models;
 using System.Windows.Forms;
 
-namespace Plugins
+namespace Plugins.Alert
 {
     public class DllMain : IModule
     {

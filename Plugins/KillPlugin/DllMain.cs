@@ -5,9 +5,9 @@ using System.Diagnostics;
 
 namespace Plugins.Kill
 {
-    public class KillPlugin : IModule
+    public class DllMain : IModule
     {
-        public KillPlugin()
+        public DllMain()
         {
             Pattern = "/kill (\\d+)";
             Description = "Kill a task with the specified pid.";

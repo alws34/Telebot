@@ -12,11 +12,11 @@ using TempTimePlugin.Models;
 
 namespace Plugins.TempTime
 {
-    public class TempTimeCommand : IModule, IJobStatus
+    public class DllMain : IModule, IJobStatus
     {
         private IJob<TempArgs> job;
 
-        public TempTimeCommand()
+        public DllMain()
         {
             Pattern = "/temptime (off|(\\d+) (\\d+))";
             Description = "Schedules temperature monitor.";

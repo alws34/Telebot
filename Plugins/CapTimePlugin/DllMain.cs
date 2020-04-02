@@ -7,11 +7,11 @@ using Telebot.Capture;
 
 namespace Plugins.CapTime
 {
-    public class CapTimePlugin : IModule, IJobStatus
+    public class DllMain : IModule, IJobStatus
     {
         private IJob<CaptureArgs> job;
 
-        public CapTimePlugin()
+        public DllMain()
         {
             Pattern = "/captime (off|(\\d+) (\\d+))";
             Description = "Schedules screen capture session.";

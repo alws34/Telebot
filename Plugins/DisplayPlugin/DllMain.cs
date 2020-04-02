@@ -6,11 +6,11 @@ using System.Collections.Generic;
 
 namespace Plugins.Display
 {
-    public class DisplayPlugin : IModule
+    public class DllMain : IModule
     {
         private readonly Dictionary<string, DisplayState> states;
 
-        public DisplayPlugin()
+        public DllMain()
         {
             Pattern = "/screen (on|off)";
             Description = "Turn off or on the monitor.";

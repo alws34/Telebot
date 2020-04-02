@@ -44,7 +44,7 @@
     <Compile Include="Intranet\IInetScanner.cs" />
     <Compile Include="Intranet\LanMonitor.cs" />
     <Compile Include="Intranet\LanScanner.cs" />
-    <Compile Include="LanPlugin.cs" />
+    <Compile Include="DllMain.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -7,14 +7,14 @@ using System.Collections.Generic;
 
 namespace Plugins.Lan
 {
-    public class LanPlugin : IModule, IJobStatus
+    public class DllMain : IModule, IJobStatus
     {
         private IInetScanner lanScanner;
         private IINetMonitor lanMonitor;
 
         private Dictionary<string, Action> actions;
 
-        public LanPlugin()
+        public DllMain()
         {
             Pattern = "/lan (mon|moff|scan)";
             Description = "Scan or listen for devices on the LAN.";

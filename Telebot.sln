@@ -17,7 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DimPlugin", "Plugins\DimPlu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapAppPlugin", "Plugins\CapAppPlugin\CapAppPlugin.csproj", "{5F021E0D-EDEE-47C2-A57E-5EEC855D7154}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotSdk", "Common\BotSdk.csproj", "{E2DB7CE9-5589-42B6-BAFA-6A6D91483BCA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotSdk", "BotSdk\BotSdk.csproj", "{E2DB7CE9-5589-42B6-BAFA-6A6D91483BCA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapScrnPlugin", "Plugins\CapPlugin\CapScrnPlugin.csproj", "{CE24A3EF-99E1-4FD1-B33C-D984D1243B2C}"
 EndProject

@@ -38,6 +38,13 @@ Each functionality is encapsulated by a module which is defined by the `IModule`
 
 the `Initialize` method could be overriden to fetch data from the IoC container across other modules (If needed). By default this method will assign the response handler so you could respond back result to the telegram client from your module.
 
+Currently Telebot supports sending of three types of contents:
+- Text
+- Photo
+- Document
+
+When passing an argument to the Response data structure, it will automatically know what you're trying to send. So if you're passing a string then it will be sent as text, if MemoryStream then a photo and if FileStream then a document.
+
 # Features
 #### Temperature Monitoring
 The application can monitor and warn you whether your cpu/gpu's temperature is above the limit defined in `settings.ini` as:

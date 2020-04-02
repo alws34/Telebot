@@ -12,19 +12,12 @@ namespace Plugins.Lan
         private IInetScanner lanScanner;
         private IINetMonitor lanMonitor;
 
-        private readonly Dictionary<string, Action> actions;
+        private Dictionary<string, Action> actions;
 
         public LanPlugin()
         {
             Pattern = "/lan (mon|moff|scan)";
             Description = "Scan or listen for devices on the LAN.";
-
-            actions = new Dictionary<string, Action>
-            {
-                { "mon", lanMonitor.Listen },
-                { "moff", lanMonitor.Disconnect },
-                { "scan", lanScanner.Discover }
-            };
         }
 
         public override async void Execute(Request req)
@@ -78,6 +71,13 @@ namespace Plugins.Lan
                 Connected = HostHandler,
                 Disconnected = HostHandler,
                 Feedback = FeedbackHandler
+            };
+
+            actions = new Dictionary<string, Action>
+            {
+                { "mon", lanMonitor.Listen },
+                { "moff", lanMonitor.Disconnect },
+                { "scan", lanScanner.Discover }
             };
         }
 

@@ -49,8 +49,8 @@
     <Compile Include="Statuses\WanIp.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Common\BotSdk.csproj">
-      <Project>{e2db7ce9-5589-42b6-bafa-6a6d91483bca}</Project>
+    <ProjectReference Include="..\..\BotSdk\BotSdk.csproj">
+      <Project>{E2DB7CE9-5589-42B6-BAFA-6A6D91483BCA}</Project>
       <Name>BotSdk</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\CPUID\CPUID.csproj">

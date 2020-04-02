@@ -1,5 +1,5 @@
-﻿using System.IO;
-using BotSdk.Enums;
+﻿using BotSdk.Enums;
+using System.IO;
 
 namespace BotSdk.Models
 {

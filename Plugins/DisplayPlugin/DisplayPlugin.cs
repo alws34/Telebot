@@ -1,8 +1,8 @@
-﻿using DisplayPlugin.Core;
+﻿using BotSdk.Contracts;
+using BotSdk.Models;
+using DisplayPlugin.Core;
 using DisplayPlugin.Enums;
 using System.Collections.Generic;
-using BotSdk.Contracts;
-using BotSdk.Models;
 
 namespace Plugins.Display
 {

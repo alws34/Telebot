@@ -1,9 +1,9 @@
-﻿using LanPlugin.Intranet;
-using System;
-using System.Collections.Generic;
-using BotSdk.Contracts;
+﻿using BotSdk.Contracts;
 using BotSdk.Extensions;
 using BotSdk.Models;
+using LanPlugin.Intranet;
+using System;
+using System.Collections.Generic;
 
 namespace Plugins.Lan
 {

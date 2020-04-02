@@ -1,7 +1,7 @@
-﻿using SimpleInjector;
-using System.Threading.Tasks;
-using BotSdk.Contracts;
+﻿using BotSdk.Contracts;
 using BotSdk.Models;
+using SimpleInjector;
+using System.Threading.Tasks;
 
 namespace Plugins.Exit
 {

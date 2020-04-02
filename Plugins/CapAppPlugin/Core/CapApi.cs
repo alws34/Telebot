@@ -1,7 +1,7 @@
-﻿using System;
+﻿using BotSdk.Contracts;
+using System;
 using System.Drawing;
 using System.Threading;
-using BotSdk.Contracts;
 using static CapAppPlugin.Native.user32;
 
 namespace CapAppPlugin.Core

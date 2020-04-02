@@ -1,8 +1,8 @@
-﻿using CapTimePlugin.Core;
+﻿using BotSdk.Jobs;
+using CapTimePlugin.Core;
 using FluentScheduler;
 using System;
 using System.Drawing;
-using BotSdk.Jobs;
 
 namespace Telebot.Capture
 {

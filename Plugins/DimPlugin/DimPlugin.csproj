@@ -43,7 +43,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Common\BotSdk.csproj">
+    <ProjectReference Include="..\..\BotSdk\BotSdk.csproj">
       <Project>{e2db7ce9-5589-42b6-bafa-6a6d91483bca}</Project>
       <Name>BotSdk</Name>
     </ProjectReference>

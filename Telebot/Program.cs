@@ -1,4 +1,6 @@
-﻿using FluentScheduler;
+﻿using BotSdk.Contracts;
+using BotSdk.Models;
+using FluentScheduler;
 using SimpleInjector;
 using System;
 using System.Collections.Generic;
@@ -6,8 +8,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
-using BotSdk.Contracts;
-using BotSdk.Models;
 using Telebot.Clients;
 using Telebot.Presenters;
 using Telebot.Settings;
@@ -119,7 +119,7 @@ namespace Telebot
         private static IEnumerable<Assembly> LoadAssemblies()
         {
             var assemblies = Directory.EnumerateFiles(
-                ".\\Plugins", "*Module.dll", SearchOption.AllDirectories
+                ".\\Plugins", "*Plugin.dll", SearchOption.AllDirectories
             );
 
             var modules = new List<Assembly>();

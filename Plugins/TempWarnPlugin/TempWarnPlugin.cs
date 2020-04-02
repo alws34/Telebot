@@ -1,10 +1,10 @@
-﻿using CPUID.Base;
-using SimpleInjector;
-using System.Linq;
-using BotSdk.Contracts;
+﻿using BotSdk.Contracts;
 using BotSdk.Extensions;
 using BotSdk.Jobs;
 using BotSdk.Models;
+using CPUID.Base;
+using SimpleInjector;
+using System.Linq;
 using TempWarnPlugin.Jobs;
 using TempWarnPlugin.Models;
 

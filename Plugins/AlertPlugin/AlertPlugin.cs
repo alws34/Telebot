@@ -1,15 +1,15 @@
-﻿using System.Windows.Forms;
-using BotSdk.Contracts;
+﻿using BotSdk.Contracts;
 using BotSdk.Models;
+using System.Windows.Forms;
 
-namespace Plugins.Alert
+namespace Plugins
 {
-    public class AlertPlugin : IModule
+    public class DllMain : IModule
     {
-        public AlertPlugin()
+        public DllMain()
         {
             Pattern = "/alert \"(.+?)\"";
-            Description = "Display an alert with the specified text.";
+            Description = "Display an alert.";
         }
 
         public override async void Execute(Request req)

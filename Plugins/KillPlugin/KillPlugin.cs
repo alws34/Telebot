@@ -1,7 +1,7 @@
-﻿using System;
-using System.Diagnostics;
-using BotSdk.Contracts;
+﻿using BotSdk.Contracts;
 using BotSdk.Models;
+using System;
+using System.Diagnostics;
 
 namespace Plugins.Kill
 {

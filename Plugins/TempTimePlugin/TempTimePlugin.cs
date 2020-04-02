@@ -1,12 +1,12 @@
-﻿using CPUID.Base;
+﻿using BotSdk.Contracts;
+using BotSdk.Extensions;
+using BotSdk.Jobs;
+using BotSdk.Models;
+using CPUID.Base;
 using SimpleInjector;
 using System;
 using System.Linq;
 using System.Text;
-using BotSdk.Contracts;
-using BotSdk.Extensions;
-using BotSdk.Jobs;
-using BotSdk.Models;
 using TempTimePlugin.Jobs;
 using TempTimePlugin.Models;
 

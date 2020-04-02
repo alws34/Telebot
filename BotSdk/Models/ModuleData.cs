@@ -1,5 +1,5 @@
-﻿using System;
-using BotSdk.Contracts;
+﻿using BotSdk.Contracts;
+using System;
 
 namespace BotSdk.Models
 {

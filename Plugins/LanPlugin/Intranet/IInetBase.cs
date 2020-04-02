@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using BotSdk.Jobs;
+using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
-using BotSdk.Jobs;
 
 namespace LanPlugin.Intranet
 {

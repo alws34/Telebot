@@ -1,6 +1,6 @@
-﻿using System;
-using BotSdk.Contracts;
+﻿using BotSdk.Contracts;
 using BotSdk.Models;
+using System;
 using VolPlugin.Core;
 
 namespace Plugins.Vol

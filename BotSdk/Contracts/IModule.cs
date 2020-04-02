@@ -1,5 +1,5 @@
-﻿using System.Threading.Tasks;
-using BotSdk.Models;
+﻿using BotSdk.Models;
+using System.Threading.Tasks;
 
 namespace BotSdk.Contracts
 {

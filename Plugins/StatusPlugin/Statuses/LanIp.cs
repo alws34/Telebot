@@ -1,6 +1,6 @@
-﻿using System.Net;
+﻿using BotSdk.Contracts;
+using System.Net;
 using System.Net.Sockets;
-using BotSdk.Contracts;
 
 namespace StatusPlugin.Statuses
 {

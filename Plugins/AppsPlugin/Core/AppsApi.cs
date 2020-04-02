@@ -1,9 +1,9 @@
 ﻿using AppsPlugin.Enums;
+using BotSdk.Contracts;
 using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using BotSdk.Contracts;
 using static AppsPlugin.Native.user32;
 
 namespace AppsPlugin.Core

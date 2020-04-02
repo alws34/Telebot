@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using BotSdk.Contracts;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using BotSdk.Contracts;
 
 namespace CapPlugin.Core
 {

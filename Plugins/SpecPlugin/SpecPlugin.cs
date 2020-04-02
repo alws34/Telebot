@@ -1,6 +1,6 @@
-﻿using System.IO;
-using BotSdk.Contracts;
+﻿using BotSdk.Contracts;
 using BotSdk.Models;
+using System.IO;
 
 namespace Plugins.NSSpec
 {

@@ -1,8 +1,8 @@
-﻿using Common.Contracts;
-using Common.Enums;
-using Common.Models;
-using PowerPlugin.Core;
+﻿using PowerPlugin.Core;
+using PowerPlugin.Enums;
 using System.Collections.Generic;
+using BotSdk.Contracts;
+using BotSdk.Models;
 
 namespace Plugins.Power
 {

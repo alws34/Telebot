@@ -1,12 +1,11 @@
-﻿using System;
-using CPUID.Base;
+﻿using CPUID.Base;
 using Plugins.NSSpec.Components;
 using Plugins.NSSpec.Sensors;
 using Plugins.NSSpec.Sensors.Contracts;
 using SimpleInjector;
+using System;
 using System.Collections.Generic;
 using System.Text;
-using Common.Models;
 
 namespace Plugins.NSSpec
 {

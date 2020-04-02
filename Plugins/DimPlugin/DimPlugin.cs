@@ -1,7 +1,7 @@
-﻿using Common.Contracts;
-using Common.Models;
-using DimPlugin.Core;
+﻿using DimPlugin.Core;
 using System;
+using BotSdk.Contracts;
+using BotSdk.Models;
 
 namespace Plugins.Dim
 {

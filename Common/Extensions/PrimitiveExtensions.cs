@@ -1,4 +1,4 @@
-﻿namespace Common.Extensions
+﻿namespace BotSdk.Extensions
 {
     public static class PrimitiveExtensions
     {

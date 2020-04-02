@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Contracts.Contracts
+namespace BotSdk.Contracts
 {
     public abstract class IApi
     {

@@ -1,7 +1,7 @@
-﻿using Common.Models;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using BotSdk.Models;
 
-namespace Common.Contracts
+namespace BotSdk.Contracts
 {
     public abstract class IModule
     {

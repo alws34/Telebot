@@ -1,5 +1,5 @@
-﻿using Contracts.Contracts;
-using System.Diagnostics;
+﻿using System.Diagnostics;
+using BotSdk.Contracts;
 
 namespace VolPlugin.Core
 {

@@ -1,10 +1,9 @@
-﻿using Common.Contracts;
-using Common.Models;
-using System.IO;
+﻿using System.IO;
+using BotSdk.Contracts;
+using BotSdk.Models;
 
 namespace Plugins.NSSpec
 {
-
     public class SpecPlugin : IModule
     {
         private const string filePath = ".\\Plugins\\Spec\\spec.txt";

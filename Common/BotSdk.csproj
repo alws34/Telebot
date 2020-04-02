@@ -31,9 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="SimpleInjector">
       <HintPath>..\packages\SimpleInjector.4.9.1\lib\net45\SimpleInjector.dll</HintPath>
     </Reference>
@@ -41,21 +38,15 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="Telegram.Bot, Version=15.4.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Telegram.Bot.15.4.0\lib\net45\Telegram.Bot.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contracts\IApi.cs" />
-    <Compile Include="Enums\DisplayState.cs" />
-    <Compile Include="Enums\PowerType.cs" />
     <Compile Include="Enums\ResultType.cs" />
     <Compile Include="Extensions\BitmapExtensions.cs" />
-    <Compile Include="Extensions\PrimitiveExtensions.cs" />
-    <Compile Include="Extensions\TimeSpanExtensions.cs" />
     <Compile Include="Contracts\IAppExit.cs" />
     <Compile Include="Contracts\IAppRestart.cs" />
     <Compile Include="Contracts\IStatus.cs" />
+    <Compile Include="Extensions\PrimitiveExtensions.cs" />
     <Compile Include="Jobs\IFeedback.cs" />
     <Compile Include="Jobs\IJob.cs" />
     <Compile Include="Contracts\IModule.cs" />
@@ -68,9 +59,6 @@
     <Compile Include="Jobs\IScheduled.cs" />
     <Compile Include="Settings\ISettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

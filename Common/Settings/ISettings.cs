@@ -1,4 +1,4 @@
-﻿namespace Contracts.Settings
+﻿namespace BotSdk.Settings
 {
     public interface ISettings
     {

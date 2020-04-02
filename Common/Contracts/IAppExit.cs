@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Common.Contracts
+namespace BotSdk.Contracts
 {
     public interface IAppExit
     {

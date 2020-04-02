@@ -1,6 +1,6 @@
-﻿using Common.Enums;
-using Contracts.Contracts;
+﻿using PowerPlugin.Enums;
 using System.Diagnostics;
+using BotSdk.Contracts;
 using static PowerPlugin.Native.powrprof;
 using static PowerPlugin.Native.user32;
 

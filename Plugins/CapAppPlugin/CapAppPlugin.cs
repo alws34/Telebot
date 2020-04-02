@@ -1,9 +1,9 @@
 ﻿using CapAppPlugin.Core;
-using Common.Contracts;
-using Common.Extensions;
-using Common.Models;
 using System;
 using System.Diagnostics;
+using BotSdk.Contracts;
+using BotSdk.Extensions;
+using BotSdk.Models;
 
 namespace Plugins.CapApp
 {

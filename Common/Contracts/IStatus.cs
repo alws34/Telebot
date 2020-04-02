@@ -1,4 +1,4 @@
-﻿namespace Common.Contracts
+﻿namespace BotSdk.Contracts
 {
     public interface IStatus
     {

@@ -1,6 +1,6 @@
-﻿using Contracts.Contracts;
-using ORMi;
+﻿using ORMi;
 using System.Linq;
+using BotSdk.Contracts;
 
 namespace DimPlugin.Core
 {

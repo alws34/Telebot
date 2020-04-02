@@ -1,8 +1,8 @@
 ﻿using CapPlugin.Core;
-using Common.Contracts;
-using Common.Extensions;
-using Common.Models;
 using System.Drawing;
+using BotSdk.Contracts;
+using BotSdk.Extensions;
+using BotSdk.Models;
 
 namespace Plugins.CapScrn
 {

@@ -1,6 +1,6 @@
-﻿using Common.Enums;
-using Common.Models;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using BotSdk.Enums;
+using BotSdk.Models;
 
 namespace Telebot.Clients
 {

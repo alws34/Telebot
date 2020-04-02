@@ -1,6 +1,6 @@
-﻿using Common.Contracts;
-using Common.Models;
-using System;
+﻿using System;
+using BotSdk.Contracts;
+using BotSdk.Models;
 using VolPlugin.Core;
 
 namespace Plugins.Vol

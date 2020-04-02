@@ -1,5 +1,5 @@
-﻿using Common.Enums;
-using Contracts.Contracts;
+﻿using BotSdk.Contracts;
+using DisplayPlugin.Enums;
 using static DisplayPlugin.Native.user32;
 
 namespace DisplayPlugin.Core

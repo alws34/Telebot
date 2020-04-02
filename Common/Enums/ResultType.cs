@@ -1,4 +1,4 @@
-﻿namespace Common.Enums
+﻿namespace BotSdk.Enums
 {
     public enum ResultType
     {

@@ -1,6 +1,6 @@
-﻿using Common.Contracts;
-using Common.Extensions;
+﻿using StatusPlugin.Extensions;
 using System;
+using BotSdk.Contracts;
 using static StatusPlugin.Native.kernel32;
 
 namespace StatusPlugin.Statuses

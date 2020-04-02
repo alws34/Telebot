@@ -1,4 +1,4 @@
-﻿namespace Common.Enums
+﻿namespace PowerPlugin.Enums
 {
     public enum PowerType
     {

@@ -1,12 +1,12 @@
-﻿using Common.Contracts;
-using Common.Extensions;
-using Common.Models;
-using Contracts.Jobs;
-using CPUID.Base;
+﻿using CPUID.Base;
+using SimpleInjector;
 using System;
 using System.Linq;
 using System.Text;
-using SimpleInjector;
+using BotSdk.Contracts;
+using BotSdk.Extensions;
+using BotSdk.Jobs;
+using BotSdk.Models;
 using TempTimePlugin.Jobs;
 using TempTimePlugin.Models;
 

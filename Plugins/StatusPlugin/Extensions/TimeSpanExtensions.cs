@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Common.Extensions
+namespace StatusPlugin.Extensions
 {
     public static class TimeSpanExtensions
     {

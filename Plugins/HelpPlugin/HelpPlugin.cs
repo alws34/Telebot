@@ -1,7 +1,7 @@
-﻿using Common.Contracts;
-using Common.Models;
+﻿using SimpleInjector;
 using System.Text;
-using SimpleInjector;
+using BotSdk.Contracts;
+using BotSdk.Models;
 
 namespace Plugins.Help
 {

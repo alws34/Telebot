@@ -1,8 +1,8 @@
-﻿using Common.Contracts;
-using Common.Extensions;
-using Common.Models;
-using Contracts.Jobs;
-using System;
+﻿using System;
+using BotSdk.Contracts;
+using BotSdk.Extensions;
+using BotSdk.Jobs;
+using BotSdk.Models;
 using Telebot.Capture;
 
 namespace Plugins.CapTime

@@ -1,7 +1,7 @@
-﻿using Common.Contracts;
-using Common.Models;
+﻿using SimpleInjector;
 using System.Threading.Tasks;
-using SimpleInjector;
+using BotSdk.Contracts;
+using BotSdk.Models;
 using Updater;
 
 namespace Plugins.Update

@@ -1,4 +1,4 @@
-﻿namespace Common.Enums
+﻿namespace DisplayPlugin.Enums
 {
     public enum DisplayState
     {

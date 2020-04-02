@@ -1,9 +1,9 @@
-﻿using Contracts.Jobs;
-using CPUID.Base;
+﻿using CPUID.Base;
 using CPUID.Models;
 using FluentScheduler;
 using System;
 using System.Collections.Generic;
+using BotSdk.Jobs;
 using TempTimePlugin.Models;
 using static CPUID.Sdk.CpuIdSdk64;
 

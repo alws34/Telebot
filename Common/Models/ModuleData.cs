@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using Common.Contracts;
-using SimpleInjector;
+using BotSdk.Contracts;
 
-namespace Common.Models
+namespace BotSdk.Models
 {
     public class ModuleData
     {

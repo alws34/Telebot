@@ -1,7 +1,7 @@
-﻿using Common.Models;
-using System;
+﻿using System;
+using BotSdk.Models;
 
-namespace Contracts.Jobs
+namespace BotSdk.Jobs
 {
     public abstract class IFeedback
     {

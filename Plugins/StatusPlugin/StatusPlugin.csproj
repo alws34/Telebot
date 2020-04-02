@@ -39,6 +39,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\TimeSpanExtensions.cs" />
     <Compile Include="Native\kernel32.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StatusPlugin.cs" />
@@ -48,9 +49,9 @@
     <Compile Include="Statuses\WanIp.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Common\Common.csproj">
+    <ProjectReference Include="..\..\Common\BotSdk.csproj">
       <Project>{e2db7ce9-5589-42b6-bafa-6a6d91483bca}</Project>
-      <Name>Common</Name>
+      <Name>BotSdk</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\CPUID\CPUID.csproj">
       <Project>{BE642C45-8519-49FD-A45D-B5BF07C9FF96}</Project>

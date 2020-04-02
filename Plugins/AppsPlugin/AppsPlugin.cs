@@ -1,8 +1,8 @@
 ﻿using AppsPlugin.Core;
 using AppsPlugin.Enums;
-using Common.Contracts;
-using Common.Models;
 using System.Collections.Generic;
+using BotSdk.Contracts;
+using BotSdk.Models;
 
 namespace Plugins.Apps
 {

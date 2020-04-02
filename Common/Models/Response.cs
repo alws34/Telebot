@@ -1,7 +1,7 @@
-﻿using Common.Enums;
-using System.IO;
+﻿using System.IO;
+using BotSdk.Enums;
 
-namespace Common.Models
+namespace BotSdk.Models
 {
 
     public class Response

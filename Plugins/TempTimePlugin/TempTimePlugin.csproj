@@ -49,9 +49,9 @@
     <Compile Include="TempTimePlugin.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Common\Common.csproj">
+    <ProjectReference Include="..\..\Common\BotSdk.csproj">
       <Project>{E2DB7CE9-5589-42B6-BAFA-6A6D91483BCA}</Project>
-      <Name>Common</Name>
+      <Name>BotSdk</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\CPUID\CPUID.csproj">
       <Project>{BE642C45-8519-49FD-A45D-B5BF07C9FF96}</Project>

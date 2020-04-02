@@ -2,7 +2,7 @@
 using System.Drawing.Imaging;
 using System.IO;
 
-namespace Common.Extensions
+namespace BotSdk.Extensions
 {
     public static class BitmapExtensions
     {

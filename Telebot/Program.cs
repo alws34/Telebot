@@ -1,6 +1,4 @@
-﻿using Common.Contracts;
-using Common.Models;
-using FluentScheduler;
+﻿using FluentScheduler;
 using SimpleInjector;
 using System;
 using System.Collections.Generic;
@@ -8,6 +6,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
+using BotSdk.Contracts;
+using BotSdk.Models;
 using Telebot.Clients;
 using Telebot.Presenters;
 using Telebot.Settings;
@@ -86,16 +86,11 @@ namespace Telebot
             var modulesType = IocContainer.GetTypesToRegister<IModule>(assemblies);
             var statusType = IocContainer.GetTypesToRegister<IJobStatus>(assemblies);
 
-            var modulesRegistration =
-                from type in modulesType
-                select Lifestyle.Singleton.CreateRegistration(type, IocContainer);
+            var modulesReg = CreateRegistrations(modulesType);
+            var statusReg = CreateRegistrations(statusType);
 
-            var statusRegistration =
-                from type in statusType
-                select Lifestyle.Singleton.CreateRegistration(type, IocContainer);
-
-            IocContainer.Collection.Register<IModule>(modulesRegistration);
-            IocContainer.Collection.Register<IJobStatus>(statusRegistration);
+            IocContainer.Collection.Register<IModule>(modulesReg);
+            IocContainer.Collection.Register<IJobStatus>(statusReg);
 
             DeviceCreator devCreator = new DeviceCreator();
 
@@ -112,10 +107,19 @@ namespace Telebot
             IocContainer.Verify();
         }
 
+        private static IEnumerable<Registration> CreateRegistrations(IEnumerable<Type> types)
+        {
+            var result =
+                from type in types
+                select Lifestyle.Singleton.CreateRegistration(type, IocContainer);
+
+            return result;
+        }
+
         private static IEnumerable<Assembly> LoadAssemblies()
         {
             var assemblies = Directory.EnumerateFiles(
-                ".\\Plugins", "*Plugin.dll", SearchOption.AllDirectories
+                ".\\Plugins", "*Module.dll", SearchOption.AllDirectories
             );
 
             var modules = new List<Assembly>();

@@ -1,8 +1,8 @@
-﻿using Contracts.Settings;
-using IniParser;
+﻿using IniParser;
 using IniParser.Model;
 using Newtonsoft.Json;
 using System.IO;
+using BotSdk.Settings;
 
 namespace Telebot.Settings
 {

@@ -1,7 +1,7 @@
-﻿using Common.Contracts;
-using CPUID.Base;
+﻿using CPUID.Base;
 using System.Collections.Generic;
 using System.Text;
+using BotSdk.Contracts;
 
 namespace StatusPlugin.Statuses
 {

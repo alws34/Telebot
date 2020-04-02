@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace Common.Models
+namespace BotSdk.Models
 {
     public class Request
     {

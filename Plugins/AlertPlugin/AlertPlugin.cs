@@ -1,6 +1,6 @@
-﻿using Common.Contracts;
-using Common.Models;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
+using BotSdk.Contracts;
+using BotSdk.Models;
 
 namespace Plugins.Alert
 {

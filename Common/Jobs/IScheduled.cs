@@ -1,4 +1,4 @@
-﻿namespace Contracts.Jobs
+﻿namespace BotSdk.Jobs
 {
     public interface IScheduled
     {

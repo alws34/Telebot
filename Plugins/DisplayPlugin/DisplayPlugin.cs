@@ -1,8 +1,8 @@
-﻿using Common.Contracts;
-using Common.Enums;
-using Common.Models;
-using DisplayPlugin.Core;
+﻿using DisplayPlugin.Core;
+using DisplayPlugin.Enums;
 using System.Collections.Generic;
+using BotSdk.Contracts;
+using BotSdk.Models;
 
 namespace Plugins.Display
 {

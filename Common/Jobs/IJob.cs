@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Contracts.Jobs
+namespace BotSdk.Jobs
 {
     public abstract class IJob<T> : IJob
     {

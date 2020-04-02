@@ -1,11 +1,11 @@
-﻿using Common.Contracts;
-using Common.Models;
+﻿using BotSdk.Models;
 using CPUID.Base;
+using SimpleInjector;
 using StatusPlugin.Statuses;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using SimpleInjector;
+using BotSdk.Contracts;
 
 namespace Plugins.Status
 {

@@ -1,13 +1,15 @@
 # Telebot
 An open source modular smart monitoring system. With a modular design, Telebot allows you to extend it and turn it into your personal assistant.
 
-# Setup instructions
+Communication with the system is via Telegram, you must create a bot by following the steps [here](https://core.telegram.org/bots) and use the token to setup the bot.
+
+# Setup
  - Create a settings.ini file and place it within the same folder as binaries. Make sure you have the bot token and the user id (who will control the bot) in the following format:
  
  ```
 [Telegram]
 Token = <Bot_Token>
-AdminId = <User_ID> // The telegram user who will command the bot.
+AdminId = <User_ID>
 ```
 
 - Necessary files will be copied to bin directory upon project build.

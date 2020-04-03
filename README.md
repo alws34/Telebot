@@ -31,19 +31,7 @@ Encapsulates the software update logic.
 Definitions shared between modules.
 
 #### .\Plugins
-Includes all preprogrammed modules that extends the application behaviour. Extending functionality is possible by reading [here](https://github.com/jdahan91/Telebot/blob/master/README.md#extending-functionality).
-
-# Extending functionality
-Each functionality is encapsulated by a module which is defined by the `IModule` abstract class. In order to extend functionality of Telebot you must inherit from `IModule` and implement Execute method which encapsulates the module logic. Don't forget to give your module a pattern (Regex) and description initialized at ctor.
-
-the `Initialize` method could be overriden to fetch data from the IoC container across other modules (If needed). By default this method will assign the response handler so you could respond back result to the telegram client from your module.
-
-Currently Telebot supports sending of three types of contents:
-- Text
-- Photo
-- Document
-
-When passing an argument to the Response data structure, it will automatically know what you're trying to send. So if you're passing a string then it will be sent as text, if MemoryStream then a photo and if FileStream then a document.
+Includes all preprogrammed modules that extends the application behaviour. Extending functionality is possible by reading [Creating a Plugin](https://github.com/jdahan91/Telebot/wiki/Creating-a-Plugin).
 
 # Features
 #### Temperature Monitoring

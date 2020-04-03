@@ -1,81 +1,31 @@
-﻿using BotSdk.Models;
+﻿using System;
+using BotSdk.Models;
 using System.IO;
 using System.Threading.Tasks;
 using Telegram.Bot;
+using Telegram.Bot.Args;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.InputFiles;
 
 namespace Telebot.Clients
 {
-    public abstract class IBotClient : TelegramBotClient
+    public interface IBotClient
     {
-        private readonly int Id;
+        event EventHandler<MessageEventArgs> Received;
 
-        protected IBotClient(string token, int id) : base(token)
-        {
-            Id = id;
-        }
+        Task ResultHandler(Response response);
 
-        public abstract Task ResultHandler(Response response);
+        bool IsConnected { get; }
 
-        public bool IsConnected => IsReceiving;
+        void Connect();
+        void Disconnect();
+        bool IsAuthorized(int id);
 
-        public void Connect()
-        {
-            StartReceiving();
-        }
+        Task<User> GetMeAsync();
 
-        public void Disconnect()
-        {
-            StopReceiving();
-        }
-
-        public bool IsAuthorized(int id)
-        {
-            return Id.Equals(id);
-        }
-
-        public async Task SendText(string text, long chatId = 0, int replyId = 0)
-        {
-            await SendTextMessageAsync(
-               chatId == 0 ? Id : chatId,
-               text.TrimEnd(),
-               ParseMode.Markdown,
-               replyToMessageId: replyId
-           );
-        }
-
-        public async Task SendPic(Stream content, long chatId = 0, int replyId = 0)
-        {
-            var raw = new InputOnlineFile(content, "preview.jpg");
-
-            await SendDocumentAsync(
-                chatId == 0 ? Id : chatId,
-                raw,
-                parseMode: ParseMode.Markdown,
-                replyToMessageId: replyId,
-                caption: "From *Telebot*",
-                thumb: raw as InputMedia
-            );
-
-            content.Close();
-        }
-
-        public async Task SendDoc(Stream content, long chatId = 0, int replyId = 0)
-        {
-            var raw = new InputOnlineFile(content, (content as FileStream).Name);
-
-            await SendDocumentAsync(
-                chatId == 0 ? Id : chatId,
-                raw,
-                parseMode: ParseMode.Markdown,
-                replyToMessageId: replyId,
-                caption: "From *Telebot*",
-                thumb: raw as InputMedia
-            );
-
-            content.Close();
-        }
+        Task SendText(string text, long chatId = 0, int replyId = 0);
+        Task SendPic(Stream content, long chatId = 0, int replyId = 0); 
+        Task SendDoc(Stream content, long chatId = 0, int replyId = 0);
     }
 }

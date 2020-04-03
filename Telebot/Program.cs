@@ -81,16 +81,13 @@ namespace Telebot
 
             IocContainer.Register<IAppUpdate, AppUpdate>(Lifestyle.Singleton);
 
-            var assemblies = LoadAssemblies();
+            var modules = LoadModules();
 
-            var modulesType = IocContainer.GetTypesToRegister<IModule>(assemblies);
-            var statusType = IocContainer.GetTypesToRegister<IJobStatus>(assemblies);
+            var modulesType = IocContainer.GetTypesToRegister<IModule>(modules);
+            var statusType = IocContainer.GetTypesToRegister<IJobStatus>(modules);
 
-            var modulesReg = CreateRegistrations(modulesType);
-            var statusReg = CreateRegistrations(statusType);
-
-            IocContainer.Collection.Register<IModule>(modulesReg);
-            IocContainer.Collection.Register<IJobStatus>(statusReg);
+            IocContainer.Collection.Register<IModule>(modulesType.AsSingletons());
+            IocContainer.Collection.Register<IJobStatus>(statusType.AsSingletons());
 
             DeviceCreator devCreator = new DeviceCreator();
 
@@ -107,7 +104,7 @@ namespace Telebot
             IocContainer.Verify();
         }
 
-        private static IEnumerable<Registration> CreateRegistrations(IEnumerable<Type> types)
+        private static IEnumerable<Registration> AsSingletons(this IEnumerable<Type> types)
         {
             var result =
                 from type in types
@@ -116,7 +113,7 @@ namespace Telebot
             return result;
         }
 
-        private static IEnumerable<Assembly> LoadAssemblies()
+        private static IEnumerable<Assembly> LoadModules()
         {
             var assemblies = Directory.EnumerateFiles(
                 ".\\Plugins", "*Plugin.dll", SearchOption.AllDirectories

@@ -1,57 +1,58 @@
-﻿using CPUID;
-using CPUID.Base;
+﻿using CPUID.Base;
 using CPUID.Devices;
-using CPUID.Sdk;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using static CPUID.CpuIdWrapper64;
+using static CPUID.Sdk.CpuIdSdk64;
 
 namespace Telebot
 {
     public class DeviceCreator
     {
         private readonly int deviceCount;
+        private readonly List<IDevice> devices;
 
         public DeviceCreator()
         {
-            deviceCount = CpuIdWrapper64.Sdk64.GetNumberOfDevices();
+            deviceCount = Sdk64.GetNumberOfDevices();
+
+            devices = new List<IDevice>();
+            devices.AddRange(LoadDevices<CPUDevice>(CLASS_DEVICE_PROCESSOR));
+            devices.AddRange(LoadDevices<GPUDevice>(CLASS_DEVICE_DISPLAY_ADAPTER));
+            devices.AddRange(LoadDevices<RAMDevice>(CLASS_DEVICE_MAINBOARD));
+            devices.AddRange(LoadDevices<HDDDevice>(CLASS_DEVICE_DRIVE));
+            devices.AddRange(LoadDevices<BATDevice>(CLASS_DEVICE_BATTERY));
         }
 
         public IEnumerable<IProcessor> GetProcessors()
         {
-            return LoadDevices<CPUDevice>(CpuIdSdk64.CLASS_DEVICE_PROCESSOR);
+            return devices.Where(d => d.DeviceClass == CLASS_DEVICE_PROCESSOR).Cast<IProcessor>();
         }
 
         public IEnumerable<IDisplay> GetDisplays()
         {
-            return LoadDevices<GPUDevice>(CpuIdSdk64.CLASS_DEVICE_DISPLAY_ADAPTER);
+            return devices.Where(d => d.DeviceClass == CLASS_DEVICE_DISPLAY_ADAPTER).Cast<IDisplay>();
         }
 
         public IEnumerable<IBattery> GetBatteries()
         {
-            return LoadDevices<BATDevice>(CpuIdSdk64.CLASS_DEVICE_BATTERY);
+            return devices.Where(d => d.DeviceClass == CLASS_DEVICE_BATTERY).Cast<IBattery>();
         }
 
         public IEnumerable<IDrive> GetDrives()
         {
-            return LoadDevices<HDDDevice>(CpuIdSdk64.CLASS_DEVICE_DRIVE);
+            return devices.Where(d => d.DeviceClass == CLASS_DEVICE_DRIVE).Cast<IDrive>();
         }
 
         public IEnumerable<IMainboard> GetMainboards()
         {
-            return LoadDevices<RAMDevice>(CpuIdSdk64.CLASS_DEVICE_MAINBOARD);
+            return devices.Where(d => d.DeviceClass == CLASS_DEVICE_MAINBOARD).Cast<IMainboard>();
         }
 
         public IEnumerable<IDevice> GetAll()
         {
-            var all = new List<IDevice>();
-
-            all.AddRange(GetProcessors());
-            all.AddRange(GetDisplays());
-            all.AddRange(GetDrives());
-            all.AddRange(GetMainboards());
-            all.AddRange(GetBatteries());
-
-            return all;
+            return devices;
         }
 
         private IEnumerable<T> LoadDevices<T>(uint deviceClass) where T : IDevice, new()
@@ -60,9 +61,9 @@ namespace Telebot
 
             for (int deviceIndex = 0; deviceIndex < deviceCount; deviceIndex++)
             {
-                if (CpuIdWrapper64.Sdk64.GetDeviceClass(deviceIndex) == deviceClass)
+                if (Sdk64.GetDeviceClass(deviceIndex) == deviceClass)
                 {
-                    string deviceName = CpuIdWrapper64.Sdk64.GetDeviceName(deviceIndex);
+                    string deviceName = Sdk64.GetDeviceName(deviceIndex);
 
                     T device = (T)Activator.CreateInstance(typeof(T), new object[]
                     {

@@ -27,7 +27,7 @@ namespace Telebot.Presenters
             this.view.FormClosed += viewClosed;
 
             this.client = client;
-            this.client.Received += clientReceive;
+            this.client.Received += clientReceived;
 
             modules = Program.IocContainer.GetAllInstances<IModule>();
 
@@ -35,7 +35,7 @@ namespace Telebot.Presenters
             appUpdate.HandleCheck += OnCheckUpdate;
         }
 
-        private async void clientReceive(object sender, MessageEventArgs e)
+        private async void clientReceived(object sender, MessageEventArgs e)
         {
             if (!client.IsAuthorized(e.Message.From.Id))
             {

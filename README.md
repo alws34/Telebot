@@ -27,8 +27,8 @@ This module is an abstraction to the cpuid library which is the core of the enti
 #### Updater module
 Encapsulates the software update logic.
 
-#### Common module
-Definitions shared between modules.
+#### BotSdk module
+Definitions shared between plugins and main module in order to allow communication.
 
 #### .\Plugins
 Includes all preprogrammed plugins that extends the application behaviour. 

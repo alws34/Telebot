@@ -32,7 +32,7 @@ Definitions shared between plugins and main module in order to allow communicati
 
 #### .\Plugins
 Includes all preprogrammed plugins that extends the application behaviour. 
-Extending functionality is possible by reading [Creating a Plugin](https://github.com/jdahan91/Telebot/wiki/Creating-a-Plugin).
+Extending functionality is possible by [creating a plugin](https://github.com/jdahan91/Telebot/wiki/Creating-a-Plugin).
 
 # Features
 #### Temperature Monitoring

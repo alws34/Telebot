@@ -14,7 +14,7 @@ AdminId = <User_ID>
 
 Necessary files will be copied to bin directory upon project build.
 
-# Application architecture
+# Architecture
 
 #### Telebot module (Non-GUI):
 The application is a [Tray-based](https://docs.microsoft.com/en-us/windows/win32/shell/notification-area) modular application based on [Model–view–presenter (MVP) architectural pattern](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93presenter) (**Notification-view**). Each module is encapsulated by the [Command design pattern](https://en.wikipedia.org/wiki/Command_pattern).

@@ -1,6 +1,6 @@
 # Telebot
 
-An open source modular smart monitoring system. With a modular design, Telebot allows you to extend it and turn it into your personal assistant. Communication with Telebot is via Telegram (Or any other service that implements IBotClient). You must create a bot by following the steps [here](https://core.telegram.org/bots) and use the token to setup the bot.
+An open source modular smart monitoring system. With a modular design, Telebot allows you to extend it and turn it into your personal assistant. Communication with Telebot is via Telegram (Or any other service that implements `IBotClient`). You must create a bot by following the steps [here](https://core.telegram.org/bots) and use the token to setup the bot.
 
 # Setup
 

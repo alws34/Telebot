@@ -16,11 +16,11 @@ Necessary files will be copied to bin directory upon project build.
 
 # Architecture
 
-#### Telebot module (Non-GUI):
+#### Telebot module (Non-GUI)
 The application is a [Tray-based](https://docs.microsoft.com/en-us/windows/win32/shell/notification-area) modular application based on [Model–view–presenter (MVP) architectural pattern](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93presenter) (**Notification-view**). Each module is encapsulated by the [Command design pattern](https://en.wikipedia.org/wiki/Command_pattern).
 
-#### CPUID module (Core functionality):
-This module is an abstraction to the cpuid library which is the core of the entire application to perform hardware analyzations tasks.
+#### CPUID module
+This module is an abstraction to the cpuid sdk library.
 
 #### Updater module
 Encapsulates the software update logic.
